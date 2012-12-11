@@ -6,8 +6,8 @@
 #include <stdexcept>
 #include <iterator>
 #include <fas/typemanip/remove_const.hpp>
-
-namespace vset{ namespace vtree{
+#include <iostream>
+namespace vset{ 
 
 /// TODO: проверки за выход диапазона
 template<typename T, size_t N>
@@ -189,7 +189,7 @@ public:
 
   iterator insert ( iterator position, const T& x )
   {
-    if ( this->size() + 1 > this->capacity() )
+    if ( this->size() + 1 > this->max_size() )
       throw std::out_of_range("array::insert");
 
     std::copy_backward(position, end(), end()+1);
@@ -200,7 +200,7 @@ public:
 
   void insert ( iterator position, size_type n, const T& x )
   {
-    if ( this->size() + n > this->capacity() )
+    if ( this->size() + n > this->max_size() )
       throw std::out_of_range("array::insert");
     std::copy_backward(position, end(), end()+n);
     std::fill_n(position, n, x);
@@ -210,13 +210,15 @@ public:
   template <class InputIterator>
   void insert ( iterator position, InputIterator first, InputIterator last )
   {
-    typename InputIterator::difference_type dist = std::distance(first,last);
-    if ( this->size() + dist > this->capacity() )
+    difference_type dist = std::distance(first,last);
+    if (dist<=0)
+      return;
+    if ( this->size() + dist > this->max_size() )
       throw std::out_of_range("array::insert");
 
     std::copy_backward(position, end(), end()+dist );
     std::copy(first, last, position);
-    _size+=std::distance(first,last);
+    _size+=dist;
   }
 
   iterator erase ( iterator position )
@@ -228,7 +230,7 @@ public:
 
   iterator erase ( iterator first, iterator last )
   {
-    difference_type dist = last - first;
+    difference_type dist = /*last - first*/std::distance(first,last);;
     std::copy( last, this->end(), first);
     this->resize( _size - dist );
     return first;
@@ -240,6 +242,6 @@ private:
   data_type _data;
 };
 
-}}
+}
 
 #endif

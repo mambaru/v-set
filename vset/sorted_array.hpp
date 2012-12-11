@@ -1,9 +1,9 @@
 #ifndef VSET_VTREE_SORTED_ARRAY_HPP
 #define VSET_VTREE_SORTED_ARRAY_HPP
 
-#include <vset/vtree/array.hpp>
+#include <vset/array.hpp>
 
-namespace vset{ namespace vtree{
+namespace vset{
 
 // TODO: сделать операции < > и пр.
 template<typename T, size_t N, typename Compare = std::less<T> >
@@ -92,12 +92,9 @@ public:
   {
     std::sort( super::begin(), super::end(), comp );
   }
-
 private:
-  
 };
 
-
-}}
+}
 
 #endif
