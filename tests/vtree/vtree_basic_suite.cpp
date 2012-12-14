@@ -36,6 +36,7 @@ UNIT(vtree_create_filesync, "")
 
   tree.get_allocator().memory().buffer().sync();
   t << message("tree size: ") << tree.get_container().size();
+  tree.get_allocator().memory().buffer().close();
   t << nothing();
 }
 

@@ -67,8 +67,9 @@ private:
     if ( offset + real_size >  buffer_size)
       real_size = buffer_size - offset;
 
-    const char *buff = t.get_aspect().template get<_buffer_>();
     
+    const char *buff = t.get_aspect().template get<_buffer_>();
+
     t.get_aspect().template get<_write_file_>()(
       t,
       buff + real_offset,

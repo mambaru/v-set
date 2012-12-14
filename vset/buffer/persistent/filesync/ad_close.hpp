@@ -18,7 +18,6 @@ struct ad_close
   template<typename T>
   void operator()( T& t)
   {
-    
     t.get_aspect().template get<_close_file_>()(t);
     delete[] t.get_aspect().template get<_buffer_>();
     t.get_aspect().template get<_buffer_>() = 0;

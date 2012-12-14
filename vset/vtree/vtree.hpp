@@ -301,10 +301,14 @@ public:
 
 #ifdef __GXX_EXPERIMENTAL_CXX0X__
 
+//#warning
+
   iterator insert(value_type&& value)
   {
-    throw not_impl();
+    return this->get_aspect().template get<_insert_value_>()(*this, value);
   }
+
+  
 #endif
 
   iterator  insert(const_iterator, const value_type& value)
@@ -381,7 +385,7 @@ public:
     throw not_impl();
   }
 
-  iterator find(const key_type& key)
+  iterator find(const key_type& /*key*/)
   {
     throw not_impl();
   }

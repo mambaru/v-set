@@ -11,6 +11,8 @@
 #include <vset/buffer/persistent/tags.hpp>
 #include <sys/stat.h>
 #include <string.h>
+#include <stdexcept>
+#include <errno.h>
 
 
 namespace vset { namespace buffer { namespace persistent{
@@ -24,7 +26,8 @@ struct ad_file_size
     memset(&sb, 0, sizeof(sb));
 
     if ( -1 == stat( t.get_aspect().template get<_file_name_>().c_str(), &sb) )
-      return 0;
+      throw std::domain_error(strerror(errno));
+    std::cout << "ad_file_size: " << sb.st_size << " name:" << t.get_aspect().template get<_file_name_>() << std::endl;
     return sb.st_size;
   }
 };

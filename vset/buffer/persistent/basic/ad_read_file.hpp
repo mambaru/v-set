@@ -19,7 +19,8 @@ struct ad_read_file
   template<typename T>
   void operator()( T& t, char* data, size_t size, size_t offset )
   {
-    ::pread( t.get_aspect().template get<_descriptor_>() , data, size, offset);
+    if ( -1 == ::pread( t.get_aspect().template get<_descriptor_>() , data, size, offset) )
+      throw std::domain_error(strerror(errno));
   }
 };
 

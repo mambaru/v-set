@@ -29,8 +29,6 @@ struct ad_open
   template<typename T>
   void operator()( T& t, const std::string& file_name)
   {
-    
-    
     t.get_aspect().template get<_close_>()(t);
     t.get_aspect().template get<_file_name_>() = file_name;
     t.get_aspect().template get<_open_file_>()(t);
@@ -53,6 +51,7 @@ struct ad_open
       t.get_aspect().template get<_read_file_>()(t, reinterpret_cast<char*>(&header), sizeof(head_type), 0);
       size_t buffer_size = header.offset() + header.capacity();
       char *data = new char[buffer_size];
+      memset(data, 0, buffer_size);
       memcpy(data, &header, sizeof(head_type) );
       t.get_aspect().template get<_buffer_size_>() = buffer_size;
       t.get_aspect().template get<_read_file_>()(t, data + header.offset(), header.size(), header.offset());
@@ -61,8 +60,6 @@ struct ad_open
     }
     t.get_aspect().template get<_size_value_>() = head->size();
     t.get_aspect().template get<_capacity_value_>() = head->capacity();
-
-    
   }
 private:
   size_t _buffer_size;

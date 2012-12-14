@@ -21,6 +21,8 @@
 #include <vset/vtree/aspect/ad_lower_bound.hpp>
 #include <vset/vtree/aspect/ad_upper_bound.hpp>
 
+#include <fas/aop.hpp>
+#include <fas/type_list.hpp>
 
 namespace vset{ namespace vtree{
 

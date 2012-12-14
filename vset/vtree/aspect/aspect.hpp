@@ -9,7 +9,7 @@
 
 #include <vset/vtree/aspect/aspect_insert.hpp>
 #include <vset/vtree/aspect/tags.hpp>
-#include <vset/vtree/sorted_array.hpp>
+#include <vset/sorted_array.hpp>
 
 #include <vset/memory/provider.hpp>
 #include <vset/memory/allocator.hpp>

@@ -20,11 +20,12 @@ struct ad_resize
   template<typename T>
   void operator()( T& t, size_t size)
   {
-    
+    std::cout << "ad_resize " << size << std::endl;
     size_t capacity = t.get_aspect().template get<_capacity_>()(t);
 
     if ( size <= capacity )
     {
+      std::cout << "ad_resize capacity=" << capacity << std::endl;
       t.get_aspect().template get<_head_>()(t)->set_size(size);
       t.get_aspect().template get<_size_value_>()=size;
       return;

@@ -10,7 +10,7 @@
 namespace vset { namespace buffer{ namespace persistent{
 
 /// Заголовок который будет записан в начало буфера
-/// Может не использовать заголовок - достаточно включить в аспект fas::value_advice< _buffer_head_, fas::empty_type >
+/// Может не использовать заголовок - достаточно включить в аспект fas::value_advice< _buffer_head_, empty_head >
 template< size_t ID >
 struct head
 {
@@ -35,8 +35,8 @@ public:
   head()
     : _format(ID)
     , _offset( sizeof(head<ID>) )
-    , _size()
-    , _capacity()
+    , _size(0)
+    , _capacity(0)
   {}
 };
 

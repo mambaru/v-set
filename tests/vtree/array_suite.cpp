@@ -5,15 +5,16 @@
 //
 
 #include <fas/testing.hpp>
-#include <vset/vtree/array.hpp>
-#include <vset/vtree/sorted_array.hpp>
+#include <vset/array.hpp>
+#include <vset/sorted_array.hpp>
+
 
 
 
 UNIT(test_array, "")
 {
   using namespace fas::testing;
-  using namespace vset::vtree;
+  using namespace vset;
 
   array<int, 1024> arr;
   t << nothing();
@@ -22,7 +23,7 @@ UNIT(test_array, "")
 UNIT(test_sorted_array, "")
 {
   using namespace fas::testing;
-  using namespace vset::vtree;
+  using namespace vset;
 
   sorted_array<int, 1024> arr;
   t << nothing();

@@ -12,6 +12,8 @@
 
 #include <fcntl.h>
 #include <unistd.h>
+#include <stdexcept>
+#include <errno.h>
 
 
 namespace vset { namespace buffer { namespace persistent{
@@ -21,11 +23,17 @@ struct ad_close_file
   template<typename T>
   void operator()( T& t )
   {
+    /// КОСТЫЛЬ
+    if (  t.get_aspect().template get<_descriptor_>() == 0 )
+      t.get_aspect().template get<_descriptor_>() = -1;
+
     if ( t.get_aspect().template get<_descriptor_>() != -1 )
     {
-      ::close( t.get_aspect().template get<_descriptor_>() );
-      t.get_aspect().template get<_descriptor_>() =-1;
+      int result = ::close( t.get_aspect().template get<_descriptor_>() );
+      t.get_aspect().template get<_descriptor_>() = -1;
       t.get_aspect().template get<_file_status_>() = false;
+      if ( result == -1 )
+        throw std::domain_error(strerror(errno));
     }
   }
 

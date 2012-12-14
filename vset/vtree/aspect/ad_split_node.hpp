@@ -76,7 +76,7 @@ struct ad_split_node
     itr = t.get_aspect().template get<_node_for_insert_>()(t, itr1, itr2, value);
 
     arr1 = itr->second;
-    std::cout << " for insert " << value << "[" << arr1->front() << "," << arr1->back() << "]" << std::endl;
+    // std::cout << " for insert " << value << "[" << arr1->front() << "," << arr1->back() << "]" << std::endl;
     return itr;
 
     

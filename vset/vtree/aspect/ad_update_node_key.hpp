@@ -30,7 +30,7 @@ struct ad_update_node_key
        )
     {
       t.get_container().erase(itr);
-      t.get_aspect().template get<_insert_to_container_>()(t, std::make_pair( arr->front(), arr->back() ), arr );
+      itr = t.get_aspect().template get<_insert_to_container_>()(t, std::make_pair( arr->front(), arr->back() ), arr );
     }
 
     return itr;

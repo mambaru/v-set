@@ -11,6 +11,9 @@
 #include <vset/buffer/persistent/tags.hpp>
 
 #include <fcntl.h>
+#include <stdexcept>
+#include <errno.h>
+
 
 namespace vset { namespace buffer { namespace persistent{
 
@@ -22,8 +25,11 @@ struct ad_open_file
     if ( t.get_aspect().template get<_descriptor_>() != -1 )
       t.get_aspect().template get<_close_file_>();
 
-    t.get_aspect().template get<_descriptor_>() =
-      ::open( t.get_aspect().template get<_file_name_>().c_str(), O_RDWR /*| O_APPEND*/ | O_CREAT, S_IRUSR | S_IWUSR | S_IRGRP | S_IROTH );
+    int d = ::open( t.get_aspect().template get<_file_name_>().c_str(), O_RDWR /*| O_APPEND*/ | O_CREAT, S_IRUSR | S_IWUSR | S_IRGRP | S_IROTH );
+    t.get_aspect().template get<_descriptor_>() = d;
+    if (d==-1)
+      throw std::domain_error(strerror(errno));
+      
   }
 };
 

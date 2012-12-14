@@ -14,6 +14,13 @@ namespace vset{ namespace vtree{
 
 struct ad_first_proper_node
 {
+  template<typename T, typename V>
+  bool not_equal(T& t, const V& first, const V& second) const
+  {
+    return t.get_aspect().template get<_compare_>()(first, second)
+           || t.get_aspect().template get<_compare_>()(second, first);
+  }
+  
   template<typename T, typename Itr>
   Itr operator()(T& t, Itr itr )
   {
@@ -28,7 +35,7 @@ struct ad_first_proper_node
 
     for ( ++beg; beg!=end; ++beg )
     {
-      if (beg->first.first != value )
+      if ( not_equal(t, beg->first.first, value) )
         return itr;
 
       if ( !beg->second->filled() )
