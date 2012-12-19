@@ -30,11 +30,9 @@ struct ad_node_for_insert
   template<typename T, typename Itr, typename V>
   Itr operator()(T& t, Itr itr1, Itr itr2, const V& value )
   {
-    //if ( value <= itr1->first.first )
     if ( less_equal(t, value, itr1->first.first) )
       return itr1;
 
-    // if ( value >= itr2->first.first )
     if ( less_equal(t, itr2->first.first, value  ) )
       return itr2;
 
@@ -47,14 +45,31 @@ struct ad_node_for_insert
              : itr2;
     }
 
-    if ( less_equal(t, value, itr1->first.first)
-         && less_equal(t, itr1->first.second, value) )
+    if ( less_equal(t, itr1->first.first, value )
+         && less_equal(t, value, itr1->first.second ) )
       return itr1;
 
-    if ( less_equal(t, value,itr2->first.first)
-        && less_equal(t, itr2->first.second, value ) )
+    if ( less_equal(t, itr2->first.first, value)
+        && less_equal(t, value, itr2->first.second ) )
       return itr2;
 
+    /*
+01
+10
+10
+10
+
+10..20   40..50
+val >10 <=20
+ 
+
+*/
+
+    std::cout << less_equal(t, value, itr1->first.first) << less_equal(t, itr1->first.first, value)<< std::endl;
+    std::cout << less_equal(t, value, itr1->first.second) << less_equal(t, itr1->first.second, value)<< std::endl;
+    std::cout << less_equal(t, value, itr2->first.first) << less_equal(t, itr2->first.first, value) <<std::endl;
+    std::cout << less_equal(t, value, itr2->first.second) << less_equal(t, itr2->first.second, value) << std::endl;
+    
     throw std::logic_error("ad_node_for_insert");
 
   }
