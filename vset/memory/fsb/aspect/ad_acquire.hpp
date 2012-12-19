@@ -33,7 +33,7 @@ struct ad_acquire
       ? sizeof(chain_type) + sizeof(chunk_type)
       : offset + sizeof(chunk_type);
 
-    // std::cout << "_buffer_resize_ " << new_size << " offset = " << offset << std::endl;
+    
     t.get_aspect().template get< _buffer_resize_ >()(t, new_size);
 
     data_type data = t.get_aspect().template get<_buffer_data_>()(t);

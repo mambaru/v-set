@@ -35,11 +35,7 @@ private:
     typedef typename T::aspect::template advice_cast<_chain_type_>::type chain_type;
     typedef typename T::aspect::template advice_cast< _buffer_data_type_ >::type data_type;
 
-    /*
-    std::cout << "ad_allocate " << sizeof(data_type) << std::endl;
-    std::cout << "ad_allocate chain_type" << sizeof(chain_type) << std::endl;
-    */
-    
+   
     if ( t.get_aspect().template get< _buffer_size_ >()(t) == 0 )
       t.get_aspect().template get<_acquire_>()(t);
 

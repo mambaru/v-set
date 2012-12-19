@@ -62,12 +62,6 @@ struct ad_split_node
       t.get_aspect().template get<_compare_>()
     );
 
-    /*
-    container.insert( itr, std::make_pair( std::make_pair( arr1->front(), arr1->back() ), arr1) );
-    container.insert( itr, std::make_pair( std::make_pair( arr2->front(), arr2->back() ), arr2) );
-    container.erase( itr );
-    */
-
     container.erase( itr );
     container_iterator itr1 = t.get_aspect().template get<_insert_to_container_>()(t, std::make_pair(arr1->front(), arr1->back()), arr1);
     container_iterator itr2 = t.get_aspect().template get<_insert_to_container_>()(t, std::make_pair(arr2->front(), arr2->back()), arr2);
@@ -76,44 +70,9 @@ struct ad_split_node
     itr = t.get_aspect().template get<_node_for_insert_>()(t, itr1, itr2, value);
 
     arr1 = itr->second;
-    // std::cout << " for insert " << value << "[" << arr1->front() << "," << arr1->back() << "]" << std::endl;
     return itr;
-
-    
-    // arr2->assign( arr1->begin() + offset, arr1->end(), _comparator );
-
-    
-    
-    /*
-    typedef typename T::aspect::template advice_cast<_container_>::type container_type;
-    typedef typename container_type::iterator iterator;
-    
-    container_type& container = t.get_aspect().template get<_container_>();
-    iterator itr = container.lower_bound( std::make_pair(value, value_type() ) );
-    
-    if ( itr==_tree.end() && !_tree.empty() )
-      itr = (++_tree.rbegin()).base();
-    */
   }
 };
-
-/*
-      if ( treeitr->second->filled() )
-      {
-        std::cout << "_insert --2.1--" << std::endl;
-        // Расщипляем массив
-        array_pointer arr1 = treeitr->second;
-        array_pointer arr2 = _allocator.allocate(1);
-        size_t offset = arr1->size()/2;
-        arr2->assign( arr1->begin() + offset, arr1->end(), _comparator );
-        arr1->resize( offset, value_type(),  _comparator );
-        _tree.insert( treeitr, std::make_pair( std::make_pair( arr1->front(), arr1->back() ), arr1) );
-        _tree.insert( treeitr, std::make_pair( std::make_pair( arr2->front(), arr2->back() ), arr2) );
-        _tree.erase( treeitr );
-        this->check();
-        // TDOD: Избавиться от рекурсии
-        return insert(value);
-      }*/
 
 }}
 

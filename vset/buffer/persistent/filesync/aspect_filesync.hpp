@@ -24,6 +24,7 @@
 namespace vset { namespace buffer{ namespace persistent{ namespace filesync{
 
 struct aspect_filesync: fas::aspect< fas::type_list_n<
+  fas::group<_destructor_, _close_>,
   fas::value_advice<_buffer_size_, size_t>,
   fas::advice<_open_, ad_open>,
   fas::advice<_close_, ad_close>,

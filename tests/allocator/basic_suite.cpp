@@ -54,28 +54,42 @@ UNIT(test_unit, "")
 {
   using namespace fas::testing;
   typedef vset::memory::manager< /*fas::aspect< vset::allocator::value_type<char> >*/ vset::memory::fsb::aspect<char> > allocator_type;
-  
+
+  std::cout << "test_unit {" << std::endl;
   
   allocator_type allocator;
   allocator.buffer().open("allocator.bin");
+  std::cout << "-1-" << std::endl;
   allocator.buffer().truncate(0);
+  std::cout << "-2-" << std::endl;
   test_char_init(t, allocator);
+  std::cout << "-3-" << std::endl;
   test_char_test(t, allocator);
+  std::cout << "-4-" << std::endl;
   allocator.buffer().sync();
+  std::cout << "-5-" << std::endl;
   allocator.buffer().close();
+  std::cout << "-6-" << std::endl;
   allocator.buffer().open("allocator.bin");
+  std::cout << "-7-" << std::endl;
   test_char_test(t, allocator);
-
+  std::cout << "-8-" << std::endl;
   allocator_type allocator2;
+  std::cout << "-9-" << std::endl;
   allocator2.buffer().open("allocator.bin");
+  std::cout << "-10-" << std::endl;
   test_char_test(t, allocator);
+  std::cout << "-11-" << std::endl;
   t << nothing();
+  std::cout << "}test_unit " << std::endl;
 }
 
 UNIT(test_allocator, "")
 {
   using namespace fas::testing;
   using namespace vset;
+
+  std::cout << "test_allocator {" << std::endl;
 
   typedef memory::manager< memory::fsb::aspect<char> > manager;
   typedef memory::provider< manager > provider;
@@ -89,6 +103,7 @@ UNIT(test_allocator, "")
   *(a.allocate(1))='X';
   a.memory().buffer().sync();
   t << nothing();
+  std::cout << "}test_allocator " << std::endl;
 }
 
 BEGIN_SUITE(basic_suite, "")

@@ -99,22 +99,6 @@ struct ad_restore
       t.get_aspect().template get<_insert_to_container_>()(t, std::make_pair( beg->front(), beg->back() ), beg);
       t.get_aspect().template get<_size_>() += beg->size();
     }
-    
-    /*
-    std::cout << "restore" << std::endl;
-
-    std::cout << "inline void restore(S& s, allocator<VT, CM> a)" << std::endl;
-    auto beg = a->begin();
-    auto end = a->end();
-    for (;beg!=end;++beg)
-    {
-      std::cout << "restore: size="<< beg->size() << " [0]=" << std::endl;
-      s._tree.insert( std::make_pair( std::make_pair(beg->front(), beg->back() ), beg) );
-      s._size += beg->size();
-      std::cout << "restore: total_size = " << s._size << std::endl;
-    }
-    */
-
   }
 };
 

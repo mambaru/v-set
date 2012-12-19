@@ -6,6 +6,8 @@
 
 #include <vset/buffer/buffer.hpp>
 #include <vset/buffer/persistent_buffer.hpp>
+#include <vset/buffer/persistent/filesync/aspect_filesync.hpp>
+#include <vset/buffer/persistent/mmap/aspect_mmap.hpp>
 #include <vset/buffer/simple/aspect_simple.hpp>
 #include <fas/testing.hpp>
 
@@ -80,8 +82,31 @@ UNIT(persistent_unit, "")
   t << nothing();
 }
 
+UNIT(mmap_unit, "")
+{
+  using namespace fas::testing;
+  using namespace vset::buffer;
+  persistent_buffer<persistent::mmap::aspect_mmap> pbuf;
+  pbuf.open("test_mmap.bin");
+  pbuf.truncate(0);
+
+  first_test( t, pbuf);
+  pbuf.sync();
+  second_test( t, pbuf, "after clear");
+  pbuf.close();
+  pbuf.open("test_mmap.bin");
+  second_test( t, pbuf, "after close/open");
+  pbuf.open("test_mmap.bin");
+  second_test( t, pbuf, "after reopen");
+  persistent_buffer<persistent::mmap::aspect_mmap> pbuf2;
+  pbuf2.open("test_mmap.bin");
+  second_test( t, pbuf2, "open exist");
+  t << nothing();
+}
+
 
 BEGIN_SUITE(basic_suite, "")
   ADD_UNIT(test_unit)
   ADD_UNIT(persistent_unit)
+  ADD_UNIT(mmap_unit)
 END_SUITE(basic_suite)

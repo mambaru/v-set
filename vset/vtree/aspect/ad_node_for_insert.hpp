@@ -55,38 +55,6 @@ struct ad_node_for_insert
         && less_equal(t, itr2->first.second, value ) )
       return itr2;
 
-    /*
-    if ( value <= itr1->first.first )
-      return itr1;
-
-    if ( value >= itr2->first.first )
-      return itr2;
-    
-    if ( itr1->first.second <= value
-         && itr2->first.first >= value )
-    {
-      // Можно вставить в любой, выбираем меньший
-      return itr1->second->size() < itr2->second->size()
-             ? itr1
-             : itr2;
-    }
-
-    
-    if ( itr1->first.first >= value && itr1->first.second <= value )
-      return itr1;
-
-    if ( itr2->first.first >= value && itr2->first.second <= value )
-      return itr2;
-    */
-    
-    /*
-    std::cout << std::endl;
-    std::cout << value << std::endl;
-    std::cout << itr1->first.first << std::endl;
-    std::cout << itr1->first.second << std::endl;
-    std::cout << itr2->first.first << std::endl;
-    std::cout << itr2->first.second << std::endl;
-    */
     throw std::logic_error("ad_node_for_insert");
 
   }

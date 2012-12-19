@@ -32,6 +32,7 @@ struct _file_name_;
 struct _open_file_;
 struct _close_file_;
 struct _file_size_;
+struct _resize_file_;
 
 struct _seek_set_;
 struct _read_file_;

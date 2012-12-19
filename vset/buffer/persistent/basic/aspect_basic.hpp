@@ -19,6 +19,7 @@
 #include <vset/buffer/persistent/basic/ad_open_file.hpp>
 #include <vset/buffer/persistent/basic/ad_basic_init.hpp>
 #include <vset/buffer/persistent/basic/ad_read_file.hpp>
+#include <vset/buffer/persistent/basic/ad_resize_file.hpp>
 #include <vset/buffer/persistent/basic/ad_write_file.hpp>
 #include <vset/buffer/persistent/basic/ad_seek_set.hpp>
 #include <vset/buffer/persistent/basic/ad_file_size.hpp>
@@ -52,6 +53,7 @@ struct aspect_basic: fas::aspect< fas::type_list_n<
   fas::advice< _open_file_, ad_open_file>,
   fas::advice< _read_file_, ad_read_file>,
   fas::advice< _write_file_, ad_write_file>,
+  fas::advice< _resize_file_, ad_resize_file>,
   fas::advice< _seek_set_, ad_seek_set>,
   fas::advice< _file_size_, ad_file_size>,
   fas::advice< _basic_init_, ad_basic_init>

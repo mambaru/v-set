@@ -13,6 +13,7 @@
 #include <vset/memory/fsb/aspect/aspect_manager.hpp>
 #include <vset/memory/fsb/aspect/aspect_pointer.hpp>
 
+#include <vset/buffer/persistent/mmap/aspect_mmap.hpp>
 #include <vset/buffer/persistent/filesync/aspect_filesync.hpp>
 #include <vset/buffer/persistent/basic/aspect_basic.hpp>
 
@@ -25,7 +26,8 @@ struct aspect: fas::aspect_merge<
   aspect_value<T>,
   aspect_manager,
   aspect_pointer,
-  vset::buffer::persistent::filesync::aspect_filesync,
+  vset::buffer::persistent::mmap::aspect_mmap,
+  //vset::buffer::persistent::filesync::aspect_filesync,
   vset::buffer::persistent::aspect_basic
 >::type {};
 

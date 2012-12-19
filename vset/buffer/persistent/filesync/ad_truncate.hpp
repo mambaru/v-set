@@ -13,6 +13,7 @@
 
 namespace vset { namespace buffer { namespace persistent{ namespace filesync{
 
+
 struct ad_truncate
 {
   template<typename T>
@@ -35,6 +36,7 @@ struct ad_truncate
     t.get_aspect().template get<_open_>()(t, filename);
   }
 };
+
 
 }}}}
 
