@@ -9,4 +9,5 @@
 BEGIN_TEST
   RUN_SUITE(array_suite)
   RUN_SUITE(vtree_basic_suite)
+  RUN_SUITE(vtree_mmap_suite)
 END_TEST
