@@ -29,13 +29,13 @@ struct ad_insert_value
     volatile int debug = 0;
     if ( itr == container.end() )
     {
-      volatile int debug = 1;
+      debug = 1;
       // Сюда попадем если ниодного нода еще не созданно
       itr = t.get_aspect().template get<_create_node_>()(t, value);
     }
     else
     {
-      volatile int debug = 2;
+      debug = 2;
       // Ищем ближайший свободный но
       itr = t.get_aspect().template get<_first_proper_node_>()(t, itr);
     }
