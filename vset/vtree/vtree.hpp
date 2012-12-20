@@ -14,7 +14,12 @@
 
 namespace vset{ namespace vtree{
   
-struct not_impl: std::exception {};
+struct not_impl: std::domain_error
+{
+  not_impl(): std::domain_error("not_impl") {}
+  not_impl(const char* what): std::domain_error(what) {}
+};
+
 
 
 template< typename A = fas::aspect<> >
@@ -130,21 +135,21 @@ public:
   vtree(const vtree& )
   {
     // TODO: Запретить копирование если работаем с файлом
-    throw not_impl();
+    throw not_impl("vtree(const vtree& )");
   }
 
 #ifdef __GXX_EXPERIMENTAL_CXX0X__
 
   vtree(vtree&& __x)
   {
-    throw not_impl();
+    throw not_impl("vtree(vtree&& __x)");
     // TODO: : _M_t(std::move(__x._M_t))
   }
 
   vtree( std::initializer_list<value_type> il, const value_compare& comp= value_compare(), const allocator_type&  alloc= allocator_type())
     : _allocator(alloc)
   {
-    throw not_impl();
+    throw not_impl("vtree( std::initializer_list<value_type> il, const value_compare& comp= value_compare(), const allocator_type&  alloc= allocator_type())");
     this->get_aspect().template get<_compare_>() = comp;
   }
 
@@ -152,7 +157,7 @@ public:
 
   vtree&  operator=(const vtree& __x)
   {
-    throw not_impl();
+    throw not_impl("vtree&  operator=(const vtree& __x)");
     return *this;
   }
 
@@ -161,7 +166,7 @@ public:
   vtree& operator=(vtree&& __x)
   {
     
-    throw not_impl();
+    throw not_impl("vtree& operator=(vtree&& __x)");
   // NB: DR 1204.
   // NB: DR 675.
   //  this->clear();
@@ -171,7 +176,7 @@ public:
 
   vtree& operator=( std::initializer_list<value_type> il)
   {
-    throw not_impl();
+    throw not_impl("vtree& operator=( std::initializer_list<value_type> il)");
     return *this;
   }
 #endif
@@ -180,12 +185,12 @@ public:
 
   const key_compare& key_comp() const
   {
-    throw not_impl();
+    throw not_impl("const key_compare& key_comp() const");
   }
 
   const value_compare& value_comp() const
   {
-    throw not_impl();
+    throw not_impl("const value_compare& value_comp() const");
   }
 
   allocator_type get_allocator() const
@@ -269,28 +274,28 @@ public:
 
   bool empty() const
   {
-    throw not_impl();
+    return _container.empty();
   }
 
   size_type size() const
   {
-    throw not_impl();
+    return this->get_aspect().template get<_size_>();
   }
 
   size_type max_size() const
   {
-    throw not_impl();
+    return std::numeric_limits<size_type>::max();
   }
 
   void swap( vtree& s )
   {
-    throw not_impl();
+    throw not_impl("void swap( vtree& s )");
   }
 
 
   size_t capacity() const
   {
-    throw not_impl();
+    throw not_impl("size_t capacity() const");
   }
 
   iterator insert(const value_type& value)
@@ -313,27 +318,28 @@ public:
 
   iterator  insert(const_iterator, const value_type& value)
   {
-    throw not_impl();
+    throw not_impl("iterator  insert(const_iterator, const value_type& value)");
   }
 
 #ifdef __GXX_EXPERIMENTAL_CXX0X__
   iterator insert(const_iterator, value_type&& value)
   {
-    throw not_impl();
+    throw not_impl("iterator insert(const_iterator, value_type&& value)");
   }
 #endif
 
   template<typename InputIterator>
   void insert(InputIterator beg, InputIterator end)
   {
-    throw not_impl();
+    for (;beg!=end;++beg)
+      this->insert(*beg);
   }
 
 #ifdef __GXX_EXPERIMENTAL_CXX0X__
 
   void insert( std::initializer_list<value_type> lst)
   {
-    throw not_impl();
+    throw not_impl("void insert( std::initializer_list<value_type> lst)");
   }
 
 #endif
@@ -342,57 +348,58 @@ public:
 
   iterator erase(const_iterator itr)
   {
-    throw not_impl();
+    return this->get_aspect().template get<_erase_iterator_>()(*this, itr);
   }
 
 #else
 
   void erase(iterator itr)
   {
-    throw not_impl();
+    this->get_aspect().template get<_erase_iterator_>()(*this, itr);
   }
 
 #endif
 
   size_type erase(const key_type& key)
   {
-    throw not_impl();
+    return this->get_aspect().template get<_erase_value_>()(*this, key);
+    //throw not_impl("size_type erase(const key_type& /*key*/)");
   }
 
 #ifdef __GXX_EXPERIMENTAL_CXX0X__
 
   iterator erase(const_iterator first, const_iterator last)
   {
-    throw not_impl();
+    return this->get_aspect().template get<_erase_range_>()(*this, first, last);
   }
 
 #else
 
   void erase(iterator first, iterator last)
   {
-    throw not_impl();
+    this->get_aspect().template get<_erase_range_>()(*this, first, last);
   }
 
 #endif
 
   void clear()
   {
-    throw not_impl();
+    return this->get_aspect().template get<_clear_>()(*this);
   }
 
   size_type count(const key_type& key) const
   {
-    throw not_impl();
+    throw not_impl("size_type count(const key_type& key) const");
   }
 
   iterator find(const key_type& /*key*/)
   {
-    throw not_impl();
+    throw not_impl("iterator find(const key_type& /*key*/)");
   }
 
   const_iterator find(const key_type& key ) const
   {
-    throw not_impl();
+    throw not_impl("const_iterator find(const key_type& key ) const");
   }
 
   iterator lower_bound(const key_type& key)
@@ -417,12 +424,12 @@ public:
 
   std::pair<iterator, iterator> equal_range(const key_type& x)
   {
-    throw not_impl();
+    throw not_impl("std::pair<iterator, iterator> equal_range(const key_type& x)");
   }
 
   std::pair<const_iterator, const_iterator> equal_range(const key_type& x) const
   {
-    throw not_impl();
+    throw not_impl("std::pair<const_iterator, const_iterator> equal_range(const key_type& x) const");
   }
 
 
@@ -437,13 +444,13 @@ public:
 template<typename A>
 inline bool operator==(const vtree<A>& __x, const vtree<A>& __y)
 {
-  throw not_impl();
+  throw not_impl("inline bool operator==(const vtree<A>& __x, const vtree<A>& __y)");
 }
 
 template<typename A>
 inline bool operator< (const vtree<A>& __x, const vtree<A>& __y)
 {
-  throw not_impl();
+  throw not_impl("inline bool operator< (const vtree<A>& __x, const vtree<A>& __y)");
 }
 
 template<typename A>

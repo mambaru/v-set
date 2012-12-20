@@ -8,6 +8,7 @@
 #define VSET_VTREE_ASPECT_ASPECT_HPP
 
 #include <vset/vtree/aspect/aspect_insert.hpp>
+#include <vset/vtree/aspect/aspect_erase.hpp>
 #include <vset/vtree/aspect/tags.hpp>
 #include <vset/sorted_array.hpp>
 
@@ -153,13 +154,19 @@ struct memory_aspect: fas::aspect< typename fas::type_list_n<
 >::type> {};
 
 
+struct aspect_common: fas::aspect_merge<
+  aspect_insert,
+  aspect_erase
+>::type{};
+
+
 template<typename V, typename Compare = std::less<V>, int N = 1024 >
 struct aspect: fas::aspect_merge<
   value_aspect<V, Compare>,
   memory_aspect< sorted_array< V, N, std::less<V> > >,
   fas::advice< _restore_, ad_restore >,
   fas::group< buffer::persistent::_after_open_, _restore_ >,
-  aspect_insert
+  aspect_common
 >::type {};
 
 }}

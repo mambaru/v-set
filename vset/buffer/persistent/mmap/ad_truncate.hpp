@@ -31,6 +31,9 @@ struct ad_truncate
     if ( data == MAP_FAILED)
       throw std::logic_error(strerror(errno));
 
+    if ( oldsize < newsize )
+      ::memset( data + oldsize, 0, newsize - oldsize);
+
     
     
     t.get_aspect().template get<_buffer_>() = data;

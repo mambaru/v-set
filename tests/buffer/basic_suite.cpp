@@ -79,6 +79,8 @@ UNIT(persistent_unit, "")
   persistent_buffer<> pbuf2;
   pbuf2.open("test.bin");
   second_test( t, pbuf2, "open exist");
+  pbuf.close();
+  pbuf2.close();
   t << nothing();
 }
 
@@ -101,6 +103,8 @@ UNIT(mmap_unit, "")
   persistent_buffer<persistent::mmap::aspect_mmap> pbuf2;
   pbuf2.open("test_mmap.bin");
   second_test( t, pbuf2, "open exist");
+  pbuf.close();
+  pbuf2.close();
   t << nothing();
 }
 

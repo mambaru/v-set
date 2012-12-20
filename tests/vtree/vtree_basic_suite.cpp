@@ -16,7 +16,7 @@ UNIT(vtree_create_filesync, "")
   typedef vtree::vtree< vtree::aspect<char, std::less<char>, 3> > int_vtree;
   int_vtree tree;
   tree.get_allocator().memory().buffer().open("vtree.bin");
-
+  
   int_vtree::iterator lower = tree.lower_bound('B');
   int_vtree::iterator upper = tree.upper_bound('B');
   std::cout<< std::endl;
@@ -24,9 +24,11 @@ UNIT(vtree_create_filesync, "")
   for ( ; lower!=upper; ++lower, std::cout << ",")
     std::cout<< *lower;
   std::cout<< "]" << std::endl;
+
   
-  for (int i = 0; i < 5; ++i)
+  for (int i = 0; i < 5 ; ++i)
     tree.insert('A'+i%10);
+  
 
   std::cout<< std::endl;
   int_vtree::iterator itr = tree.begin();

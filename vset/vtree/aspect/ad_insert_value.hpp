@@ -38,7 +38,7 @@ struct ad_insert_value
     }
 
     if ( itr == container.end() )
-      throw;
+      abort();
 
     if ( itr->second->filled() )
       itr = t.get_aspect().template get<_split_node_>()(t, itr, value);

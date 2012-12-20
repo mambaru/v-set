@@ -223,6 +223,9 @@ public:
 
   iterator erase ( iterator position )
   {
+    if ( position == this->end() )
+      throw std::out_of_range("iterator array<>::erase ( iterator position )");
+    
     std::copy( position + 1, this->end(), position);
     this->resize( _size - 1 );
     return position;

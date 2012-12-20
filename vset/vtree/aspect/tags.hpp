@@ -20,6 +20,7 @@ struct _allocator_;
 
 struct _restore_;
 struct _size_;
+struct _clear_;
 
 
 struct _node_for_insert_;
@@ -35,6 +36,10 @@ struct _first_proper_node_;
 
 struct _lower_bound_;
 struct _upper_bound_;
+
+struct _erase_iterator_;
+struct _erase_range_;
+struct _erase_value_;
 
 
 }}

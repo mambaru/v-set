@@ -54,7 +54,10 @@ struct allocator
 
   void construct (pointer p, const_reference value)
   {
-      new((void *)(&(*p))) value_type(value);  //placement new
+// #warning TODO
+    *p = value;
+   // new (&(*p)) value_type(value);  //placement new
+      //new((void *)(&(*p))) value_type(value);  //placement new
   }
 
   void destroy (pointer p)

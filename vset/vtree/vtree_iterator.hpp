@@ -238,8 +238,7 @@ inline typename vtree_iterator<TI, VT>::difference_type operator -
   if ( r1._itr == r2._itr )
     return  r1._pos - r2._pos;
 
-  typedef typename vtree_iterator<TI, VT>::tree_iteartor tree_iteartor;
-  tree_iteartor titr = r2._itr;
+  typename vtree_iterator<TI, VT>::source_iteartor titr = r2._itr;
   typename vtree_iterator<TI, VT>::difference_type result = titr->second->size() - r2._pos;
   
   for ( ++titr; titr!=r1._itr; ++titr )
