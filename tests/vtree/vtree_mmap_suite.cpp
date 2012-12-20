@@ -404,7 +404,7 @@ void test_all(T& t, bool testPersist)
 {
   test_stack.push("test_all");
   test_insert<Container>(t, testPersist);
-  // test_erase<Container>(t, testPersist);
+  test_erase<Container>(t, testPersist);
   test_stack.pop();
 }
 

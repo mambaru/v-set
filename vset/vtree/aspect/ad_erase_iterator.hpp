@@ -55,7 +55,8 @@ struct ad_erase_iterator
   typename T::iterator operator()(T& t, typename T::iterator itr)
   {
     if ( itr == t.end() )
-      return itr;
+      throw std::out_of_range("ad_erase_iterator");
+      //return itr;
 
     typedef typename T::iterator iterator;
     typedef typename iterator::difference_type difference_type;
