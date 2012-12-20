@@ -40,7 +40,7 @@ struct ad_insert_value
       itr = t.get_aspect().template get<_first_proper_node_>()(t, itr);
     }
 
-    if ( itr == container.end() )
+    if ( debug!=-1 && itr == container.end() )
       abort();
 
     if ( itr->second->filled() )
