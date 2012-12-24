@@ -160,7 +160,7 @@ public:
 
   void clear()
   {
-    std::fill_n( begin(), N, T() );
+    // std::fill_n( begin(), N, T() );
     _size = 0;
   }
 
