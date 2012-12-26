@@ -81,12 +81,20 @@ public:
     return super::_sync(*this);
   }
 
-  
   size_type sync(size_type offset, size_type size )
   {
     return super::_sync(*this, offset, size);
   }
 
+  size_type sync(bool sync)
+  {
+    return super::_sync(*this, sync);
+  }
+
+  size_type sync(size_type offset, size_type size, bool sync )
+  {
+    return super::_sync(*this, offset, size, sync);
+  }
   
 };
 

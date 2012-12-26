@@ -57,6 +57,23 @@ public:
     _target->get_aspect().template gete< persistent::_after_sync_>()(*_target, result);
     return result;
   }
+
+  size_type sync(bool async)
+  {
+    _target->get_aspect().template gete< persistent::_before_sync_ >()(*_target, async);
+    size_type result = _target->get_aspect().template get<persistent::_sync_>()(*_target, async);
+    _target->get_aspect().template gete< persistent::_after_sync_>()(*_target, result, async);
+    return result;
+  }
+
+  size_type sync(size_type offset, size_type size, bool async )
+  {
+    _target->get_aspect().template gete< persistent::_before_sync_ >()(*_target, offset, size, async);
+    size_type result = _target->get_aspect().template get<persistent::_sync_>()(*_target, offset, size, async);
+    _target->get_aspect().template gete< persistent::_after_sync_>()(*_target, result, async);
+    return result;
+  }
+
 };
 
 }}

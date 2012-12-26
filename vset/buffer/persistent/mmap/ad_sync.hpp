@@ -19,17 +19,17 @@ namespace vset { namespace buffer { namespace persistent{ namespace mmap{
 struct ad_sync
 {
   template<typename T>
-  size_t operator()( T& t, size_t offset, size_t limit) const
+  size_t operator()( T& t, size_t offset, size_t limit, bool sync = false) const
   {
-    return _write(t, offset, limit, false);
+    return _write(t, offset, limit, sync);
   }
 
   template<typename T>
-  size_t operator()( T& t) const
+  size_t operator()( T& t, bool sync = true) const
   {
     size_t offset = 0;
     size_t limit = t.get_aspect().template get<_size_>()(t);
-    return _write(t, offset, limit, true);
+    return _write(t, offset, limit, sync );
   }
 
 private:
