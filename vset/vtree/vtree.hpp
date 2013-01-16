@@ -13,7 +13,7 @@
 */
 
 namespace vset{ namespace vtree{
-  
+
 struct not_impl: std::domain_error
 {
   not_impl(): std::domain_error("not_impl") {}
@@ -31,21 +31,21 @@ class vtree:
   typedef typename super::aspect::template advice_cast<_allocator_>::type         allocator_builder;
   typedef typename super::aspect::template advice_cast<_key_compare_>::type       key_compare;
   typedef typename super::aspect::template advice_cast<_value_compare_>::type     value_compare;
-  
+
 public:
   typedef typename super::aspect::template advice_cast<_value_type_>::type        value_type;
   typedef typename super::aspect::template advice_cast<_key_type_>::type          key_type;
 
   //typedef typename super::aspect::template advice_cast<_container_>::type         container_type;
-  typedef typename allocator_builder::template build<self>::type                  allocator_type;
+  typedef typename allocator_builder::template apply<self>::type                  allocator_type;
 
-  
+
   //typedef typename key_compare_builder::template build<self>::type                key_compare;
   //typedef typename value_compare_builder::template build<self>::type              value_compare;
-  
 
-  
-  
+
+
+
   /*
   typedef int key_type;
   typedef int value_type;
@@ -94,21 +94,21 @@ public:
   */
 
   typedef std::multimap< std::pair<value_type, value_type>, typename allocator_type::pointer> container_type;
-  
+
   typedef vtree_iterator<typename container_type::iterator, value_type> iterator;
   typedef vtree_iterator<typename container_type::const_iterator, const value_type> const_iterator;
   typedef std::reverse_iterator<iterator> reverse_iterator;
   typedef std::reverse_iterator<const_iterator> const_reverse_iterator;
 
-  
 
-  
+
+
   // key_compare     _comparator;
   allocator_type  _allocator;
   container_type  _container;
-  
+
 public:
-  
+
   vtree()
     : _allocator( this->get_aspect().template get<_allocator_>()(*this) )
   {}
@@ -165,7 +165,7 @@ public:
 
   vtree& operator=(vtree&& __x)
   {
-    
+
     throw not_impl("vtree& operator=(vtree&& __x)");
   // NB: DR 1204.
   // NB: DR 675.
@@ -207,7 +207,7 @@ public:
   {
     return _container;
   }
-  
+
 
   iterator  begin()
   {
@@ -313,7 +313,7 @@ public:
     return this->get_aspect().template get<_insert_value_>()(*this, value);
   }
 
-  
+
 #endif
 
   iterator  insert(const_iterator, const value_type& value)
