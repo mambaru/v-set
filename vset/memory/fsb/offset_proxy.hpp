@@ -50,7 +50,6 @@ public:
   {
     assert(_offset!=0);
     throw std::domain_error("offset_proxy::pred not impl");
-    // return _offset->get_aspect().template get<_next_offset_>()(*_offset, offset, count);
   }
 
   bool operator == (const offset_proxy<T> right) const

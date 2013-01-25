@@ -158,7 +158,6 @@ struct chain
     return 0;
   }
 
-
   void free(T* value)
   {
     size_t offset = reinterpret_cast<char*>(value) - reinterpret_cast<char*>(this->first_chunk());

@@ -111,48 +111,15 @@ struct value_aspect: fas::aspect< typename fas::type_list_n<
   fas::value_advice<_compare_, Compare >,
   fas::alias< _key_compare_, _compare_ >,
   fas::alias< _value_compare_, _compare_ >
-  
-  /*
-  fas::type_advice<_compare_, fas::w< std::less< fas::_ > > >,
-  fas::alias<_key_compare_, _compare_ >,
-  fas::alias<_value_compare_, _compare_ >,
-  fas::type_advice<_key_compare_builder_, ad_simple_builder<_key_compare_> >,
-  fas::type_advice<_value_compare_builder_, ad_simple_builder<_value_compare_> >
-  */
-  
 >::type> {};
-
-/*
-template<typename V, typename Compare = std::less<V>, int N = 1024 >
-struct memory_aspect: fas::aspect< typename fas::type_list_n<
-  fas::type_advice<_array_type_, sorted_array< V, N, std::less<V> > >,
-  fas::advice<_allocator_, ad_persistent_allocator_builder>,
-  memory::fsb::aspect< sorted_array< V, N, std::less<V> > >
->::type> {};
-*/
-
 
 template<typename Array >
 struct memory_aspect: fas::aspect< typename fas::type_list_n<
   fas::type_advice<_array_type_, Array >,
   fas::advice<_allocator_, fas::provider< fas::w< memory::allocator< memory::provider< fas::_ > > > > >,
-  /*
-  fas::type_advice<_allocator_, fas::w< memory::allocator< memory::provider< fas::_ > > > >,
-  fas::advice<_allocator_builder_, ad_advanced_builder<_allocator_> >,
-  */
-
   fas::value_advice< _size_, size_t>,
-  /*fas::value_advice< _container_,
-    std::multimap<
-      std::pair<typename Array::value_type, typename Array::value_type>,
-      Array*
-      // TODO: tree compare
-    >
-  >,*/
-  
   memory::fsb::aspect<Array >
 >::type> {};
-
 
 struct aspect_common: fas::aspect_merge<
   aspect_insert,

@@ -41,9 +41,6 @@ struct ad_lower_bound
       t.get_aspect().template get<_compare_>()
     );
 
-    /*if ( itr == cont_itr->second->end() )
-      return this->end();*/
-
     return iterator( cont_itr, std::distance(cont_itr->second->begin(), itr) );
   }
 };

@@ -27,7 +27,6 @@ public:
   {
   }
 
-
   void close()
   {
     _target->get_aspect().template gete< persistent::_before_close_ >()(*_target);

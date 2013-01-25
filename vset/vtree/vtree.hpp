@@ -36,72 +36,15 @@ public:
   typedef typename super::aspect::template advice_cast<_value_type_>::type        value_type;
   typedef typename super::aspect::template advice_cast<_key_type_>::type          key_type;
 
-  //typedef typename super::aspect::template advice_cast<_container_>::type         container_type;
   typedef typename allocator_builder::template apply<self>::type                  allocator_type;
-
-
-  //typedef typename key_compare_builder::template build<self>::type                key_compare;
-  //typedef typename value_compare_builder::template build<self>::type              value_compare;
-
-
-
-
-  /*
-  typedef int key_type;
-  typedef int value_type;
-  typedef std::less<int> key_compare;
-  typedef std::less<int> value_compare;
-
-  typedef _Key     key_type;
-  typedef _Key     value_type;
-  typedef _Compare key_compare;
-  typedef _Compare value_compare;
-  typedef _Alloc   allocator_type;
-
-  */
-  // Ключ - пара значений [первый элемент массива, последний элемент массива]
-  /*
-  typedef typename super::aspect::template advice_cast<_key_type_>::type   key_type;
-  typedef typename super::aspect::template advice_cast<_value_type_>::type value_type;
-
-  typedef typename super::aspect::template advice_cast<_key_compare_>::type   key_compare;
-  typedef typename super::aspect::template advice_cast<_value_compare_>::type value_compare;
-
-  typedef typename super::aspect::template advice_cast<_allocator_type_>::type allocator_type;
-
-  typedef typename allocator_type::pointer             pointer;
-  typedef typename allocator_type::const_pointer       const_pointer;
-  typedef typename allocator_type::reference           reference;
-  typedef typename allocator_type::const_reference     const_reference;
   typedef typename allocator_type::size_type           size_type;
   typedef typename allocator_type::difference_type     difference_type;
-  */
-
-  /*
-  typedef std::multimap< key_type,  value_type, key_compare > conatainer_type;
-  typedef typename conatainer_type::allocator_type allocator_type;
-  typedef typename allocator_type::pointer             pointer;
-  typedef typename allocator_type::const_pointer       const_pointer;
-  typedef typename allocator_type::reference           reference;
-  typedef typename allocator_type::const_reference     const_reference;
-  */
-  typedef typename allocator_type::size_type           size_type;
-  typedef typename allocator_type::difference_type     difference_type;
-  /*typedef typename container_type::iterator container_iterator;
-  typedef typename container_type::const_iterator const_iterator;
-  typedef typename container_type::reverse_iterator reverse_iterator;
-  typedef typename container_type::const_reverse_iterator const_reverse_iterator;
-  */
-
   typedef std::multimap< std::pair<value_type, value_type>, typename allocator_type::pointer> container_type;
 
   typedef vtree_iterator<typename container_type::iterator, value_type> iterator;
   typedef vtree_iterator<typename container_type::const_iterator, const value_type> const_iterator;
   typedef std::reverse_iterator<iterator> reverse_iterator;
   typedef std::reverse_iterator<const_iterator> const_reverse_iterator;
-
-
-
 
   // key_compare     _comparator;
   allocator_type  _allocator;

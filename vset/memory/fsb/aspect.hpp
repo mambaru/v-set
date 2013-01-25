@@ -27,7 +27,6 @@ struct aspect: fas::aspect_merge<
   aspect_manager,
   aspect_pointer,
   vset::buffer::persistent::mmap::aspect_mmap,
-  //vset::buffer::persistent::filesync::aspect_filesync,
   vset::buffer::persistent::aspect_basic
 >::type {};
 

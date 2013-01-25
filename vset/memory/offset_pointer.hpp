@@ -7,8 +7,6 @@
 #ifndef VSET_VSET_ALLOCATOR_OFFSET_POINTER_HPP
 #define VSET_VSET_ALLOCATOR_OFFSET_POINTER_HPP
 
-
-
 namespace vset { namespace memory{
 
 template<typename T, typename M>

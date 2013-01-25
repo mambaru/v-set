@@ -53,25 +53,7 @@ struct ad_node_for_insert
         && less_equal(t, value, itr2->first.second ) )
       return itr2;
 
-    /*
-01
-10
-10
-10
-
-10..20   40..50
-val >10 <=20
- 
-
-*/
-
-    std::cout << less_equal(t, value, itr1->first.first) << less_equal(t, itr1->first.first, value)<< std::endl;
-    std::cout << less_equal(t, value, itr1->first.second) << less_equal(t, itr1->first.second, value)<< std::endl;
-    std::cout << less_equal(t, value, itr2->first.first) << less_equal(t, itr2->first.first, value) <<std::endl;
-    std::cout << less_equal(t, value, itr2->first.second) << less_equal(t, itr2->first.second, value) << std::endl;
-    
     throw std::logic_error("ad_node_for_insert");
-
   }
   
 };

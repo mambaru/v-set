@@ -30,22 +30,6 @@ struct ad_clear
 
     t.get_aspect().template get<_size_>() = 0;
     container.clear();
-    
-    
-    /*
-    container_type& container = t.get_container();
-
-    typedef typename T::allocator_type allocator_type;
-    typedef typename allocator_type::value_type array_type;
-    typedef typename allocator_type::pointer    pointer;
-    typedef typename array_type::iterator       array_iterator;
-
-    pointer parr = t.get_allocator().allocate(1);
-
-    t.get_allocator().construct(parr, array_type() );
-    
-    return t.get_aspect().template get<_insert_to_container_>()(t, std::make_pair(value, value), parr);
-    */
   }
 };
 

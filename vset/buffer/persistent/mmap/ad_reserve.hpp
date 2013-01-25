@@ -23,13 +23,6 @@ struct ad_reserve
       return;
 
     t.get_aspect().template get<_truncate_>()(t, size);
-    /*
-    char *olddata = t.get_aspect().template get<_buffer_>();
-    char* data = (char*) ::mremap( olddata, capacity, size, MREMAP_MAYMOVE);
-    t.get_aspect().template get<_buffer_>() = data;
-    t.get_aspect().template get<_head_>()(t)->set_capacity(size);
-    t.get_aspect().template get<_sync_>()(t, 0, 0);
-    */
   }
 };
 

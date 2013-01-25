@@ -63,19 +63,6 @@ struct chunk
     return data + index;
   }
 
-
-
-  /*
-  void _next_value(T** result, T* current) const
-  {
-    size_t index = next_occuped(current - data + 1);
-    if ( index == static_cast<size_t>(-1) )
-      *result = 0;
-    else
-      *result = data + index;
-  }
-  */
-  
   T* next_value(T* current)
   {
     size_t index = next_occuped(current - data + 1);
@@ -86,8 +73,6 @@ struct chunk
 
   const T* next_value(const T* current) const
   {
-    // return _next_value(current);
-    
     size_t index = next_occuped(current - data + 1);
     if ( index == static_cast<size_t>(-1) )
       return 0;

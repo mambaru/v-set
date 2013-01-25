@@ -31,13 +31,11 @@ struct allocator
 
   pointer address(reference value ) const
   {
-    //assert(_mmm!=0);
     return static_cast<char*>(&value) - _memory.data();
   }
 
   const_pointer address (const_reference value) const
   {
-    //assert(_mmm!=0);
     return static_cast<char*>(&value) - _memory.data();
   }
   
@@ -48,16 +46,12 @@ struct allocator
 
   pointer allocate (size_type num, void *  hint = 0)
   {
-    //assert(_mmm!=0);
     return _memory.allocate(num, hint);
   }
 
   void construct (pointer p, const_reference value)
   {
-// #warning TODO
     *p = value;
-   // new (&(*p)) value_type(value);  //placement new
-      //new((void *)(&(*p))) value_type(value);  //placement new
   }
 
   void destroy (pointer p)
@@ -67,7 +61,6 @@ struct allocator
 
   void deallocate (pointer p, size_type num)
   {
-    //assert(_mmm!=0);
     _memory.deallocate(p, num);
   }
 
@@ -78,7 +71,7 @@ struct allocator
     return _memory;
   }
 
-    memory_type memory()
+  memory_type memory()
   {
     return _memory;
   }

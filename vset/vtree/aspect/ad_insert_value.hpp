@@ -26,21 +26,19 @@ struct ad_insert_value
     container_type& container = t.get_container();
     // находим ближайший подходящий нод
     container_iterator itr = t.get_aspect().template get<_lower_node_>()(t, value);
-    // volatile int debug = 0;
+    
     if ( itr == container.end() )
     {
-      //debug = 1;
       // Сюда попадем если ниодного нода еще не созданно
       itr = t.get_aspect().template get<_create_node_>()(t, value);
     }
     else
     {
-      // debug = 2;
       // Ищем ближайший свободный но
       itr = t.get_aspect().template get<_first_proper_node_>()(t, itr);
     }
 
-    if ( /*debug!=-1 &&*/ itr == container.end() )
+    if ( itr == container.end() )
       abort();
 
     if ( itr->second->filled() )
@@ -61,7 +59,6 @@ struct ad_insert_value
     return typename T::iterator( itr, std::distance(itr->second->begin(), aitr) );
   }
 };
-
   
 }}
 

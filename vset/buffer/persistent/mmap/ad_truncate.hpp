@@ -33,8 +33,6 @@ struct ad_truncate
 
     if ( oldsize < newsize )
       ::memset( data + oldsize, 0, newsize - oldsize);
-
-    
     
     t.get_aspect().template get<_buffer_>() = data;
     t.get_aspect().template get<_buffer_size_>() = newsize;

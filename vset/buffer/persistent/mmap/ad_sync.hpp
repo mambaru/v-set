@@ -76,14 +76,6 @@ private:
     if ( -1 == ::msync( data + real_offset, real_size, async ? MS_ASYNC : MS_SYNC) )
       throw std::logic_error(strerror(errno));
     
-    /*
-    t.get_aspect().template get<_write_file_>()(
-      t,
-      buff + real_offset,
-      real_size,
-      real_offset
-    );*/
-
     return real_offset + real_size >= buffer_size ? 0 : offset + limit;
   }
 };

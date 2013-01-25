@@ -36,7 +36,6 @@ struct ad_first_proper_node
     
     value_type value = itr->first.first;
 
-    //volatile int counter = 0;
     for ( ++beg; beg!=end; ++beg )
     {
       if ( not_equal(t, beg->first.first, value) )
@@ -44,11 +43,9 @@ struct ad_first_proper_node
 
       if ( !beg->second->filled() )
         return beg;
-
-      //++counter;
     }
 
-    if (/*counter!=-1 && */itr==end)
+    if (itr==end)
       abort();
 
     return itr;

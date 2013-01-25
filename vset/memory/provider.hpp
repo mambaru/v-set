@@ -36,17 +36,6 @@ public:
   typedef size_t size_type;
   typedef std::ptrdiff_t difference_type;
 
-  /*
-  typedef typename manager::value_type  value_type;
-  typedef typename manager::buffer_type buffer_type;
-  typedef typename manager::pointer pointer;
-  typedef typename manager::const_pointer const_pointer;
-  typedef typename manager::reference       reference;
-  typedef typename manager::const_reference const_reference;
-  typedef typename manager::size_type size_type;
-  typedef typename manager::difference_type difference_type;
-  */
-
   provider(): _manager(0) {}
   
   provider(Manager* m): _manager(m) {}
@@ -54,49 +43,41 @@ public:
   pointer begin()
   {
     return _manager->get_aspect().template get<_begin_>()(*_manager, fas::type2type<pointer>() );
-    //return _manager->begin();
   }
 
   const_pointer begin() const
   {
     return _manager->get_aspect().template get<_begin_>()(*_manager, fas::type2type<const_pointer>() );
-    //return _manager->begin();
   }
 
   pointer end()
   {
     return _manager->get_aspect().template get<_end_>()(*_manager, fas::type2type<pointer>() );
-    //return _manager->end();
   }
 
   const_pointer end() const
   {
     return _manager->get_aspect().template get<_end_>()(*_manager, fas::type2type<const_pointer>() );
-    // return _manager->end();
   }
 
   pointer allocate(size_t num, void *  hint = 0)
   {
     return _manager->get_aspect().template get<_allocate_>()(*_manager, fas::type2type<pointer>(), num, hint );
-    //return _manager->allocate(num, hint);
   }
 
   void deallocate(pointer ptr, size_type num)
   {
     return _manager->get_aspect().template get<_deallocate_>()(*_manager, ptr, num );
-    //return _manager->deallocate(ptr, num);
   }
 
   buffer_type buffer()
   {
     return buffer_type(_manager);
-    //return _manager->buffer();
   }
 
   const buffer_type buffer() const
   {
     return buffer_type(_manager);
-    //return _manager->buffer();
   }
   
 private:

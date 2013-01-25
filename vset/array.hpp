@@ -233,7 +233,7 @@ public:
 
   iterator erase ( iterator first, iterator last )
   {
-    difference_type dist = /*last - first*/std::distance(first,last);;
+    difference_type dist = std::distance(first,last);;
     std::copy( last, this->end(), first);
     this->resize( _size - dist );
     return first;

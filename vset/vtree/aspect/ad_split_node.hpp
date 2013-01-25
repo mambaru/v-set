@@ -66,7 +66,6 @@ struct ad_split_node
     container_iterator itr1 = t.get_aspect().template get<_insert_to_container_>()(t, std::make_pair(arr1->front(), arr1->back()), arr1);
     container_iterator itr2 = t.get_aspect().template get<_insert_to_container_>()(t, std::make_pair(arr2->front(), arr2->back()), arr2);
     
-
     itr = t.get_aspect().template get<_node_for_insert_>()(t, itr1, itr2, value);
 
     arr1 = itr->second;
