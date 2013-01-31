@@ -35,6 +35,9 @@ struct ad_upper_bound
 
     container_iterator cont_itr = t.get_aspect().template get<_upper_node_>()(t, value);
 
+    if ( cont_itr == container.end() )
+      return t.end();
+
     array_iterator itr = std::upper_bound(
       cont_itr->second->begin(),
       cont_itr->second->end(),
@@ -42,9 +45,14 @@ struct ad_upper_bound
       t.get_aspect().template get<_compare_>()
     );
 
-    return (itr!=cont_itr->second->end())
+    if ( itr == cont_itr->second->end() )
+      return t.end();
+
+    return iterator( cont_itr, std::distance(cont_itr->second->begin(), itr) );
+    /*return (itr!=cont_itr->second->end())
             ? iterator( cont_itr, std::distance(cont_itr->second->begin(), itr) )
             : iterator( ++cont_itr, 0 );
+            */
   }
 };
 

@@ -1,0 +1,29 @@
+add_library(votes votes.cpp)
+
+add_executable(
+  votes_example
+  votes_example.cpp
+)
+
+target_link_libraries(votes_example votes)
+
+
+
+
+
+
+
+
+#add_executable(
+#  test_vtree
+#  test_vtree.cpp
+#  ${FASLIB_DIR}/fas/testing/testing.cpp
+#  array_suite.cpp
+#  vtree_basic_suite.cpp
+#  vtree_mmap_suite.cpp
+#)
+
+#add_test(test_vtree test_vtree)
+
+
+

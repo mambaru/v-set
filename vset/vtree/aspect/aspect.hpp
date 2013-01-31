@@ -130,7 +130,7 @@ struct aspect_common: fas::aspect_merge<
 template<typename V, typename Compare = std::less<V>, int N = 1024 >
 struct aspect: fas::aspect_merge<
   value_aspect<V, Compare>,
-  memory_aspect< sorted_array< V, N, std::less<V> > >,
+  memory_aspect< sorted_array< V, N, Compare/*std::less<V>*/ > >,
   fas::advice< _restore_, ad_restore >,
   fas::group< buffer::persistent::_after_open_, _restore_ >,
   aspect_common

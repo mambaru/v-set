@@ -60,6 +60,7 @@ public:
     : _allocator(alloc)
   {
     this->get_aspect().template get<_compare_>() = comp;
+    _allocator = this->get_aspect().template get<_allocator_>()(*this);
   }
 
   template<typename InputIterator>
@@ -73,6 +74,7 @@ public:
     : _allocator(alloc)
   {
     this->get_aspect().template get<_compare_>() = comp;
+    _allocator = this->get_aspect().template get<_allocator_>()(*this);
   }
 
   vtree(const vtree& )

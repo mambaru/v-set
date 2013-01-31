@@ -66,10 +66,19 @@ public:
     return super::insert(position, x);
   }
 
+  
   void insert ( size_type n, const T& x, const value_compare& comp = value_compare() )
   {
     iterator position = std::upper_bound(super::begin(), super::end(), x, comp );
     return super::insert(position, n, x);
+  }
+  
+
+  template <class InputIterator>
+  void insert ( InputIterator first, InputIterator last, const value_compare& comp = value_compare() )
+  {
+    super::insert( super::end(), first, last );
+    this->sort(comp);
   }
 
   size_type erase( const T& x, const value_compare& comp = value_compare() )
@@ -81,12 +90,6 @@ public:
     return count;
   }
 
-  template <class InputIterator>
-  void insert ( InputIterator first, InputIterator last, const value_compare& comp = value_compare() )
-  {
-    super::insert( super::end(), first, last );
-    this->sort(comp);
-  }
 
   void sort(const value_compare& comp = value_compare())
   {

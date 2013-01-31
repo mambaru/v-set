@@ -34,12 +34,18 @@ struct ad_lower_bound
 
     container_iterator cont_itr = t.get_aspect().template get<_lower_node_>()(t, value);
 
+    if ( cont_itr == container.end() )
+      return t.end();
+
     array_iterator itr = std::lower_bound(
       cont_itr->second->begin(),
       cont_itr->second->end(),
       value,
       t.get_aspect().template get<_compare_>()
     );
+
+    if ( itr == cont_itr->second->end() )
+      return t.end();
 
     return iterator( cont_itr, std::distance(cont_itr->second->begin(), itr) );
   }
