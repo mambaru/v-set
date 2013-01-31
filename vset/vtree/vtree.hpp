@@ -153,7 +153,6 @@ public:
     return _container;
   }
 
-
   iterator  begin()
   {
     return iterator( _container.begin(), 0);
@@ -258,7 +257,6 @@ public:
     return this->get_aspect().template get<_insert_value_>()(*this, value);
   }
 
-
 #endif
 
   iterator  insert(const_iterator, const value_type& value)
@@ -337,14 +335,16 @@ public:
     throw not_impl("size_type count(const key_type& key) const");
   }
 
-  iterator find(const key_type& /*key*/)
+  iterator find(const key_type& key)
   {
-    throw not_impl("iterator find(const key_type& /*key*/)");
+    return this->get_aspect().template get<_find_>()(*this, key);
+    //throw not_impl("iterator find(const key_type& /*key*/)");
   }
 
   const_iterator find(const key_type& key ) const
   {
-    throw not_impl("const_iterator find(const key_type& key ) const");
+    return this->get_aspect().template get<_find_>()(*this, key);
+    //throw not_impl("const_iterator find(const key_type& key ) const");
   }
 
   iterator lower_bound(const key_type& key)

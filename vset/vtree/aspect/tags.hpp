@@ -34,6 +34,7 @@ struct _update_node_key_;
 struct _first_proper_node_;
 
 
+struct _find_;
 struct _lower_bound_;
 struct _upper_bound_;
 

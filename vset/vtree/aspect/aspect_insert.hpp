@@ -11,6 +11,7 @@
 #include <vset/vtree/aspect/ad_node_for_insert.hpp>
 #include <vset/vtree/aspect/ad_multimap_insert.hpp>
 #include <vset/vtree/aspect/ad_create_node.hpp>
+#include <vset/vtree/aspect/ad_find.hpp>
 #include <vset/vtree/aspect/ad_lower_node.hpp>
 #include <vset/vtree/aspect/ad_upper_node.hpp>
 #include <vset/vtree/aspect/ad_split_node.hpp>
@@ -30,6 +31,7 @@ struct aspect_insert: fas::aspect< fas::type_list_n<
   fas::advice< _node_for_insert_, ad_node_for_insert>,
   fas::advice< _insert_to_container_, ad_multimap_insert>,
   fas::advice< _create_node_, ad_create_node>,
+  fas::advice< _find_, ad_find>,
   fas::advice< _lower_node_, ad_lower_node>,
   fas::advice< _upper_node_, ad_upper_node>,
   fas::advice< _split_node_, ad_split_node>,
