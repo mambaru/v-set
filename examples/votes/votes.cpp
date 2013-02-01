@@ -3,22 +3,6 @@
 #include <vset/memory/manager.hpp>
 #include <iostream>
 
-/*
-struct vote
-{
-  id_t rating_id;
-  id_t poller_id;
-  id_t content_id;
-  double mark;
-
-  vote()
-    : rating_id(0)
-    , poller_id(0)
-    , content_id(0)
-    , mark(0.0)
-  {}
-};*/
-
 /**
  * За какой контент голосовал пользователь
  */
@@ -43,11 +27,6 @@ struct poller
     return ( poller_id < right.poller_id )
            || ( !(right.poller_id < poller_id)
            && (content_id < right.content_id) );
-    /*
-    if ( poller_id == right.poller_id )
-      return content_id == right.content_id;
-    return poller_id < right.poller_id;
-    */
   }
 };
 
@@ -158,15 +137,6 @@ struct f_content_by_id
     pright = right;
     return pleft->content_id < pright->content_id;
   }
-
-  /*
-  bool operator()(offset_t left, const content& right) const
-  {
-    pleft = left;
-    return pleft->content_id < right.content_id;
-  }
-  */
-
 };
 
 /// Индекс по content_id
@@ -206,23 +176,7 @@ struct f_content_by_rating
     return ( pleft->rating_id < pright->rating_id )
            || ( !(pright->rating_id < pleft->rating_id)
                 && (pleft->content_id < pright->content_id) );
-
-    /*
-    if ( pleft->rating_id == pright->rating_id )
-      return pleft->content_id < pright->content_id;
-    return pleft->rating_id < pright->rating_id;
-    */
   }
-
-  /*
-  bool operator()(offset_t left, const content& right) const
-  {
-    pleft = left;
-    if ( pleft->rating_id == right.rating_id )
-      return pleft->content_id < right.content_id;
-    return pleft->rating_id < right.rating_id;
-  }
-  */
 };
 
 /// Индекс по rating_id и content_id
@@ -236,52 +190,8 @@ public:
   }
 };
 
-
-/*
-class vote_storage
- : public vset::memory::manager< vset::memory::fsb::aspect<vote> >
-{
-};
-
-typedef vote_storage::pointer vote_pointer;
-
-struct f_rating_poller_content
-{
-  vote_pointer ptr;
-
-  f_rating_poller_content(): ptr(0){}
-
-  f_rating_poller_content(vote_pointer ptr): ptr(ptr){}
-
-  bool operator()(vote_pointer left, vote_pointer right) const
-  {
-    return left->rating_id < right->rating_id;
-  }
-};
-*/
-
-
-
-/*
-class rating_poller_content_index
-  : public vset::vtree::vtree< vset::vtree::aspect<offset_t, f_rating_poller_content, 512> >
-{
-public:
-  rating_poller_content_index(const f_rating_poller_content& comp)
-    : vtree(comp)
-  {
-
-  }
-};
-*/
-
-//
-//class ids_storage: public vset::vtree::vtree< vset::vtree::aspect< id_t> >{};
-
-
 votes::votes()
 {
-  //_votes = new vote_storage;
   // Создаем сортированное хранилище
   _pollers = new poller_storage;
   // Создаем не сортированное хранилище
@@ -298,7 +208,6 @@ votes::~votes()
   this->sync();
   this->close();
 
-  //delete _votes;
   delete _pollers;
   delete _content;
   delete _content_index;
@@ -308,8 +217,6 @@ votes::~votes()
 
 void votes::open(const std::string& preffix)
 {
-  //_votes->buffer().open( (preffix + "/votes.bin").c_str() );
-
   // А так открываем файл у vtree
   _pollers->get_allocator().memory().buffer().open( (preffix + "/pollers.bin").c_str() );
   // Так открываем файл у memory::manager
@@ -317,33 +224,28 @@ void votes::open(const std::string& preffix)
   _content_index->get_allocator().memory().buffer().open( (preffix + "/content_by_id.bin").c_str() );
   _content_by_rating_index->get_allocator().memory().buffer().open( (preffix + "/content_by_rating.bin").c_str() );
 
-  if ( !_content->empty() && _content_index->empty )
+  // если в хранилище есть данные а индекс пустой
+  if ( _content->buffer().size()!=0 && _content_index->empty() )
   {
-    // Можно востановить индекс, если файл удалить
-    for (auto p: *_content)
-      _content_index->insert( const_cast<size_t>(p));
+    for ( content_pointer beg = _content->begin(); beg!=_content->end(); ++beg)
+      _content_index->insert( static_cast<offset_t>( static_cast<size_t>(beg) ) );
   }
-  //_rating_poller_content_index->get_allocator().memory().buffer().open( (preffix + "/votes-index1.bin").c_str() );
 }
 
 void votes::sync()
 {
-  //_votes->buffer().sync(false);
   _pollers->get_allocator().memory().buffer().sync(false);
   _content->buffer().sync(false);
   _content_by_rating_index->get_allocator().memory().buffer().sync(false);
   _content_index->get_allocator().memory().buffer().sync(false);
-  //_rating_poller_content_index->get_allocator().memory().buffer().sync(false);
 }
 
 void votes::close()
 {
-  //_votes->buffer().close();
   _pollers->get_allocator().memory().buffer().close();
   _content->buffer().close();
   _content_by_rating_index->get_allocator().memory().buffer().close();
   _content_index->get_allocator().memory().buffer().close();
-  //_rating_poller_content_index->get_allocator().memory().buffer().close();
 }
 
 bool votes::add_content(id_t rating_id, id_t content_id, id_t country_id, id_t region_id, id_t city_id, id_t metro_id)
@@ -358,16 +260,10 @@ bool votes::add_content(id_t rating_id, id_t content_id, id_t country_id, id_t r
 
   if ( itr != _content_index->end() )
   {
-    _content->deallocate(ptr2, 1);
+    _content->deallocate(ptr, 1);
     return false;
-    /*content_pointer ptr2 = _content->begin() + *itr;
-    if ( ptr2->content_id == content_id)
-    {
-      _content->deallocate(ptr2, 1);
-      return false;
-    }
-    */
   }
+  
   // Добавляем в индексы
   _content_index->insert( static_cast<offset_t>( static_cast<size_t>(ptr) ) );
   _content_by_rating_index->insert( static_cast<offset_t>( static_cast<size_t>(ptr) ) );
@@ -410,3 +306,4 @@ bool votes::add_vote(id_t poller_id, id_t nice_content_id, id_t ugly_content_id 
 
   return true;
 }
+
