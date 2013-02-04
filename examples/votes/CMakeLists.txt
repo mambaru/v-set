@@ -12,8 +12,10 @@ add_executable(
 target_link_libraries(votes_example votes)
 
 
-
-
+add_executable( my_test
+  test.cpp
+  )
+target_link_libraries( my_test votes )
 
 
 
