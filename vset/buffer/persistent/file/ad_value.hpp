@@ -10,7 +10,7 @@
 #include <vset/buffer/tags.hpp>
 #include <vset/buffer/persistent/tags.hpp>
 
-namespace vset { namespace buffer { namespace persistent{
+namespace vset { namespace buffer { namespace persistent{ namespace file{
 
 template<typename TTg, typename Tg>
 struct ad_value
@@ -23,6 +23,6 @@ struct ad_value
   }
 };
 
-}}}
+}}}}
 
 #endif

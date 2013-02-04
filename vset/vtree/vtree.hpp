@@ -39,7 +39,11 @@ public:
   typedef typename allocator_builder::template apply<self>::type                  allocator_type;
   typedef typename allocator_type::size_type           size_type;
   typedef typename allocator_type::difference_type     difference_type;
-  typedef std::multimap< std::pair<value_type, value_type>, typename allocator_type::pointer> container_type;
+  // typedef std::multimap< std::pair<value_type, value_type>, typename allocator_type::pointer> container_type;
+  typedef typename super::aspect
+                        ::template advice_cast<_container_>::type
+                        ::template apply< std::pair<value_type, value_type>, typename allocator_type::pointer >
+                        ::type container_type;
 
   typedef vtree_iterator<typename container_type::iterator, value_type> iterator;
   typedef vtree_iterator<typename container_type::const_iterator, const value_type> const_iterator;

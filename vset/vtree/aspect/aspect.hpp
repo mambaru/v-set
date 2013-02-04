@@ -20,37 +20,39 @@
 
 #include <fas/aop/provider.hpp>
 
+#include <map>
+
 namespace vset{ namespace vtree{
 
 struct ad_default_allocator_builder
 {
   template<typename T>
-  struct build
+  struct apply
   {
     typedef typename T::aspect::template advice_cast<_array_type_>::type array_type;
     typedef std::allocator<array_type> type;
   };
 
   template<typename T>
-  typename build<T>::type operator()(T& ) const
+  typename apply<T>::type operator()(T& ) const
   {
-    return build<T>::type();
+    return typename apply<T>::type();
   }
 };
 
 struct ad_persistent_allocator_builder
 {
   template<typename T>
-  struct build
+  struct apply
   {
     typedef memory::provider< T > provider;
     typedef memory::allocator< provider > type;
   };
 
   template<typename T>
-  typename build<T>::type operator()(T& t) const
+  typename apply<T>::type operator()(T& t) const
   {
-    return build<T>::type(&t);
+    return typename apply<T>::type(&t);
   }
 };
 
@@ -58,16 +60,16 @@ template<typename Tg>
 struct ad_advanced_builder
 {
   template<typename T>
-  struct build
+  struct apply
   {
     typedef typename T::aspect::template advice_cast< Tg >::type wrap;
     typedef typename fas::apply<typename wrap::type, T>::type type;
   };
 
   template<typename T>
-  typename build<T>::type operator()(T& t) const
+  typename apply<T>::type operator()(T& t) const
   {
-    return build<T>::type(&t);
+    return typename apply<T>::type(&t);
   }
 };
 
@@ -75,15 +77,15 @@ template<typename Tg>
 struct ad_simple_builder
 {
   template<typename T>
-  struct build
+  struct apply
   {
     typedef typename T::aspect::template advice_cast< Tg >::type type;
   };
 
   template<typename T>
-  typename build<T>::type operator()(T& ) const
+  typename apply<T>::type operator()(T& ) const
   {
-    return build<T>::type();
+    return apply<T>::type();
   }
 };
 
@@ -103,6 +105,14 @@ struct ad_restore
   }
 };
 
+struct ad_container
+{
+  template<typename K, typename V>
+  struct apply
+  {
+    typedef std::multimap<K, V> type;
+  };
+};
 
 template<typename V, typename Compare = std::less<V> >
 struct value_aspect: fas::aspect< typename fas::type_list_n<
@@ -110,7 +120,8 @@ struct value_aspect: fas::aspect< typename fas::type_list_n<
   fas::alias<_key_type_, _value_type_>,
   fas::value_advice<_compare_, Compare >,
   fas::alias< _key_compare_, _compare_ >,
-  fas::alias< _value_compare_, _compare_ >
+  fas::alias< _value_compare_, _compare_ >,
+  fas::advice< _container_, ad_container>
 >::type> {};
 
 template<typename Array >
@@ -130,11 +141,21 @@ struct aspect_common: fas::aspect_merge<
 template<typename V, typename Compare = std::less<V>, int N = 1024 >
 struct aspect: fas::aspect_merge<
   value_aspect<V, Compare>,
-  memory_aspect< sorted_array< V, N, Compare/*std::less<V>*/ > >,
+  memory_aspect< sorted_array< V, N, Compare > >,
   fas::advice< _restore_, ad_restore >,
   fas::group< buffer::persistent::_after_open_, _restore_ >,
   aspect_common
 >::type {};
+
+template<typename V, typename Compare = std::less<V>, int N = 1024 >
+struct aspect2: fas::aspect_merge<
+  value_aspect<V, Compare>,
+  fas::type_advice<_array_type_, sorted_array< V, N, Compare > >,
+  fas::advice<_allocator_, ad_default_allocator_builder >,
+  fas::value_advice< _size_, size_t>,
+  aspect_common
+>::type {};
+
 
 }}
 

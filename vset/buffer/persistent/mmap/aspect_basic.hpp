@@ -4,12 +4,12 @@
 // Copyright: See COPYING file that comes with this distribution
 //
 
-#ifndef VSET_VSET_BUFFER_PERSISTENT_MMAP_ASPECT_MMAP_HPP
-#define VSET_VSET_BUFFER_PERSISTENT_MMAP_ASPECT_MMAP_HPP
+#ifndef VSET_VSET_BUFFER_PERSISTENT_MMAP_ASPECT_BASIC_HPP
+#define VSET_VSET_BUFFER_PERSISTENT_MMAP_ASPECT_BASIC_HPP
 
 #include <vset/buffer/tags.hpp>
 #include <vset/buffer/persistent/tags.hpp>
-#include <vset/buffer/persistent/basic/tags.hpp>
+
 #include <vset/buffer/persistent/mmap/tags.hpp>
 #include <vset/buffer/persistent/mmap/ad_open.hpp>
 #include <vset/buffer/persistent/mmap/ad_clear.hpp>
@@ -23,7 +23,7 @@
 
 namespace vset { namespace buffer{ namespace persistent{ namespace mmap{
 
-struct aspect_mmap: fas::aspect< fas::type_list_n<
+struct aspect_basic: fas::aspect< fas::type_list_n<
   fas::value_advice<_buffer_size_, size_t>,
   fas::advice<_open_, ad_open>,
   fas::advice<_close_, ad_close>,
