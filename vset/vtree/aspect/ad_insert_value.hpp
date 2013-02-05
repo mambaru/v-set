@@ -9,6 +9,7 @@
 
 #include <vset/vtree/aspect/tags.hpp>
 
+#include <iostream>
 namespace vset{ namespace vtree{
 
 struct ad_insert_value
@@ -43,6 +44,7 @@ struct ad_insert_value
 
     if ( itr == container.end() )
     {
+      std::cout << flag << std::endl;
       abort();
     }
 
