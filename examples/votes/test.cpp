@@ -207,10 +207,10 @@ int main()
 
   contents.buffer().open( (preffix + "/contents.bin").c_str() );
   contents.buffer().reserve( items * sizeof(rate::Content) );
-
+  
   contents_by_ratings_i.get_allocator().memory().buffer().open( (preffix + "/contents_by_ratings_i.bin").c_str() );
   contents_by_ratings_i.get_allocator().memory().buffer().reserve( items * sizeof(rate::offset_t) );
-
+  
   for ( size_t i = 0; i < items; ++i )
   {
     rate::content_storage_t::pointer ptr = contents.allocate(1);
@@ -261,8 +261,6 @@ int main()
     std::cerr << "fail\n";
     contents.deallocate( ptr, 1 );
   }
-
-  
 
   return 0;
 }
