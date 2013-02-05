@@ -8,16 +8,16 @@
 #define VSET_VSET_BUFFER_PERSISTENT_BUFFER_BASE_HPP
 
 #include <vset/buffer/buffer_base.hpp>
-#include <vset/buffer/persistent/basic/aspect_basic.hpp>
+#include <vset/buffer/persistent/file/aspect.hpp>
 #include <vset/buffer/tags.hpp>
 #include <fas/aop.hpp>
 namespace vset { namespace buffer{
 
 template<typename A = fas::aspect<> >
 class persistent_buffer_base
-  : public buffer_base< typename fas::aspect_merge<A, persistent::aspect_basic>::type >
+  : public buffer_base< typename fas::aspect_merge<A, persistent::file::aspect>::type >
 {
-  typedef buffer_base< typename fas::aspect_merge<A, persistent::aspect_basic>::type > super;
+  typedef buffer_base< typename fas::aspect_merge<A, persistent::file::aspect>::type > super;
 public:
 
   typedef typename super::size_type size_type;

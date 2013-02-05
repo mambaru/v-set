@@ -21,6 +21,27 @@ struct not_impl: std::domain_error
 };
 
 
+template<typename K, typename C>
+struct compare_pair
+{
+  C _comp;
+
+  compare_pair()
+    : _comp()
+  {}
+  
+  compare_pair(C comp)
+    : _comp(comp)
+  {
+  }
+  
+  bool operator()(const K& first, const K& second) const
+  {
+    return _comp(first.first, second.first)
+           || ( !_comp(first.first, second.first)
+                && _comp(first.second, second.second) );
+  }
+};
 
 template< typename A = fas::aspect<> >
 class vtree:
@@ -40,9 +61,12 @@ public:
   typedef typename allocator_type::size_type           size_type;
   typedef typename allocator_type::difference_type     difference_type;
   // typedef std::multimap< std::pair<value_type, value_type>, typename allocator_type::pointer> container_type;
+
+  typedef std::pair<value_type, value_type>  container_key;
+  typedef compare_pair<container_key, key_compare> container_comparator;
   typedef typename super::aspect
                         ::template advice_cast<_container_>::type
-                        ::template apply< std::pair<value_type, value_type>, typename allocator_type::pointer >
+                        ::template apply< container_key, typename allocator_type::pointer, container_comparator >
                         ::type container_type;
 
   typedef vtree_iterator<typename container_type::iterator, value_type> iterator;
@@ -62,6 +86,7 @@ public:
 
   explicit vtree(const key_compare& comp,const allocator_type& alloc = allocator_type() )
     : _allocator(alloc)
+    , _container( container_comparator(comp) ) 
   {
     this->get_aspect().template get<_compare_>() = comp;
     _allocator = this->get_aspect().template get<_allocator_>()(*this);
@@ -76,6 +101,7 @@ public:
   template<typename InputIterator>
   vtree(InputIterator beg, InputIterator end, const value_compare& comp, const allocator_type&  alloc= allocator_type() )
     : _allocator(alloc)
+    , _container( container_comparator(comp) ) 
   {
     this->get_aspect().template get<_compare_>() = comp;
     _allocator = this->get_aspect().template get<_allocator_>()(*this);
