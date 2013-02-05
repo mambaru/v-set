@@ -34,10 +34,6 @@ struct compare_pair
     : _comp(comp)
   {
   }
-
-
-
-
   
   bool operator()(const K& first, const K& second) const
   {
