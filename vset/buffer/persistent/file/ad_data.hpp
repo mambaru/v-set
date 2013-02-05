@@ -10,7 +10,7 @@
 #include <vset/buffer/tags.hpp>
 #include <vset/buffer/persistent/tags.hpp>
 
-namespace vset { namespace buffer { namespace persistent{
+namespace vset { namespace buffer { namespace persistent{ namespace file{
 
 struct ad_data
 {
@@ -34,6 +34,6 @@ struct ad_data
 
 };
 
-}}}
+}}}}
 
 #endif

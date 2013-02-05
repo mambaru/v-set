@@ -25,7 +25,7 @@ struct ad_lower_node
     iterator itr = container.lower_bound( std::make_pair(value, value/*_type()*/ ) );
 
     if ( itr==container.end() && !container.empty() )
-      itr = (++container.rbegin()).base();
+      itr = --container.end()/*(++container.rbegin()).base()*/;
 
     if ( itr!=container.end() && itr!=container.begin()
          && t.get_aspect().template get<_compare_>()(value, itr->first.first) )

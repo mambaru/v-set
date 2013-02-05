@@ -265,7 +265,7 @@ bool votes::add_content(id_t rating_id, id_t content_id, id_t country_id, id_t r
   }
   
   // Добавляем в индексы
-  _content_index->insert( static_cast<offset_t>( static_cast<size_t>(ptr) ) );
+  _content_index->insert( /*static_cast<offset_t>(*/ static_cast<size_t>(ptr) /*)*/ );
   _content_by_rating_index->insert( static_cast<offset_t>( static_cast<size_t>(ptr) ) );
   return true;
 }

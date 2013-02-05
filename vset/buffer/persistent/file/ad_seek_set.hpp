@@ -12,7 +12,7 @@
 
 #include <fcntl.h>
 
-namespace vset { namespace buffer { namespace persistent{
+namespace vset { namespace buffer { namespace persistent{ namespace file{
 
 struct ad_seek_set
 {
@@ -23,6 +23,6 @@ struct ad_seek_set
   }
 };
 
-}}}
+}}}}
 
 #endif

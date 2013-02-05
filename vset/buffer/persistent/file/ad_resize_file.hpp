@@ -15,7 +15,7 @@
 #include <errno.h>
 
 
-namespace vset { namespace buffer { namespace persistent{
+namespace vset { namespace buffer { namespace persistent{ namespace file{
 
 struct ad_resize_file
 {
@@ -35,6 +35,6 @@ struct ad_resize_file
   }
 };
 
-}}}
+}}}}
 
 #endif

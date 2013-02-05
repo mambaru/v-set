@@ -15,7 +15,7 @@
 #include <errno.h>
 
 
-namespace vset { namespace buffer { namespace persistent{
+namespace vset { namespace buffer { namespace persistent{ namespace file{
 
 struct ad_file_size
 {
@@ -27,11 +27,11 @@ struct ad_file_size
 
     if ( -1 == stat( t.get_aspect().template get<_file_name_>().c_str(), &sb) )
       throw std::domain_error(strerror(errno));
-    
+
     return sb.st_size;
   }
 };
 
-}}}
+}}}}
 
 #endif
