@@ -215,8 +215,8 @@ int main()
   {
     rate::content_storage_t::pointer ptr = contents.allocate(1);
     
-    *ptr = rate::Content();
-    //new(ptr) rate::Content();
+    // *ptr = rate::Content();
+    new(ptr) rate::Content();
     ptr->id = i;
     ptr->owner_id = i + 1;
     ptr->rating_id = i + 2;
@@ -233,22 +233,36 @@ int main()
 
   rate::content_storage_t::pointer ptr = contents.allocate(1);
   
-  *ptr = rate::Content();
-  //new(ptr) rate::Content();
+  // *ptr = rate::Content();
+  new(ptr) rate::Content();
   ptr->id = 133;
 
   rate::content_by_rating_index_t::iterator it = contents_by_ratings_i.find( static_cast<size_t>(ptr) ); 
 
   if ( it != contents_by_ratings_i.end() )
   {
+    contents.deallocate( ptr, 1 );
     ptr = static_cast<size_t>(*it);
     std::cerr << ptr->owner_id << ", " << ptr->rating_id << "\n";
+
+    contents_by_ratings_i.erase( static_cast<size_t>(ptr) );
+    
+    it = contents_by_ratings_i.find( static_cast<size_t>(ptr) );
+
+    if ( it == contents_by_ratings_i.end() )
+    {
+      std::cerr << "erase ok\n";
+    }
+    else
+      std::cerr << "erase failed\n";
   }
   else
+  {
     std::cerr << "fail\n";
+    contents.deallocate( ptr, 1 );
+  }
 
   
-  contents.deallocate( ptr, 1 );
 
   return 0;
 }
