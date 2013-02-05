@@ -107,10 +107,10 @@ struct ad_restore
 
 struct ad_container
 {
-  template<typename K, typename V>
+  template<typename K, typename V, typename C>
   struct apply
   {
-    typedef std::multimap<K, V> type;
+    typedef std::multimap<K, V, C> type;
   };
 };
 

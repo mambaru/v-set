@@ -7,7 +7,7 @@
 #include <vset/buffer/buffer.hpp>
 #include <vset/buffer/persistent_buffer.hpp>
 #include <vset/buffer/persistent/filesync/aspect_filesync.hpp>
-#include <vset/buffer/persistent/mmap/aspect_mmap.hpp>
+#include <vset/buffer/persistent/mmap/aspect.hpp>
 #include <vset/buffer/simple/aspect_simple.hpp>
 #include <fas/testing.hpp>
 
@@ -88,7 +88,7 @@ UNIT(mmap_unit, "")
 {
   using namespace fas::testing;
   using namespace vset::buffer;
-  persistent_buffer<persistent::mmap::aspect_mmap> pbuf;
+  persistent_buffer<persistent::mmap::aspect> pbuf;
   pbuf.open("test_mmap.bin");
   pbuf.truncate(0);
 
@@ -100,7 +100,7 @@ UNIT(mmap_unit, "")
   second_test( t, pbuf, "after close/open");
   pbuf.open("test_mmap.bin");
   second_test( t, pbuf, "after reopen");
-  persistent_buffer<persistent::mmap::aspect_mmap> pbuf2;
+  persistent_buffer<persistent::mmap::aspect> pbuf2;
   pbuf2.open("test_mmap.bin");
   second_test( t, pbuf2, "open exist");
   pbuf.close();

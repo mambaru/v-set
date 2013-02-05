@@ -14,7 +14,7 @@
 #include <unistd.h>
 #include <stdexcept>
 #include <errno.h>
-
+#include <string.h>
 
 namespace vset { namespace buffer { namespace persistent{ namespace file{
 
