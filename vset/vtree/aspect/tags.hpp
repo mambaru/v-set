@@ -16,7 +16,7 @@ struct _key_compare_;
 struct _value_compare_;
 struct _array_type_;
 struct _allocator_;
-//struct _container_;
+struct _container_;
 
 struct _restore_;
 struct _size_;

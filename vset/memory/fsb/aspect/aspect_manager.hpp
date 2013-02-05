@@ -15,6 +15,8 @@
 #include <vset/memory/fsb/aspect/ad_allocate.hpp>
 #include <vset/memory/fsb/aspect/ad_deallocate.hpp>
 
+#include <vset/buffer/persistent_provider.hpp>
+
 #include <fas/aop.hpp>
 
 namespace vset { namespace memory{ namespace fsb{
@@ -25,7 +27,8 @@ struct aspect_manager: fas::aspect< typename fas::type_list_n<
   fas::advice<_end_, ad_end>,
   fas::advice<_acquire_, ad_acquire>,
   fas::advice<_allocate_, ad_allocate>,
-  fas::advice<_deallocate_, ad_deallocate>
+  fas::advice<_deallocate_, ad_deallocate>,
+  fas::type_advice< _buffer_provider_,  fas::w< buffer::persistent_provider< fas::_> > >
 >::type > {};
 
 }}}

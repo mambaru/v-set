@@ -15,7 +15,7 @@
 #include <errno.h>
 
 
-namespace vset { namespace buffer { namespace persistent{
+namespace vset { namespace buffer { namespace persistent{ namespace file{
 
 struct ad_open_file
 {
@@ -29,10 +29,10 @@ struct ad_open_file
     t.get_aspect().template get<_descriptor_>() = d;
     if (d==-1)
       throw std::domain_error(strerror(errno));
-      
+
   }
 };
 
-}}}
+}}}}
 
 #endif

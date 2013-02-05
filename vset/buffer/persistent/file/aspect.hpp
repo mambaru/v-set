@@ -9,27 +9,26 @@
 
 #include <vset/buffer/tags.hpp>
 #include <vset/buffer/persistent/tags.hpp>
-#include <vset/buffer/persistent/basic/tags.hpp>
-#include <vset/buffer/persistent/basic/head.hpp>
-
-#include <vset/buffer/persistent/basic/ad_head.hpp>
-#include <vset/buffer/persistent/basic/ad_data.hpp>
-#include <vset/buffer/persistent/basic/ad_value.hpp>
-#include <vset/buffer/persistent/basic/ad_close_file.hpp>
-#include <vset/buffer/persistent/basic/ad_open_file.hpp>
-#include <vset/buffer/persistent/basic/ad_basic_init.hpp>
-#include <vset/buffer/persistent/basic/ad_read_file.hpp>
-#include <vset/buffer/persistent/basic/ad_resize_file.hpp>
-#include <vset/buffer/persistent/basic/ad_write_file.hpp>
-#include <vset/buffer/persistent/basic/ad_seek_set.hpp>
-#include <vset/buffer/persistent/basic/ad_file_size.hpp>
+#include <vset/buffer/persistent/head.hpp>
+#include <vset/buffer/persistent/file/tags.hpp>
+#include <vset/buffer/persistent/file/ad_head.hpp>
+#include <vset/buffer/persistent/file/ad_data.hpp>
+#include <vset/buffer/persistent/file/ad_value.hpp>
+#include <vset/buffer/persistent/file/ad_close_file.hpp>
+#include <vset/buffer/persistent/file/ad_open_file.hpp>
+#include <vset/buffer/persistent/file/ad_basic_init.hpp>
+#include <vset/buffer/persistent/file/ad_read_file.hpp>
+#include <vset/buffer/persistent/file/ad_resize_file.hpp>
+#include <vset/buffer/persistent/file/ad_write_file.hpp>
+#include <vset/buffer/persistent/file/ad_seek_set.hpp>
+#include <vset/buffer/persistent/file/ad_file_size.hpp>
 
 #include <fas/aop.hpp>
 #include <string>
 
-namespace vset { namespace buffer{ namespace persistent{
+namespace vset { namespace buffer{ namespace persistent{ namespace file{
 
-struct aspect_basic: fas::aspect< fas::type_list_n<
+struct aspect: fas::aspect< fas::type_list_n<
   fas::group<_constructor_, _basic_init_>,
   fas::group<_destructor_, _close_file_>,
   fas::type_advice< _data_type_, char*>,
@@ -47,7 +46,7 @@ struct aspect_basic: fas::aspect< fas::type_list_n<
   fas::advice< _data_, ad_data>,
   fas::advice< _capacity_, ad_value<_size_type_, _capacity_value_> >,
   fas::advice< _size_, ad_value<_size_type_, _size_value_> >,
- // fas::advice< _clear_, ad_clear>,
+
 
   fas::advice< _close_file_, ad_close_file>,
   fas::advice< _open_file_, ad_open_file>,
@@ -59,7 +58,7 @@ struct aspect_basic: fas::aspect< fas::type_list_n<
   fas::advice< _basic_init_, ad_basic_init>
 >::type >{};
 
-}}}
+}}}}
 
 #endif
 

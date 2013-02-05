@@ -13,21 +13,20 @@
 #include <vset/memory/fsb/aspect/aspect_manager.hpp>
 #include <vset/memory/fsb/aspect/aspect_pointer.hpp>
 
-#include <vset/buffer/persistent/mmap/aspect_mmap.hpp>
+#include <vset/buffer/persistent/mmap/aspect.hpp>
 #include <vset/buffer/persistent/filesync/aspect_filesync.hpp>
-#include <vset/buffer/persistent/basic/aspect_basic.hpp>
+#include <vset/buffer/persistent/file/aspect.hpp>
 
 #include <fas/aop.hpp>
 
 namespace vset { namespace memory{ namespace fsb{
 
-template<typename T>
+template<typename T, typename BufferAspect = vset::buffer::persistent::mmap::aspect >
 struct aspect: fas::aspect_merge<
   aspect_value<T>,
   aspect_manager,
   aspect_pointer,
-  vset::buffer::persistent::mmap::aspect_mmap,
-  vset::buffer::persistent::aspect_basic
+  BufferAspect
 >::type {};
 
 }}}

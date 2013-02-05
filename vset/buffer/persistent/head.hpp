@@ -4,8 +4,8 @@
 // Copyright: See COPYING file that comes with this distribution
 //
 
-#ifndef VSET_VSET_BUFFER_PERSISTENT_BASIC_HEAD_HPP
-#define VSET_VSET_BUFFER_PERSISTENT_BASIC_HEAD_HPP
+#ifndef VSET_VSET_BUFFER_PERSISTENT_HEAD_HPP
+#define VSET_VSET_BUFFER_PERSISTENT_HEAD_HPP
 
 namespace vset { namespace buffer{ namespace persistent{
 

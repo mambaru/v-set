@@ -9,7 +9,6 @@
 
 #include <vset/buffer/tags.hpp>
 #include <vset/buffer/persistent/tags.hpp>
-#include <vset/buffer/persistent/basic/tags.hpp>
 #include <vset/buffer/persistent/filesync/tags.hpp>
 #include <vset/buffer/persistent/filesync/ad_open.hpp>
 #include <vset/buffer/persistent/filesync/ad_clear.hpp>

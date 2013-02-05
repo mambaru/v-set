@@ -17,7 +17,7 @@
 #include <errno.h>
 
 
-namespace vset { namespace buffer { namespace persistent{
+namespace vset { namespace buffer { namespace persistent{ namespace file{
 
 struct ad_write_file
 {
@@ -29,6 +29,6 @@ struct ad_write_file
   }
 };
 
-}}}
+}}}}
 
 #endif
