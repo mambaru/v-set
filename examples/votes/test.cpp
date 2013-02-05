@@ -207,10 +207,10 @@ int main()
 
   contents.buffer().open( (preffix + "/contents.bin").c_str() );
   contents.buffer().reserve( items * sizeof(rate::Content) );
-
+  
   contents_by_ratings_i.get_allocator().memory().buffer().open( (preffix + "/contents_by_ratings_i.bin").c_str() );
   contents_by_ratings_i.get_allocator().memory().buffer().reserve( items * sizeof(rate::offset_t) );
-
+  
   for ( size_t i = 0; i < items; ++i )
   {
     rate::content_storage_t::pointer ptr = contents.allocate(1);
@@ -241,14 +241,20 @@ int main()
 
   if ( it != contents_by_ratings_i.end() )
   {
+    size_t offset = *it;
+    std::cout << offset << std::endl;
+    contents.deallocate( ptr, 1 );  
     ptr = static_cast<size_t>(*it);
     std::cerr << ptr->owner_id << ", " << ptr->rating_id << "\n";
   }
   else
+  {
+    contents.deallocate( ptr, 1 );
     std::cerr << "fail\n";
+  }
 
   
-  contents.deallocate( ptr, 1 );
+  
 
   return 0;
 }

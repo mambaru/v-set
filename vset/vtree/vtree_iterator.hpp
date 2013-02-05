@@ -50,7 +50,7 @@ public:
   
   template<typename TI, typename VT>
   vtree_iterator(const vtree_iterator<TI, VT>& slf)
-    : _itr(slf.get_tree_iteartor() )
+    : _itr(slf.get_source_iteartor() )
     , _pos(slf.get_position() )
   {
   }
