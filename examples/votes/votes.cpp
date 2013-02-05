@@ -256,7 +256,7 @@ bool votes::add_content(id_t rating_id, id_t content_id, id_t country_id, id_t r
   *ptr = content(rating_id, content_id, 2000.0, country_id, region_id, city_id, metro_id);
 
   // Проверяем есть ли контент с таким id
-  content_index::iterator itr = _content_index->find( static_cast<size_t>(ptr) );
+  content_index::iterator itr = _content_index->find( /*преобразовывает в offset_t*/ static_cast<size_t>(ptr) );
 
   if ( itr != _content_index->end() )
   {
