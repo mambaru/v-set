@@ -18,8 +18,10 @@
 namespace rate {
 
 #define NAME_LENGTH 256
-#define VSET_VECTOR_LENGTH 512 
+#define VSET_VECTOR_LENGTH 512
+#define START_MARK 2000.0
 
+// max index std::numeric_limits<uint32_t>::max(), если индексов будет больше, то использовать size_t
 typedef uint32_t  offset_t;
 
 typedef uint32_t  id_t;
@@ -97,8 +99,7 @@ struct Rating
 }; // Rating
 
 
-typedef vset::vtree::vtree< vset::vtree::aspect<Rating, std::less<Rating>, VSET_VECTOR_LENGTH> > rating_tree_t;
-
+//typedef vset::vtree::vtree< vset::vtree::aspect<Rating, std::less<Rating>, VSET_VECTOR_LENGTH> > rating_tree_t;
 
 //~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
@@ -109,19 +110,33 @@ typedef id_t     country_id_t;
 typedef uint16_t age_id_t;
 typedef uint16_t loc_id_t;
 
+
 struct Content
 {
   Content()
+    : id(0),
+      owner_id(0),
+      rating_id(0),
+      country_id(0),
+      age_id(0),
+      loc1_id(0),
+      loc2_id(0),
+      loc3_id(0),
+      is_intim(false),
+      is_real(false),
+      mark(START_MARK),
+      updated(0),
+      is_deleted(false)
   {
-    this->id = 0;
-    this->rating_id = 0;
   }
 
+  /*
   bool
   operator< ( Content const & c ) const
   {
     return this->id < c.id;
   }
+  */
 
 //members
 
@@ -136,15 +151,63 @@ struct Content
   bool          is_intim;
   bool          is_real;
   double        mark;
-  time_t        updated; 
+  time_t        updated;
+  bool          is_deleted; // создаем индекс в дереве удаленных контентов, и помечаем флаг (для GetExpiredContent и etc.)
 
 }; // Content
+
+
+typedef vset::memory::manager< vset::memory::fsb::aspect<Content> > content_storage_t;
+
+
+struct ContentByIdFunctor
+{
+  typedef typename content_storage_t::pointer   content_pointer_t;
+  //typedef typename content_storage_t::const_pointer   content_const_pointer_t;
+
+
+  ContentByIdFunctor()
+    : leftp ( NULL ),
+      rightp( NULL )
+  {
+  }
+  
+  ContentByIdFunctor( content_pointer_t cont_ptr )
+    : leftp ( cont_ptr ),
+      rightp( cont_ptr )
+  {
+  }
+
+  bool
+  operator()( rate::offset_t lv, rate::offset_t rv ) const
+  {
+    leftp  = static_cast<size_t>(lv);
+    rightp = static_cast<size_t>(rv); // call's operator size_t()
+    return leftp->id < rightp->id;
+  }
+ 
+  content_pointer_t mutable leftp;
+  content_pointer_t mutable rightp;
+
+}; //ContentByIdFunctor
+
+typedef vset::vtree::vtree< vset::vtree::aspect<rate::offset_t, ContentByIdFunctor> > content_by_rating_index_t;
 
 
 } // ns rate
 
 
+int main()
+{
+  rate::content_storage_t          contents; 
+  rate::content_by_rating_index_t  contents_by_ratings_i( rate::ContentByIdFunctor( contents.end() ) );
 
+  return 0;
+}
+
+
+
+/*
 int main()
 {
   size_t const iters = 10000000;
@@ -199,7 +262,7 @@ int main()
 
   return 0;
 }
-
+*/
 
 
 
