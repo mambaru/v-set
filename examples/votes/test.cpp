@@ -167,7 +167,7 @@ struct ContentByIdFunctor
 
 
   ContentByIdFunctor()
-    : leftp ( NULL ),
+    : leftp ( NULL ), // нельзя использовать, если не инициализированно итератором от хранилища для индексов
       rightp( NULL )
   {
   }
@@ -199,8 +199,56 @@ typedef vset::vtree::vtree< vset::vtree::aspect<rate::offset_t, ContentByIdFunct
 
 int main()
 {
+  size_t const items = 1000;
+  std::string preffix = "."; 
+
   rate::content_storage_t          contents; 
   rate::content_by_rating_index_t  contents_by_ratings_i( rate::ContentByIdFunctor( contents.end() ) );
+
+  contents.buffer().open( (preffix + "/contents.bin").c_str() );
+  contents.buffer().reserve( items * sizeof(rate::Content) );
+
+  contents_by_ratings_i.get_allocator().memory().buffer().open( (preffix + "/contents_by_ratings_i.bin").c_str() );
+  contents_by_ratings_i.get_allocator().memory().buffer().reserve( items * sizeof(rate::offset_t) );
+
+  for ( size_t i = 0; i < items; ++i )
+  {
+    rate::content_storage_t::pointer ptr = contents.allocate(1);
+    
+    //*ptr = rate::Content();
+    new(ptr) rate::Content();
+    ptr->id = i;
+    ptr->owner_id = i + 1;
+    ptr->rating_id = i + 2;
+
+    rate::content_by_rating_index_t::iterator it = contents_by_ratings_i.find( static_cast<size_t>(ptr) );   
+
+    if ( it == contents_by_ratings_i.end() )
+    {
+      contents_by_ratings_i.insert( static_cast<size_t>(ptr) );
+    }
+    else
+      contents.deallocate( ptr, 1 );
+  }
+
+  rate::content_storage_t::pointer ptr = contents.allocate(1);
+  
+  //*ptr = rate::Content();
+  new(ptr) rate::Content();
+  ptr->id = 133;
+
+  rate::content_by_rating_index_t::iterator it = contents_by_ratings_i.find( static_cast<size_t>(ptr) ); 
+
+  if ( it != contents_by_ratings_i.end() )
+  {
+    ptr = static_cast<size_t>(*it);
+    std::cerr << ptr->owner_id << ", " << ptr->rating_id << "\n";
+  }
+  else
+    std::cerr << "fail\n";
+
+  
+  contents.deallocate( ptr, 1 );
 
   return 0;
 }
