@@ -19,7 +19,9 @@ struct ad_erase_range
   typename T::const_iterator
   operator()(T& t, typename T::const_iterator beg, typename T::const_iterator end)
   {
-    for ( ;beg!=end; /*++beg*/)
+    // for ( ;beg!=end; /*++beg*/)
+    size_t dist = std::distance(beg, end);
+    for ( ;dist!=0; --dist)
       beg = t.get_aspect().template get<_erase_iterator_>()(t, beg);
     return beg;
   }
@@ -32,7 +34,9 @@ struct ad_erase_range
   template<typename T>
   void operator()(T& t, typename T::iterator beg, typename T::iterator end)
   {
-    for ( ;beg!=end;)
+    //for ( ;beg!=end;)
+    size_t dist = std::distance(beg, end);
+    for ( ;dist!=0; --dist)
       beg = t.get_aspect().template get<_erase_iterator_>()(t, beg);
   }
 };

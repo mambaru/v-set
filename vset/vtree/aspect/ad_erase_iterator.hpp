@@ -9,6 +9,8 @@
 
 #include <vset/vtree/aspect/tags.hpp>
 
+#include <iostream>
+
 namespace vset{ namespace vtree{
 
 #ifdef __GXX_EXPERIMENTAL_CXX0X__
@@ -19,7 +21,7 @@ struct ad_erase_iterator
   typename T::const_iterator
   operator()(T& t, typename T::const_iterator itr)
   {
-    throw;
+    throw std::logic_error("not impl");
     /*
     if ( itr == t.cend() )
       return itr;
@@ -54,8 +56,9 @@ struct ad_erase_iterator
   template<typename T>
   typename T::iterator operator()(T& t, typename T::iterator itr)
   {
+    //std::cout << "--->ad_erase_iterator" << std::endl;
     if ( itr == t.end() )
-      throw std::out_of_range("ad_erase_iterator");
+      throw std::out_of_range("ad_erase_iterator itr == t.end()");
       //return itr;
 
     typedef typename T::iterator iterator;
@@ -74,11 +77,13 @@ struct ad_erase_iterator
 
     if ( cont_itr->second->empty() )
     {
+      //std::cout << "--->ad_erase_iterator: t.get_container().erase( cont_itr++ ); " << std::endl;
       t.get_container().erase( cont_itr++ );
       offset = 0;
     }
     else
     {
+      //std::cout << "--->ad_erase_iterator: _update_node_key_; " << std::endl;
       cont_itr = t.get_aspect().template get<_update_node_key_>()(t, cont_itr );
     }
 

@@ -34,11 +34,15 @@ struct compare_pair
     : _comp(comp)
   {
   }
+
+
+
+
   
   bool operator()(const K& first, const K& second) const
   {
     return _comp(first.first, second.first)
-           || ( !_comp(first.first, second.first)
+           || ( !_comp(second.first, first.first)
                 && _comp(first.second, second.second) );
   }
 };

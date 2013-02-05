@@ -126,6 +126,8 @@ public:
   {
     _vset = new set_type;
     _vset->get_allocator().memory().buffer().open( filename.c_str() );
+    _vset->get_allocator().memory().buffer().truncate(0);
+    _vset->get_allocator().memory().buffer().reserve( 1024*1024);
     std::cout << "persist_container size after open: " << _vset->size() << std::endl;
     if ( clear )
     {
@@ -315,14 +317,42 @@ void test_erase1(T& /*t*/, const Container& cnt, const F& init, bool onlyCheck)
     for ( std::list<int>::iterator beg = values2.begin(); beg!=values2.end(); ++beg )
     {
 
+      /*
       std::cout << *beg << " [";
       for (typename Container::iterator tmpi = cnt->begin(); tmpi != cnt->end(); ++tmpi )
         std::cout << *tmpi <<",";
       std::cout << "]" << std::endl ;
+      */
 
       try
       {
+        if ( cnt->find( *beg ) == cnt->end() )
+        {
+          std::cout << "fatal" << std::endl ;
+          abort();
+        }
+        /*
+        else
+          std::cout << "FOUND" << std::endl ;
+
+        typename Container::iterator lower = cnt->lower_bound(*beg);
+        typename Container::iterator upper = cnt->upper_bound(*beg);
+        if ( upper != cnt->end() )
+        {
+          if ( *upper == *beg )
+            std::cout << "fatal2" << *upper << std::endl ;
+          else
+            std::cout << "UPPER " << *upper << std::endl ;
+        }
+
+        std::cout << "distance: " << std::distance(lower, upper) << std::endl;
+
+        std::cout << "erase: " << *beg << std::endl;
+
+        std::cout << "{{{"<< std::endl;
+        */
         cnt->erase( *beg );
+        //std::cout << "}}}"<< std::endl;
       }
       catch(const std::exception& e)
       {
@@ -435,21 +465,25 @@ void test_all_persist(T& t)
   std::cout << "------------------- test_all_persist -------------------" << std::endl;
   test_stack.push("test_all_persist");
 
-  test_persist<3>(t);
+  /*test_persist<3>(t);
   test_persist<4>(t);
   test_persist<5>(t);
   test_persist<6>(t);
   test_persist<7>(t);
   test_persist<13>(t);
+  */
   test_persist<32>(t);
   test_persist<64>(t);
+  /*
   test_persist<128>(t);
+  
   test_persist<256>(t);
   test_persist<500>(t);
   test_persist<1000>(t);
 
   test_persist<1024>(t);
   test_persist<4000>(t);
+  */
   
   test_stack.pop();
 }
