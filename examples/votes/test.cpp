@@ -199,7 +199,7 @@ typedef vset::vtree::vtree< vset::vtree::aspect<rate::offset_t, ContentByIdFunct
 
 int main()
 {
-  size_t const items = 1000;
+  size_t const items = 1000000;
   std::string preffix = "."; 
 
   rate::content_storage_t          contents; 
@@ -215,8 +215,8 @@ int main()
   {
     rate::content_storage_t::pointer ptr = contents.allocate(1);
     
-    //*ptr = rate::Content();
-    new(ptr) rate::Content();
+    *ptr = rate::Content();
+    //new(ptr) rate::Content();
     ptr->id = i;
     ptr->owner_id = i + 1;
     ptr->rating_id = i + 2;
@@ -233,8 +233,8 @@ int main()
 
   rate::content_storage_t::pointer ptr = contents.allocate(1);
   
-  //*ptr = rate::Content();
-  new(ptr) rate::Content();
+  *ptr = rate::Content();
+  //new(ptr) rate::Content();
   ptr->id = 133;
 
   rate::content_by_rating_index_t::iterator it = contents_by_ratings_i.find( static_cast<size_t>(ptr) ); 
