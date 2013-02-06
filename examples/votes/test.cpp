@@ -237,10 +237,13 @@ int main()
   new(ptr) rate::Content();
   ptr->id = 133;
 
-  rate::content_by_rating_index_t::iterator it = contents_by_ratings_i.find( static_cast<size_t>(ptr) ); 
+  rate::content_by_rating_index_t::iterator it = contents_by_ratings_i.find( static_cast<size_t>(ptr) );
+  rate::content_by_rating_index_t::const_iterator it2 = it;
+  rate::content_by_rating_index_t::const_iterator it3 = it2;
 
   if ( it != contents_by_ratings_i.end() )
   {
+    contents_by_ratings_i.erase(it2);
     contents.deallocate( ptr, 1 );
     ptr = static_cast<size_t>(*it);
     std::cerr << ptr->owner_id << ", " << ptr->rating_id << "\n";

@@ -18,7 +18,7 @@ namespace vset{ namespace vtree{
 struct ad_erase_iterator
 {
   template<typename T>
-  typename T::const_iterator
+  typename T::iterator
   operator()(T& t, typename T::const_iterator itr)
   {
     if ( itr == t.end() )
