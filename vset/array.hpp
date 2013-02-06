@@ -56,21 +56,29 @@ public:
   
   reference front ( )
   {
+    if ( _size==0 )
+      throw std::out_of_range("array::at");
     return _data[0];
   }
   
   const_reference front ( ) const
   {
+    if ( _size==0 )
+      throw std::out_of_range("array::at");
     return _data[0];
   }
   
   reference back ( )
   {
+    if ( _size==0 )
+      throw std::out_of_range("array::at");
     return _data[_size-1];
   }
   
   const_reference back ( ) const
   {
+    if ( _size==0 )
+      throw std::out_of_range("array::at");
     return _data[_size-1];
   }
 
@@ -147,7 +155,30 @@ public:
   {
     return _data + _size;
   }
-  
+
+#ifdef __GXX_EXPERIMENTAL_CXX0X__
+  const reverse_iterator crbegin() const
+  {
+    return const_reverse_iterator(cend());
+  }
+
+  const_reverse_iterator crend() const
+  {
+    return const_reverse_iterator( begin() );
+  }
+
+  const_iterator cbegin() const
+  {
+    return _data;
+  }
+
+  const_iterator cend() const
+  {
+    return _data + _size;
+  }
+
+#endif
+
   iterator last()
   {
     return _data + _size - 1;
@@ -221,15 +252,27 @@ public:
     _size+=dist;
   }
 
-  iterator erase ( iterator position )
+#ifdef __GXX_EXPERIMENTAL_CXX0X__
+  iterator erase ( const_iterator position )
   {
-    if ( position == this->end() )
+    if ( position == this->cend() )
       throw std::out_of_range("iterator array<>::erase ( iterator position )");
     
     std::copy( position + 1, this->end(), position);
     this->resize( _size - 1 );
     return position;
   }
+#else
+  iterator erase ( iterator position )
+  {
+    if ( position == this->end() )
+      throw std::out_of_range("iterator array<>::erase ( iterator position )");
+
+    std::copy( position + 1, this->end(), position);
+    this->resize( _size - 1 );
+    return position;
+  }
+#endif
 
   iterator erase ( iterator first, iterator last )
   {
