@@ -8,7 +8,8 @@ include_directories(${FASLIB_DIR})
 include_directories(${CMAKE_SOURCE_DIR})
 
 if(UNIX)
-  SET(CMAKE_CXX_FLAGS "-W -Wall -Werror -pedantic -fno-rtti -Wno-long-long -Wno-unused-variable")
+  SET(CMAKE_CXX_FLAGS "-W -Wall -Werror -pedantic -fno-rtti -Wno-long-long -Wno-unused-variable -std=c++11")
+ #-std=c++11
   SET(CMAKE_CXX_FLAGS_RELEASE "-O3 -DNDEBUG ")
   SET(CMAKE_CXX_FLAGS_RELWITHDEBINFO  "-O2 -g -DNDEBUG")
   SET(CMAKE_CXX_FLAGS_DEBUG  "-O0 -g")

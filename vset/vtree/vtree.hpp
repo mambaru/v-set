@@ -38,7 +38,7 @@ struct compare_pair
   bool operator()(const K& first, const K& second) const
   {
     return _comp(first.first, second.first)
-           || ( !_comp(first.first, second.first)
+           || ( !_comp(second.first, first.first)
                 && _comp(first.second, second.second) );
   }
 };
@@ -284,7 +284,7 @@ public:
 
   iterator insert(value_type&& value)
   {
-    return this->get_aspect().template get<_insert_value_>()(*this, value);
+    return this->get_aspect().template get<_insert_value_>()(*this, value );
   }
 
 #endif
@@ -399,12 +399,14 @@ public:
 
   std::pair<iterator, iterator> equal_range(const key_type& x)
   {
-    throw not_impl("std::pair<iterator, iterator> equal_range(const key_type& x)");
+    return std::make_pair(this->lower_bound(x), this->upper_bound(x) );
+    //throw not_impl("std::pair<iterator, iterator> equal_range(const key_type& x)");
   }
 
   std::pair<const_iterator, const_iterator> equal_range(const key_type& x) const
   {
-    throw not_impl("std::pair<const_iterator, const_iterator> equal_range(const key_type& x) const");
+    return std::make_pair(this->lower_bound(x), this->upper_bound(x) );
+    //throw not_impl("std::pair<const_iterator, const_iterator> equal_range(const key_type& x) const");
   }
 
 

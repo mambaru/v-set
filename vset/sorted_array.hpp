@@ -13,7 +13,7 @@ class sorted_array
   typedef array<T, N> super;
 
 public:
-  using super::erase;
+  
   typedef Compare key_compare;
   typedef Compare value_compare;
 
@@ -80,6 +80,32 @@ public:
     super::insert( super::end(), first, last );
     this->sort(comp);
   }
+
+  using super::erase;
+  //using super::cbegin;
+#ifdef __GXX_EXPERIMENTAL_CXX0X__
+  iterator erase ( const_iterator position )
+  {
+    if ( position == this->cend() )
+      throw std::out_of_range("iterator array<>::erase ( iterator position )");
+
+    iterator dst = this->begin() + std::distance(this->cbegin(), position);
+    std::copy( position + 1, this->cend(), dst);
+    this->resize( this->size() - 1 );
+    return dst;
+  }
+#else
+  iterator erase ( iterator position )
+  {
+    if ( position == this->end() )
+      throw std::out_of_range("iterator array<>::erase ( iterator position )");
+
+    std::copy( position + 1, this->end(), position);
+    this->resize( this->size() - 1 );
+    return position;
+  }
+#endif
+
 
   size_type erase( const T& x, const value_compare& comp = value_compare() )
   {

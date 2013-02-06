@@ -34,7 +34,7 @@ struct ad_first_proper_node
     if (beg==end)
       return itr;
     
-    value_type value = itr->first.first;
+    const value_type& value = itr->first.first;
 
     for ( ++beg; beg!=end; ++beg )
     {

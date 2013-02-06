@@ -30,7 +30,8 @@ struct ad_upper_node
 
     if ( itr!=container.end() )
     {
-      if ( itr!=container.begin() && t.get_aspect().template get<_compare_>()(itr->first.first, value) )
+      //if ( itr!=container.begin() && t.get_aspect().template get<_compare_>()(itr->first.first, value) )
+      if ( itr!=container.begin() && t.get_aspect().template get<_compare_>()(value, itr->first.first) )
         --itr;
     }
     else
