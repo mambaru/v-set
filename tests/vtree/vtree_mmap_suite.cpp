@@ -495,6 +495,7 @@ void test_all_persist(T& t)
 {
   std::cout << "------------------- test_all_persist -------------------" << std::endl;
   test_stack.push("test_all_persist");
+  t << fas::testing::nothing();
 
   
   /*test_persist<3>(t);
@@ -502,6 +503,7 @@ void test_all_persist(T& t)
   test_persist<5>(t);*/
   /*test_persist<6>(t);
   test_persist<7>(t);*/
+  /*
   test_persist<13>(t);
   
   test_persist<32>(t);
@@ -514,6 +516,7 @@ void test_all_persist(T& t)
 
   test_persist<1024>(t);
   test_persist<4000>(t);
+  */
   
 
   test_stack.pop();

@@ -37,8 +37,8 @@ struct ad_erase_iterator
 
 
     cont_itr->second->erase(
-      cont_itr->second->cbegin()
-      + offset
+      cont_itr->second->cbegin() + offset,
+      t.get_aspect().template get<_compare_>()                        
     );
 
     if ( cont_itr->second->empty() )

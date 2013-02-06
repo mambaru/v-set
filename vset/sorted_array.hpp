@@ -41,33 +41,34 @@ public:
     : super()
   {};
 
-  void resize ( size_type sz, T value = value_type(), const value_compare& comp = value_compare() )
+  void resize ( size_type sz, T value /*= value_type()*/, const value_compare& comp /*= value_compare()*/ )
   {
+    bool f = this->size() < sz;
     super::resize(sz, value);
-    this->sort(comp);
+    if ( f ) this->sort(comp);
   }
 
   template <class InputIterator>
-  void assign( InputIterator first, InputIterator last, const value_compare& comp = value_compare() )
+  void assign( InputIterator first, InputIterator last, const value_compare& comp /*= value_compare()*/ )
   {
     super::assign(first, last);
     this->sort(comp);
   }
 
-  void push_back ( const T& x, const value_compare& comp = value_compare() )
+  void push_back ( const T& x, const value_compare& comp /*= value_compare()*/ )
   {
     super::push_back(x);
     this->sort(comp);
   }
 
-  iterator insert ( const T& x, const value_compare& comp = value_compare() )
+  iterator insert ( const T& x, const value_compare& comp /*= value_compare()*/ )
   {
     iterator position = std::upper_bound(super::begin(), super::end(), x, comp );
     return super::insert(position, x);
   }
 
   
-  void insert ( size_type n, const T& x, const value_compare& comp = value_compare() )
+  void insert ( size_type n, const T& x, const value_compare& comp /*= value_compare()*/ )
   {
     iterator position = std::upper_bound(super::begin(), super::end(), x, comp );
     return super::insert(position, n, x);
@@ -75,39 +76,39 @@ public:
   
 
   template <class InputIterator>
-  void insert ( InputIterator first, InputIterator last, const value_compare& comp = value_compare() )
+  void insert ( InputIterator first, InputIterator last, const value_compare& comp /*= value_compare()*/ )
   {
     super::insert( super::end(), first, last );
     this->sort(comp);
   }
 
-  using super::erase;
+  //using super::erase;
   //using super::cbegin;
 #ifdef __GXX_EXPERIMENTAL_CXX0X__
-  iterator erase ( const_iterator position )
+  iterator erase ( const_iterator position, const value_compare& comp )
   {
     if ( position == this->cend() )
       throw std::out_of_range("iterator array<>::erase ( iterator position )");
 
     iterator dst = this->begin() + std::distance(this->cbegin(), position);
     std::copy( position + 1, this->cend(), dst);
-    this->resize( this->size() - 1 );
+    this->resize( this->size() - 1, value_type(), comp );
     return dst;
   }
 #else
-  iterator erase ( iterator position )
+  iterator erase ( iterator position, const value_compare& comp )
   {
     if ( position == this->end() )
       throw std::out_of_range("iterator array<>::erase ( iterator position )");
 
     std::copy( position + 1, this->end(), position);
-    this->resize( this->size() - 1 );
+    this->resize( this->size() - 1, value_type(), comp );
     return position;
   }
 #endif
 
 
-  size_type erase( const T& x, const value_compare& comp = value_compare() )
+  size_type erase( const T& x, const value_compare& comp )
   {
     size_type count = 0;
     std::pair<iterator, iterator> range = std::equal_range(super::begin(), super::end(), x, comp );
@@ -117,7 +118,7 @@ public:
   }
 
 
-  void sort(const value_compare& comp = value_compare())
+  void sort(const value_compare& comp )
   {
     std::sort( super::begin(), super::end(), comp );
   }

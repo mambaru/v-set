@@ -245,6 +245,8 @@ int main()
     ptr = static_cast<size_t>(*it);
     std::cerr << ptr->owner_id << ", " << ptr->rating_id << "\n";
 
+    it = contents_by_ratings_i.find( static_cast<size_t>(ptr) );
+    
     contents_by_ratings_i.erase( static_cast<size_t>(ptr) );
     
     it = contents_by_ratings_i.find( static_cast<size_t>(ptr) );
