@@ -115,7 +115,7 @@ public:
         ++_itr;
       }
     }
-    _pos = n;
+    _pos += n;
     return *this;
   }
 
@@ -133,7 +133,7 @@ public:
       }
     }
 
-    _pos = _itr->second->size() - n;
+    _pos -= n/*_itr->second->size() - n*/;
     return *this;
   }
 

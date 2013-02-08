@@ -17,5 +17,14 @@ int main()
   {
     
   }
+
+  std::vector<content> result;
+  if ( !v.get_content_for_rating(1, 100, 100, result) )
+    std::cout << "not found" << std::endl;
+  std::cout << result.size() << std::endl;
+  for (auto c: result)
+  {
+    std::cout << "content: " << c.content_id << std::endl;
+  }
   return 0;
 }

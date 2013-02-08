@@ -1,6 +1,8 @@
 #include "votes.hpp"
 #include <vset/vtree/vtree.hpp>
 #include <vset/memory/manager.hpp>
+#include <vset/multiset.hpp>
+#include <vset/allocators/mmap_allocator.hpp>
 #include <iostream>
 
 /**
@@ -49,54 +51,6 @@ class poller_by_content
   : public vset::vtree::vtree< vset::vtree::aspect<poller, f_poller_by_content, 512> >
 {};
 
-/// Информация о контенте
-struct content
-{
-  id_t rating_id;
-  id_t content_id;
-
-  id_t country_id;
-  id_t region_id;
-  id_t city_id;
-  id_t metro_id;
-
-  int votes;
-  double mark;
-
-  content()
-    : rating_id(0)
-    , content_id(0)
-    , country_id(0)
-    , region_id(0)
-    , city_id(0)
-    , metro_id(0)
-    , votes(0)
-    , mark(0)
-  {}
-
-  content(id_t content_id)
-    : rating_id(0)
-    , content_id(content_id)
-    , country_id(0)
-    , region_id(0)
-    , city_id(0)
-    , metro_id(0)
-    , votes(0)
-    , mark(0)
-  {}
-
-
-  content(id_t rating_id, id_t content_id, double mark = 2000.0, id_t country_id = 0, id_t region_id  = 0, id_t city_id  = 0, id_t metro_id = 0)
-    : rating_id(rating_id)
-    , content_id(content_id)
-    , country_id(country_id)
-    , region_id(region_id)
-    , city_id(city_id)
-    , metro_id(metro_id)
-    , votes(0)
-    , mark(mark)
-  {}
-};
 
 /// Несортированое хранилище
 class content_storage
@@ -190,6 +144,37 @@ public:
   }
 };
 
+
+struct content_by_rating
+{
+  id_t rating_id;
+  id_t content_id;
+  offset_t offset;
+
+  content_by_rating(id_t rating_id = 0, id_t content_id = 0, offset_t offset = 0)
+    : rating_id(rating_id)
+    , content_id(content_id)
+    , offset(offset)
+  {}
+
+  bool operator < ( const content_by_rating& right) const
+  {
+    return ( rating_id < right.rating_id )
+           || ( !(right.rating_id < rating_id)
+                && (content_id < right.content_id) );
+  }
+};
+
+
+struct content_by_rating_index2
+  : vset::multiset< content_by_rating, std::less<content_by_rating>, vset::mmap_allocator<512> >
+{
+  
+};
+
+
+
+
 votes::votes()
 {
   // Создаем сортированное хранилище
@@ -200,6 +185,7 @@ votes::votes()
   // указатель можно взять из хранилища, _content->end() - вполне сойдет
   _content_index= new content_index(f_content_by_id(_content->end()));
   _content_by_rating_index = new content_by_rating_index(f_content_by_rating(_content->end()));
+  _content_by_rating_index2 = new content_by_rating_index2;
   //_rating_poller_content_index = new rating_poller_content_index(f_rating_poller_content(_votes->end()));
 }
 
@@ -212,6 +198,7 @@ votes::~votes()
   delete _content;
   delete _content_index;
   delete _content_by_rating_index;
+  delete _content_by_rating_index2;
   //delete _rating_poller_content_index;
 }
 
@@ -223,6 +210,7 @@ void votes::open(const std::string& preffix)
   _content->buffer().open( (preffix + "/content.bin").c_str() );
   _content_index->get_allocator().memory().buffer().open( (preffix + "/content_by_id.bin").c_str() );
   _content_by_rating_index->get_allocator().memory().buffer().open( (preffix + "/content_by_rating.bin").c_str() );
+  _content_by_rating_index2->get_allocator().memory().buffer().open( (preffix + "/content_by_rating2.bin").c_str() );
 
   // если в хранилище есть данные а индекс пустой
   if ( _content->buffer().size()!=0 && _content_index->empty() )
@@ -237,6 +225,7 @@ void votes::sync()
   _pollers->get_allocator().memory().buffer().sync(false);
   _content->buffer().sync(false);
   _content_by_rating_index->get_allocator().memory().buffer().sync(false);
+  _content_by_rating_index2->get_allocator().memory().buffer().sync(false);
   _content_index->get_allocator().memory().buffer().sync(false);
 }
 
@@ -245,6 +234,7 @@ void votes::close()
   _pollers->get_allocator().memory().buffer().close();
   _content->buffer().close();
   _content_by_rating_index->get_allocator().memory().buffer().close();
+  _content_by_rating_index2->get_allocator().memory().buffer().close();
   _content_index->get_allocator().memory().buffer().close();
 }
 
@@ -267,6 +257,7 @@ bool votes::add_content(id_t rating_id, id_t content_id, id_t country_id, id_t r
   // Добавляем в индексы
   _content_index->insert( /*static_cast<offset_t>(*/ static_cast<size_t>(ptr) /*)*/ );
   _content_by_rating_index->insert( static_cast<offset_t>( static_cast<size_t>(ptr) ) );
+  _content_by_rating_index2->insert( content_by_rating(rating_id, content_id, static_cast<size_t>(ptr) ) );
   return true;
 }
 
@@ -304,6 +295,35 @@ bool votes::add_vote(id_t poller_id, id_t nice_content_id, id_t ugly_content_id 
   _pollers->insert( poller(poller_id, nice_content_id) );
   _pollers->insert( poller(poller_id, ugly_content_id) );
 
+  return true;
+}
+
+bool votes::get_content_for_rating(id_t rating_id, size_t offset, size_t limit, std::vector<content>& contents) const
+{
+  typedef content_by_rating_index2::const_iterator const_iterator;
+  const_iterator lower = _content_by_rating_index2->lower_bound( content_by_rating(rating_id) );
+  const_iterator upper = _content_by_rating_index2->upper_bound( content_by_rating(rating_id, static_cast<id_t>(-1) ) );
+
+  if ( std::distance(lower, upper ) <= offset  )
+    return false;
+
+  lower += offset;
+
+  if ( limit < std::distance(lower, upper ) )
+  {
+    upper = lower + limit;
+  }
+
+  content_storage::pointer ptr = _content->end();
+
+  contents.reserve(limit);
+  for ( ;lower!=upper; ++lower )
+  {
+    ptr = lower->offset;
+    contents.push_back( *ptr );  
+  }
+
+  upper = lower - limit;
   return true;
 }
 

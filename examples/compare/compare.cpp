@@ -26,11 +26,6 @@ private:
   Ext  _ext;
   Comp _comp;
 };
-/*
-    return ( poller_id < right.poller_id )
-           || ( !(right.poller_id < poller_id)
-           && (content_id < right.content_id) );
-           */
 
 
 template<typename L = fas::empty_list>
@@ -103,7 +98,7 @@ typedef index_compare<
     key< fas::member<hit, int, &hit::dst>, std::greater<int> >,
     key< fas::member<hit, int, &hit::src> >
   >::type >
-> ptr_compare;
+> by_dst_src;
 
 int main()
 {
