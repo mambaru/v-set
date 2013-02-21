@@ -19,11 +19,6 @@ struct ad_create_node
   typename T::container_type::iterator
   operator()(T& t, const typename T::value_type& value)
   {
-    typedef typename T::container_type container_type;
-    typedef typename container_type::iterator container_iterator;
-
-    container_type& container = t.get_container();
-
     typedef typename T::allocator_type allocator_type;
     typedef typename allocator_type::value_type array_type;
     typedef typename allocator_type::pointer    pointer;
