@@ -17,14 +17,14 @@ namespace vset{ namespace vtree{
 struct ad_erase_range
 {
   template<typename T>
-  typename T::const_iterator
+  typename T::iterator
   operator()(T& t, typename T::const_iterator beg, typename T::const_iterator end)
   {
-    
+    typename T::iterator last = t.end();
     size_t dist = std::distance(beg, end);
     for ( ;dist!=0; --dist)
-      beg = t.get_aspect().template get<_erase_iterator_>()(t, beg);
-    return beg;
+      last = t.get_aspect().template get<_erase_iterator_>()(t, beg);
+    return last;
   }
 };
 
