@@ -113,6 +113,7 @@ public:
 
   typedef vset::vtree::vtree< vset::vtree::aspect<int, std::less<int>, ArraySize> > set_type;
   typedef typename set_type::iterator iterator;
+  typedef typename set_type::const_iterator const_iterator;
   //typedef typename vset_helper<int, std::less<int>, alloc_type::persistent, ArraySize >::vset_type set_type;
   //typedef vset<int> set_type;
 
@@ -318,6 +319,16 @@ void test_erase1(T& /*t*/, const Container& cnt, const F& init, bool onlyCheck)
   std::list<int>::iterator beg = values1.begin();
   std::list<int>::iterator end = values1.end();
 
+  if (0)
+  {
+    Container cnt2("aaaa", 10);
+    typename Container::const_iterator lower = cnt2->lower_bound(1);
+    typename Container::const_iterator upper = cnt2->upper_bound(10);
+    /*auto lower = cnt.lower_bound(1);
+    auto upper = cnt.upper_bound(10);
+    */
+    cnt2->erase(lower, upper);
+  }
 
   // Перемещаем каждый второй
 
@@ -498,8 +509,8 @@ void test_all_persist(T& t)
   t << fas::testing::nothing();
 
   
-  /*test_persist<3>(t);
-  test_persist<4>(t);
+  test_persist<3>(t);
+  /*test_persist<4>(t);
   test_persist<5>(t);*/
   /*test_persist<6>(t);
   test_persist<7>(t);*/
@@ -528,9 +539,9 @@ void test_all_non_persist(T& t)
   std::cout << "------------------- test_all_non_persist -------------------" << std::endl;
   test_stack.push("test_all_non_persist");
 
-  /*
+  
   test_non_persist<3>(t);
-  test_non_persist<4>(t);
+  /*test_non_persist<4>(t);
   test_non_persist<5>(t);
   test_non_persist<6>(t);
   test_non_persist<7>(t);
