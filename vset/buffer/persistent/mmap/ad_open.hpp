@@ -22,14 +22,14 @@ namespace vset { namespace buffer { namespace persistent{ namespace mmap{
 struct ad_open
 {
   ad_open(){}
-  
+
   template<typename T>
   void operator()( T& t)
   {
     std::string file_name = t.get_aspect().template get<_file_name_>();
     this->operator()(t, file_name );
   }
-  
+
   template<typename T>
   void operator()( T& t, const std::string& file_name)
   {
@@ -40,7 +40,7 @@ struct ad_open
 
     size_t file_size = t.get_aspect().template get<_file_size_>()(t);
     typedef typename T::aspect::template advice_cast<_head_type_>::type head_type;
-    
+
     bool is_created = file_size < sizeof(head_type);
     if ( is_created  )
     {
@@ -59,7 +59,7 @@ struct ad_open
     if ( data == MAP_FAILED)
       throw;
 
-    if ( is_created ) 
+    if ( is_created )
       ::memset(data, 0, file_size);
 
     t.get_aspect().template get<_buffer_size_>() = file_size;

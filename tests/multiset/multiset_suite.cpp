@@ -25,6 +25,7 @@ UNIT(multiset_basic, "")
 
   t << equal<expect, size_t>( int_set.size(), 6) << FAS_TESTING_FILE_LINE;
 
+
   multiset_type::iterator itr = int_set.find(2);
 
   int_set.erase(itr);
@@ -32,8 +33,9 @@ UNIT(multiset_basic, "")
   t << equal<expect, size_t>( int_set.size(), 5) << FAS_TESTING_FILE_LINE;
 
   int_set.erase(1);
-  
+
   t << equal<expect, size_t>( int_set.size(), 2) << FAS_TESTING_FILE_LINE;
+
 
   t << nothing();
 }

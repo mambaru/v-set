@@ -13,7 +13,7 @@ namespace vset{ namespace vtree{
 
 
 #ifdef __GXX_EXPERIMENTAL_CXX0X__
-  
+
 struct ad_erase_range
 {
   template<typename T>
@@ -22,8 +22,12 @@ struct ad_erase_range
   {
     typename T::iterator last = t.end();
     size_t dist = std::distance(beg, end);
-    for ( ;dist!=0; --dist)
+    if (dist!=0)
+    {
       last = t.get_aspect().template get<_erase_iterator_>()(t, beg);
+      for ( --dist;dist!=0; --dist)
+        last = t.get_aspect().template get<_erase_iterator_>()(t, last);
+    }
     return last;
   }
 };
@@ -43,7 +47,7 @@ struct ad_erase_range
 };
 
 #endif
-  
+
 }}
 
 #endif
