@@ -26,13 +26,16 @@ struct ad_upper_node
     for ( ; itr!=container.end()
             && !t.get_aspect().template get<_compare_>()(value, itr->first.first)
             && !t.get_aspect().template get<_compare_>()(itr->first.first, value)
-          ; ++itr );
+          ; ++itr )
+    {
+    }
 
     if ( itr!=container.end() )
     {
-      //if ( itr!=container.begin() && t.get_aspect().template get<_compare_>()(itr->first.first, value) )
       if ( itr!=container.begin() && t.get_aspect().template get<_compare_>()(value, itr->first.first) )
+      {
         --itr;
+      }
     }
     else
     {

@@ -28,6 +28,7 @@ struct ad_erase_range
       for ( --dist;dist!=0; --dist)
         last = t.get_aspect().template get<_erase_iterator_>()(t, last);
     }
+    
     return last;
   }
 };

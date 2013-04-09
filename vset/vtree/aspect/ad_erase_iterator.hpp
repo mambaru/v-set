@@ -36,9 +36,10 @@ struct ad_erase_iterator
     container_iterator cont_itr = itr2.get_source_iteartor();
 
 
+
     cont_itr->second->erase(
       cont_itr->second->cbegin() + offset,
-      t.get_aspect().template get<_compare_>()                        
+      t.get_aspect().template get<_compare_>()
     );
 
     if ( cont_itr->second->empty() )
@@ -55,9 +56,6 @@ struct ad_erase_iterator
     --t.get_aspect().template get<_size_>();
 
     return iterator(cont_itr, offset);
-    
-    
-    throw std::logic_error("not impl");
   }
 };
 

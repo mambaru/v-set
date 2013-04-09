@@ -30,7 +30,7 @@ struct ad_upper_bound
     
     container_type& container = t.get_container();
 
-    if ( container.empty() )
+     if ( container.empty() )
       return t.end();
 
     container_iterator cont_itr = t.get_aspect().template get<_upper_node_>()(t, value);
@@ -46,13 +46,9 @@ struct ad_upper_bound
     );
 
     if ( itr == cont_itr->second->end() )
-      return t.end();
+      return ++ iterator( cont_itr, cont_itr->second->size()-1 );
 
     return iterator( cont_itr, std::distance(cont_itr->second->begin(), itr) );
-    /*return (itr!=cont_itr->second->end())
-            ? iterator( cont_itr, std::distance(cont_itr->second->begin(), itr) )
-            : iterator( ++cont_itr, 0 );
-            */
   }
 };
 

@@ -107,7 +107,8 @@ public:
   }
 #endif
 
-
+private:
+  /// BUG 
   size_type erase( const T& x, const value_compare& comp )
   {
     size_type count = 0;
@@ -116,7 +117,7 @@ public:
       super::erase(range.first);
     return count;
   }
-
+public:
 
   void sort(const value_compare& comp )
   {

@@ -163,7 +163,8 @@ struct chain
     size_t offset = reinterpret_cast<char*>(value) - reinterpret_cast<char*>(this->first_chunk());
     chunk_type* chk = first_chunk() + offset/sizeof(chunk_type);
     chk->free(value);
-    
+
+    offset = chk - first_chunk();
     if ( offset < first_free )
       first_free = offset;
   }

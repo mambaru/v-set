@@ -28,25 +28,19 @@ struct ad_insert_value
     // находим ближайший подходящий нод
     container_iterator itr = t.get_aspect().template get<_lower_node_>()(t, value);
 
-    volatile int flag  = 0;
     if ( itr == container.end() )
     {
-      flag = 1;
       // Сюда попадем если ниодного нода еще не созданно
       itr = t.get_aspect().template get<_create_node_>()(t, value);
     }
     else
     {
-      flag = 2;
       // Ищем ближайший свободный но
       itr = t.get_aspect().template get<_first_proper_node_>()(t, itr);
     }
 
     if ( itr == container.end() )
-    {
-      std::cout << flag << std::endl;
       abort();
-    }
 
     if ( itr->second->filled() )
       itr = t.get_aspect().template get<_split_node_>()(t, itr, value);

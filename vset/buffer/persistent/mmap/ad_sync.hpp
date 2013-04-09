@@ -37,9 +37,6 @@ private:
   template<typename T>
   size_t _write( T& t, size_t offset, size_t limit, bool async) const
   {
-    if ( 0 == t.get_aspect().template get<_buffer_>() )
-      return 0;
-    
     typedef typename T::aspect::template advice_cast<_head_type_>::type head_type;
     size_t buffer_size = t.get_aspect().template get<_buffer_size_>();
 

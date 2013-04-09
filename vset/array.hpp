@@ -223,10 +223,24 @@ public:
     if ( this->size() + 1 > this->max_size() )
       throw std::out_of_range("array::insert");
 
+    iterator first = position;
+    iterator last = this->end();
+    iterator d_last = last+1;
+    while (first != last)
+    {
+        *(--d_last) = *(--last);
+    }
+
+    *position = x;
+    ++_size;
+    return position;
+
+    /*
     std::copy_backward(position, end(), end()+1);
     *position = x;
     ++_size;
     return position;
+    */
   }
 
   void insert ( iterator position, size_type n, const T& x )

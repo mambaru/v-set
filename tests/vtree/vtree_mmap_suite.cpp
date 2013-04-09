@@ -345,7 +345,6 @@ void test_erase1(T& /*t*/, const Container& cnt, const F& init, bool onlyCheck)
     }
   }
 
-
   if ( !onlyCheck )
   {
     for ( std::list<int>::iterator beg = values2.begin(); beg!=values2.end(); ++beg )
@@ -362,14 +361,15 @@ void test_erase1(T& /*t*/, const Container& cnt, const F& init, bool onlyCheck)
       {
         if ( cnt->find( *beg ) == cnt->end() )
         {
-          std::cout << "fatal" << std::endl ;
+          std::cout << "fatal " << *beg << std::endl ;
           abort();
         }
         /*
         else
           std::cout << "FOUND" << std::endl ;
+        */
 
-        typename Container::iterator lower = cnt->lower_bound(*beg);
+        //typename Container::iterator lower = cnt->lower_bound(*beg);
         typename Container::iterator upper = cnt->upper_bound(*beg);
         if ( upper != cnt->end() )
         {
@@ -378,15 +378,7 @@ void test_erase1(T& /*t*/, const Container& cnt, const F& init, bool onlyCheck)
           else
             std::cout << "UPPER " << *upper << std::endl ;
         }
-
-        std::cout << "distance: " << std::distance(lower, upper) << std::endl;
-
-        std::cout << "erase: " << *beg << std::endl;
-
-        std::cout << "{{{"<< std::endl;
-        */
         cnt->erase( *beg );
-        //std::cout << "}}}"<< std::endl;
       }
       catch(const std::exception& e)
       {
