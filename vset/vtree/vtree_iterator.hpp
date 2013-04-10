@@ -108,11 +108,13 @@ public:
     {
       n -= _itr->second->size() - _pos;
       ++_itr;
+      _pos = 0;
 
       while ( n >= static_cast<difference_type>( _itr->second->size() ) )
       {
         n -= _itr->second->size();
         ++_itr;
+        _pos = 0;
       }
     }
     _pos += n;
@@ -125,15 +127,16 @@ public:
     {
       n -= _pos;
       --_itr;
+      _pos = _itr->second->size() - 1;
 
       while ( n >= static_cast<difference_type>( _itr->second->size() ) )
       {
         n -= _itr->second->size();
         --_itr;
+        _pos = _itr->second->size() - 1;
       }
     }
-
-    _pos -= n/*_itr->second->size() - n*/;
+    _pos -= n;
     return *this;
   }
 
