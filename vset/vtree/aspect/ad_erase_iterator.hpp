@@ -29,13 +29,14 @@ struct ad_erase_iterator
     typedef typename T::container_type container_type;
     typedef typename container_type::iterator container_iterator;
 
-
-    iterator itr2 = t.begin() + std::distance(t.cbegin(), itr); /*itr.get_position()*/;
+    /*
+    iterator itr2 = t.begin() + std::distance(t.cbegin(), itr); ;
     
     difference_type    offset   = itr2.get_position();
     container_iterator cont_itr = itr2.get_source_iteartor();
-
-
+    */
+    difference_type    offset   = itr.get_position();
+    container_iterator cont_itr = t.get_container().erase( itr.get_source_iteartor(), itr.get_source_iteartor() );
 
     cont_itr->second->erase(
       cont_itr->second->cbegin() + offset,
