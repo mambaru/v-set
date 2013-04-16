@@ -52,6 +52,11 @@ struct ad_erase_iterator
     else
     {
       cont_itr = t.get_aspect().template get<_update_node_key_>()(t, cont_itr );
+      if ( offset == static_cast<difference_type>(cont_itr->second->size()) )
+      {
+        offset=0;
+        ++cont_itr;
+      }
     }
 
     --t.get_aspect().template get<_size_>();
@@ -93,6 +98,11 @@ struct ad_erase_iterator
     else
     {
       cont_itr = t.get_aspect().template get<_update_node_key_>()(t, cont_itr );
+      if ( offset == static_cast<difference_type>(cont_itr->second->size()) )
+      {
+        offset=0;
+        ++cont_itr;
+      }
     }
 
     --t.get_aspect().template get<_size_>();
