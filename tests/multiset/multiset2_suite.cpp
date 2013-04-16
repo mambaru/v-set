@@ -55,6 +55,54 @@ UNIT(multiset_alloc, "")
   t << nothing();
 }
 
+UNIT(multiset2, "")
+{
+  using namespace fas::testing;
+  using namespace vset;
+
+  // 0,1,2 ; 3,4,5 ; 6,7,8
+  typedef multiset<int, std::greater<int>, allocator<3> > multiset_type;
+  multiset_type int_set;
+  for (int i=0; i < 9; i++)
+    int_set.insert(i);
+
+  for (int i=0; i < 9; i++)
+  {
+    multiset_type::iterator lower = int_set.lower_bound(i);
+    t << equal<expect>( *lower, i) << " i=" << i << " " << FAS_TESTING_FILE_LINE;
+  }
+
+  for (int i=0; i < 9; i++)
+  {
+    multiset_type::iterator lower = int_set.upper_bound(i);
+    t << equal<expect>( *(--lower), i) << " i=" << i << " " << FAS_TESTING_FILE_LINE;
+  }
+
+  for (int i=0; i < 9; i+=2)
+    int_set.erase(i);
+
+  std::cout <<std::endl;
+  for ( auto i=int_set.begin(); i!=int_set.end(); ++i)
+    std::cout << *i << "[" << i.get_source_iteartor()->first.first << "," << i.get_source_iteartor()->first.second << std::endl;
+  std::cout <<std::endl;
+
+  for ( int i=0; i < 9; ++i )
+  {
+    multiset_type::iterator lower = int_set.lower_bound(i);
+    if ( i == 0 && lower == int_set.end() )
+      continue;
+    t << not_equal<assert>(lower, int_set.end()) << " i=" << i << " " << FAS_TESTING_FILE_LINE;
+    if (i%2!=0)
+      t << equal<assert>( *lower, i ) << " i=" << i /*<< "," << i */<< " !="<< *lower<< " " << FAS_TESTING_FILE_LINE;
+    else
+      t << equal<assert>( *lower, i-1 ) << " i=" << i-1<< " !="<< *lower<< " " << FAS_TESTING_FILE_LINE;
+  }
+
+
+}
+
+
 BEGIN_SUITE(multiset2_suite, "")
   ADD_UNIT(multiset_alloc)
+  ADD_UNIT(multiset2)
 END_SUITE(multiset2_suite)
