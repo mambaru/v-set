@@ -25,10 +25,10 @@ UNIT(vtree_create_filesync, "")
     std::cout<< *lower;
   std::cout<< "]" << std::endl;
 
-  
+  std::cout<< "----" << std::endl;
   for (int i = 0; i < 5 ; ++i)
     tree.insert('A'+i%10);
-  
+  std::cout<< "----" << std::endl;
 
   std::cout<< std::endl;
   int_vtree::iterator itr = tree.begin();

@@ -46,7 +46,9 @@ struct ad_upper_bound
     );
 
     if ( itr == cont_itr->second->end() )
+      //return t.end();
       return ++ iterator( cont_itr, cont_itr->second->size()-1 );
+       
 
     return iterator( cont_itr, std::distance(cont_itr->second->begin(), itr) );
   }

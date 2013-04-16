@@ -36,6 +36,22 @@ UNIT(multiset_alloc, "")
   
   t << equal<expect, size_t>( int_set.size(), 2) << FAS_TESTING_FILE_LINE;
 
+  int_set.erase(10);
+
+  t << equal<expect, size_t>( int_set.size(), 2) << FAS_TESTING_FILE_LINE;
+
+  bool flag = false;
+  try
+  {
+    int_set.erase(int_set.end());
+  }
+  catch(const std::out_of_range&)
+  {
+    flag = true;
+  }
+
+  t << is_true<expect>( flag ) << FAS_TESTING_FILE_LINE;
+
   t << nothing();
 }
 

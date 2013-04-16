@@ -190,11 +190,13 @@ public:
 
   iterator end()
   {
+    /*
     if ( _container.empty() )
       return iterator( _container.end(), 0 );
 
     return iterator( (++_container.rbegin()).base(), _container.rbegin()->second->size() );
-    // return iterator( _container.end(), 0 );
+    */
+    return iterator( _container.end(), 0 );
   }
 
   const_iterator  begin() const
