@@ -115,11 +115,14 @@ struct chain
 
   chunk_type* find_free()
   {
-    chunk_type* beg = first_chunk();
+    //chunk_type* beg = first_chunk();
+    chunk_type* beg = first_chunk() + first_free;
     chunk_type* end = beg + size;
 
+    /*
     if ( beg!=end && !( beg + first_free)->filled() )
       return beg + first_free;
+    */
 
     for ( ;beg!=end; ++beg)
     {
@@ -129,16 +132,21 @@ struct chain
         return beg;
       }
     }
+
+    first_free = beg - first_chunk();
     return 0;
   }
 
   const chunk_type* find_free() const
   {
-    const chunk_type* beg = first_chunk();
+    //chunk_type* beg = first_chunk();
+    const chunk_type* beg = first_chunk() + first_free ;
     const chunk_type* end = beg + size;
 
+    /*
     if ( beg!=end && !( beg + first_free)->filled() )
       return beg + first_free;
+    */
 
     for ( ;beg!=end; ++beg)
     {
@@ -148,6 +156,7 @@ struct chain
         return beg;
       }
     }
+    first_free = beg - first_chunk();
     return 0;
   }
 
