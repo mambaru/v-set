@@ -12,12 +12,13 @@
 //#include <vset/persistent_buffer.hpp>
 #include <vset/buffer/persistent/filesync/aspect_filesync.hpp>
 
-#define MAX_TEST 6400
+//#define MAX_TEST 6400
+#define MAX_TEST 640 
 
 typedef char value_type;
 
 template<typename T, typename Alloc>
-void test_char_init(T& /*t*/, Alloc& allocator)
+void test_char_init(T& t, Alloc& allocator)
 {
   using namespace fas::testing;
   typedef typename Alloc::pointer pointer;
@@ -25,7 +26,12 @@ void test_char_init(T& /*t*/, Alloc& allocator)
   for (int i=0; i < MAX_TEST; ++i)
   {
     value_type* ch = allocator.allocate(1);
-    if (!ch) throw;
+    /*if (!ch)
+      std
+      */
+    //std::cout << "----------" << i << std::endl;
+    t << not_equal<assert, value_type*>(ch, 0) << "i=" << i << " " << FAS_TESTING_FILE_LINE;
+    t << stop;
     *ch = '0' + i%10;
   }
 
