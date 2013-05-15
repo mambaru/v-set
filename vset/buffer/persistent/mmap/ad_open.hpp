@@ -62,6 +62,11 @@ struct ad_open
     if ( is_created )
       ::memset(data, 0, file_size);
 
+    int ret;
+    ::madvise(data, 0, MADV_RANDOM);
+    if( ret < 0 )
+      throw;
+
     t.get_aspect().template get<_buffer_size_>() = file_size;
     t.get_aspect().template get<_buffer_>() = data;
     head_type* head = t.get_aspect().template get<_head_>()(t);
