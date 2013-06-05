@@ -6,6 +6,8 @@
 
 #include <vset/multiset.hpp>
 #include <vset/allocators/allocator.hpp>
+#include <vset/allocators/mmap_allocator.hpp>
+#include <vset/allocators/buffer_allocator.hpp>
 #include <fas/testing.hpp>
 
 UNIT(multiset_alloc, "")
@@ -13,8 +15,10 @@ UNIT(multiset_alloc, "")
   using namespace fas::testing;
   using namespace vset;
 
-  typedef multiset<int, std::greater<int>, allocator<512> > multiset_type;
+  typedef multiset<int, std::greater<int>, buffer_allocator<512> > multiset_type;
   multiset_type int_set;
+  int_set.get_allocator().memory().buffer().reserve(10000000);
+  //int_set.get_allocator().memory()/*.buffer().open("./multiset_mmap.bin")*/;
 
   int_set.insert(1);
   int_set.insert(1);
