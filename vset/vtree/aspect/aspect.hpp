@@ -15,6 +15,7 @@
 #include <vset/memory/provider.hpp>
 #include <vset/memory/allocator.hpp>
 #include <vset/memory/fsb/aspect.hpp>
+#include <vset/buffer/simple/aspect.hpp>
 #include <fas/aop.hpp>
 #include <fas/mp.hpp>
 
@@ -132,6 +133,15 @@ struct memory_aspect: fas::aspect< typename fas::type_list_n<
   memory::fsb::aspect<Array >
 >::type> {};
 
+template<typename Array, typename Buffer >
+struct memory_aspect2: fas::aspect< typename fas::type_list_n<
+  fas::type_advice<_array_type_, Array >,
+  fas::advice<_allocator_, fas::provider< fas::w< memory::allocator< memory::provider< fas::_ > > > > >,
+  fas::value_advice< _size_, size_t>,
+  memory::fsb::aspect<Array, Buffer >
+>::type> {};
+
+
 struct aspect_common: fas::aspect_merge<
   aspect_insert,
   aspect_erase
@@ -153,6 +163,15 @@ struct aspect2: fas::aspect_merge<
   fas::type_advice<_array_type_, sorted_array< V, N, Compare > >,
   fas::advice<_allocator_, ad_default_allocator_builder >,
   fas::value_advice< _size_, size_t>,
+  aspect_common
+>::type {};
+
+template<typename V, typename Compare = std::less<V>, int N = 1024 >
+struct aspect3: fas::aspect_merge<
+  value_aspect<V, Compare>,
+  memory_aspect2< sorted_array< V, N, Compare >, ::vset::buffer::simple::aspect >,
+  fas::advice< _restore_, ad_restore >,
+  fas::group< buffer::persistent::_after_open_, _restore_ >,
   aspect_common
 >::type {};
 
