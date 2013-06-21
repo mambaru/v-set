@@ -60,6 +60,21 @@ struct chain
   {
     size_t offset = reinterpret_cast<char*>(value) - reinterpret_cast<char*>(this->first_chunk());
     chunk_type* chk = first_chunk() + offset/sizeof(chunk_type);
+
+    if ( T* result =  chk->next_value(value) )
+      return result;
+
+    for ( ++chk; chk->empty(); ++chk)
+    {
+      if ( static_cast<size_t>(chk - this->first_chunk()) == size )
+        return 0;
+    }
+
+    return chk->first_value();
+    
+    /*
+    size_t offset = reinterpret_cast<char*>(value) - reinterpret_cast<char*>(this->first_chunk());
+    chunk_type* chk = first_chunk() + offset/sizeof(chunk_type);
     T* result =  chk->next_value(value);
     if ( result == 0)
     {
@@ -69,11 +84,26 @@ struct chain
       result = chk->first_value();
     }
     return result;
-
+    */
   }
 
   const T* next_value(const T* value)  const
   {
+    size_t offset = reinterpret_cast<const char*>(value) - reinterpret_cast<const char*>(this->first_chunk());
+    const chunk_type* chk = first_chunk() + offset/sizeof(chunk_type);
+
+    if ( const T* result =  chk->next_value(value) )
+      return result;
+
+    for ( ++chk; chk->empty(); ++chk)
+    {
+      if ( static_cast<size_t>(chk - this->first_chunk()) == size )
+        return 0;
+    }
+
+    return chk->first_value();
+
+    /*
     size_t offset = reinterpret_cast<const char*>(value) - reinterpret_cast<const char*>(this->first_chunk());
     const chunk_type* chk = first_chunk() + offset/sizeof(chunk_type);
     const T* result =  chk->next_value(value);
@@ -85,6 +115,7 @@ struct chain
       result = chk->first_value();
     }
     return result;
+    */
   }
 
   chunk_type* first_occuped()

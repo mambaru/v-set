@@ -10,4 +10,5 @@ BEGIN_TEST
   RUN_SUITE(multiset_suite)
   RUN_SUITE(multiset2_suite)
   RUN_SUITE(multiset_mmap_suite)
+  RUN_SUITE(multiset_mmap_cmp_suite)
 END_TEST
