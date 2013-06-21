@@ -62,23 +62,24 @@ struct cmp123
   }
 };
 
-typedef vset::multiset< offset_t, cmp123, vset::mmap_allocator<16> > index123_type;
+typedef vset::multiset< offset_t, cmp123, vset::mmap_allocator<13> > index123_type;
 
 data generate()
 {
-  return data{ std::rand()%(TEST_COUNT*10), std::rand()%(TEST_COUNT/10), std::rand()%(TEST_COUNT/10) };
+  return data{ std::rand()%10/*(TEST_COUNT/10)*/, /*std::rand()%(TEST_COUNT/10)*/0, /*std::rand()%(TEST_COUNT/10)*/0 };
 }
 
 bool create(data_buffer& buffer, index123_type& index123)
 {
   data_pointer ptr = buffer.allocate(1);
   *ptr = generate();
-  auto itr = index123.find(static_cast<offset_t>( static_cast<size_t>(ptr) ));
-  if (itr == index123.end())
+  //auto itr = index123.find(static_cast<offset_t>( static_cast<size_t>(ptr) ));
+  //if (itr == index123.end())
     index123.insert( static_cast<offset_t>( static_cast<size_t>(ptr) ) );
-  else
-    buffer.deallocate(ptr, 1);
-  return itr == index123.end();
+  //else
+    //buffer.deallocate(ptr, 1);
+  //return itr == index123.end();
+    return true;
 }
 
 void check(data_buffer& buffer, index123_type& index123)
@@ -99,8 +100,11 @@ void init(data_buffer& buffer, index123_type& index123)
     if ( create(buffer, index123) )
     {
       ++i;
-      //std::cout << "create\t" << i << std::endl;
-      check(buffer, index123);
+      if (i%100 == 0)
+      {
+        std::cout << "create\t" << i << std::endl;
+        check(buffer, index123);
+      }
     }
   }
 
@@ -110,6 +114,26 @@ void init(data_buffer& buffer, index123_type& index123)
 bool erase(data_buffer& buffer, index123_type& index123)
 {
   size_t buffer_size = std::distance(buffer.begin(), buffer.end());
+  data_pointer ptr = buffer.begin() + rand()%buffer_size;
+  //auto itr = index123.find(static_cast<offset_t>( static_cast<size_t>(ptr) ));
+  // index123.erase(itr);
+  index123.erase( static_cast<offset_t>( static_cast<size_t>(ptr) ) );
+  buffer.deallocate(ptr, 1);
+  size_t buffer_size2 = std::distance(buffer.begin(), buffer.end());
+  if ( (buffer_size - buffer_size2) != 1)
+  {
+    std::cout  << "fuck " << (buffer_size-1) << "!=" << buffer_size2 << std::endl;
+    abort();
+  }
+  return true;
+}
+
+/*
+bool erase_range(data_buffer& buffer, index123_type& index123)
+{
+  size_t buffer_size = std::distance(buffer.begin(), buffer.end());
+  if ( buffer_size < 10)
+    return erase(buffer, index123)
   data_pointer ptr = buffer.begin() + rand()%buffer_size;
   auto itr = index123.find(static_cast<offset_t>( static_cast<size_t>(ptr) ));
   index123.erase(itr);
@@ -121,17 +145,16 @@ bool erase(data_buffer& buffer, index123_type& index123)
     abort();
   }
   return true;
-  
-  /*
-  data_pointer ptr = buffer.allocate(1);
-  *ptr = generate();
+}
+*/
+
+bool erase_begin(data_buffer& buffer, index123_type& index123)
+{
+  data_pointer ptr = buffer.begin();
   auto itr = index123.find(static_cast<offset_t>( static_cast<size_t>(ptr) ));
-  if (itr == index123.end())
-    index123.insert( static_cast<offset_t>( static_cast<size_t>(ptr) ) );
-  else
-    buffer.deallocate(ptr, 1);
-  return itr == index123.end();
-  */
+  index123.erase(itr);
+  buffer.deallocate(ptr, 1);
+  return true;
 }
 
 
@@ -143,8 +166,11 @@ void clear(data_buffer& buffer, index123_type& index123)
     if ( erase(buffer, index123) )
     {
       ++i;
-      // std::cout << "erase\t" << TEST_COUNT - i << std::endl;
-      check(buffer, index123);
+      if (i%100 == 0)
+      {
+        std::cout << "erase\t" << TEST_COUNT - i << std::endl;
+        check(buffer, index123);
+      }
     }
   }
 
@@ -153,19 +179,22 @@ void clear(data_buffer& buffer, index123_type& index123)
 
 bool multiset_test()
 {
+  std::srand( time(0) );
   std::cout << "multiset_test()" << std::endl;
   data_buffer buffer;
   std::cout << "open..." << std::endl;
   buffer.buffer().open("./test2_.bin");
   std::cout << "reserve..." << std::endl;
-  buffer.buffer().reserve(1000000);
+  buffer.buffer().reserve(TEST_COUNT*sizeof(data));
 
   //cmp123 cmp = cmp123(buffer);
   index123_type index123( (cmp123(buffer)) );
   std::cout << "open..." << std::endl;
   index123.get_allocator().memory().buffer().open("./test2_index123.bin");
+  index123.get_allocator().memory().buffer().reserve(TEST_COUNT*sizeof(data)*2);
 
   init(buffer, index123);
   clear(buffer, index123);
+  check(buffer, index123);
   return true;
 }
