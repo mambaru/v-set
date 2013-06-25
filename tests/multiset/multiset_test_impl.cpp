@@ -66,30 +66,51 @@ typedef vset::multiset< offset_t, cmp123, vset::mmap_allocator<13> > index123_ty
 
 data generate()
 {
-  return data{ std::rand()%10/*(TEST_COUNT/10)*/, /*std::rand()%(TEST_COUNT/10)*/0, /*std::rand()%(TEST_COUNT/10)*/0 };
+  return data{ std::rand()%(TEST_COUNT/10), std::rand()%(TEST_COUNT/10), std::rand()%(TEST_COUNT/10) };
 }
 
 bool create(data_buffer& buffer, index123_type& index123)
 {
   data_pointer ptr = buffer.allocate(1);
   *ptr = generate();
-  //auto itr = index123.find(static_cast<offset_t>( static_cast<size_t>(ptr) ));
-  //if (itr == index123.end())
+  auto itr = index123.find(static_cast<offset_t>( static_cast<size_t>(ptr) ));
+  if (itr == index123.end())
     index123.insert( static_cast<offset_t>( static_cast<size_t>(ptr) ) );
-  //else
-    //buffer.deallocate(ptr, 1);
-  //return itr == index123.end();
-    return true;
+  else
+    buffer.deallocate(ptr, 1);
+  return itr == index123.end();
+  return true;
 }
 
 void check(data_buffer& buffer, index123_type& index123)
 {
   size_t buffer_size = std::distance(buffer.begin(), buffer.end());
   size_t index_size = index123.size();
-  //std::cout << "buffer\t" << buffer_size << std::endl;
-  //std::cout << "index\t" << index_size << std::endl;
-    if (buffer_size != index_size)
-      abort();
+  if (buffer_size != index_size)
+  {
+    std::cout << "buffer_size " << buffer_size << std::endl;
+    std::cout << "index_size " << index_size << std::endl;
+    abort();
+  }
+
+  if ( index123.size() < 2 )
+    return;
+  
+  cmp123 cmp(buffer);
+  index123_type::iterator itr1 = index123.begin();
+  index123_type::iterator itr2 = itr1 + 1;
+  // ++itr2;
+  for ( ;itr2!=index123.end(); ++itr1, ++itr2)
+  {
+    if ( cmp(*itr1, *itr2) )
+      continue;
+    if ( !cmp(*itr2, *itr1) )
+      continue;
+
+    std::cout << "comp fail" << std::endl;
+    abort();
+  }
+  
 }
 
 void init(data_buffer& buffer, index123_type& index123)
@@ -113,18 +134,44 @@ void init(data_buffer& buffer, index123_type& index123)
 
 bool erase(data_buffer& buffer, index123_type& index123)
 {
+  //std::cout << "erase1" << std::endl;
   size_t buffer_size = std::distance(buffer.begin(), buffer.end());
+  // std::cout << "erase2" << std::endl;
   data_pointer ptr = buffer.begin() + rand()%buffer_size;
-  //auto itr = index123.find(static_cast<offset_t>( static_cast<size_t>(ptr) ));
-  // index123.erase(itr);
-  index123.erase( static_cast<offset_t>( static_cast<size_t>(ptr) ) );
+
+  /*
+  auto lower = index123.lower_bound(static_cast<offset_t>( static_cast<size_t>(ptr) ));
+  auto upper = index123.upper_bound(static_cast<offset_t>( static_cast<size_t>(ptr) ));
+  if (std::distance(lower,upper)!=1 )
+  {
+    std::cout << ptr->data1 << "," << ptr->data2 << ", " << ptr->data3 << std::endl;
+    std::cout << "std::distance(lower,upper): "  << std::distance(lower,upper) << std::endl;
+    abort();
+  }
+  index123.erase(lower, upper);
   buffer.deallocate(ptr, 1);
+  */
+  
+  /*auto itr = index123.find(static_cast<offset_t>( static_cast<size_t>(ptr) ));
+  index123.erase(itr);
+  buffer.deallocate(ptr, 1);
+  */
+  
+  
+  offset_t offset = static_cast<offset_t>( static_cast<size_t>(ptr) );
+  //std::cout << "erase3 " << offset << "<?" << buffer_size << std::endl;
+  index123.erase( offset );
+  // std::cout << "erase4" << std::endl;
+  buffer.deallocate(ptr, 1);
+  // std::cout << "erase5" << std::endl;
   size_t buffer_size2 = std::distance(buffer.begin(), buffer.end());
+  // std::cout << "erase6" << std::endl;
   if ( (buffer_size - buffer_size2) != 1)
   {
     std::cout  << "fuck " << (buffer_size-1) << "!=" << buffer_size2 << std::endl;
     abort();
   }
+  
   return true;
 }
 
@@ -163,10 +210,11 @@ void clear(data_buffer& buffer, index123_type& index123)
   std::cout << "clear" << std::endl;
   for (int i = 0; i < TEST_COUNT; )
   {
+    // std::cout << "erase i=" << i << std::endl;
     if ( erase(buffer, index123) )
     {
       ++i;
-      if (i%100 == 0)
+      //if (i%100 == 0)
       {
         std::cout << "erase\t" << TEST_COUNT - i << std::endl;
         check(buffer, index123);
@@ -179,7 +227,7 @@ void clear(data_buffer& buffer, index123_type& index123)
 
 bool multiset_test()
 {
-  std::srand( time(0) );
+  //std::srand( time(0) );
   std::cout << "multiset_test()" << std::endl;
   data_buffer buffer;
   std::cout << "open..." << std::endl;
