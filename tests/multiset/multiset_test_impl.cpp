@@ -82,6 +82,11 @@ bool create(data_buffer& buffer, index123_type& index123)
   return true;
 }
 
+void create_one(data_buffer& buffer, index123_type& index123)
+{
+  while(!create(buffer,index123));
+}
+
 void check(data_buffer& buffer, index123_type& index123)
 {
   size_t buffer_size = std::distance(buffer.begin(), buffer.end());
@@ -132,7 +137,7 @@ void init(data_buffer& buffer, index123_type& index123)
   std::cout << index123.size() << std::endl;
 }
 
-bool erase(data_buffer& buffer, index123_type& index123)
+bool erase_one(data_buffer& buffer, index123_type& index123)
 {
   //std::cout << "erase1" << std::endl;
   size_t buffer_size = std::distance(buffer.begin(), buffer.end());
@@ -211,7 +216,7 @@ void clear(data_buffer& buffer, index123_type& index123)
   for (int i = 0; i < TEST_COUNT; )
   {
     // std::cout << "erase i=" << i << std::endl;
-    if ( erase(buffer, index123) )
+    if ( erase_one(buffer, index123) )
     {
       ++i;
       //if (i%100 == 0)
@@ -223,6 +228,15 @@ void clear(data_buffer& buffer, index123_type& index123)
   }
 
   std::cout << index123.size() << std::endl;
+}
+
+void stress(data_buffer& buffer, index123_type& index123, int count)
+{
+  for(int i =0 ; i < count; i++)
+  {
+    erase_one(buffer, index123);
+    create_one(buffer, index123);
+  }
 }
 
 bool multiset_test()
@@ -242,6 +256,9 @@ bool multiset_test()
   index123.get_allocator().memory().buffer().reserve(TEST_COUNT*sizeof(data)*2);
 
   init(buffer, index123);
+  check(buffer, index123);
+  stress(buffer, index123, );
+  check(buffer, index123);
   clear(buffer, index123);
   check(buffer, index123);
   return true;
