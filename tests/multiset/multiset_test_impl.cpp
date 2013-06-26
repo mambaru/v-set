@@ -142,17 +142,18 @@ bool erase_one(data_buffer& buffer, index123_type& index123)
   //std::cout << "erase1" << std::endl;
   size_t buffer_size = std::distance(buffer.begin(), buffer.end());
   // std::cout << "erase2" << std::endl;
-  data_pointer ptr = buffer.begin() + rand()%buffer_size;
-
-  /*
-  auto lower = index123.lower_bound(static_cast<offset_t>( static_cast<size_t>(ptr) ));
-  auto upper = index123.upper_bound(static_cast<offset_t>( static_cast<size_t>(ptr) ));
+  data_pointer ptr = buffer.begin() + (buffer_size > 0 ? rand()%buffer_size : 0);
+  offset_t offset = static_cast<offset_t>( static_cast<size_t>(ptr) );
+  
+  auto lower = index123.lower_bound(offset);
+  auto upper = index123.upper_bound(offset);
   if (std::distance(lower,upper)!=1 )
   {
     std::cout << ptr->data1 << "," << ptr->data2 << ", " << ptr->data3 << std::endl;
     std::cout << "std::distance(lower,upper): "  << std::distance(lower,upper) << std::endl;
     abort();
   }
+  /*
   index123.erase(lower, upper);
   buffer.deallocate(ptr, 1);
   */
@@ -163,7 +164,7 @@ bool erase_one(data_buffer& buffer, index123_type& index123)
   */
   
   
-  offset_t offset = static_cast<offset_t>( static_cast<size_t>(ptr) );
+  
   //std::cout << "erase3 " << offset << "<?" << buffer_size << std::endl;
   index123.erase( offset );
   // std::cout << "erase4" << std::endl;
@@ -234,8 +235,10 @@ void stress(data_buffer& buffer, index123_type& index123, int count)
 {
   for(int i =0 ; i < count; i++)
   {
+    std::cout << "stres " << i << std::endl;
     erase_one(buffer, index123);
     create_one(buffer, index123);
+    check(buffer, index123);
   }
 }
 
@@ -257,7 +260,7 @@ bool multiset_test()
 
   init(buffer, index123);
   check(buffer, index123);
-  stress(buffer, index123, );
+  stress(buffer, index123, 10000);
   check(buffer, index123);
   clear(buffer, index123);
   check(buffer, index123);
