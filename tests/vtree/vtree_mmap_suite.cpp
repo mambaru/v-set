@@ -500,13 +500,14 @@ void test_all_persist(T& t)
   test_stack.push("test_all_persist");
   t << fas::testing::nothing();
 
-  
-  test_persist<3>(t);
-  /*test_persist<4>(t);
-  test_persist<5>(t);*/
-  /*test_persist<6>(t);
-  test_persist<7>(t);*/
+
   /*
+  test_persist<3>(t);
+  test_persist<4>(t);
+  test_persist<5>(t);
+  test_persist<6>(t);
+  test_persist<7>(t);
+  
   test_persist<13>(t);
   
   test_persist<32>(t);
@@ -531,9 +532,10 @@ void test_all_non_persist(T& t)
   std::cout << "------------------- test_all_non_persist -------------------" << std::endl;
   test_stack.push("test_all_non_persist");
 
+  /*
   
   test_non_persist<3>(t);
-  /*test_non_persist<4>(t);
+  test_non_persist<4>(t);
   test_non_persist<5>(t);
   test_non_persist<6>(t);
   test_non_persist<7>(t);
@@ -546,7 +548,7 @@ void test_all_non_persist(T& t)
   test_non_persist<1000>(t);
   test_non_persist<1024>(t);
   test_non_persist<4000>(t);
-*/
+  */
   test_stack.pop();
 }
 UNIT(vtree_mmap_test, "")

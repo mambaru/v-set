@@ -8,20 +8,20 @@ include_directories("/home/void/sandbox/stx-btree/include")
 
 #SET(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -std=c++11")
 SET(CMAKE_CXX_FLAGS "-O3 -std=c++11")
-add_library(votes votes.cpp)
+#add_library(votes votes.cpp)
 
-add_executable(
-  votes_example
-  votes_example.cpp
-)
+#add_executable(
+#  votes_example
+#  votes_example.cpp
+#)
 
-target_link_libraries(votes_example votes)
+#target_link_libraries(votes_example votes)
 
 
-add_executable( my_test
-  test.cpp
-  )
-target_link_libraries( my_test votes )
+#add_executable( my_test
+#  test.cpp
+#  )
+#target_link_libraries( my_test votes )
 
 
 
