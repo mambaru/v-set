@@ -50,10 +50,10 @@ class vtree:
   typedef vtree<A> self;
   typedef fas::aspect_class<A> super;
   typedef typename super::aspect::template advice_cast<_allocator_>::type         allocator_builder;
+  
+public:
   typedef typename super::aspect::template advice_cast<_key_compare_>::type       key_compare;
   typedef typename super::aspect::template advice_cast<_value_compare_>::type     value_compare;
-
-public:
   typedef typename super::aspect::template advice_cast<_value_type_>::type        value_type;
   typedef typename super::aspect::template advice_cast<_key_type_>::type          key_type;
 
@@ -73,6 +73,11 @@ public:
   typedef vtree_iterator<typename container_type::const_iterator, const value_type> const_iterator;
   typedef std::reverse_iterator<iterator> reverse_iterator;
   typedef std::reverse_iterator<const_iterator> const_reverse_iterator;
+
+  typedef typename std::iterator_traits<iterator>::pointer pointer;
+  typedef typename std::iterator_traits<iterator>::reference reference;
+  typedef typename std::iterator_traits<const_iterator>::pointer const_pointer;
+  typedef typename std::iterator_traits<const_iterator>::reference const_reference;
 
   // key_compare     _comparator;
   allocator_type  _allocator;
