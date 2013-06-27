@@ -128,6 +128,7 @@ void init(data_buffer& buffer, index123_type& index123)
       ++i;
       if (i%100 == 0)
       {
+        buffer.buffer().reserve( buffer.buffer().size() + 100);
         std::cout << "create\t" << i << std::endl;
         check(buffer, index123);
       }
