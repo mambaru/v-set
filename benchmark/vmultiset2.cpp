@@ -1,39 +1,19 @@
-/*#include <set>
-#include <fas/xtime.hpp>
-#include <iostream>
-
-const int MAX_COUNT = 1024*1024*10;
-
-int main()
-{
-  std::multiset<int> vtr;
-
-  fas::nanospan start = fas::process_nanotime();
-  for (int i=0; i < MAX_COUNT; ++i)
-    vtr.insert( rand() );
-  fas::nanospan finish = fas::process_nanotime();
-
-  std::cout << (finish - start).to_double() << std::endl;
-  std::cout << fas::rate(finish - start)*MAX_COUNT << std::endl;
-
-  std::cin.get();
-  return 0;
-}
-*/
-
-#include <set>
+#include <vset/multiset.hpp>
+#include <vset/allocators/buffer_allocator.hpp>
 #include <fas/xtime.hpp>
 #include <iostream>
 
 #include "config.hpp"
+using namespace vset;
 
-
-typedef std::multiset<int> storage_type;
+typedef vset::multiset< int, std::less<int>, buffer_allocator<CHUNK_SIZE> > storage_type;
 // typedef vtree::vtree< vtree::aspect<int, std::less<int>, 512-4*4> > storage_type;
 
 int main()
 {
   storage_type stg;
+  stg.get_allocator().memory().buffer().clear();
+  stg.get_allocator().memory().buffer().reserve(MAX_COUNT*8*2);
 
   fas::nanospan minspan(fas::nanospan::xmax, fas::nanospan::xmax);
   fas::nanospan start = fas::process_nanotime();
@@ -63,9 +43,8 @@ int main()
         std::cout << "find rate (" << MIN_COUNT << "):" <<fas::rate(tmp)*MAX_COUNT << std::endl;
       }
       start2 = fas::process_nanotime();
-      
     }
-
+      
   }
   finish = fas::process_nanotime();
 

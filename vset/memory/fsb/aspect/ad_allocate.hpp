@@ -42,13 +42,15 @@ private:
     data_type data = t.get_aspect().template get<_buffer_data_>()(t);
     chain_type* chn = reinterpret_cast<chain_type*>(data);
     pointer p( &t );
-    p = chn->mark();
+    p.set_pointer( chn->mark() );
+    // p = chn->mark();
     if (!p)
     {
       t.get_aspect().template get<_acquire_>()(t);
       data = t.get_aspect().template get<_buffer_data_>()(t);
       chn = reinterpret_cast<chain_type*>(data);
-      p = chn->mark();
+      // p = chn->mark();
+      p.set_pointer(chn->mark());
       if (!p)
         abort();
     }

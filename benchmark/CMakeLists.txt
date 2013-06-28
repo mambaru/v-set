@@ -8,10 +8,13 @@ SET(CMAKE_CXX_FLAGS_RELWITHDEBINFO  "-O2 -g -DNDEBUG")
 SET(CMAKE_CXX_FLAGS_DEBUG  "-O0 -g")
 
 
-#add_executable(multiset_insert multiset_insert.cpp)
-#add_executable(stx_insert  stx_insert.cpp)
+add_executable(multiset_insert multiset_insert.cpp)
+add_executable(stx_insert  stx_insert.cpp)
 #add_executable(stx_insert2  stx_insert2.cpp)
 #add_executable(vset_insert vset_insert.cpp)
 #add_executable(vset_insert2 vset_insert2.cpp)
+# not support reverse_iterator::base
 #add_executable(vset_insert3 vset_insert3.cpp)
 add_executable(vmultiset vmultiset.cpp)
+add_executable(vmultiset2 vmultiset2.cpp)
+add_executable(vmultiset3 vmultiset3.cpp)
