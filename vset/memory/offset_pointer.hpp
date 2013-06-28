@@ -28,45 +28,73 @@ struct offset_pointer
     , offset(static_cast<size_t>(-1))
   { }
 
-  offset_pointer(offset_provider provider, size_t offset = static_cast<size_t>(-1) )
+  explicit offset_pointer(offset_provider provider, size_t offset = static_cast<size_t>(-1) )
     : _provider(provider)
     , offset(offset)
   {}
 
-  offset_pointer(offset_provider provider, T* ptr )
+  /*
+  explicit offset_pointer(offset_provider provider, T* ptr )
     : _provider(provider)
     , offset(_provider.offset(ptr))
   {
-  }
+  }*/
   
-  operator T* () { return _get_pointer();}
-  operator const T* () const { return _get_pointer();}
+  operator T* () { return this->get_pointer();}
+  operator const T* () const { return this->get_pointer();}
 
-  T& operator*() { return *(_get_pointer());}
-  const T& operator*() const { return *(_get_pointer());}
-  T* operator->() { return _get_pointer(); }
+  T& operator*() { return *(this->get_pointer());}
+  const T& operator*() const { return *(this->get_pointer());}
+  T* operator->() { return this->get_pointer(); }
 
-  const T* operator->() const { return _get_pointer(); }
+  const T* operator->() const { return this->get_pointer(); }
 
-  T* _get_pointer()
+  T* get_pointer()
   {
     if ( offset == static_cast<size_t>(-1) )
       return 0;
     return _provider.get(offset);
   }
   
-  const T* _get_pointer() const
+  const T* get_pointer() const
   {
     if ( offset == static_cast<size_t>(-1) )
       return 0;
     return _provider.get(offset);
   }
 
+  self& set_pointer(T* t)
+  {
+    this->offset = _provider.offset(t);
+    return *this;
+    /*if ( offset == static_cast<size_t>(-1) )
+      return 0;
+    return _provider.get(offset);
+    */
+  }
+
+  size_t get_offset() const
+  {
+    return offset;
+  }
+
+
+  void set_offset(size_t offset) 
+  {
+    this->offset = offset;
+  }
+
+  bool is_null() const
+  {
+    return offset == static_cast<size_t>(-1);
+  }
+  /*
   void operator = ( size_t offset ) { this->offset = offset; }
   void operator = ( T* t ) { this->offset = _provider.offset(t); }
   operator size_t () const { return offset;}
+  */
 
-  operator bool () const { return offset != static_cast<size_t>(-1);}
+  // operator bool () const { return offset != static_cast<size_t>(-1);}
 
   self& operator++()
   {

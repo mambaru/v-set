@@ -36,13 +36,19 @@ struct ad_lower_bound
 
     if ( cont_itr == container.end() )
       return t.end();
-
+    /*
+    array_iterator itr = cont_itr->second->begin();
+    for (;itr!=cont_itr->second->end() && t.get_aspect().template get<_compare_>()(value, *itr); ++itr);
+    */
+      
+    
     array_iterator itr = std::lower_bound(
       cont_itr->second->begin(),
       cont_itr->second->end(),
       value,
       t.get_aspect().template get<_compare_>()
     );
+    
 
     if ( itr == cont_itr->second->end() )
       return ++iterator( cont_itr, cont_itr->second->size()-1 );

@@ -1,44 +1,62 @@
-#include <vset/vtree/vtree.hpp>
+#include <vset/multiset.hpp>
+#include <vset/allocators/mmap_allocator.hpp>
 #include <fas/xtime.hpp>
 #include <iostream>
 
-const int MAX_COUNT = 1024*1024*10;
+#include "config.hpp"
 using namespace vset;
 
-typedef vtree::vtree< vtree::aspect<int, std::less<int>, 512-4*4> > vtree_int;
+typedef vset::multiset< int, std::less<int>, mmap_allocator<CHUNK_SIZE> > storage_type;
+// typedef vtree::vtree< vtree::aspect<int, std::less<int>, 512-4*4> > storage_type;
 
 int main()
 {
-  vtree_int vtr;
-  vtr.get_allocator().memory().buffer().open("./vset.bin");
-  vtr.get_allocator().memory().buffer().clear();
-  vtr.get_allocator().memory().buffer().reserve(MAX_COUNT*8*2);
+  storage_type stg;
+  stg.get_allocator().memory().buffer().open("./vset.bin");
+  stg.get_allocator().memory().buffer().clear();
+  stg.get_allocator().memory().buffer().reserve(MAX_COUNT*8*2);
 
+  fas::nanospan minspan(fas::nanospan::xmax, fas::nanospan::xmax);
   fas::nanospan start = fas::process_nanotime();
   for (int i=0; i < MAX_COUNT; ++i)
-    vtr.insert( rand() );
+    stg.insert( rand() );
   fas::nanospan finish = fas::process_nanotime();
 
-  std::cout << (finish - start).to_double() << std::endl;
-  std::cout << fas::rate(finish - start)*MAX_COUNT << std::endl;
+  std::cout << "init time: " << (finish - start).to_double() << std::endl;
+  std::cout << "init rate: " << fas::rate(finish - start)*MAX_COUNT << std::endl;
 
   start = fas::process_nanotime();
+  fas::nanospan start2 = start;
   for (int i=0; i < MAX_COUNT; ++i)
   {
-    vtr.find( rand() );
-    if (i%100000==0)
+    stg.find( rand() );
+    if (i%MIN_COUNT==0)
     {
       finish = fas::process_nanotime();
-      std::cout << (finish - start).to_double() << std::endl;
-      std::cout << fas::rate(finish - start)*MAX_COUNT << std::endl;
-      std::cout << "---------------------------------" << std::endl;
+      fas::nanospan tmp = finish - start2;
+      if (i!=0 && tmp < minspan)
+        minspan = tmp;
+      if ( SHOW_PROCESS )
+      {
+        std::cout << "find time (" << i << "):" << (finish - start).to_double() << std::endl;
+        std::cout << "find rate (" << i << "):" <<fas::rate(finish - start)*MAX_COUNT << std::endl;
+        std::cout << "find time (" << MIN_COUNT << "):" << (tmp).to_double() << std::endl;
+        std::cout << "find rate (" << MIN_COUNT << "):" <<fas::rate(tmp)*MAX_COUNT << std::endl;
+      }
+      start2 = fas::process_nanotime();
     }
       
   }
   finish = fas::process_nanotime();
 
-  std::cout << (finish - start).to_double() << std::endl;
-  std::cout << fas::rate(finish - start)*MAX_COUNT << std::endl;
+  std::cout << "---------------------------------" << std::endl;
+  // std::cout << (finish - start).to_double() << std::endl;
+  // std::cout << fas::rate(finish - start)*MAX_COUNT << std::endl;
+  std::cout << "final find time (" << MAX_COUNT << "):" << (finish - start).to_double() << std::endl;
+  std::cout << "final find rate (" << MAX_COUNT << "):" <<fas::rate(finish - start)*MAX_COUNT << std::endl;
+  std::cout << "min find time (" << MIN_COUNT << "):" << (minspan).to_double() << std::endl;
+  std::cout << "min find rate (" << MIN_COUNT << "):" <<fas::rate(minspan)*MIN_COUNT << std::endl;
+
   std::cout << "DONE" << std::endl;
 
   std::cin.get();
