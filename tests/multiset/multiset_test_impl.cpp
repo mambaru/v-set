@@ -5,7 +5,7 @@
 #include <vset/memory/manager.hpp>
 #include <vset/memory/fsb/aspect.hpp>
 
-#define TEST_COUNT 10000
+#define TEST_COUNT 100000
 
 
 struct data
@@ -13,6 +13,7 @@ struct data
   int data1;
   int data2;
   int data3;
+  //char datax[10240*5];
 };
 
 typedef vset::memory::fsb::aspect<data> mmap_data_aspect;
@@ -36,9 +37,14 @@ struct cmp123
 
   bool operator()(offset_t l, offset_t r) const
   {
-    left = static_cast<size_t>(l);
-    right = static_cast<size_t>(r);
+    left.set_offset(l);
+    right.set_offset(r);
 
+    return left->data1 < right->data1 ||
+    ( ! ( right->data1 < left->data1 ) && left->data2 < right->data2 ) ||
+    ( ! ( right->data1 < left->data1 ) && ! ( right->data2 < left->data2 ) && left->data3 < right->data3 );
+
+    /*
     
     if ( left->data1 < right->data1 )
       return true;
@@ -57,6 +63,7 @@ struct cmp123
 
     if ( right->data3 < left->data3 )
       return false;
+    */
 
     return false;
   }
@@ -66,16 +73,18 @@ typedef vset::multiset< offset_t, cmp123, vset::mmap_allocator<13> > index123_ty
 
 data generate()
 {
-  return data{ std::rand()%(TEST_COUNT/10), std::rand()%(TEST_COUNT/10), std::rand()%(TEST_COUNT/10) };
+  return data{ std::rand()%(TEST_COUNT/10), std::rand()%(TEST_COUNT/10), std::rand()%(TEST_COUNT/10)};
 }
 
 bool create(data_buffer& buffer, index123_type& index123)
 {
+  //std::cout << "create " << std::endl;
   data_pointer ptr = buffer.allocate(1);
   *ptr = generate();
-  auto itr = index123.find(static_cast<offset_t>( static_cast<size_t>(ptr) ));
+  // auto itr = index123.find(static_cast<offset_t>( static_cast<size_t>(ptr) ));
+  auto itr = index123.find( ptr.get_offset() );
   if (itr == index123.end())
-    index123.insert( static_cast<offset_t>( static_cast<size_t>(ptr) ) );
+    index123.insert( /*static_cast<offset_t>( static_cast<size_t>(ptr) )*/ ptr.get_offset() );
   else
     buffer.deallocate(ptr, 1);
   return itr == index123.end();
@@ -84,6 +93,7 @@ bool create(data_buffer& buffer, index123_type& index123)
 
 void create_one(data_buffer& buffer, index123_type& index123)
 {
+  // std::cout << "create_one " << std::endl;
   while(!create(buffer,index123));
 }
 
@@ -128,6 +138,7 @@ void init(data_buffer& buffer, index123_type& index123)
       ++i;
       if (i%100 == 0)
       {
+        buffer.buffer().reserve( buffer.buffer().size() + 100);
         std::cout << "create\t" << i << std::endl;
         check(buffer, index123);
       }
@@ -142,17 +153,18 @@ bool erase_one(data_buffer& buffer, index123_type& index123)
   //std::cout << "erase1" << std::endl;
   size_t buffer_size = std::distance(buffer.begin(), buffer.end());
   // std::cout << "erase2" << std::endl;
-  data_pointer ptr = buffer.begin() + rand()%buffer_size;
-
-  /*
-  auto lower = index123.lower_bound(static_cast<offset_t>( static_cast<size_t>(ptr) ));
-  auto upper = index123.upper_bound(static_cast<offset_t>( static_cast<size_t>(ptr) ));
+  data_pointer ptr = buffer.begin() + (buffer_size > 0 ? rand()%buffer_size : 0);
+  offset_t offset = ptr.get_offset();/*static_cast<offset_t>( static_cast<size_t>(ptr) )*/;
+  
+  auto lower = index123.lower_bound(offset);
+  auto upper = index123.upper_bound(offset);
   if (std::distance(lower,upper)!=1 )
   {
     std::cout << ptr->data1 << "," << ptr->data2 << ", " << ptr->data3 << std::endl;
     std::cout << "std::distance(lower,upper): "  << std::distance(lower,upper) << std::endl;
     abort();
   }
+  /*
   index123.erase(lower, upper);
   buffer.deallocate(ptr, 1);
   */
@@ -163,7 +175,7 @@ bool erase_one(data_buffer& buffer, index123_type& index123)
   */
   
   
-  offset_t offset = static_cast<offset_t>( static_cast<size_t>(ptr) );
+  
   //std::cout << "erase3 " << offset << "<?" << buffer_size << std::endl;
   index123.erase( offset );
   // std::cout << "erase4" << std::endl;
@@ -203,7 +215,7 @@ bool erase_range(data_buffer& buffer, index123_type& index123)
 bool erase_begin(data_buffer& buffer, index123_type& index123)
 {
   data_pointer ptr = buffer.begin();
-  auto itr = index123.find(static_cast<offset_t>( static_cast<size_t>(ptr) ));
+  auto itr = index123.find( ptr.get_offset() /*static_cast<offset_t>( static_cast<size_t>(ptr) )*/);
   index123.erase(itr);
   buffer.deallocate(ptr, 1);
   return true;
@@ -219,7 +231,7 @@ void clear(data_buffer& buffer, index123_type& index123)
     if ( erase_one(buffer, index123) )
     {
       ++i;
-      //if (i%100 == 0)
+      if (i%100 == 0)
       {
         std::cout << "erase\t" << TEST_COUNT - i << std::endl;
         check(buffer, index123);
@@ -234,8 +246,19 @@ void stress(data_buffer& buffer, index123_type& index123, int count)
 {
   for(int i =0 ; i < count; i++)
   {
-    erase_one(buffer, index123)
-    create_one(buffer, index123)
+    erase_one(buffer, index123);
+    if (i%100 == 0)
+    {
+      std::cout << "stres " << i << std::endl;
+      check(buffer, index123);
+    }
+    create_one(buffer, index123);
+    if (i%100 == 0)
+    {
+      std::cout << "stres " << i << std::endl;
+      check(buffer, index123);
+    }
+    
   }
 }
 
@@ -253,11 +276,11 @@ bool multiset_test()
   index123_type index123( (cmp123(buffer)) );
   std::cout << "open..." << std::endl;
   index123.get_allocator().memory().buffer().open("./test2_index123.bin");
-  index123.get_allocator().memory().buffer().reserve(TEST_COUNT*sizeof(data)*2);
+  index123.get_allocator().memory().buffer().reserve(TEST_COUNT*sizeof(size_t));
 
   init(buffer, index123);
   check(buffer, index123);
-  stress(buffer, index123, );
+  stress(buffer, index123, 10000);
   check(buffer, index123);
   clear(buffer, index123);
   check(buffer, index123);
