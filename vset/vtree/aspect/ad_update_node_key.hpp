@@ -25,8 +25,8 @@ struct ad_update_node_key
     array_pointer arr = itr->second;
     
 
-    if (    (!compare(arr->front(), itr->first.first)    && !compare(itr->first.first, arr->front()) )
-         || (!compare(arr->back(),  itr->first.second)   && !compare(itr->first.second, arr->back()) )
+    if (    !(!compare(arr->front(), itr->first.first)    && !compare(itr->first.first, arr->front()) )
+         || !(!compare(arr->back(),  itr->first.second)   && !compare(itr->first.second, arr->back()) )
        )
     {
       t.get_container().erase(itr);
