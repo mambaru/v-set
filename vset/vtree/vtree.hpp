@@ -165,12 +165,14 @@ public:
 
   const key_compare& key_comp() const
   {
-    throw not_impl("const key_compare& key_comp() const");
+    // throw not_impl("const key_compare& key_comp() const");
+    return this->get_aspect().template get<_key_compare_>();
   }
 
   const value_compare& value_comp() const
   {
-    throw not_impl("const value_compare& value_comp() const");
+    // throw not_impl("const value_compare& value_comp() const");
+    return this->get_aspect().template get<_value_compare_>();
   }
 
   allocator_type get_allocator() const
