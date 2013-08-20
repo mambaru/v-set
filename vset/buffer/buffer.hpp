@@ -57,7 +57,6 @@ public:
     super::_truncate(*this, size);
   }
 
-
   void reserve( size_type size)
   {
     super::_reserve(*this, size);

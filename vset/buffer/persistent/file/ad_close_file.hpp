@@ -4,8 +4,8 @@
 // Copyright: See COPYING file that comes with this distribution
 //
 
-#ifndef VSET_VSET_BUFFER_PERSISTENT_BASIC_AD_CLOSE_FILE_HPP
-#define VSET_VSET_BUFFER_PERSISTENT_BASIC_AD_CLOSE_FILE_HPP
+#ifndef VSET_VSET_BUFFER_PERSISTENT_FILE_AD_CLOSE_FILE_HPP
+#define VSET_VSET_BUFFER_PERSISTENT_FILE_AD_CLOSE_FILE_HPP
 
 #include <vset/buffer/tags.hpp>
 #include <vset/buffer/persistent/tags.hpp>
@@ -23,7 +23,6 @@ struct ad_close_file
   template<typename T>
   void operator()( T& t )
   {
-    /// КОСТЫЛЬ
     if (  t.get_aspect().template get<_descriptor_>() == 0 )
       t.get_aspect().template get<_descriptor_>() = -1;
 
@@ -33,7 +32,7 @@ struct ad_close_file
       t.get_aspect().template get<_descriptor_>() = -1;
       t.get_aspect().template get<_file_status_>() = false;
       if ( result == -1 )
-        throw std::domain_error(strerror(errno));
+        throw std::runtime_error(strerror(errno));
     }
   }
 

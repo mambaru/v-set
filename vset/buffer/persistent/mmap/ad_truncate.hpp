@@ -29,7 +29,7 @@ struct ad_truncate
     char* olddata = t.get_aspect().template get<_buffer_>();
     char* data = (char*) ::mremap( olddata, oldsize, newsize, MREMAP_MAYMOVE);
     if ( data == MAP_FAILED)
-      throw std::logic_error(strerror(errno));
+      throw std::runtime_error(strerror(errno));
 
     if ( oldsize < newsize )
       ::memset( data + oldsize, 0, newsize - oldsize);

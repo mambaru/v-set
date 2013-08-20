@@ -4,8 +4,8 @@
 // Copyright: See COPYING file that comes with this distribution
 //
 
-#ifndef VSET_VSET_BUFFER_PERSISTENT_BASIC_AD_RESIZE_FILE_HPP
-#define VSET_VSET_BUFFER_PERSISTENT_BASIC_AD_RESIZE_FILE_HPP
+#ifndef VSET_VSET_BUFFER_PERSISTENT_FILE_AD_RESIZE_FILE_HPP
+#define VSET_VSET_BUFFER_PERSISTENT_FILE_AD_RESIZE_FILE_HPP
 
 #include <vset/buffer/tags.hpp>
 #include <vset/buffer/persistent/tags.hpp>
@@ -13,7 +13,6 @@
 #include <string.h>
 #include <stdexcept>
 #include <errno.h>
-
 
 namespace vset { namespace buffer { namespace persistent{ namespace file{
 
@@ -30,7 +29,7 @@ struct ad_resize_file
 
     if ( -1 == ftruncate( t.get_aspect().template get<_descriptor_>(), size) )
     {
-      throw std::logic_error(strerror(errno));
+      throw std::runtime_error(strerror(errno));
     }
   }
 };

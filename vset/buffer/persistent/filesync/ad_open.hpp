@@ -17,7 +17,8 @@ namespace vset { namespace buffer { namespace persistent{ namespace filesync{
 
 struct ad_open
 {
-  ad_open(): _buffer_size(0) {}
+  ad_open()
+    : _buffer_size(0) {}
   
   template<typename T>
   void operator()( T& t)

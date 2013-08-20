@@ -74,7 +74,7 @@ private:
     char *data = t.get_aspect().template get<_buffer_>();
 
     if ( -1 == ::msync( data + real_offset, real_size, async ? MS_ASYNC : MS_SYNC) )
-      throw std::logic_error(strerror(errno));
+      throw std::runtime_error(strerror(errno));
     
     return real_offset + real_size >= buffer_size ? 0 : offset + limit;
   }

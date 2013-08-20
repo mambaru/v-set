@@ -4,8 +4,8 @@
 // Copyright: See COPYING file that comes with this distribution
 //
 
-#ifndef VSET_VSET_ALLOCATOR_ASPECT_AD_NEXT_OFFSET_HPP
-#define VSET_VSET_ALLOCATOR_ASPECT_AD_NEXT_OFFSET_HPP
+#ifndef VSET_VSET_MEMORY_FSB_ASPECT_AD_NEXT_OFFSET_HPP
+#define VSET_VSET_MEMORY_FSB_ASPECT_AD_NEXT_OFFSET_HPP
 
 #include <vset/buffer/tags.hpp>
 #include <vset/memory/fsb/tags.hpp>
@@ -35,12 +35,9 @@ struct ad_next_offset
       {
         return static_cast<size_t>(-1);
       }
-      
     }
     return offset;
   }
-
-private:
 };
 
 }}}

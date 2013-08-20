@@ -11,13 +11,14 @@
 #include <vset/buffer/persistent/file/aspect.hpp>
 #include <vset/buffer/tags.hpp>
 #include <fas/aop.hpp>
+
 namespace vset { namespace buffer{
 
 template<typename A = fas::aspect<> >
 class persistent_buffer_base
-  : public buffer_base< typename fas::aspect_merge<A, persistent::file::aspect>::type >
+  : public buffer_base< A >
 {
-  typedef buffer_base< typename fas::aspect_merge<A, persistent::file::aspect>::type > super;
+  typedef buffer_base< A > super;
 public:
 
   typedef typename super::size_type size_type;
@@ -27,7 +28,7 @@ public:
   void _close(T& t)
   {
     t.get_aspect().template gete< persistent::_before_close_ >()(t);
-    t.get_aspect().template get<persistent::_close_>()(t);
+    t.get_aspect().template get< persistent::_close_>()(t);
     t.get_aspect().template gete< persistent::_after_close_ >()(t);
   }
 

@@ -9,19 +9,22 @@
 
 namespace vset { namespace memory{
 
+//#warning TODO: переименовать в итератор, избавиться от T
+//#warning TODO: это рандом access
+  
 template<typename T, typename M>
-struct offset_pointer
+class offset_pointer
 {
+public:
+  
   typedef offset_pointer<T, M> self;
   typedef M offset_provider;
-  offset_provider _provider;
-  size_t offset;
+  typedef typename offset_provider::value_type value_type;
 
-  typedef typename std::iterator_traits<T*>::iterator_category iterator_category;
-  typedef typename std::iterator_traits<T*>::value_type        value_type;
-  typedef typename std::iterator_traits<T*>::difference_type   difference_type;
-  typedef typename std::iterator_traits<T*>::pointer           pointer;
-  typedef typename std::iterator_traits<T*>::reference         reference;
+  typedef typename std::iterator_traits<value_type*>::iterator_category iterator_category;
+  typedef typename std::iterator_traits<value_type*>::difference_type   difference_type;
+  typedef typename std::iterator_traits<value_type*>::pointer           pointer;
+  typedef typename std::iterator_traits<value_type*>::reference         reference;
 
   offset_pointer()
     : _provider()
@@ -33,13 +36,6 @@ struct offset_pointer
     , offset(offset)
   {}
 
-  /*
-  explicit offset_pointer(offset_provider provider, T* ptr )
-    : _provider(provider)
-    , offset(_provider.offset(ptr))
-  {
-  }*/
-  
   operator T* () { return this->get_pointer();}
   operator const T* () const { return this->get_pointer();}
 
@@ -67,10 +63,6 @@ struct offset_pointer
   {
     this->offset = _provider.offset(t);
     return *this;
-    /*if ( offset == static_cast<size_t>(-1) )
-      return 0;
-    return _provider.get(offset);
-    */
   }
 
   size_t get_offset() const
@@ -88,13 +80,6 @@ struct offset_pointer
   {
     return offset == static_cast<size_t>(-1);
   }
-  /*
-  void operator = ( size_t offset ) { this->offset = offset; }
-  void operator = ( T* t ) { this->offset = _provider.offset(t); }
-  operator size_t () const { return offset;}
-  */
-
-  // operator bool () const { return offset != static_cast<size_t>(-1);}
 
   self& operator++()
   {
@@ -174,6 +159,10 @@ struct offset_pointer
   {
     return *(_provider.get( offset + sizeof(T)*n ));
   }
+
+private:
+  offset_provider _provider;
+  size_t offset;
 };
 
 

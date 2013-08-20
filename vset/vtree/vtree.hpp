@@ -237,6 +237,7 @@ public:
   }
 
 #ifdef __GXX_EXPERIMENTAL_CXX0X__
+
   const_iterator  cbegin() const
   {
     return const_iterator( _container.cbegin(), 0);
@@ -349,7 +350,6 @@ public:
   size_type erase(const key_type& key)
   {
     return this->get_aspect().template get<_erase_value_>()(*this, key);
-    //throw not_impl("size_type erase(const key_type& /*key*/)");
   }
 
 #ifdef __GXX_EXPERIMENTAL_CXX0X__
@@ -381,13 +381,11 @@ public:
   iterator find(const key_type& key)
   {
     return this->get_aspect().template get<_find_>()(*this, key);
-    //throw not_impl("iterator find(const key_type& /*key*/)");
   }
 
   const_iterator find(const key_type& key ) const
   {
     return this->get_aspect().template get<_find_>()(*this, key);
-    //throw not_impl("const_iterator find(const key_type& key ) const");
   }
 
   iterator lower_bound(const key_type& key)
@@ -413,13 +411,11 @@ public:
   std::pair<iterator, iterator> equal_range(const key_type& x)
   {
     return std::make_pair(this->lower_bound(x), this->upper_bound(x) );
-    //throw not_impl("std::pair<iterator, iterator> equal_range(const key_type& x)");
   }
 
   std::pair<const_iterator, const_iterator> equal_range(const key_type& x) const
   {
     return std::make_pair(this->lower_bound(x), this->upper_bound(x) );
-    //throw not_impl("std::pair<const_iterator, const_iterator> equal_range(const key_type& x) const");
   }
 
 

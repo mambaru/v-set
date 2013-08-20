@@ -101,8 +101,6 @@ UNIT(multiset2, "")
     else
       t << equal<assert>( *lower, i-1 ) << " i=" << i-1<< " !="<< *lower<< " " << FAS_TESTING_FILE_LINE;
   }
-
-
 }
 
 

@@ -1,11 +1,11 @@
 //
-// Author: Vladimir Migashko <migashko@gmail.com>, (C) 2012
+// Author: Vladimir Migashko <migashko@gmail.com>, (C) 2012, 2013
 //
 // Copyright: See COPYING file that comes with this distribution
 //
 
-#ifndef VSET_VSET_BUFFER_PERSISTENT_FILESYNC_ASPECT_FILESYNC_HPP
-#define VSET_VSET_BUFFER_PERSISTENT_FILESYNC_ASPECT_FILESYNC_HPP
+#ifndef VSET_VSET_BUFFER_PERSISTENT_FILESYNC_ASPECT_BASIC_HPP
+#define VSET_VSET_BUFFER_PERSISTENT_FILESYNC_ASPECT_BASIC_HPP
 
 #include <vset/buffer/tags.hpp>
 #include <vset/buffer/persistent/tags.hpp>
@@ -22,7 +22,7 @@
 
 namespace vset { namespace buffer{ namespace persistent{ namespace filesync{
 
-struct aspect_filesync: fas::aspect< fas::type_list_n<
+struct aspect_basic: fas::aspect< fas::type_list_n<
   fas::group<_destructor_, _close_>,
   fas::value_advice<_buffer_size_, size_t>,
   fas::advice<_open_, ad_open>,

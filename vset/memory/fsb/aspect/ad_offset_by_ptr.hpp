@@ -4,8 +4,8 @@
 // Copyright: See COPYING file that comes with this distribution
 //
 
-#ifndef VSET_VSET_ALLOCATOR_ASPECT_AD_OFFSET_BY_PTR_HPP
-#define VSET_VSET_ALLOCATOR_ASPECT_AD_OFFSET_BY_PTR_HPP
+#ifndef VSET_VSET_MEMORY_FSB_ASPECT_AD_OFFSET_BY_PTR_HPP
+#define VSET_VSET_MEMORY_FSB_ASPECT_AD_OFFSET_BY_PTR_HPP
 
 #include <vset/buffer/tags.hpp>
 #include <vset/memory/fsb/tags.hpp>

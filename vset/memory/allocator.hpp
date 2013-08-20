@@ -10,7 +10,7 @@ template<typename Memory >
 struct allocator
 {
   typedef Memory memory_type;
-  typedef allocator<Memory> self;
+  //typedef allocator<Memory> self;
   typedef typename memory_type::value_type value_type;
   typedef typename memory_type::pointer pointer;
   typedef typename memory_type::const_pointer const_pointer;

@@ -7,13 +7,13 @@
 #ifndef VSET_VSET_BUFFER_PERSISTENT_BUFFER_HPP
 #define VSET_VSET_BUFFER_PERSISTENT_BUFFER_HPP
 
-#include <vset/buffer/persistent/filesync/aspect_filesync.hpp>
+#include <vset/buffer/persistent/filesync/aspect.hpp>
 #include <vset/buffer/persistent_buffer_base.hpp>
 #include <fas/aop.hpp>
 
 namespace vset { namespace buffer{
 
-template<typename A = /*fas::aspect<>*/ persistent::filesync::aspect_filesync >
+template<typename A = persistent::filesync::aspect >
 class persistent_buffer
   : public persistent_buffer_base<A>
 {
@@ -94,7 +94,6 @@ public:
   {
     return super::_sync(*this, offset, size, sync);
   }
-  
 };
 
 }}

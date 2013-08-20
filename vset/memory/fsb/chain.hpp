@@ -71,20 +71,6 @@ struct chain
     }
 
     return chk->first_value();
-    
-    /*
-    size_t offset = reinterpret_cast<char*>(value) - reinterpret_cast<char*>(this->first_chunk());
-    chunk_type* chk = first_chunk() + offset/sizeof(chunk_type);
-    T* result =  chk->next_value(value);
-    if ( result == 0)
-    {
-      ++chk;
-      if ( static_cast<size_t>(chk - this->first_chunk()) == size )
-        return 0;
-      result = chk->first_value();
-    }
-    return result;
-    */
   }
 
   const T* next_value(const T* value)  const
@@ -102,20 +88,6 @@ struct chain
     }
 
     return chk->first_value();
-
-    /*
-    size_t offset = reinterpret_cast<const char*>(value) - reinterpret_cast<const char*>(this->first_chunk());
-    const chunk_type* chk = first_chunk() + offset/sizeof(chunk_type);
-    const T* result =  chk->next_value(value);
-    if ( result == 0)
-    {
-      ++chk;
-      if ( static_cast<size_t>(chk - this->first_chunk()) == size )
-        return 0;
-      result = chk->first_value();
-    }
-    return result;
-    */
   }
 
   chunk_type* first_occuped()
@@ -146,16 +118,8 @@ struct chain
 
   chunk_type* find_free()
   {
-    //chunk_type* beg = first_chunk();
-    // chunk_type* end = beg + size;
     chunk_type* beg = first_chunk() + first_free;
     chunk_type* end = first_chunk() + size;
-
-    
-    /*if ( beg!=end && !( beg + first_free)->filled() )
-      return beg + first_free;
-      */
-    
 
     for ( ;beg!=end; ++beg)
     {
@@ -172,17 +136,8 @@ struct chain
 
   const chunk_type* find_free() const
   {
-    //chunk_type* beg = first_chunk();
-    // const chunk_type* end = beg + size;
     const chunk_type* beg = first_chunk() + first_free ;
     const chunk_type* end = first_chunk() + size;
-    
-
-    /*
-    if ( beg!=end && !( beg + first_free)->filled() )
-      return beg + first_free;
-    */
-    
 
     for ( ;beg!=end; ++beg)
     {

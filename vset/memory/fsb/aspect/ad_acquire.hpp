@@ -4,8 +4,8 @@
 // Copyright: See COPYING file that comes with this distribution
 //
 
-#ifndef VSET_VSET_ALLOCATOR_ASPECT_AD_ACQUIRE_HPP
-#define VSET_VSET_ALLOCATOR_ASPECT_AD_ACQUIRE_HPP
+#ifndef VSET_VSET_MEMORY_FSB_ASPECT_AD_ACQUIRE_HPP
+#define VSET_VSET_MEMORY_FSB_ASPECT_AD_ACQUIRE_HPP
 
 #include <vset/buffer/tags.hpp>
 #include <vset/memory/fsb/tags.hpp>
@@ -25,7 +25,7 @@ struct ad_acquire
 
     typedef typename T::aspect::template advice_cast<_chain_type_>::type chain_type;
     typedef typename T::aspect::template advice_cast<_chunk_type_>::type chunk_type;
-    typedef typename T::aspect::template advice_cast< _buffer_data_type_ >::type data_type;
+    typedef typename T::aspect::template advice_cast<_buffer_data_type_>::type data_type;
 
     size_t offset = t.get_aspect().template get< _buffer_size_ >()(t);
     

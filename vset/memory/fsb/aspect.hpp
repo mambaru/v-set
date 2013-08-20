@@ -12,11 +12,7 @@
 #include <vset/memory/fsb/aspect/aspect_value.hpp>
 #include <vset/memory/fsb/aspect/aspect_manager.hpp>
 #include <vset/memory/fsb/aspect/aspect_pointer.hpp>
-
 #include <vset/buffer/persistent/mmap/aspect.hpp>
-#include <vset/buffer/persistent/filesync/aspect_filesync.hpp>
-#include <vset/buffer/persistent/file/aspect.hpp>
-
 #include <fas/aop.hpp>
 
 namespace vset { namespace memory{ namespace fsb{

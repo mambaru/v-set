@@ -91,7 +91,6 @@ public:
   {
     t.get_aspect().template get<_clear_>()(t);
   }
-
 };
 
 }}

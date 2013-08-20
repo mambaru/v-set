@@ -4,8 +4,8 @@
 // Copyright: See COPYING file that comes with this distribution
 //
 
-#ifndef VSET_VSET_ALLOCATOR_ASPECT_AD_ALLOCATE_HPP
-#define VSET_VSET_ALLOCATOR_ASPECT_AD_ALLOCATE_HPP
+#ifndef VSET_VSET_MEMORY_FSB_ASPECT_AD_ALLOCATE_HPP
+#define VSET_VSET_MEMORY_FSB_ASPECT_AD_ALLOCATE_HPP
 
 #include <vset/buffer/tags.hpp>
 #include <vset/memory/fsb/tags.hpp>
@@ -43,13 +43,11 @@ private:
     chain_type* chn = reinterpret_cast<chain_type*>(data);
     pointer p( &t );
     p.set_pointer( chn->mark() );
-    // p = chn->mark();
     if (!p)
     {
       t.get_aspect().template get<_acquire_>()(t);
       data = t.get_aspect().template get<_buffer_data_>()(t);
       chn = reinterpret_cast<chain_type*>(data);
-      // p = chn->mark();
       p.set_pointer(chn->mark());
       if (!p)
         abort();

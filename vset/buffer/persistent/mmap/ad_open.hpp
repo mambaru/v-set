@@ -12,6 +12,7 @@
 #include <vset/buffer/persistent/mmap/tags.hpp>
 #include <string.h>
 #include <string>
+#include <stdexcept>
 
 #include <unistd.h>
 #include <sys/mman.h>
@@ -57,7 +58,7 @@ struct ad_open
     );
 
     if ( data == MAP_FAILED)
-      throw;
+      throw std::runtime_error(strerror(errno));
 
     if ( is_created )
       ::memset(data, 0, file_size);

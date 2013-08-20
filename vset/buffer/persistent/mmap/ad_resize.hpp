@@ -20,7 +20,6 @@ struct ad_resize
   template<typename T>
   void operator()( T& t, size_t size)
   {
-    
     size_t capacity = t.get_aspect().template get<_capacity_>()(t);
     if ( size <= capacity )
     {
@@ -33,7 +32,6 @@ struct ad_resize
       t.get_aspect().template get<_head_>()(t)->set_size(size);
       t.get_aspect().template get<_size_value_>()=size;
     }
-    // t.get_aspect().template get<_sync_>()(t);
   }
 };
 

@@ -12,6 +12,7 @@
 
 namespace vset { namespace memory{
 
+// #warning TODO: сделать size(), как distance(begin(), end() );
 template<typename A >
 class manager
   : public manager_base<A>

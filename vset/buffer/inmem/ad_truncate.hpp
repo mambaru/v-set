@@ -4,13 +4,13 @@
 // Copyright: See COPYING file that comes with this distribution
 //
 
-#ifndef VSET_VSET_BUFFER_SIMPLE_AD_TRUNCATE_HPP
-#define VSET_VSET_BUFFER_SIMPLE_AD_TRUNCATE_HPP
+#ifndef VSET_VSET_BUFFER_INMEM_AD_TRUNCATE_HPP
+#define VSET_VSET_BUFFER_INMEM_AD_TRUNCATE_HPP
 
 #include <vset/buffer/tags.hpp>
-#include <vset/buffer/simple/tags.hpp>
+#include <vset/buffer/inmem/tags.hpp>
 
-namespace vset { namespace buffer { namespace simple{
+namespace vset { namespace buffer { namespace inmem{
 
 struct ad_truncate
 {

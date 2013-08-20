@@ -6,9 +6,9 @@
 
 #include <vset/buffer/buffer.hpp>
 #include <vset/buffer/persistent_buffer.hpp>
-#include <vset/buffer/persistent/filesync/aspect_filesync.hpp>
+#include <vset/buffer/persistent/filesync/aspect.hpp>
 #include <vset/buffer/persistent/mmap/aspect.hpp>
-#include <vset/buffer/simple/aspect.hpp>
+#include <vset/buffer/inmem/aspect.hpp>
 #include <fas/testing.hpp>
 
 
@@ -54,7 +54,7 @@ void second_test(T& t, B& buff, const std::string& text)
 UNIT(test_unit, "")
 {
   using namespace fas::testing;
-  vset::buffer::buffer< vset::buffer::simple::aspect> buff;
+  vset::buffer::buffer< vset::buffer::inmem::aspect> buff;
   first_test( t, buff);
   second_test( t, buff, "simple");
   t << nothing();

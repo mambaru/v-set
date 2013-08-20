@@ -15,7 +15,7 @@
 #include <vset/memory/provider.hpp>
 #include <vset/memory/allocator.hpp>
 #include <vset/memory/fsb/aspect.hpp>
-#include <vset/buffer/simple/aspect.hpp>
+#include <vset/buffer/inmem/aspect.hpp>
 #include <fas/aop.hpp>
 #include <fas/mp.hpp>
 
@@ -169,7 +169,7 @@ struct aspect2: fas::aspect_merge<
 template<typename V, typename Compare = std::less<V>, int N = 1024 >
 struct aspect3: fas::aspect_merge<
   value_aspect<V, Compare>,
-  memory_aspect2< sorted_array< V, N, Compare >, ::vset::buffer::simple::aspect >,
+  memory_aspect2< sorted_array< V, N, Compare >, ::vset::buffer::inmem::aspect >,
   fas::advice< _restore_, ad_restore >,
   fas::group< buffer::persistent::_after_open_, _restore_ >,
   aspect_common

@@ -4,8 +4,8 @@
 // Copyright: See COPYING file that comes with this distribution
 //
 
-#ifndef VSET_VSET_BUFFER_PERSISTENT_BASIC_AD_SEEK_SET_HPP
-#define VSET_VSET_BUFFER_PERSISTENT_BASIC_AD_SEEK_SET_HPP
+#ifndef VSET_VSET_BUFFER_PERSISTENT_FILE_AD_SEEK_SET_HPP
+#define VSET_VSET_BUFFER_PERSISTENT_FILE_AD_SEEK_SET_HPP
 
 #include <vset/buffer/tags.hpp>
 #include <vset/buffer/persistent/tags.hpp>

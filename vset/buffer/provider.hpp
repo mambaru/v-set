@@ -64,6 +64,7 @@ public:
   }
 
 protected:
+  
   T* _target;
 };
 

@@ -72,7 +72,6 @@ public:
     _target->get_aspect().template gete< persistent::_after_sync_>()(*_target, result, async);
     return result;
   }
-
 };
 
 }}

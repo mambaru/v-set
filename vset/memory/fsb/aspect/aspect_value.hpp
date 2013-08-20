@@ -12,10 +12,6 @@
 
 #include <vset/memory/fsb/chunk.hpp>
 #include <vset/memory/fsb/chain.hpp>
-
-
-
-
 #include <fas/aop.hpp>
 
 namespace vset { namespace memory{ namespace fsb{

@@ -4,8 +4,8 @@
 // Copyright: See COPYING file that comes with this distribution
 //
 
-#ifndef VSET_VSET_ALLOCATOR_OFFSET_PROXY_HPP
-#define VSET_VSET_ALLOCATOR_OFFSET_PROXY_HPP
+#ifndef VSET_VSET_MEMORY_FSB_OFFSET_PROVIDER_HPP
+#define VSET_VSET_MEMORY_FSB_OFFSET_PROVIDER_HPP
 
 #include <vset/memory/fsb/tags.hpp>
 #include <cassert>
@@ -14,13 +14,19 @@
 namespace vset { namespace memory{ namespace fsb{
 
 template<typename T>
-class offset_proxy
+class offset_provider
 {
-  typedef typename T::aspect::template advice_cast<_value_type_>::type value_type;
 public:
-  offset_proxy(): _offset(0) {}
+
+  typedef typename T::aspect::template advice_cast<_value_type_>::type value_type;
   
-  offset_proxy(T* offset): _offset(offset) {}
+  offset_provider()
+    : _offset(0)
+  {}
+  
+  offset_provider(T* offset)
+    : _offset(offset)
+  {}
 
   const value_type* get(size_t offset) const
   {
@@ -49,10 +55,10 @@ public:
   size_t pred(size_t offset, size_t count = 1) const
   {
     assert(_offset!=0);
-    throw std::domain_error("offset_proxy::pred not impl");
+    throw std::domain_error("offset_provider::pred not impl");
   }
 
-  bool operator == (const offset_proxy<T> right) const
+  bool operator == (const offset_provider<T> right) const
   {
     return _offset==right._offset;
   }

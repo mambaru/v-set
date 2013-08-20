@@ -4,8 +4,8 @@
 // Copyright: See COPYING file that comes with this distribution
 //
 
-#ifndef VSET_VSET_ALLOCATOR_ASPECT_AD_DEALLOCATE_HPP
-#define VSET_VSET_ALLOCATOR_ASPECT_AD_DEALLOCATE_HPP
+#ifndef VSET_VSET_MEMORY_FSB_ASPECT_AD_DEALLOCATE_HPP
+#define VSET_VSET_MEMORY_FSB_ASPECT_AD_DEALLOCATE_HPP
 
 #include <vset/buffer/tags.hpp>
 #include <vset/memory/fsb/tags.hpp>
@@ -26,10 +26,8 @@ struct ad_deallocate
 
     data_type data = t.get_aspect().template get<_buffer_data_>()(t);
     chain_type* chn = reinterpret_cast<chain_type*>(data);
-    chn->free( reinterpret_cast<value_type*>(data + ptr.offset) );
+    chn->free( reinterpret_cast<value_type*>(data + ptr.get_offset() ) );
   }
-
-private:
 };
 
 }}}

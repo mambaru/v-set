@@ -7,23 +7,22 @@
 #ifndef VSET_VSET_BUFFER_PERSISTENT_HEAD_HPP
 #define VSET_VSET_BUFFER_PERSISTENT_HEAD_HPP
 
+#include <cstddef>
+
 namespace vset { namespace buffer{ namespace persistent{
 
-/// Заголовок который будет записан в начало буфера
-/// Может не использовать заголовок - достаточно включить в аспект fas::value_advice< _buffer_head_, empty_head >
 template< size_t ID >
 struct head
 {
+  
 private:
-  /// Идентификатор формата данных (определяеться разработчиком)
   size_t _format;
-  /// Начало блока данных в буфере (сразу за заголовком)
   size_t _offset;
-  /// Фактический размер данных
   size_t _size;
-  /// Фактический размер буфера
   size_t _capacity;
+  
 public:
+  
   size_t format() const { return _format; }
   size_t offset() const { return _offset; }
   size_t size() const { return _size; }

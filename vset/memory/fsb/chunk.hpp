@@ -9,9 +9,6 @@
 
 namespace vset { namespace memory{ namespace fsb{
 
-//#include <cstddef>
-//#include <stdexcept>
-
 template<typename T>
 struct chunk
 {
@@ -78,7 +75,6 @@ struct chunk
       return 0;
     return data + index;
   }
-
   
   size_t next_occuped(size_t pos = 0) const
   {
@@ -88,30 +84,13 @@ struct chunk
     return static_cast<size_t>(-1);
   }
 
-
   size_t first_free() const
   {
-    /// биты c права на лево
-    /// 000000000 000000000 000000000 000000000 000000000 000000000 000000000 000000001
-    /// Первый элемент свободен
     for ( size_t i = 0; i < sizeof(size_t)*8; ++i )
       if ( ! ( bits & ( static_cast<size_t>(1) << i) ) )
         return i;
     return static_cast<size_t>(-1);
-    /*
-      var
-        x     : integer;
-        index : word;
-      begin
-        x := 44; //101100b
-        asm
-          bsf   ax, x
-          mov   index, ax  //index = 2 (биты нумеруются с 0)
-        end;
-      end;
-    */
   }
-
 
   T* mark()
   {
@@ -133,7 +112,7 @@ struct chunk
     if ( index < 64 )
       bits &= ~( static_cast<size_t>(1)<<index);
     else
-      throw std::invalid_argument("addr");
+      throw std::invalid_argument("chunk<T>::free");
   }
 };
 

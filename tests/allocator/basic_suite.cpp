@@ -10,7 +10,7 @@
 #include <vset/memory/allocator.hpp>
 #include <vset/memory/fsb/aspect.hpp>
 //#include <vset/persistent_buffer.hpp>
-#include <vset/buffer/persistent/filesync/aspect_filesync.hpp>
+#include <vset/buffer/persistent/filesync/aspect.hpp>
 
 //#define MAX_TEST 6400
 #define MAX_TEST 640 
