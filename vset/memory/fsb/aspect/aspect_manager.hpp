@@ -22,13 +22,14 @@
 
 namespace vset { namespace memory{ namespace fsb{
 
+template< template<typename> class BufferProvider = buffer::persistent_provider >
 struct aspect_manager: fas::aspect< typename fas::type_list_n<
   fas::advice<_begin_, ad_begin>,
   fas::advice<_end_, ad_end>,
   fas::advice<_acquire_, ad_acquire>,
   fas::advice<_allocate_, ad_allocate>,
   fas::advice<_deallocate_, ad_deallocate>,
-  fas::type_advice< _buffer_provider_,  fas::w< buffer::persistent_provider< fas::_ > > >
+  fas::type_advice< _buffer_provider_,  fas::w< /*buffer::persistent_provider*/BufferProvider< fas::_ > > >
 >::type > {};
 
 }}}

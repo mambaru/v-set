@@ -44,6 +44,9 @@ void test_char_init(T& t, Alloc& allocator)
 template<typename T, typename Alloc>
 void test_char_test(T& t, const Alloc& allocator)
 {
+  /*
+  int * const ii = 0;
+  ++ii;*/
   using namespace fas::testing;
   typedef typename Alloc::const_pointer const_pointer;
   const_pointer beg = allocator.begin();

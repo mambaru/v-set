@@ -1,6 +1,6 @@
 project(tests)
 ENABLE_TESTING()
 add_subdirectory(buffer)
-add_subdirectory(allocator)
+add_subdirectory(memory)
 add_subdirectory(vtree)
 add_subdirectory(multiset)

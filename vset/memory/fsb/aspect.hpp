@@ -20,7 +20,7 @@ namespace vset { namespace memory{ namespace fsb{
 template<typename T, typename BufferAspect = vset::buffer::persistent::mmap::aspect >
 struct aspect: fas::aspect_merge<
   aspect_value<T>,
-  aspect_manager,
+  aspect_manager<>,
   aspect_pointer,
   BufferAspect
 >::type {};

@@ -8,9 +8,6 @@
 #include <vset/array.hpp>
 #include <vset/sorted_array.hpp>
 
-
-
-
 UNIT(test_array, "")
 {
   using namespace fas::testing;

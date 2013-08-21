@@ -6,11 +6,11 @@
 
 namespace vset { namespace memory{
 
+// TODO: привести к спецификации c++11
 template<typename Memory >
 struct allocator
 {
   typedef Memory memory_type;
-  //typedef allocator<Memory> self;
   typedef typename memory_type::value_type value_type;
   typedef typename memory_type::pointer pointer;
   typedef typename memory_type::const_pointer const_pointer;
@@ -20,9 +20,15 @@ struct allocator
   typedef typename memory_type::size_type size_type;
   typedef typename memory_type::difference_type difference_type;
 
-  allocator(): _memory() { }
+  allocator()
+    : _memory()
+  {
+  }
   
-  allocator(const memory_type& m): _memory(m) { }
+  allocator(const memory_type& m)
+    : _memory(m)
+  {
+  }
 
   template <typename U>
   struct rebind {
@@ -41,7 +47,8 @@ struct allocator
   
   size_type max_size () const throw()
   {
-    return ::std::numeric_limits <size_type>::max() / sizeof(value_type);
+    // return ::std::numeric_limits <size_type>::max() / sizeof(value_type);
+    return 1;
   }
 
   pointer allocate (size_type num, void *  hint = 0)

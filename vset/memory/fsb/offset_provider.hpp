@@ -19,6 +19,10 @@ class offset_provider
 public:
 
   typedef typename T::aspect::template advice_cast<_value_type_>::type value_type;
+  typedef value_type* pointer;
+  typedef const value_type* const_pointer;
+  typedef value_type& reference;
+  typedef const value_type& const_reference;
   
   offset_provider()
     : _offset(0)

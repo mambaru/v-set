@@ -1,11 +1,11 @@
 add_executable(
-  test_allocator
-  test_allocator.cpp
+  test_memory
+  test_memory.cpp
   ${FASLIB_DIR}/fas/testing/testing.cpp
   basic_suite.cpp 
 )
 
-add_test(test_allocator test_allocator)
+add_test(test_memory test_memory)
 
 
 

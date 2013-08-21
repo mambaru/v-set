@@ -6,9 +6,12 @@
 
 #include <vset/buffer/buffer.hpp>
 #include <vset/buffer/persistent_buffer.hpp>
+/*
 #include <vset/buffer/persistent/filesync/aspect.hpp>
 #include <vset/buffer/persistent/mmap/aspect.hpp>
 #include <vset/buffer/inmem/aspect.hpp>
+*/
+#include <vset/buffer/strategy.hpp>
 #include <fas/testing.hpp>
 
 
@@ -54,7 +57,8 @@ void second_test(T& t, B& buff, const std::string& text)
 UNIT(test_unit, "")
 {
   using namespace fas::testing;
-  vset::buffer::buffer< vset::buffer::inmem::aspect> buff;
+  using namespace vset::buffer;
+  buffer< strategy::inmem > buff;
   first_test( t, buff);
   second_test( t, buff, "simple");
   t << nothing();
@@ -64,7 +68,7 @@ UNIT(persistent_unit, "")
 {
   using namespace fas::testing;
   using namespace vset::buffer;
-  persistent_buffer<> pbuf;
+  persistent_buffer< strategy::filesync > pbuf;
   pbuf.open("test.bin");
   pbuf.truncate(0);
   
@@ -76,7 +80,7 @@ UNIT(persistent_unit, "")
   second_test( t, pbuf, "after close/open");
   pbuf.open("test.bin");
   second_test( t, pbuf, "after reopen");
-  persistent_buffer<> pbuf2;
+  persistent_buffer< strategy::filesync > pbuf2;
   pbuf2.open("test.bin");
   second_test( t, pbuf2, "open exist");
   pbuf.close();
@@ -88,7 +92,7 @@ UNIT(mmap_unit, "")
 {
   using namespace fas::testing;
   using namespace vset::buffer;
-  persistent_buffer<persistent::mmap::aspect> pbuf;
+  persistent_buffer< strategy::mmap > pbuf;
   pbuf.open("test_mmap.bin");
   pbuf.truncate(0);
 
@@ -100,7 +104,7 @@ UNIT(mmap_unit, "")
   second_test( t, pbuf, "after close/open");
   pbuf.open("test_mmap.bin");
   second_test( t, pbuf, "after reopen");
-  persistent_buffer<persistent::mmap::aspect> pbuf2;
+  persistent_buffer< strategy::mmap > pbuf2;
   pbuf2.open("test_mmap.bin");
   second_test( t, pbuf2, "open exist");
   pbuf.close();

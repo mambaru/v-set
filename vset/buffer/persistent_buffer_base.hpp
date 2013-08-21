@@ -14,7 +14,7 @@
 
 namespace vset { namespace buffer{
 
-template<typename A = fas::aspect<> >
+template<typename A /*= fas::aspect<>*/ >
 class persistent_buffer_base
   : public buffer_base< A >
 {

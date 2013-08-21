@@ -13,7 +13,7 @@
 
 namespace vset { namespace buffer{
 
-template<typename A = persistent::filesync::aspect >
+template<typename A /*persistent::filesync::aspect*/ >
 class persistent_buffer
   : public persistent_buffer_base<A>
 {

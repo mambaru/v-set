@@ -11,7 +11,7 @@
 #include <vset/buffer/tags.hpp>
 namespace vset { namespace buffer{
 
-template<typename A = fas::aspect<> >
+template<typename A /*= fas::aspect<>*/ >
 class buffer_base
   : public fas::aspect_class<A>
 {
