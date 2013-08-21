@@ -64,7 +64,8 @@ void test_char_test(T& t, const Alloc& allocator)
 UNIT(test_unit, "")
 {
   using namespace fas::testing;
-  typedef vset::memory::manager< /*fas::aspect< vset::allocator::value_type<char> >*/ vset::memory::fsb::aspect<char> > allocator_type;
+  // typedef vset::memory::manager< /*fas::aspect< vset::allocator::value_type<char> >*/ vset::memory::fsb::aspect<char> > allocator_type;
+  typedef vset::memory::manager< vset::memory::strategy::fsb_mmap<char> > allocator_type;
 
   std::cout << "test_unit {" << std::endl;
   
@@ -104,7 +105,8 @@ UNIT(test_allocator, "")
 
   std::cout << "test_allocator {" << std::endl;
 
-  typedef memory::manager< memory::fsb::aspect<value_type> > manager;
+  // typedef memory::manager< memory::fsb::aspect<value_type> > manager;
+  typedef memory::manager< vset::memory::strategy::fsb_mmap<char> > manager;
   typedef memory::provider< manager > provider;
   typedef memory::allocator< memory::provider< manager > > allocator;
 

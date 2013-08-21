@@ -9,6 +9,7 @@
 
 #include <cstddef>
 #include <vset/memory/manager_base.hpp>
+#include <vset/memory/strategy.hpp>
 
 namespace vset { namespace memory{
 
@@ -20,10 +21,11 @@ class manager
   typedef manager_base<A> super;
 public:
   typedef manager<A> self;
-  typedef typename super::value_type  value_type;
-  typedef typename super::buffer_type buffer_type;
-  typedef typename super::pointer pointer;
+  typedef typename super::value_type    value_type;
+  typedef typename super::buffer_type   buffer_type;
+  typedef typename super::pointer       pointer;
   typedef typename super::const_pointer const_pointer;
+  
   typedef value_type& reference;
   typedef const value_type& const_reference;
 

@@ -16,7 +16,8 @@ struct data
   //char datax[10240*5];
 };
 
-typedef vset::memory::fsb::aspect<data> mmap_data_aspect;
+//typedef vset::memory::fsb::aspect<data> mmap_data_aspect;
+typedef vset::memory::strategy::fsb_mmap<data> mmap_data_aspect;
 typedef vset::memory::manager<mmap_data_aspect> data_buffer;
 typedef data_buffer::const_pointer data_const_pointer;
 typedef data_buffer::pointer data_pointer;
@@ -63,6 +64,7 @@ struct cmp123
 
     if ( right->data3 < left->data3 )
       return false;
+    
     */
 
     return false;

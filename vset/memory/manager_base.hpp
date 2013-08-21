@@ -14,6 +14,8 @@
 #include <fas/aop.hpp>
 #include <iostream>
 
+#include <vset/memory/detail/helper.hpp>
+
 namespace vset { namespace memory{
 
 template<typename A >
@@ -22,7 +24,16 @@ class manager_base
 {
   typedef fas::aspect_class<A> super;
   typedef manager_base<A> self;
+  
 protected:
+
+  typedef typename helper<self>::value_type      value_type;
+  typedef typename helper<self>::buffer_type     buffer_type;
+  typedef typename helper<self>::pointer         pointer;
+  typedef typename helper<self>::const_pointer   const_pointer;
+  typedef typename helper<self>::difference_type difference_type;
+
+  /*
   typedef typename super::aspect::template advice_cast<_value_type_>::type value_type;
   
   typedef typename super::aspect::template advice_cast<_buffer_provider_>::type
@@ -34,6 +45,8 @@ protected:
   typedef typename fas::apply<buffer_metatype, self>::type buffer_type;
   typedef typename fas::apply<pointer_metatype, value_type, self >::type pointer;
   typedef typename fas::apply<pointer_metatype, const value_type, const self >::type const_pointer;
+  */
+  
 
   typedef size_t size_type;
 

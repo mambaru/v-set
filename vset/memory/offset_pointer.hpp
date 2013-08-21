@@ -7,6 +7,8 @@
 #ifndef VSET_VSET_ALLOCATOR_OFFSET_POINTER_HPP
 #define VSET_VSET_ALLOCATOR_OFFSET_POINTER_HPP
 
+#include <iterator>
+
 namespace vset { namespace memory{
 
 //#warning TODO: переименовать в итератор, избавиться от T
@@ -16,11 +18,9 @@ template<typename T, typename M>
 class offset_pointer
 {
 public:
-  
   typedef offset_pointer<T, M> self;
   typedef M offset_provider;
   typedef typename offset_provider::value_type value_type;
-
   typedef typename std::iterator_traits<value_type*>::iterator_category iterator_category;
   typedef typename std::iterator_traits<value_type*>::difference_type   difference_type;
   typedef typename std::iterator_traits<value_type*>::pointer           pointer;
@@ -139,7 +139,6 @@ public:
 
   self& operator += (difference_type n )
   {
-    
     offset = _provider.next(offset, n);
     return *this;
   }

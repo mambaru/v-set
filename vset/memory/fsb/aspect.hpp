@@ -12,15 +12,19 @@
 #include <vset/memory/fsb/aspect/aspect_value.hpp>
 #include <vset/memory/fsb/aspect/aspect_manager.hpp>
 #include <vset/memory/fsb/aspect/aspect_pointer.hpp>
-#include <vset/buffer/persistent/mmap/aspect.hpp>
+//#include <vset/buffer/persistent/mmap/aspect.hpp>
 #include <fas/aop.hpp>
 
 namespace vset { namespace memory{ namespace fsb{
 
-template<typename T, typename BufferAspect = vset::buffer::persistent::mmap::aspect >
+template<
+  typename T,
+  typename BufferAspect/* = vset::buffer::persistent::mmap::aspect*/,
+  template<typename> class BufferProvider /*= buffer::persistent_provider*/
+>
 struct aspect: fas::aspect_merge<
   aspect_value<T>,
-  aspect_manager<>,
+  aspect_manager<BufferProvider>,
   aspect_pointer,
   BufferAspect
 >::type {};

@@ -15,6 +15,7 @@
 #include <vset/memory/provider.hpp>
 #include <vset/memory/allocator.hpp>
 #include <vset/memory/fsb/aspect.hpp>
+#include <vset/memory/strategy.hpp>
 #include <vset/buffer/inmem/aspect.hpp>
 #include <fas/aop.hpp>
 #include <fas/mp.hpp>
@@ -130,7 +131,8 @@ struct memory_aspect: fas::aspect< typename fas::type_list_n<
   fas::type_advice<_array_type_, Array >,
   fas::advice<_allocator_, fas::provider< fas::w< memory::allocator< memory::provider< fas::_ > > > > >,
   fas::value_advice< _size_, size_t>,
-  memory::fsb::aspect<Array >
+  //memory::fsb::aspect<Array >
+  memory::strategy::fsb_mmap<Array>
 >::type> {};
 
 template<typename Array, typename Buffer >
@@ -138,7 +140,7 @@ struct memory_aspect2: fas::aspect< typename fas::type_list_n<
   fas::type_advice<_array_type_, Array >,
   fas::advice<_allocator_, fas::provider< fas::w< memory::allocator< memory::provider< fas::_ > > > > >,
   fas::value_advice< _size_, size_t>,
-  memory::fsb::aspect<Array, Buffer >
+  memory::fsb::aspect<Array, Buffer, buffer::persistent_provider  > // TODO:
 >::type> {};
 
 

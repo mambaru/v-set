@@ -9,6 +9,7 @@
 
 #include <vset/memory/tags.hpp>
 #include <fas/typemanip/type2type.hpp>
+#include <vset/memory/detail/helper.hpp>
 
 namespace vset { namespace memory{
 
@@ -18,6 +19,13 @@ class provider
 public:
   typedef Manager manager;
 
+  typedef typename helper<manager>::value_type      value_type;
+  typedef typename helper<manager>::buffer_type     buffer_type;
+  typedef typename helper<manager>::pointer         pointer;
+  typedef typename helper<manager>::const_pointer   const_pointer;
+  typedef typename helper<manager>::difference_type difference_type;
+  
+  /*
   typedef typename manager::aspect::template advice_cast<_value_type_>::type value_type;
 
   typedef typename manager::aspect::template advice_cast<_buffer_provider_>::type
@@ -29,12 +37,13 @@ public:
   typedef typename fas::apply<buffer_metatype, Manager>::type buffer_type;
   typedef typename fas::apply<pointer_metatype, value_type, Manager >::type pointer;
   typedef typename fas::apply<pointer_metatype, const value_type, const Manager >::type const_pointer;
+  */
 
   typedef value_type& reference;
   typedef const value_type& const_reference;
 
   typedef size_t size_type;
-  typedef std::ptrdiff_t difference_type;
+  //typedef std::ptrdiff_t difference_type;
 
   provider(): _manager(0) {}
   
