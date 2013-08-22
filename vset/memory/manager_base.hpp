@@ -91,6 +91,12 @@ protected:
     return t.get_aspect().template get<_count_>()(t);
   }
 
+  template<typename T>
+  size_type _capacity(T& t) const
+  {
+    return t.get_aspect().template get<_capacity_>()(t);
+  }
+
 };
 
 }}

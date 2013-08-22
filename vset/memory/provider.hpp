@@ -79,9 +79,9 @@ public:
     return _manager->get_aspect().template get<_count_>()(*_manager);
   }
 
-  size_type count() const
+  size_type capacity() const
   {
-    return _manager->get_aspect().template get<_count_>()(*_manager);
+    return _manager->get_aspect().template get<_capacity_>()(*_manager);
   }
 
 private:

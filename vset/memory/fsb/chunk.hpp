@@ -12,6 +12,7 @@ namespace vset { namespace memory{ namespace fsb{
 template<typename T>
 struct chunk
 {
+  typedef chunk<T> self;
   typedef T value_type;
 
   size_t bits;
@@ -60,6 +61,7 @@ struct chunk
     bits = 0;
   }
 
+  /*
   T* first_value() 
   {
     size_t index = next_occuped(0);
@@ -67,6 +69,7 @@ struct chunk
       return 0;
     return data + index;
   }
+  */
 
   const T* first_value() const
   {
@@ -76,6 +79,26 @@ struct chunk
     return data + index;
   }
 
+  T* first_value()
+  {
+    return const_cast<T*>( const_cast<const self*>(this)->first_value()  );
+  }
+
+  const T* last_value() const
+  {
+    size_t index = pred_occuped( max_count() - 1 );
+    if ( index == static_cast<size_t>(-1) )
+      return 0;
+    return data + index;
+  }
+
+  T* last_value()
+  {
+    return const_cast<T*>( const_cast<const self*>(this)->last_value()  );
+  }
+
+
+  /*
   T* next_value(T* current)
   {
     size_t index = next_occuped(current - data + 1);
@@ -83,6 +106,7 @@ struct chunk
       return 0;
     return data + index;
   }
+  */
 
   const T* next_value(const T* current) const
   {
@@ -91,12 +115,44 @@ struct chunk
       return 0;
     return data + index;
   }
+
+  T* next_value(T* current)
+  {
+    return const_cast<T*>( const_cast<const self*>(this)->next_value(current) );
+  }
+
+  const T* pred_value(const T* current) const
+  {
+    size_t index = pred_occuped(current - data - 1 /*+ 1*/);
+    if ( index == static_cast<size_t>(-1) )
+      return 0;
+    return data + index;
+  }
+
+  T* pred_value(T* current)
+  {
+    return const_cast<T*>( const_cast<const self*>(this)->pred_value(current) );
+  }
   
   size_t next_occuped(size_t pos = 0) const
   {
     for ( size_t i = pos; i < sizeof(size_t)*8; ++i )
       if ( bits & ( static_cast<size_t>(1) << i) )
         return i;
+    return static_cast<size_t>(-1);
+  }
+
+  size_t pred_occuped(size_t pos = max_count() - 1) const
+  {
+    /*if (pos == 0)
+      return static_cast<size_t>(-1);*/
+    // exit if overflow
+    for ( size_t i = pos /*- 1*/; i < max_count(); --i )
+    {
+      std::cout << "pred_occuped i=" << i << std::endl;
+      if ( bits & ( static_cast<size_t>(1) << i) )
+        return i;
+    }
     return static_cast<size_t>(-1);
   }
 

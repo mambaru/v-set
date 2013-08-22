@@ -20,7 +20,7 @@ class offset_pointer
 public:
   typedef offset_pointer<T, M> self;
   typedef M offset_provider;
-  typedef typename offset_provider::value_type value_type;
+  typedef /*typename offset_provider::value_type*/T value_type;
   typedef typename std::iterator_traits<value_type*>::iterator_category iterator_category;
   typedef typename std::iterator_traits<value_type*>::difference_type   difference_type;
   typedef typename std::iterator_traits<value_type*>::pointer           pointer;

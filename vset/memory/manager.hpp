@@ -79,6 +79,11 @@ public:
     return super::_count(*this);
   }
 
+  size_type capacity() const
+  {
+    return super::_capacity(*this);
+  }
+
 };
 
 }}

@@ -15,6 +15,8 @@
 //#define MAX_TEST 6400
 #define MAX_TEST 777 
 
+const size_t CAPACITY = (777/64)*64 + (777%64!=0)*64;
+
 typedef char value_type;
 
 template<typename T, typename Alloc>
@@ -31,7 +33,13 @@ void test_char_init(T& t, Alloc& allocator)
     *ch = '0' + i%10;
   }
 
-  pointer ptr = allocator.begin();
+  pointer beg = allocator.begin();
+  pointer end = allocator.end();
+
+  int i=0;
+  for ( ;beg!=end;++beg, ++i)
+    t << equal< assert, value_type > ( *beg, '0' + i%10 ) << char(*beg) << "!=" << char('0' + i%10) << " " << FAS_TESTING_FILE_LINE;
+
 }
 
 template<typename T, typename Alloc>
@@ -47,9 +55,71 @@ void test_char_test(T& t, const Alloc& allocator)
   t << equal< assert, int > ( i, MAX_TEST) << i << "!=" << MAX_TEST << " " << FAS_TESTING_FILE_LINE;
 
   std::cout << "COUNT=" <<  allocator.count() << std::endl;
+  std::cout << "CAPACITY=" << CAPACITY << " " <<  allocator.capacity() << std::endl;
   std::cout << "i=" <<  i << std::endl;
 
   t << equal< assert, int > ( i, allocator.count() ) << FAS_TESTING_FILE_LINE;
+  t << equal< assert, int > ( CAPACITY, allocator.capacity() ) << FAS_TESTING_FILE_LINE;
+
+  beg = allocator.begin();
+  const_pointer beg1 = beg;
+  std::cout << "offset1=" << beg1.get_offset() << std::endl;
+  ++beg1;
+  std::cout << "offset2=" << beg1.get_offset() << std::endl;
+  --beg1;
+  std::cout << "offset3=" << beg1.get_offset() << std::endl;
+  
+  t << equal< assert > ( beg, beg1 ) << FAS_TESTING_FILE_LINE;
+  t << equal< assert > ( *beg, *beg1 ) << FAS_TESTING_FILE_LINE;
+
+  
+  std::cout << "xxx i=" << "ready" << std::endl;
+  i = MAX_TEST - 1;
+  beg = allocator.begin();
+  end = allocator.end();
+  /*--end;
+
+  std::cout << "### " << *end << ":" << char('0' + i%10) << std::endl;
+  */
+  
+  //--end;
+  
+  for ( --end; beg!=end;--end, --i)
+  {
+    
+    std::cout << "xxx i=" << i << std::endl;
+    if ( i < 0 )
+    {
+      t << fatal( "FUCK" );
+      break;
+    }
+
+    t << equal< assert, value_type > ( *end, '0' + i%10 ) << char(*end) << "!=" << char('0' + i%10) << " " << FAS_TESTING_FILE_LINE;
+    
+  }
+
+  
+  /*
+  std::reverse_iterator<const_pointer> rbeg(allocator.end());
+  std::reverse_iterator<const_pointer> rend(allocator.begin());
+
+  i = MAX_TEST - 1;
+  for ( ;rbeg!=rend;++rbeg, --i)
+  {
+    if ( i < 0 )
+    {
+      t << fatal( "FUCK" );
+      break;
+    }
+    
+    t << equal< expect, value_type > ( *rbeg, '0' + i%10 )
+      << char(*rbeg)
+      << "!=" << char('0' + i%10) << " [" << i << "] "
+      << FAS_TESTING_FILE_LINE;
+  }
+      */
+
+  
 
 }
 

@@ -12,6 +12,7 @@ namespace vset { namespace memory{ namespace fsb{
 template<typename T, template<typename> class Chunk >
 struct chain
 {
+  typedef chain<T, Chunk> self;
   typedef Chunk<T> chunk_type;
 
   size_t size;
@@ -37,17 +38,32 @@ struct chain
     return reinterpret_cast<const chunk_type*>(this+1);
   }
 
+  chunk_type* last_chunk()
+  {
+    chunk_type* cnk = reinterpret_cast<chunk_type*>(this + 1);
+    return size > 0 ? cnk + size - 1 : cnk;
+  }
+
+  const chunk_type* last_chunk() const
+  {
+    const chunk_type* cnk = reinterpret_cast<const chunk_type*>(this + 1);
+    return size > 0 ? cnk + size - 1 : cnk;
+  }
+
+  
   size_t chunk_size() const
   {
     return sizeof(chunk_type);
   }
 
+  /*
   T* first_value()
   {
     if ( chunk_type* beg = first_occuped() )
       return beg->first_value();
     return 0;
   }
+  */
 
   const T* first_value() const
   {
@@ -55,24 +71,25 @@ struct chain
       return beg->first_value();
     return 0;
   }
-  
-  T* next_value(T* value)
+
+  T* first_value()
   {
-    size_t offset = reinterpret_cast<char*>(value) - reinterpret_cast<char*>(this->first_chunk());
-    chunk_type* chk = first_chunk() + offset/sizeof(chunk_type);
-
-    if ( T* result =  chk->next_value(value) )
-      return result;
-
-    for ( ++chk; chk->empty(); ++chk)
-    {
-      if ( static_cast<size_t>(chk - this->first_chunk()) == size )
-        return 0;
-    }
-
-    return chk->first_value();
+    return const_cast<T*>( const_cast<const self*>(this)->first_value() );
   }
 
+  const T* last_value() const
+  {
+    if ( const chunk_type* beg = last_occuped() )
+      return beg->last_value();
+    return 0;
+  }
+
+  T* last_value()
+  {
+    return const_cast<T*>( const_cast<const self*>(this)->last_value() );
+  }
+
+  
   const T* next_value(const T* value)  const
   {
     size_t offset = reinterpret_cast<const char*>(value) - reinterpret_cast<const char*>(this->first_chunk());
@@ -90,6 +107,58 @@ struct chain
     return chk->first_value();
   }
 
+  T* next_value(T* value)
+  {
+    return const_cast<T*>( const_cast<const self*>(this)->next_value(value) );
+    /*
+    size_t offset = reinterpret_cast<char*>(value) - reinterpret_cast<char*>(this->first_chunk());
+    chunk_type* chk = first_chunk() + offset/sizeof(chunk_type);
+
+    if ( T* result =  chk->next_value(value) )
+      return result;
+
+    for ( ++chk; chk->empty(); ++chk)
+    {
+      if ( static_cast<size_t>(chk - this->first_chunk()) == size )
+        return 0;
+    }
+
+    return chk->first_value();
+    */
+  }
+
+  const T* pred_value(const T* value)  const
+  {
+    size_t offset = reinterpret_cast<const char*>(value) - reinterpret_cast<const char*>(this->first_chunk());
+    const chunk_type* chk = first_chunk() + offset/sizeof(chunk_type);
+
+    if ( const T* result =  chk->pred_value(value) )
+      return result;
+
+    std::cout << "============================ pred chunk ==================1" << std::endl;
+
+    if ( chk == this->first_chunk() )
+        return 0;
+
+    std::cout << "============================ pred chunk ==================2" << std::endl;
+    
+    for ( --chk; chk->empty(); --chk)
+    {
+      std::cout << "============================ pred chunk ==================3" << std::endl;
+      if ( chk == this->first_chunk() )
+        return 0;
+    }
+
+    std::cout << "============================ pred chunk ==================4" << std::endl;
+    return chk->last_value();
+  }
+
+  T* pred_value(T* value)
+  {
+    return const_cast<T*>( const_cast<const self*>(this)->pred_value(value) );
+  }
+
+  /*
   chunk_type* first_occuped()
   {
     chunk_type* beg = first_chunk();
@@ -102,6 +171,7 @@ struct chain
     }
     return 0;
   }
+  */
 
   const chunk_type* first_occuped() const
   {
@@ -116,6 +186,32 @@ struct chain
     return 0;
   }
 
+  chunk_type* first_occuped()
+  {
+    return const_cast<chunk_type*>( const_cast<const self*>(this)->first_occuped() );
+  }
+
+
+  const chunk_type* last_occuped() const
+  {
+    const chunk_type* beg = last_chunk();
+    const chunk_type* end = first_chunk() - 1;
+
+    for ( ;beg!=end; --beg)
+    {
+      if ( !beg->empty() )
+        return beg;
+    }
+    return 0;
+  }
+
+  chunk_type* last_occuped()
+  {
+    return const_cast<chunk_type*>( const_cast<const self*>(this)->last_occuped() );
+  }
+
+
+  
   chunk_type* find_free()
   {
     chunk_type* beg = first_chunk() + first_free;

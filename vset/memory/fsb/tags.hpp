@@ -14,6 +14,7 @@ struct _chain_type_;
 struct _get_by_offset_;
 struct _offset_by_ptr_;
 struct _next_offset_;
+struct _pred_offset_;
 struct _acquire_;
 
 }}}

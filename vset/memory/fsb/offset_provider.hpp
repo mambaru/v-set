@@ -25,50 +25,51 @@ public:
   typedef const value_type& const_reference;
   
   offset_provider()
-    : _offset(0)
+    : _target(0)
   {}
   
   offset_provider(T* offset)
-    : _offset(offset)
+    : _target(offset)
   {}
 
   const value_type* get(size_t offset) const
   {
-    assert(_offset!=0);
-    return _offset->get_aspect().template get<_get_by_offset_>()(*_offset, offset);
+    assert(_target!=0);
+    return _target->get_aspect().template get<_get_by_offset_>()(*_target, offset);
   }
 
   value_type* get(size_t offset)
   {
-    assert(_offset!=0);
-    return _offset->get_aspect().template get<_get_by_offset_>()(*_offset, offset);
+    assert(_target!=0);
+    return _target->get_aspect().template get<_get_by_offset_>()(*_target, offset);
   }
 
   size_t offset(value_type* p) const
   {
-    assert(_offset!=0);
-    return _offset->get_aspect().template get<_offset_by_ptr_>()(*_offset, p);
+    assert(_target!=0);
+    return _target->get_aspect().template get<_offset_by_ptr_>()(*_target, p);
   }
 
   size_t next(size_t offset, size_t count = 1) const
   {
-    assert(_offset!=0);
-    return _offset->get_aspect().template get<_next_offset_>()(*_offset, offset, count);
+    assert(_target!=0);
+    return _target->get_aspect().template get<_next_offset_>()(*_target, offset, count);
   }
 
   size_t pred(size_t offset, size_t count = 1) const
   {
-    assert(_offset!=0);
-    throw std::domain_error("offset_provider::pred not impl");
+    assert(_target!=0);
+    return _target->get_aspect().template get<_pred_offset_>()(*_target, offset, count);
+    //throw std::domain_error("offset_provider::pred not impl");
   }
 
   bool operator == (const offset_provider<T> right) const
   {
-    return _offset==right._offset;
+    return _target==right._target;
   }
 
 private:
-  T *_offset;
+  T *_target;
 };
 
 
