@@ -13,7 +13,7 @@
 #include <vset/buffer/persistent/filesync/aspect.hpp>
 
 //#define MAX_TEST 6400
-#define MAX_TEST 640 
+#define MAX_TEST 777 
 
 typedef char value_type;
 
@@ -26,39 +26,31 @@ void test_char_init(T& t, Alloc& allocator)
   for (int i=0; i < MAX_TEST; ++i)
   {
     value_type* ch = allocator.allocate(1);
-    /*if (!ch)
-      std
-      */
-    //std::cout << "----------" << i << std::endl;
     t << not_equal<assert, value_type*>(ch, 0) << "i=" << i << " " << FAS_TESTING_FILE_LINE;
     t << stop;
     *ch = '0' + i%10;
   }
 
   pointer ptr = allocator.begin();
-  //ptr[19]='X';
-  //*ptr = '1';
-
 }
 
 template<typename T, typename Alloc>
 void test_char_test(T& t, const Alloc& allocator)
 {
-  /*
-  int * const ii = 0;
-  ++ii;*/
   using namespace fas::testing;
   typedef typename Alloc::const_pointer const_pointer;
   const_pointer beg = allocator.begin();
   const_pointer end = allocator.end();
   int i=0;
   for ( ;beg!=end;++beg, ++i)
-  {
     t << equal< assert, value_type > ( *beg, '0' + i%10 ) << char(*beg) << "!=" << char('0' + i%10) << " " << FAS_TESTING_FILE_LINE;
-  }
-
   t << equal< assert, int > ( i, MAX_TEST) << i << "!=" << MAX_TEST << " " << FAS_TESTING_FILE_LINE;
-  
+
+  std::cout << "COUNT=" <<  allocator.count() << std::endl;
+  std::cout << "i=" <<  i << std::endl;
+
+  t << equal< assert, int > ( i, allocator.count() ) << FAS_TESTING_FILE_LINE;
+
 }
 
 UNIT(test_unit, "")

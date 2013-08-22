@@ -17,7 +17,10 @@ struct chunk
   size_t bits;
   T data[sizeof(size_t)*8];
 
-  chunk(): bits(0), data() {}
+  chunk()
+    : bits(0)
+    , data()
+  {}
 
   bool filled() const
   {
@@ -29,9 +32,22 @@ struct chunk
     return bits == 0;
   }
 
-  size_t max_count() const
+  static size_t max_count() /*const*/
   {
     return sizeof(size_t)*8;
+  }
+
+  size_t count() const
+  {
+    if ( this->empty() )
+      return 0;
+    else if ( this->filled() )
+      return this->max_count();
+
+    size_t cnt = 0;
+    for ( size_t i = 0; i < sizeof(size_t)*8; ++i )
+      cnt += ( 0 != (bits & ( static_cast<size_t>(1) << i)) );
+    return cnt;
   }
 
   size_t size() const

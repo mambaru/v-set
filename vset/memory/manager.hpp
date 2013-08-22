@@ -73,6 +73,12 @@ public:
   {
     return super::_buffer(*this);
   }
+
+  size_type count() const
+  {
+    return super::_count(*this);
+  }
+
 };
 
 }}

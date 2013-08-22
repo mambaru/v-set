@@ -20,8 +20,13 @@ struct ad_close
   {
     char *data = t.get_aspect().template get<_buffer_>();
     size_t size = t.get_aspect().template get<_buffer_size_>();
-    if ( -1 == ::munmap( data, size ) )
-      throw std::runtime_error(strerror(errno));
+
+    if ( data!=0 )
+    {
+      if ( -1 == ::munmap( data, size ) )
+        throw std::runtime_error(strerror(errno));
+    }
+    
     t.get_aspect().template get<_close_file_>()(t);
     t.get_aspect().template get<_buffer_>() = 0;
     t.get_aspect().template get<_buffer_size_>() = 0;

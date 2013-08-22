@@ -14,6 +14,8 @@
 #include <vset/memory/fsb/aspect/ad_acquire.hpp>
 #include <vset/memory/fsb/aspect/ad_allocate.hpp>
 #include <vset/memory/fsb/aspect/ad_deallocate.hpp>
+#include <vset/memory/fsb/aspect/ad_count.hpp>
+#include <vset/memory/fsb/aspect/ad_capacity.hpp>
 
 #include <vset/buffer/persistent_provider.hpp>
 
@@ -29,6 +31,8 @@ struct aspect_manager: fas::aspect< typename fas::type_list_n<
   fas::advice<_acquire_, ad_acquire>,
   fas::advice<_allocate_, ad_allocate>,
   fas::advice<_deallocate_, ad_deallocate>,
+  fas::advice<_count_, ad_count>,
+  fas::advice<_capacity_, ad_capacity>,
   fas::type_advice< _buffer_provider_,  fas::w< /*buffer::persistent_provider*/BufferProvider< fas::_ > > >
 >::type > {};
 

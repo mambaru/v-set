@@ -47,7 +47,6 @@ struct allocator
   
   size_type max_size () const throw()
   {
-    // return ::std::numeric_limits <size_type>::max() / sizeof(value_type);
     return 1;
   }
 
@@ -71,7 +70,7 @@ struct allocator
     _memory.deallocate(p, num);
   }
 
-/// non-standart, для востановления
+/// ex
 
   const memory_type memory() const
   {

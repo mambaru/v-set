@@ -33,21 +33,6 @@ protected:
   typedef typename helper<self>::const_pointer   const_pointer;
   typedef typename helper<self>::difference_type difference_type;
 
-  /*
-  typedef typename super::aspect::template advice_cast<_value_type_>::type value_type;
-  
-  typedef typename super::aspect::template advice_cast<_buffer_provider_>::type
-                                ::type buffer_metatype;
-                                
-  typedef typename super::aspect::template advice_cast<_pointer_provider_>::type
-                                ::type pointer_metatype;
-                                
-  typedef typename fas::apply<buffer_metatype, self>::type buffer_type;
-  typedef typename fas::apply<pointer_metatype, value_type, self >::type pointer;
-  typedef typename fas::apply<pointer_metatype, const value_type, const self >::type const_pointer;
-  */
-  
-
   typedef size_t size_type;
 
   manager_base(){}
@@ -99,6 +84,13 @@ protected:
   {
     return buffer_type(&t);
   }
+
+  template<typename T>
+  size_type _count(T& t) const
+  {
+    return t.get_aspect().template get<_count_>()(t);
+  }
+
 };
 
 }}

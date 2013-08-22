@@ -16,6 +16,8 @@ struct _begin_;
 struct _end_;
 struct _allocate_;
 struct _deallocate_;
+struct _count_;
+struct _capacity_;
 
 }}
 

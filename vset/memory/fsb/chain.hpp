@@ -168,6 +168,24 @@ struct chain
     if ( offset < first_free )
       first_free = offset;
   }
+
+  ///
+
+  size_t count() const
+  {
+    size_t cnt=0;
+    const chunk_type* beg = first_chunk();
+    const chunk_type* end = first_chunk() + size;
+    for (;beg!=end;++beg)
+      cnt+=beg->count();
+    return cnt;
+  }
+
+  size_t capacity() const
+  {
+    return size * chunk_type::max_count();
+  }
+
 };
 
 }}}

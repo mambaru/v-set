@@ -37,8 +37,7 @@ struct ad_open
     t.get_aspect().template get<_close_>()(t);
     t.get_aspect().template get<_file_name_>() = file_name;
     t.get_aspect().template get<_open_file_>()(t);
-
-
+    
     size_t file_size = t.get_aspect().template get<_file_size_>()(t);
     typedef typename T::aspect::template advice_cast<_head_type_>::type head_type;
 

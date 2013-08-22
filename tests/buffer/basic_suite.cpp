@@ -3,7 +3,7 @@
 //
 // Copyright: See COPYING file that comes with this distribution
 //
-
+#include <iostream>
 #include <vset/buffer/buffer.hpp>
 #include <vset/buffer/persistent_buffer.hpp>
 /*
