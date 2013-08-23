@@ -60,7 +60,6 @@ public:
   {
     assert(_target!=0);
     return _target->get_aspect().template get<_pred_offset_>()(*_target, offset, count);
-    //throw std::domain_error("offset_provider::pred not impl");
   }
 
   bool operator == (const offset_provider<T> right) const

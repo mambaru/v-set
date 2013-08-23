@@ -13,7 +13,6 @@
 
 namespace vset { namespace memory{
 
-// #warning TODO: сделать size(), как distance(begin(), end() );
 template<typename A >
 class manager
   : public manager_base<A>
@@ -64,16 +63,6 @@ public:
     return super::_deallocate(*this, ptr, num);
   }
 
-  buffer_type buffer()
-  {
-    return super::_buffer(*this);
-  }
-
-  const buffer_type buffer() const
-  {
-    return super::_buffer(*this);
-  }
-
   size_type count() const
   {
     return super::_count(*this);
@@ -82,6 +71,16 @@ public:
   size_type capacity() const
   {
     return super::_capacity(*this);
+  }
+  
+  buffer_type buffer()
+  {
+    return super::_buffer(*this);
+  }
+
+  const buffer_type buffer() const
+  {
+    return super::_buffer(*this);
   }
 
 };

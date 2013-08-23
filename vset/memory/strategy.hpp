@@ -45,12 +45,6 @@ namespace strategy
         buffer::provider
       >
   {};
-
-  /*
-  typedef ::vset::buffer::inmem::aspect inmem;
-  typedef ::vset::buffer::persistent::filesync::aspect filesync;
-  typedef ::vset::buffer::persistent::mmap::aspect mmap;
-  */
 }
   
 }}

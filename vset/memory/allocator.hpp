@@ -45,7 +45,7 @@ struct allocator
     return static_cast<char*>(&value) - _memory.data();
   }
   
-  size_type max_size () const throw()
+  size_type max_size () const
   {
     return 1;
   }

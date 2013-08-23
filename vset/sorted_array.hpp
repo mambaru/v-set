@@ -17,7 +17,6 @@ public:
   typedef Compare key_compare;
   typedef Compare value_compare;
 
-
   typedef typename super::value_type value_type;
   typedef typename super::data_type data_type;
   typedef typename super::size_type size_type;

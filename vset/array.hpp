@@ -5,18 +5,18 @@
 #include <cstddef>
 #include <stdexcept>
 #include <iterator>
-#include <fas/typemanip/remove_const.hpp>
-#include <iostream>
+//#include <fas/typemanip/remove_const.hpp>
+
 namespace vset{ 
 
-/// TODO: проверки за выход диапазона
 template<typename T, size_t N>
 class array
 {
 public:
   enum { dimension = N};
   typedef T value_type;
-  typedef typename fas::remove_const<T>::type data_type[N];
+  //typedef typename fas::remove_const<T>::type data_type[N];
+  typedef value_type data_type[N];
   typedef size_t size_type;
   typedef T& reference;
   typedef const T& const_reference;
@@ -28,7 +28,11 @@ public:
   typedef const std::reverse_iterator<iterator> const_reverse_iterator;
   typedef std::ptrdiff_t difference_type;
 
-  array():_size(), _data() {};
+  array()
+    : _size()
+    , _data()
+  {
+  }
 
   reference operator[](size_type n)
   {
@@ -40,14 +44,14 @@ public:
     return this->at(n);
   }
 
-  const_reference at ( size_type n ) const  // __attribute__ ((noinline))
+  const_reference at ( size_type n ) const
   {
     if ( n < _size)
       return _data[n];
     throw std::out_of_range("array::at");
   }
 
-  reference at ( size_type n )  // __attribute__ ((noinline))
+  reference at ( size_type n )
   {
     if ( n < _size )
       return _data[n];
@@ -157,6 +161,7 @@ public:
   }
 
 #ifdef __GXX_EXPERIMENTAL_CXX0X__
+
   const reverse_iterator crbegin() const
   {
     return const_reverse_iterator(cend());
@@ -191,7 +196,6 @@ public:
 
   void clear()
   {
-    // std::fill_n( begin(), N, T() );
     _size = 0;
   }
 
@@ -234,13 +238,6 @@ public:
     *position = x;
     ++_size;
     return position;
-
-    /*
-    std::copy_backward(position, end(), end()+1);
-    *position = x;
-    ++_size;
-    return position;
-    */
   }
 
   void insert ( iterator position, size_type n, const T& x )
@@ -267,6 +264,7 @@ public:
   }
 
 #ifdef __GXX_EXPERIMENTAL_CXX0X__
+
   iterator erase ( const_iterator position )
   {
     if ( position == this->cend() )
@@ -276,7 +274,9 @@ public:
     this->resize( _size - 1 );
     return position;
   }
+  
 #else
+
   iterator erase ( iterator position )
   {
     if ( position == this->end() )
@@ -286,6 +286,7 @@ public:
     this->resize( _size - 1 );
     return position;
   }
+  
 #endif
 
   iterator erase ( iterator first, iterator last )

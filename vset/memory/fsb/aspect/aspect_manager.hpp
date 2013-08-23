@@ -33,7 +33,7 @@ struct aspect_manager: fas::aspect< typename fas::type_list_n<
   fas::advice<_deallocate_, ad_deallocate>,
   fas::advice<_count_, ad_count>,
   fas::advice<_capacity_, ad_capacity>,
-  fas::type_advice< _buffer_provider_,  fas::w< /*buffer::persistent_provider*/BufferProvider< fas::_ > > >
+  fas::type_advice< _buffer_provider_,  fas::w< BufferProvider< fas::_ > > >
 >::type > {};
 
 }}}

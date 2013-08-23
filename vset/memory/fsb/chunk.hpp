@@ -33,7 +33,7 @@ struct chunk
     return bits == 0;
   }
 
-  static size_t max_count() /*const*/
+  static size_t max_count()
   {
     return sizeof(size_t)*8;
   }
@@ -61,16 +61,6 @@ struct chunk
     bits = 0;
   }
 
-  /*
-  T* first_value() 
-  {
-    size_t index = next_occuped(0);
-    if ( index == static_cast<size_t>(-1) )
-      return 0;
-    return data + index;
-  }
-  */
-
   const T* first_value() const
   {
     size_t index = next_occuped(0);
@@ -96,17 +86,6 @@ struct chunk
   {
     return const_cast<T*>( const_cast<const self*>(this)->last_value()  );
   }
-
-
-  /*
-  T* next_value(T* current)
-  {
-    size_t index = next_occuped(current - data + 1);
-    if ( index == static_cast<size_t>(-1) )
-      return 0;
-    return data + index;
-  }
-  */
 
   const T* next_value(const T* current) const
   {
@@ -144,12 +123,8 @@ struct chunk
 
   size_t pred_occuped(size_t pos = max_count() - 1) const
   {
-    /*if (pos == 0)
-      return static_cast<size_t>(-1);*/
-    // exit if overflow
-    for ( size_t i = pos /*- 1*/; i < max_count(); --i )
+    for ( size_t i = pos ; i < max_count(); --i )
     {
-      std::cout << "pred_occuped i=" << i << std::endl;
       if ( bits & ( static_cast<size_t>(1) << i) )
         return i;
     }

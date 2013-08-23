@@ -74,18 +74,6 @@ protected:
   }
 
   template<typename T>
-  buffer_type _buffer(T& t)
-  {
-    return buffer_type(&t);
-  }
-
-  template<typename T>
-  const buffer_type _buffer(T& t) const
-  {
-    return buffer_type(&t);
-  }
-
-  template<typename T>
   size_type _count(T& t) const
   {
     return t.get_aspect().template get<_count_>()(t);
@@ -95,6 +83,18 @@ protected:
   size_type _capacity(T& t) const
   {
     return t.get_aspect().template get<_capacity_>()(t);
+  }
+  
+  template<typename T>
+  buffer_type _buffer(T& t)
+  {
+    return buffer_type(&t);
+  }
+
+  template<typename T>
+  const buffer_type _buffer(T& t) const
+  {
+    return buffer_type(&t);
   }
 
 };

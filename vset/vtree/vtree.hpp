@@ -78,8 +78,7 @@ public:
   typedef typename std::iterator_traits<iterator>::reference reference;
   typedef typename std::iterator_traits<const_iterator>::pointer const_pointer;
   typedef typename std::iterator_traits<const_iterator>::reference const_reference;
-
-  // key_compare     _comparator;
+  
   allocator_type  _allocator;
   container_type  _container;
 

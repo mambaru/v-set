@@ -23,7 +23,6 @@ struct ad_end
   }
 };
 
-
 }}}
 
 #endif

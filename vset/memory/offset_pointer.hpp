@@ -11,16 +11,13 @@
 
 namespace vset { namespace memory{
 
-//#warning TODO: переименовать в итератор, избавиться от T
-//#warning TODO: это рандом access
-  
 template<typename T, typename M>
 class offset_pointer
 {
 public:
   typedef offset_pointer<T, M> self;
   typedef M offset_provider;
-  typedef /*typename offset_provider::value_type*/T value_type;
+  typedef T value_type;
   typedef typename std::iterator_traits<value_type*>::iterator_category iterator_category;
   typedef typename std::iterator_traits<value_type*>::difference_type   difference_type;
   typedef typename std::iterator_traits<value_type*>::pointer           pointer;
@@ -29,37 +26,60 @@ public:
   offset_pointer()
     : _provider()
     , offset(static_cast<size_t>(-1))
-  { }
+  {
+  }
 
   explicit offset_pointer(offset_provider provider, size_t offset = static_cast<size_t>(-1) )
     : _provider(provider)
     , offset(offset)
-  {}
+  {
+  }
 
-  operator T* () { return this->get_pointer();}
-  operator const T* () const { return this->get_pointer();}
+  operator T* ()
+  {
+    return this->get_address();
+  }
+  
+  operator const T* () const
+  {
+    return this->get_address();
+  }
 
-  T& operator*() { return *(this->get_pointer());}
-  const T& operator*() const { return *(this->get_pointer());}
-  T* operator->() { return this->get_pointer(); }
+  T& operator*()
+  {
+    return *(this->get_address());
+  }
+  
+  const T& operator*() const
+  {
+    return *(this->get_address());
+  }
+  
+  T* operator->()
+  {
+    return this->get_address();
+  }
 
-  const T* operator->() const { return this->get_pointer(); }
+  const T* operator->() const
+  {
+    return this->get_address();
+  }
 
-  T* get_pointer()
+  T* get_address()
   {
     if ( offset == static_cast<size_t>(-1) )
       return 0;
     return _provider.get(offset);
   }
   
-  const T* get_pointer() const
+  const T* get_address() const
   {
     if ( offset == static_cast<size_t>(-1) )
       return 0;
     return _provider.get(offset);
   }
 
-  self& set_pointer(T* t)
+  self& set_address(T* t)
   {
     this->offset = _provider.offset(t);
     return *this;
@@ -69,7 +89,6 @@ public:
   {
     return offset;
   }
-
 
   void set_offset(size_t offset) 
   {
