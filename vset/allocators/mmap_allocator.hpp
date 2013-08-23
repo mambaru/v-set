@@ -8,7 +8,7 @@
 #define VSET_ALLOCATORS_MMAP_ALLOCATOR_HPP
 
 #include <fas/typemanip/empty_type.hpp>
-#include <vset/vtree/aspect/aspect.hpp>
+#include <vset/vtree/strategy.hpp>
 
 namespace vset{
 
@@ -20,7 +20,7 @@ struct mmap_allocator
   template<typename V, typename C>
   struct apply
   {
-    typedef vtree::aspect<V, C, N> type;
+    typedef vtree::strategy::vtree_fsb_mmap<V, C, N> type;
   };
 };
 

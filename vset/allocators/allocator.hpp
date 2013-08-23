@@ -8,7 +8,7 @@
 #define VSET_ALLOCATOR_ALLOCATOR_HPP
 
 #include <fas/typemanip/empty_type.hpp>
-#include <vset/vtree/aspect/aspect.hpp>
+#include <vset/vtree/strategy.hpp>
 
 namespace vset{
 
@@ -20,7 +20,7 @@ struct allocator
   template<typename V, typename C>
   struct apply
   {
-    typedef vtree::aspect2<V, C, N> type;
+    typedef vtree::strategy::vtree_std_alloc<V, C, N> type;
   };
 };
   

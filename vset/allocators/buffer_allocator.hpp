@@ -8,7 +8,7 @@
 #define VSET_ALLOCATORS_BUFFER_ALLOCATOR_HPP
 
 #include <fas/typemanip/empty_type.hpp>
-#include <vset/vtree/aspect/aspect.hpp>
+#include <vset/vtree/strategy.hpp>
 
 namespace vset{
 
@@ -20,7 +20,7 @@ struct buffer_allocator
   template<typename V, typename C>
   struct apply
   {
-    typedef vtree::aspect3<V, C, N> type;
+    typedef vtree::strategy::vtree_fsb_inmem<V, C, N> type;
   };
 };
 

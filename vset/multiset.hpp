@@ -3,7 +3,7 @@
 
 #include <fas/typemanip/has_typename.hpp>
 #include <vset/vtree/vtree.hpp>
-#include <vset/vtree/aspect/aspect.hpp>
+#include <vset/vtree/strategy.hpp>
 
 namespace vset{ 
 
@@ -12,7 +12,7 @@ class multiset;
   
 template<typename V, typename C>
 class multiset<V, C, std::allocator<V> >
-  : public vtree::vtree< vtree::aspect2<V, C, 512> >
+  : public vtree::vtree< vtree::strategy::vtree_std_alloc<V, C, 512> >
 {
   
 };

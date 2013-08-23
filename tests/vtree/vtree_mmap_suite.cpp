@@ -6,7 +6,7 @@
 
 #include <fas/testing.hpp>
 #include <vset/vtree/vtree.hpp>
-#include <vset/vtree/aspect/aspect.hpp>
+#include <vset/vtree/strategy.hpp>
 
 //#include <pmi/vset.hpp>
 #include <stdexcept>
@@ -111,7 +111,7 @@ class persist_container
 {
 public:
 
-  typedef vset::vtree::vtree< vset::vtree::aspect<int, std::less<int>, ArraySize> > set_type;
+  typedef vset::vtree::vtree< vset::vtree::strategy::vtree_fsb_mmap<int, std::less<int>, ArraySize> > set_type;
   typedef typename set_type::iterator iterator;
   typedef typename set_type::const_iterator const_iterator;
   //typedef typename vset_helper<int, std::less<int>, alloc_type::persistent, ArraySize >::vset_type set_type;
@@ -193,7 +193,7 @@ public:
 
   //typedef typename vset_helper<int, std::less<int>, alloc_type::inmemmory, ArraySize >::vset_type set_type;
   // TODO: в отдельный тест-файл
-  typedef vset::vtree::vtree< vset::vtree::aspect<int, std::less<int>, ArraySize> > set_type;
+  typedef vset::vtree::vtree< vset::vtree::strategy::vtree_fsb_mmap<int, std::less<int>, ArraySize> > set_type;
   typedef typename set_type::iterator iterator;
 
   non_persist_container(const std::string& filename, bool /*clear*/)

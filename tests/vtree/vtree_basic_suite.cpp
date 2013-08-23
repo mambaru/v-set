@@ -6,14 +6,14 @@
 
 #include <fas/testing.hpp>
 #include <vset/vtree/vtree.hpp>
-#include <vset/vtree/aspect/aspect.hpp>
+#include <vset/vtree/strategy.hpp>
 
 UNIT(vtree_create_filesync, "")
 {
   using namespace fas::testing;
   using namespace vset;
 
-  typedef vtree::vtree< vtree::aspect<char, std::less<char>, 3> > int_vtree;
+  typedef vtree::vtree< vtree::strategy::vtree_fsb_mmap<char, std::less<char>, 3> > int_vtree;
   int_vtree tree;
   tree.get_allocator().memory().buffer().open("vtree.bin");
   

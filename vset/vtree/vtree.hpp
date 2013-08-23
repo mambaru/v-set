@@ -2,11 +2,15 @@
 #define VSET_VTREE_VTREE_HPP
 
 #include <cstddef>
-#include <exception>
+#include <stdexcept>
 #include <map>
+#include <limits>
 
 #include <vset/vtree/vtree_iterator.hpp>
-#include <vset/vtree/aspect/aspect.hpp>
+#include <vset/vtree/aspect/tags.hpp>
+
+#include <fas/aop.hpp>
+//#include <vset/vtree/aspect/aspect.hpp>
 /*#include <functional>
 #include <memory>
 #include <map>
@@ -43,7 +47,7 @@ struct compare_pair
   }
 };
 
-template< typename A = fas::aspect<> >
+template< typename A /*= fas::aspect<>*/ >
 class vtree:
   public fas::aspect_class<A>
 {
