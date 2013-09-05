@@ -45,6 +45,16 @@ struct vtree_fsb_mmap: fas::aspect_merge<
 >::type {};
 
 template<typename V, typename Compare = std::less<V>, int N = 1024 >
+struct vtree_fsb_filesync: fas::aspect_merge<
+  aspect_tree<V, Compare>,
+  aspect_memory< sorted_array< V, N, Compare >,  memory::strategy::fsb_filesync>,
+  fas::advice< _restore_, ad_restore >,
+  fas::group< buffer::persistent::_after_open_, _restore_ >,
+  aspect_basic
+>::type {};
+
+
+template<typename V, typename Compare = std::less<V>, int N = 1024 >
 struct vtree_fsb_inmem: fas::aspect_merge<
   aspect_tree<V, Compare>,
   aspect_memory< sorted_array< V, N, Compare >,  memory::strategy::fsb_inmem>,
