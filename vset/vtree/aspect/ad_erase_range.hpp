@@ -24,11 +24,12 @@ struct ad_erase_range
     size_t dist = std::distance(beg, end);
     if (dist!=0)
     {
-      last = t.get_aspect().template get<_erase_iterator_>()(t, beg);
+      last = t.get_aspect().template get<_erase_iterator_>()(t, beg, false);
       for ( --dist;dist!=0; --dist)
-        last = t.get_aspect().template get<_erase_iterator_>()(t, last);
+        last = t.get_aspect().template get<_erase_iterator_>()(t, last, false);
     }
     
+    t.get_aspect().template get<_defrag_container_>()(t, last);
     return last;
   }
 };
@@ -42,8 +43,10 @@ struct ad_erase_range
   {
     //for ( ;beg!=end;)
     size_t dist = std::distance(beg, end);
-    for ( ;dist!=0; --dist)
-      beg = t.get_aspect().template get<_erase_iterator_>()(t, beg);
+    for ( ;dist!=0; --dist) {
+      beg = t.get_aspect().template get<_erase_iterator_>()(t, beg, false);
+    }
+    t.get_aspect().template get<_defrag_container_>()(t, beg);
   }
 };
 

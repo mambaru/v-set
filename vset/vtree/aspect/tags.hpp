@@ -41,6 +41,7 @@ struct _upper_bound_;
 struct _erase_iterator_;
 struct _erase_range_;
 struct _erase_value_;
+struct _defrag_container_;
 
 
 }}

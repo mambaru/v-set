@@ -28,7 +28,7 @@ void test_char_init(T& t, Alloc& allocator)
   for (int i=0; i < MAX_TEST; ++i)
   {
     value_type* ch = allocator.allocate(1);
-    t << not_equal<assert, value_type*>(ch, 0) << "i=" << i << " " << FAS_TESTING_FILE_LINE;
+    t << is_true<assert>( ch != 0 ) << "i=" << i << " " << FAS_TESTING_FILE_LINE;
     t << stop;
     *ch = '0' + i%10;
   }

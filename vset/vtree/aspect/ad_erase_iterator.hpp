@@ -21,6 +21,13 @@ struct ad_erase_iterator
   typename T::iterator
   operator()(T& t, typename T::const_iterator itr)
   {
+    return this->operator ()(t, itr, true);
+  }
+
+  template<typename T>
+  typename T::iterator
+  operator()(T& t, typename T::const_iterator itr, bool make_defrag)
+  {
     if ( itr == t.end() )
       throw std::out_of_range("ad_erase_iterator itr == t.end()");
 
@@ -61,6 +68,10 @@ struct ad_erase_iterator
 
     --t.get_aspect().template get<_size_>();
 
+    if( make_defrag ) {
+      t.get_aspect().template get<_defrag_container_>()(t, iterator(cont_itr, offset));
+    }
+
     return iterator(cont_itr, offset);
   }
 };
@@ -71,6 +82,12 @@ struct ad_erase_iterator
 {
   template<typename T>
   typename T::iterator operator()(T& t, typename T::iterator itr)
+  {
+    return this->operator ()(t, itr, true);
+  }
+
+  template<typename T>
+  typename T::iterator operator()(T& t, typename T::iterator itr, bool make_defrag)
   {
     if ( itr == t.end() )
       throw std::out_of_range("ad_erase_iterator itr == t.end()");
@@ -106,6 +123,10 @@ struct ad_erase_iterator
     }
 
     --t.get_aspect().template get<_size_>();
+
+    if( make_defrag ) {
+      t.get_aspect().template get<_defrag_container_>()(t, iterator(cont_itr, offset));
+    }
 
     return iterator(cont_itr, offset);
   }

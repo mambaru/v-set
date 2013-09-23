@@ -24,6 +24,7 @@
 #include <vset/vtree/aspect/ad_erase_value.hpp>
 #include <vset/vtree/aspect/ad_erase_range.hpp>
 #include <vset/vtree/aspect/ad_erase_iterator.hpp>
+#include <vset/vtree/aspect/ad_defrag_container.hpp>
 #include <fas/aop.hpp>
 
 namespace vset{ namespace vtree{
@@ -44,7 +45,8 @@ struct aspect_basic: fas::aspect< fas::type_list_n<
   fas::advice< _clear_, ad_clear>,
   fas::advice< _erase_iterator_, ad_erase_iterator>,
   fas::advice< _erase_range_, ad_erase_range>,
-  fas::advice< _erase_value_, ad_erase_value>
+  fas::advice< _erase_value_, ad_erase_value>,
+  fas::advice< _defrag_container_, ad_defrag_container>
 >::type > {};
 
 }}

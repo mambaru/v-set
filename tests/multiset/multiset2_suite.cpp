@@ -95,7 +95,7 @@ UNIT(multiset2, "")
     multiset_type::iterator lower = int_set.lower_bound(i);
     if ( i == 0 && lower == int_set.end() )
       continue;
-    t << not_equal<assert>(lower, int_set.end()) << " i=" << i << " " << FAS_TESTING_FILE_LINE;
+    t << is_true<assert>( lower != int_set.end() ) << " i=" << i << " " << FAS_TESTING_FILE_LINE;
     if (i%2!=0)
       t << equal<assert>( *lower, i ) << " i=" << i /*<< "," << i */<< " !="<< *lower<< " " << FAS_TESTING_FILE_LINE;
     else
