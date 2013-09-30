@@ -24,14 +24,31 @@ struct data
 
 struct cmp_data
 {
-  cmp_data() {}
-
   bool operator()(const data& l, const data& r) const
   {
     return l.data1 < r.data1 ||
     ( ! ( r.data1 < l.data1 ) && l.data2 > r.data2 ) ||
     ( ! ( r.data1 < l.data1 ) && ! ( r.data2 > l.data2 ) && l.data3 < r.data3 );
-    return false;
+  }
+};
+
+struct cmp_data1
+{
+  bool operator()(const data& l, const data& r) const
+  {
+    if ( l.data1 < r.data1 )
+      return true;
+
+    if ( r.data1 < l.data1)
+      return false;
+
+    if ( l.data2 > r.data2 )
+      return true;
+
+    if ( r.data2 > l.data2 )
+      return false;
+
+    return l.data3 < r.data3;
   }
 };
 
@@ -51,10 +68,10 @@ bool test(C c)
 {
   bool flag = true;
   flag &= !c( data{1,2,3}, data{1,2,3}) && !c( data{1,2,3}, data{1,2,3} );
-  flag &= c( data{1,2,3}, data{2,3,4} ) && !c( data{2,3,4}, data{1,2,3} );
-  flag &= c( data{2,3,3}, data{2,2,2} ) && !c( data{2,2,2}, data{2,3,3} );
-  flag &= c( data{2,5,4}, data{2,3,4} ) && !c( data{2,3,4}, data{2,5,4} );
-  flag &= c( data{2,3,2}, data{2,3,3} ) && !c( data{2,3,3}, data{2,3,2} );
+  flag &=  c( data{1,2,3}, data{2,3,4}) && !c( data{2,3,4}, data{1,2,3} );
+  flag &=  c( data{2,3,3}, data{2,2,2}) && !c( data{2,2,2}, data{2,3,3} );
+  flag &=  c( data{2,5,4}, data{2,3,4}) && !c( data{2,3,4}, data{2,5,4} );
+  flag &=  c( data{2,3,2}, data{2,3,3}) && !c( data{2,3,3}, data{2,3,2} );
   return flag;
 }
 
@@ -80,6 +97,7 @@ UNIT(comparator_basic, "")
   using namespace vset;
 
   t << is_true<expect>( test(cmp_data() ) ) << FAS_TESTING_FILE_LINE;
+  t << is_true<expect>( test(cmp_data1() ) ) << FAS_TESTING_FILE_LINE;
   t << is_true<expect>( test(cmp_data2() ) ) << FAS_TESTING_FILE_LINE;
   t << is_true<expect>( test(cmp_data3() ) ) << FAS_TESTING_FILE_LINE;
 

@@ -21,6 +21,37 @@ struct compare_list
   template<typename D>
   bool operator()(const D& l, const D& r) const
   {
+    return _( CompareList(), l, r);
+  }
+
+  template< typename L, typename D>
+  bool _( L, const D& l, const D& r) const
+  {
+    typedef typename fas::head<L>::type head;
+    typedef typename fas::tail<L>::type tail;
+
+    if ( head()(l, r) )
+      return true;
+
+    if ( head()(r, l) )
+      return false;
+
+    return _(tail(), l, r);
+  }
+
+  template< typename D>
+  bool _( fas::empty_list, const D& , const D& ) const
+  {
+    return false;
+  }
+};
+
+template<typename CompareList>
+struct compare_list2
+{
+  template<typename D>
+  bool operator()(const D& l, const D& r) const
+  {
     return _1_( fas::empty_list(), CompareList(), l, r);
   }
 
@@ -51,5 +82,6 @@ struct compare_list
     return H()(l, r);
   }
 };
+
 
 }
