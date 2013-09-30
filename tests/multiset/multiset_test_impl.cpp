@@ -1,11 +1,12 @@
 #include "multiset_test_impl.hpp"
 
 #include <vset/allocators/mmap_allocator.hpp>
+#include <vset/allocators/buffer_allocator.hpp>
 #include <vset/multiset.hpp>
 #include <vset/memory/manager.hpp>
 #include <vset/memory/fsb/aspect.hpp>
 
-#define TEST_COUNT 1000 /*00*/
+#define TEST_COUNT 10000
 
 
 struct data
@@ -13,7 +14,6 @@ struct data
   int data1;
   int data2;
   int data3;
-  //char datax[10240*5];
 };
 
 //typedef vset::memory::fsb::aspect<data> mmap_data_aspect;
@@ -71,11 +71,13 @@ struct cmp123
   }
 };
 
-typedef vset::multiset< offset_t, cmp123, vset::mmap_allocator<13> > index123_type;
+//!typedef vset::multiset< offset_t, cmp123, vset::mmap_allocator<13> > index123_type;
+typedef vset::multiset< offset_t, cmp123, vset::buffer_allocator<9> > index123_type;
 
 data generate()
 {
-  return data{ std::rand()%(TEST_COUNT/10), std::rand()%(TEST_COUNT/10), std::rand()%(TEST_COUNT/10)};
+  // return data{ std::rand()%(TEST_COUNT/10), std::rand()%(TEST_COUNT/10), std::rand()%(TEST_COUNT/10)};
+  return data{ std::rand()%(TEST_COUNT*10), std::rand()%(TEST_COUNT*10), std::rand()%(TEST_COUNT*10)};
 }
 
 bool create(data_buffer& buffer, index123_type& index123)
@@ -102,8 +104,10 @@ void create_one(data_buffer& buffer, index123_type& index123)
 void check(data_buffer& buffer, index123_type& index123)
 {
   size_t buffer_size = std::distance(buffer.begin(), buffer.end());
+  size_t buffer2_size = buffer.count();
   size_t index_size = index123.size();
-  if (buffer_size != index_size)
+  size_t index2_size = std::distance(index123.begin(), index123.end());
+  if (buffer_size != index_size || buffer2_size != index2_size || buffer2_size != index_size)
   {
     std::cout << "buffer_size " << buffer_size << std::endl;
     std::cout << "index_size " << index_size << std::endl;
@@ -119,6 +123,7 @@ void check(data_buffer& buffer, index123_type& index123)
   // ++itr2;
   for ( ;itr2!=index123.end(); ++itr1, ++itr2)
   {
+//    std::cout << "."; std::cout.flush();
     if ( cmp(*itr1, *itr2) )
       continue;
     if ( !cmp(*itr2, *itr1) )
@@ -127,6 +132,7 @@ void check(data_buffer& buffer, index123_type& index123)
     std::cout << "comp fail" << std::endl;
     abort();
   }
+//  std::cout << std::endl;
   
 }
 
@@ -231,21 +237,52 @@ void clear(data_buffer& buffer, index123_type& index123)
 
 void stress(data_buffer& buffer, index123_type& index123, int count)
 {
-  for(int i =0 ; i < count; i++)
+  for(int i =0 ; i < count && index123.size() > 1; i++)
   {
     erase_one(buffer, index123);
-    if (i%1000 == 0)
+    if (i%100 == 0)
     {
-      std::cout << "stres1 " << i << std::endl;
+      std::cout << "stres1 " << i << " size=" << index123.size() << " bufsize="<< buffer.count() << std::endl;
       check(buffer, index123);
     }
     create_one(buffer, index123);
-    if (i%1000 == 0)
+    if (i%100 == 0)
     {
-      std::cout << "stres2 " << i << std::endl;
+      std::cout << "stres2 " << i << " size=" << index123.size() << std::endl;
       check(buffer, index123);
     }
-    
+  }
+}
+
+void stress2(data_buffer& buffer, index123_type& index123, int count)
+{
+  for(int i =0 ; /*i < count &&*/ index123.size() > 2; i++)
+  {
+    for(int k =0 ; k < count && index123.size() > 2; k++)
+    {
+      erase_one(buffer, index123);
+      erase_one(buffer, index123);
+      create_one(buffer, index123);
+      if (k%100 == 0)
+        std::cout << "2stres1 " << k << " size=" << index123.size() << " bufsize="<< buffer.count() << std::endl;
+    }
+
+    std::cout << "2stres1 " << i << " size=" << index123.size() << " bufsize="<< buffer.count() << std::endl;
+    check(buffer, index123);
+    /*
+    erase_one(buffer, index123);
+    erase_one(buffer, index123);
+    if (i%100 == 0)
+    {
+      std::cout << "2stres1 " << i << " size=" << index123.size() << " bufsize="<< buffer.count() << std::endl;
+      check(buffer, index123);
+    }
+    create_one(buffer, index123);
+    if (i%100 == 0)
+    {
+      std::cout << "2stres2 " << i << std::endl;
+      check(buffer, index123);
+    }*/
   }
 }
 
@@ -256,19 +293,23 @@ bool multiset_test()
   data_buffer buffer;
   std::cout << "open..." << std::endl;
   buffer.buffer().open("./test2_.bin");
+  /*if ( buffer.buffer().count() != 0 )
+    abort();*/
   std::cout << "reserve..." << std::endl;
-  buffer.buffer().reserve(TEST_COUNT*sizeof(data));
+  buffer.buffer().reserve(TEST_COUNT*sizeof(data)+TEST_COUNT);
   buffer.buffer().clear();
 
   //cmp123 cmp = cmp123(buffer);
   index123_type index123( (cmp123(buffer)) );
   std::cout << "open..." << std::endl;
-  index123.get_allocator().memory().buffer().open("./test2_index123.bin");
-  index123.get_allocator().memory().buffer().reserve(TEST_COUNT*sizeof(size_t));
+  std::cout << std::distance(index123.begin(), index123.end()) << std::endl;
+  //index123.get_allocator().memory().buffer().open("./test2_index123.bin");
+  //index123.get_allocator().memory().buffer().reserve(TEST_COUNT*sizeof(size_t));
   index123.clear();
 
   init(buffer, index123);
   check(buffer, index123);
+  //stress2(buffer, index123, 100);
   stress(buffer, index123, 10000);
   check(buffer, index123);
   clear(buffer, index123);

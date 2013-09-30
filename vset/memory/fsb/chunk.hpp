@@ -7,6 +7,8 @@
 #ifndef VSET_MEMORY_FSB_CHUNK_HPP
 #define VSET_MEMORY_FSB_CHUNK_HPP
 
+#include <stdexcept>
+
 namespace vset { namespace memory{ namespace fsb{
 
 template<typename T>
