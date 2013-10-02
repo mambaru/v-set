@@ -8,4 +8,5 @@ SET(CMAKE_CXX_FLAGS_RELWITHDEBINFO  "-O2 -g -DNDEBUG")
 SET(CMAKE_CXX_FLAGS_DEBUG  "-O0 -g")
 
 
-add_executable(compare compare.cpp)
+add_executable(compare1 compare1.cpp)
+add_executable(compare2 compare2.cpp)

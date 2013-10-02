@@ -1,1 +1,1 @@
-add_subdirectory(votes)
+add_subdirectory(compare)
