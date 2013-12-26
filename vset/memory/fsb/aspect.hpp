@@ -22,7 +22,7 @@ template<
   typename BufferAspect/* = vset::buffer::persistent::mmap::aspect*/,
   template<typename> class BufferProvider /*= buffer::persistent_provider*/
 >
-struct aspect: fas::aspect_merge<
+struct aspect: fas::merge_aspect<
   aspect_value<T>,
   aspect_manager<BufferProvider>,
   aspect_pointer,

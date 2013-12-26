@@ -6,7 +6,7 @@
 
 #pragma once
 #include <vset/comparators/compare.hpp>
-#include <fas/typemanip/member.hpp>
+#include <fas/functional/member.hpp>
 #include <functional>
 
 namespace vset{

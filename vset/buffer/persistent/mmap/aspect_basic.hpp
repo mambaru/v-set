@@ -24,7 +24,7 @@
 namespace vset { namespace buffer{ namespace persistent{ namespace mmap{
 
 struct aspect_basic: fas::aspect< fas::type_list_n<
-  fas::value_advice<_buffer_size_, size_t>,
+  fas::value<_buffer_size_, size_t>,
   fas::advice<_open_, ad_open>,
   fas::advice<_close_, ad_close>,
   fas::advice<_reserve_, ad_reserve>,

@@ -1,7 +1,7 @@
 add_executable(
   test_comparator
+  ${FAS_TESTING_CPP}
   test_comparator.cpp
-  ${FASLIB_DIR}/fas/testing/testing.cpp
   comparator_suite.cpp
 )
 

@@ -1,7 +1,7 @@
 add_executable(
   test_buffer
+  ${FAS_TESTING_CPP}
   test_buffer.cpp
-  ${FASLIB_DIR}/fas/testing/testing.cpp
   basic_suite.cpp 
 )
 

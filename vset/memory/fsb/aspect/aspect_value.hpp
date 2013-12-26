@@ -18,9 +18,9 @@ namespace vset { namespace memory{ namespace fsb{
 
 template<typename T>
 struct aspect_value: fas::aspect< typename fas::type_list_n<
-  fas::type_advice< _value_type_, T>,
-  fas::type_advice< _chunk_type_, chunk<T> >,
-  fas::type_advice< _chain_type_, chain<T, chunk > >
+  fas::type< _value_type_, T>,
+  fas::type< _chunk_type_, chunk<T> >,
+  fas::type< _chain_type_, chain<T, chunk > >
 >::type > {};
 
 }}}

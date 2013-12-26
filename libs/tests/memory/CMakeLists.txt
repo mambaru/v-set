@@ -1,7 +1,7 @@
 add_executable(
   test_memory
+  ${FAS_TESTING_CPP}
   test_memory.cpp
-  ${FASLIB_DIR}/fas/testing/testing.cpp
   basic_suite.cpp 
 )
 

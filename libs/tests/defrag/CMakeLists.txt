@@ -1,7 +1,7 @@
 add_executable(
   test_defrag
+  ${FAS_TESTING_CPP}
   test_defrag.cpp
-  ${FASLIB_DIR}/fas/testing/testing.cpp
   defrag_suite.cpp
 )
 

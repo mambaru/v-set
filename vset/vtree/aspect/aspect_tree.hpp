@@ -25,9 +25,9 @@ struct ad_multimap
 
 template<typename V, typename Compare /*= std::less<V>*/ >
 struct aspect_tree: fas::aspect< typename fas::type_list_n<
-  fas::type_advice<_value_type_, V >,
+  fas::type<_value_type_, V >,
   fas::alias<_key_type_, _value_type_>,
-  fas::value_advice<_compare_, Compare >,
+  fas::value<_compare_, Compare >,
   fas::alias< _key_compare_, _compare_ >,
   fas::alias< _value_compare_, _compare_ >,
   fas::advice< _container_, ad_multimap>
