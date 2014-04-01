@@ -4,6 +4,7 @@
 #include <vset/comparators/compare_list.hpp>
 #include <fas/xtime.hpp>
 #include <fas/typemanip.hpp>
+#include <fas/functional.hpp>
 #include <iostream>
 #include <set>
 

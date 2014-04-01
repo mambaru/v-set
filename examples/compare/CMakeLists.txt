@@ -15,6 +15,8 @@ else(UNIX)
 
 endif(UNIX)
 
+set(FAS_TESTING_CPP "${CMAKE_CURRENT_SOURCE_DIR}/../faslib/fas/testing/testing.cpp")
+
 
 add_executable(compare1 EXCLUDE_FROM_ALL compare1.cpp)
 add_executable(compare2 EXCLUDE_FROM_ALL compare2.cpp)

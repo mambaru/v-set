@@ -35,7 +35,7 @@ namespace strategy
 {
 
 template<typename V, typename Compare = std::less<V>, int N = 1024 >
-struct vtree_fsb_mmap: fas::aspect_merge<
+struct vtree_fsb_mmap: fas::merge_aspect<
   aspect_tree<V, Compare>,
   aspect_memory< sorted_array< V, N, Compare >,  memory::strategy::fsb_mmap>,
   fas::advice< _restore_, ad_restore >,
@@ -44,7 +44,7 @@ struct vtree_fsb_mmap: fas::aspect_merge<
 >::type {};
 
 template<typename V, typename Compare = std::less<V>, int N = 1024 >
-struct vtree_fsb_filesync: fas::aspect_merge<
+struct vtree_fsb_filesync: fas::merge_aspect<
   aspect_tree<V, Compare>,
   aspect_memory< sorted_array< V, N, Compare >,  memory::strategy::fsb_filesync>,
   fas::advice< _restore_, ad_restore >,
@@ -54,7 +54,7 @@ struct vtree_fsb_filesync: fas::aspect_merge<
 
 
 template<typename V, typename Compare = std::less<V>, int N = 1024 >
-struct vtree_fsb_inmem: fas::aspect_merge<
+struct vtree_fsb_inmem: fas::merge_aspect<
   aspect_tree<V, Compare>,
   aspect_memory< sorted_array< V, N, Compare >,  memory::strategy::fsb_inmem>,
   aspect_basic
@@ -62,11 +62,11 @@ struct vtree_fsb_inmem: fas::aspect_merge<
 
 
 template<typename V, typename Compare = std::less<V>, int N = 1024 >
-struct vtree_std_alloc: fas::aspect_merge<
+struct vtree_std_alloc: fas::merge_aspect<
   aspect_tree<V, Compare>,
-  fas::type_advice<_array_type_, sorted_array< V, N, Compare > >,
+  fas::type<_array_type_, sorted_array< V, N, Compare > >,
   fas::advice<_allocator_, creator< std::allocator< sorted_array< V, N, Compare > > > >,
-  fas::value_advice< _size_, size_t>,
+  fas::value< _size_, size_t>,
   aspect_basic
 >::type {};
 

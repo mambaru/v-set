@@ -14,7 +14,7 @@
 
 namespace vset { namespace buffer{ namespace persistent{ namespace filesync{
 
-struct aspect: fas::aspect_merge<
+struct aspect: fas::merge_aspect<
   file::aspect,
   aspect_basic
 >::type {};

@@ -25,7 +25,7 @@ struct aspect_pointer: fas::aspect< typename fas::type_list_n<
   fas::advice<_offset_by_ptr_, ad_offset_by_ptr>,
   fas::advice<_next_offset_, ad_next_offset>,
   fas::advice<_pred_offset_, ad_pred_offset>,
-  fas::type_advice< _pointer_provider_,  fas::w< offset_pointer< fas::_1, offset_provider<fas::_2> > > >
+  fas::type< _pointer_provider_,  fas::w< offset_pointer< fas::_1, offset_provider<fas::_2> > > >
 >::type > {};
 
 }}}

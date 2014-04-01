@@ -19,9 +19,9 @@ namespace vset{ namespace vtree{
 
 template<typename Array, template<typename> class MemmoryStreategy >
 struct aspect_memory: fas::aspect< typename fas::type_list_n<
-  fas::type_advice<_array_type_, Array >,
-  fas::advice<_allocator_, fas::provider< fas::w< memory::allocator< memory::provider< fas::_ > > > > >,
-  fas::value_advice< _size_, size_t>,
+  fas::type<_array_type_, Array >,
+  fas::provider< _allocator_, fas::w< memory::allocator< memory::provider< fas::_ > > > >,
+  fas::value< _size_, size_t>,
   MemmoryStreategy<Array>
 >::type> {};
 
