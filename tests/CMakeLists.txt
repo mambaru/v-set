@@ -1,4 +1,8 @@
 project(tests)
+
+include_directories(../faslib)
+include_directories(../)
+
 ENABLE_TESTING()
 add_subdirectory(buffer)
 add_subdirectory(memory)

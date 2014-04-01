@@ -1,9 +1,9 @@
-include_directories(${FASLIB_DIR})
-include_directories(${CMAKE_SOURCE_DIR})
+include_directories(../../../faslib)
+include_directories(../../)
 
 if(UNIX)
   SET(CMAKE_CXX_FLAGS "-W -Wall -Wextra -Werror -pedantic -fno-rtti -Wno-long-long -Wno-unused-variable -std=c++11")
-  SET(CMAKE_CXX_FLAGS_RELEASE "-O3 -DNDEBUG ")
+  SET(CMAKE_CXX_FLAGS_RELEASE "-O3 -DNDEBUG -fomit-frame-pointer")
   SET(CMAKE_CXX_FLAGS_RELWITHDEBINFO  "-O2 -g -DNDEBUG")
   SET(CMAKE_CXX_FLAGS_DEBUG  "-O0 -g -fno-inline-small-functions")
 elseif(MSVC)
@@ -15,6 +15,12 @@ else(UNIX)
 
 endif(UNIX)
 
-add_subdirectory(tests)
-add_subdirectory(examples)
-add_subdirectory(benchmark)
+
+add_executable(compare1 EXCLUDE_FROM_ALL compare1.cpp)
+add_executable(compare2 EXCLUDE_FROM_ALL compare2.cpp)
+
+add_custom_target(
+    compare_example DEPENDS    
+    compare1
+    compare2
+)
