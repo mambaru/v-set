@@ -6,14 +6,8 @@
 #include <iostream>
 #include <vset/buffer/buffer.hpp>
 #include <vset/buffer/persistent_buffer.hpp>
-/*
-#include <vset/buffer/persistent/filesync/aspect.hpp>
-#include <vset/buffer/persistent/mmap/aspect.hpp>
-#include <vset/buffer/inmem/aspect.hpp>
-*/
 #include <vset/buffer/strategy.hpp>
 #include <fas/testing.hpp>
-
 
 template<typename T, typename B>
 void first_test(T& t, B& buff)
@@ -38,9 +32,10 @@ void first_test(T& t, B& buff)
   t << equal<expect, size_t>( 7, buff.size() )<< " first test: "<< FAS_TESTING_FILE_LINE;
   t << equal<expect, size_t>( 7, buff.capacity() )<< " first test: "<< FAS_TESTING_FILE_LINE;
   buff.reserve(14);
-  for (int i = 0 ; i < 7; ++i)
-    buff.data()[i]='0'+i;
-  
+  for (int i = 0; i < 7; ++i)
+  {
+    buff.data()[i] = '0' + i;
+  }
 }
 
 template<typename T, typename B>

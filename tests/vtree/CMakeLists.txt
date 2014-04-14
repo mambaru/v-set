@@ -1,5 +1,5 @@
 add_executable(
-  test_vtree
+  test_vtree EXCLUDE_FROM_ALL
   ${FAS_TESTING_CPP}
   test_vtree.cpp
   array_suite.cpp
