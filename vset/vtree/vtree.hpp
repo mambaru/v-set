@@ -10,11 +10,6 @@
 #include <vset/vtree/aspect/tags.hpp>
 
 #include <fas/aop.hpp>
-//#include <vset/vtree/aspect/aspect.hpp>
-/*#include <functional>
-#include <memory>
-#include <map>
-*/
 
 namespace vset{ namespace vtree{
 
@@ -47,7 +42,7 @@ struct compare_pair
   }
 };
 
-template< typename A /*= fas::aspect<>*/ >
+template< typename A >
 class vtree:
   public fas::aspect_class<A>
 {
@@ -64,7 +59,6 @@ public:
   typedef typename allocator_builder::template apply<self>::type                  allocator_type;
   typedef typename allocator_type::size_type           size_type;
   typedef typename allocator_type::difference_type     difference_type;
-  // typedef std::multimap< std::pair<value_type, value_type>, typename allocator_type::pointer> container_type;
 
   typedef std::pair<value_type, value_type>  container_key;
   typedef compare_pair<container_key, key_compare> container_comparator;
@@ -168,13 +162,11 @@ public:
 
   const key_compare& key_comp() const
   {
-    // throw not_impl("const key_compare& key_comp() const");
     return this->get_aspect().template get<_key_compare_>();
   }
 
   const value_compare& value_comp() const
   {
-    // throw not_impl("const value_compare& value_comp() const");
     return this->get_aspect().template get<_value_compare_>();
   }
 
@@ -200,12 +192,6 @@ public:
 
   iterator end()
   {
-    /*
-    if ( _container.empty() )
-      return iterator( _container.end(), 0 );
-
-    return iterator( (++_container.rbegin()).base(), _container.rbegin()->second->size() );
-    */
     return iterator( _container.end(), 0 );
   }
 

@@ -32,13 +32,8 @@ namespace helper
 
   template<typename V, typename C, typename A>
   struct multiset<V, C, A, true>
-    // : public vtree::vtree< typename multiset_helper<V, C, A>::aspect  >
   {
     typedef vtree::vtree< typename multiset_helper<V, C, A>::aspect  > type;
-    /*
-    typedef multiset<V, C, A, true> self;
-    typedef vtree::vtree< typename multiset_helper<V, C, A>::aspect  > super;
-    */
   };
 }
 
@@ -123,12 +118,6 @@ public:
     return *this;
   }
 #endif
-
-  
-  
 };
-
-
 }
-
 #endif

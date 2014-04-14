@@ -18,9 +18,9 @@ endif(UNIX)
 
 add_executable(multiset_insert EXCLUDE_FROM_ALL multiset_insert.cpp)
 add_executable(stx_insert EXCLUDE_FROM_ALL stx_insert.cpp)
-#add_executable(stx_insert2 EXCLUDE_FROM_ALL stx_insert2.cpp)
-#add_executable(vset_insert EXCLUDE_FROM_ALL vset_insert.cpp)
-#add_executable(vset_insert2 EXCLUDE_FROM_ALL vset_insert2.cpp)
+add_executable(stx_insert2 EXCLUDE_FROM_ALL stx_insert2.cpp)
+add_executable(vset_insert EXCLUDE_FROM_ALL vset_insert.cpp)
+add_executable(vset_insert2 EXCLUDE_FROM_ALL vset_insert2.cpp)
 # not support reverse_iterator::base
 #add_executable(vset_insert3 EXCLUDE_FROM_ALL vset_insert3.cpp)
 add_executable(vmultiset EXCLUDE_FROM_ALL vmultiset.cpp)
@@ -36,4 +36,9 @@ add_custom_target(
     vmultiset2
     vmultiset3
     compare
+    
+    stx_insert2
+    vset_insert
+    vset_insert2
+    #vset_insert3
 )

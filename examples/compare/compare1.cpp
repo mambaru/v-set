@@ -53,15 +53,21 @@ int main()
   data2.insert(data_storage.back());
 
   for (const data* d : data1)
+  {
     std::cout << d->data1 << " " << d->data2 << " " << d->data3 << std::endl;
+  }
 
   std::cout << "---" << std::endl;
   
   for (const data* d : data2)
+  {
     std::cout << d->data1 << " " << d->data2 << " " << d->data3 << std::endl;
+  }
 
   for (const data* d : data_storage)
+  {
     delete d;
+  }
   
   return 0;
 }
