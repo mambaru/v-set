@@ -5,11 +5,14 @@
 #include <stdexcept>
 #include <map>
 #include <limits>
+#include <algorithm>
 
 #include <vset/vtree/vtree_iterator.hpp>
 #include <vset/vtree/aspect/tags.hpp>
+#include <vset/buffer/persistent/tags.hpp>
 
 #include <fas/aop.hpp>
+#include <fas/static_check/static_error.hpp>
 
 namespace vset{ namespace vtree{
 
@@ -109,32 +112,42 @@ public:
     _allocator = this->get_aspect().template get<_allocator_>()(*this);
   }
 
-  vtree(const vtree& )
+  vtree(const vtree& __x)
+    : _allocator( this->get_aspect().template get<_allocator_>()(*this) ),
+      _container()
   {
-    // TODO: Запретить копирование если работаем с файлом
-    throw not_impl("vtree(const vtree& )");
+    //если есть _open_file_ копирование недоступно
+    struct copy_ctor_disabled_for_mapped_files;
+    typename fas::static_error< copy_ctor_disabled_for_mapped_files, super::aspect::template has_advice< ::vset::buffer::persistent::_open_file_ >::value == 0 >::type error;
+    std::for_each(__x.begin(), __x.end(), [this](const value_type& item) {this->insert(item);});
   }
 
 #ifdef __GXX_EXPERIMENTAL_CXX0X__
 
   vtree(vtree&& __x)
   {
-    throw not_impl("vtree(vtree&& __x)");
-    // TODO: : _M_t(std::move(__x._M_t))
+    vtree tmp;
+    this->swap(__x);
   }
 
-  vtree( std::initializer_list<value_type> il, const value_compare& comp= value_compare(), const allocator_type&  alloc= allocator_type())
-    : _allocator(alloc)
+  vtree( std::initializer_list<value_type> il, const value_compare& comp = value_compare(), const allocator_type&  alloc = allocator_type())
+    : _allocator(alloc),
+      _container()
   {
-    throw not_impl("vtree( std::initializer_list<value_type> il, const value_compare& comp= value_compare(), const allocator_type&  alloc= allocator_type())");
     this->get_aspect().template get<_compare_>() = comp;
+    _allocator = this->get_aspect().template get<_allocator_>()(*this);
+    for(auto item : il)
+    {
+      this->insert(item);
+    }
   }
 
 #endif
 
-  vtree&  operator=(const vtree& __x)
+  vtree& operator=(const vtree& __x)
   {
-    throw not_impl("vtree&  operator=(const vtree& __x)");
+    vtree tmp(__x);
+    this->swap(tmp);
     return *this;
   }
 
@@ -142,23 +155,17 @@ public:
 
   vtree& operator=(vtree&& __x)
   {
-
-    throw not_impl("vtree& operator=(vtree&& __x)");
-  // NB: DR 1204.
-  // NB: DR 675.
-  //  this->clear();
-  //  this->swap(__x);
+    this->swap(__x);
     return *this;
   }
 
   vtree& operator=( std::initializer_list<value_type> il)
   {
-    throw not_impl("vtree& operator=( std::initializer_list<value_type> il)");
+    vtree tmp(il, this->get_aspect().template get<_compare_>(), this->get_aspect().template get<_allocator_>()(*this));
+    this->swap(tmp);
     return *this;
   }
 #endif
-
-  // accessors:
 
   const key_compare& key_comp() const
   {
@@ -266,9 +273,12 @@ public:
 
   void swap( vtree& s )
   {
-    throw not_impl("void swap( vtree& s )");
+    this->_container.swap(s._container);
+    size_type s_size = s.get_aspect().template get<_size_>();
+    s.get_aspect().template get<_size_>() = this->get_aspect().template get<_size_>();
+    this->get_aspect().template get<_size_>() = s_size;
+    std::swap(this->_allocator, s._allocator);
   }
-
 
   size_t capacity() const
   {
@@ -283,8 +293,6 @@ public:
 
 #ifdef __GXX_EXPERIMENTAL_CXX0X__
 
-//#warning
-
   iterator insert(value_type&& value)
   {
     return this->get_aspect().template get<_insert_value_>()(*this, value );
@@ -292,7 +300,7 @@ public:
 
 #endif
 
-  iterator  insert(const_iterator, const value_type& value)
+  iterator insert(const_iterator, const value_type& value)
   {
     throw not_impl("iterator  insert(const_iterator, const value_type& value)");
   }
@@ -315,7 +323,10 @@ public:
 
   void insert( std::initializer_list<value_type> lst)
   {
-    throw not_impl("void insert( std::initializer_list<value_type> lst)");
+    for(auto item: lst)
+    {
+      this->insert(item);
+    }
   }
 
 #endif
