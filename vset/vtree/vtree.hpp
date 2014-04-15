@@ -6,6 +6,7 @@
 #include <map>
 #include <limits>
 #include <algorithm>
+#include <type_traits>
 
 #include <vset/vtree/vtree_iterator.hpp>
 #include <vset/vtree/aspect/tags.hpp>
@@ -119,12 +120,13 @@ public:
     //если есть _open_file_ копирование недоступно
     struct copy_ctor_disabled_for_mapped_files;
     typename fas::static_error< copy_ctor_disabled_for_mapped_files, super::aspect::template has_advice< ::vset::buffer::persistent::_open_file_ >::value == 0 >::type error;
-    std::for_each(__x.begin(), __x.end(), [this](const value_type& item) {this->insert(item);});
+    this->insert(__x.begin(), __x.end());
   }
 
 #ifdef __GXX_EXPERIMENTAL_CXX0X__
 
   vtree(vtree&& __x)
+  noexcept(std::is_nothrow_copy_constructible<allocator_type>::value)
   {
     vtree tmp;
     this->swap(__x);
@@ -155,14 +157,15 @@ public:
 
   vtree& operator=(vtree&& __x)
   {
+    this->clear();
     this->swap(__x);
     return *this;
   }
 
   vtree& operator=( std::initializer_list<value_type> il)
   {
-    vtree tmp(il, this->get_aspect().template get<_compare_>(), this->get_aspect().template get<_allocator_>()(*this));
-    this->swap(tmp);
+    this->clear();
+    this->insert(il.begin(), il.end());
     return *this;
   }
 #endif
