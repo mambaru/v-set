@@ -6,6 +6,7 @@ add_executable(
   vtree_basic_suite.cpp
   vtree_mmap_suite.cpp
   vtree_ctor_suite.cpp
+  vtree_count_suite.cpp
 )
 
 add_test(test_vtree test_vtree)

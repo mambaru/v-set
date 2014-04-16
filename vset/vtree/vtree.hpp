@@ -318,18 +318,17 @@ public:
   template<typename InputIterator>
   void insert(InputIterator beg, InputIterator end)
   {
-    for (;beg!=end;++beg)
+    for (; beg != end; ++beg)
+    {
       this->insert(*beg);
+    }
   }
 
 #ifdef __GXX_EXPERIMENTAL_CXX0X__
 
   void insert( std::initializer_list<value_type> lst)
   {
-    for(auto item: lst)
-    {
-      this->insert(item);
-    }
+    this->insert(lst.begin(), lst.end());
   }
 
 #endif
@@ -378,7 +377,7 @@ public:
 
   size_type count(const key_type& key) const
   {
-    throw not_impl("size_type count(const key_type& key) const");
+    return this->upper_bound(key) - this->lower_bound(key);
   }
 
 // TODO: find for c++03

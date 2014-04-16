@@ -11,4 +11,5 @@ BEGIN_TEST
   RUN_SUITE(vtree_basic_suite)
   RUN_SUITE(vtree_mmap_suite)
   RUN_SUITE(vtree_ctor_suite)
+  RUN_SUITE(vtree_count_suite)
 END_TEST

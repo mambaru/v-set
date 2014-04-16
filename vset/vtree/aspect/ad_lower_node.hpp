@@ -37,6 +37,33 @@ struct ad_lower_node
 
     return  itr;
   }
+
+  template<typename T>
+  typename T::container_type::const_iterator
+  operator()(const T& t, const typename T::value_type& value) const
+  {
+    typedef typename T::value_type value_type;
+    typedef typename T::container_type container_type;
+    typedef typename container_type::const_iterator const_iterator;
+
+    const container_type& container = t.get_container();
+    const_iterator itr = container.lower_bound( std::make_pair(value, value ) );
+
+    if ( itr == container.cend() && !container.empty() )
+    {
+      itr = (++container.crbegin()).base();
+    }
+
+    if (
+      itr != container.cend()
+      && itr != container.cbegin()
+      && t.get_aspect().template get<_compare_>()(value, itr->first.first) )
+    {
+      --itr;
+    }
+
+    return itr;
+  }
 };
 
 }}
