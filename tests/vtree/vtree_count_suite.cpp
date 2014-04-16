@@ -25,6 +25,20 @@ UNIT(vtree_count, "")
   t << equal<expect, typename int_vtree::size_type>( tree.count(15), static_cast< typename int_vtree::size_type>(1) ) << FAS_TESTING_FILE_LINE;
   t << equal<expect, typename int_vtree::size_type>( tree.count(18), static_cast< typename int_vtree::size_type>(0) ) << FAS_TESTING_FILE_LINE;
 
+  t << equal<expect, typename int_vtree::size_type>( tree.capacity(), static_cast< typename int_vtree::size_type>(18) ) << FAS_TESTING_FILE_LINE;
+
+  int_vtree tree1({1});
+  t << equal<expect, typename int_vtree::size_type>( tree1.capacity(), static_cast< typename int_vtree::size_type>(3) ) << FAS_TESTING_FILE_LINE;
+
+  tree1.insert(544);
+  t << equal<expect, typename int_vtree::size_type>( tree1.capacity(), static_cast< typename int_vtree::size_type>(3) ) << FAS_TESTING_FILE_LINE;
+
+  tree1.insert(545);
+  t << equal<expect, typename int_vtree::size_type>( tree1.capacity(), static_cast< typename int_vtree::size_type>(3) ) << FAS_TESTING_FILE_LINE;
+
+  tree1.insert(546);
+  t << equal<expect, typename int_vtree::size_type>( tree1.capacity(), static_cast< typename int_vtree::size_type>(6) ) << FAS_TESTING_FILE_LINE;
+
   t << nothing();
 }
 

@@ -285,7 +285,7 @@ public:
 
   size_t capacity() const
   {
-    throw not_impl("size_t capacity() const");
+    return this->_container.size() * super::aspect::template advice_cast< ::vset::vtree::_array_type_ >::type::dimension;
   }
 
   iterator insert(const value_type& value)
