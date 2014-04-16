@@ -305,13 +305,13 @@ public:
 
   iterator insert(const_iterator, const value_type& value)
   {
-    throw not_impl("iterator  insert(const_iterator, const value_type& value)");
+    return this->get_aspect().template get<_insert_value_>()(*this, value );
   }
 
 #ifdef __GXX_EXPERIMENTAL_CXX0X__
   iterator insert(const_iterator, value_type&& value)
   {
-    throw not_impl("iterator insert(const_iterator, value_type&& value)");
+    return this->get_aspect().template get<_insert_value_>()(*this, value );
   }
 #endif
 
