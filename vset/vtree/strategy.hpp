@@ -4,7 +4,8 @@
 // Copyright: See COPYING file that comes with this distribution
 //
 
-#pragma once
+#ifndef VSET_VTREE_STRATEGY_HPP
+#define VSET_VTREE_STRATEGY_HPP
 
 #include <vset/vtree/aspect/aspect_tree.hpp>
 #include <vset/vtree/aspect/aspect_memory.hpp>
@@ -73,3 +74,5 @@ struct vtree_std_alloc: fas::merge_aspect<
 }
 
 }}
+
+#endif

@@ -185,6 +185,11 @@ public:
     return _allocator;
   }
 
+  allocator_type& get_allocator()
+  {
+    return _allocator;
+  }
+
   const container_type& get_container() const
   {
     return _container;
@@ -276,11 +281,7 @@ public:
 
   void swap( vtree& s )
   {
-    this->_container.swap(s._container);
-    size_type s_size = s.get_aspect().template get<_size_>();
-    s.get_aspect().template get<_size_>() = this->get_aspect().template get<_size_>();
-    this->get_aspect().template get<_size_>() = s_size;
-    std::swap(this->_allocator, s._allocator);
+    this->get_aspect().template get<_swap_>()(*this, s);
   }
 
   size_t capacity() const

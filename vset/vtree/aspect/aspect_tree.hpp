@@ -30,7 +30,7 @@ struct aspect_tree: fas::aspect< typename fas::type_list_n<
   fas::value<_compare_, Compare >,
   fas::alias< _key_compare_, _compare_ >,
   fas::alias< _value_compare_, _compare_ >,
-  fas::advice< _container_, ad_multimap>
+  fas::advice< _container_, ad_multimap >
 >::type> {};
 
 

@@ -21,7 +21,7 @@ struct _container_;
 struct _restore_;
 struct _size_;
 struct _clear_;
-
+struct _swap_;
 
 struct _node_for_insert_;
 struct _insert_to_container_;
