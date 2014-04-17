@@ -21,45 +21,17 @@ struct ad_find
     typename T::iterator itr = t.get_aspect().template get<_lower_bound_>()(t, value);
 
     if ( itr == t.end() )
+    {
       return t.end();
+    }
 
     if ( t.get_aspect().template get<_compare_>()(*itr, value)
-         || t.get_aspect().template get<_compare_>()(value, *itr) )
+       || t.get_aspect().template get<_compare_>()(value, *itr) )
+    {
       return t.end();
+    }
 
     return itr;
-    /*
-    typedef typename T::container_type container_type;
-    typedef typename container_type::iterator container_iterator;
-
-    typedef typename T::iterator iterator;
-    typedef typename T::allocator_type          allocator_type;
-    typedef typename allocator_type::value_type array_type;
-    typedef typename array_type::iterator       array_iterator;
-    typedef typename allocator_type::pointer    array_pointer;
-
-    container_type& container = t.get_container();
-
-    if ( container.empty() )
-      return t.end();
-
-    container_iterator cont_itr = t.get_aspect().template get<_lower_node_>()(t, value);
-
-    if ( cont_itr == container.end() )
-      return t.end();
-
-    array_iterator itr = std::lower_bound(
-      cont_itr->second->begin(),
-      cont_itr->second->end(),
-      value,
-      t.get_aspect().template get<_compare_>()
-    );
-
-    if ( itr == cont_itr->second->end() )
-      return t.end();
-
-    return iterator( cont_itr, std::distance(cont_itr->second->begin(), itr) );
-    */
   }
 };
 

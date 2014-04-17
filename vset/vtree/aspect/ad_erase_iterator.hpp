@@ -37,7 +37,7 @@ struct ad_erase_iterator
     typedef typename container_type::iterator container_iterator;
 
     difference_type    offset   = itr.get_position();
-    container_iterator cont_itr = t.get_container().erase( itr.get_source_iteartor(), itr.get_source_iteartor() );
+    container_iterator cont_itr = t.get_container().erase( itr.get_source_iterator(), itr.get_source_iterator() );
 
     cont_itr->second->erase(
       cont_itr->second->cbegin() + offset,
@@ -91,7 +91,7 @@ struct ad_erase_iterator
     typedef typename T::container_type container_type;
     typedef typename container_type::iterator container_iterator;
 
-    container_iterator cont_itr = itr.get_source_iteartor();
+    container_iterator cont_itr = itr.get_source_iterator();
     difference_type    offset   = itr.get_position();
     
 

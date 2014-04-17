@@ -21,8 +21,8 @@ class vtree_iterator
 {
 public:
   typedef vtree_iterator<SourceIterator, ValueType> self;
-  typedef SourceIterator source_iteartor;
-  typedef typename source_iteartor::value_type source_value_type;
+  typedef SourceIterator source_iterator;
+  typedef typename source_iterator::value_type source_value_type;
   typedef typename source_value_type::first_type source_key_type;
   typedef typename source_value_type::second_type source_mapped_type;
   
@@ -36,7 +36,7 @@ public:
   typedef typename std::iterator_traits<ValueType*>::pointer pointer;
   typedef typename std::iterator_traits<ValueType*>::reference reference;
   
-  vtree_iterator(source_iteartor itr, difference_type pos)
+  vtree_iterator(source_iterator itr, difference_type pos)
     : _itr(itr)
     , _pos(pos)
   {
@@ -50,7 +50,7 @@ public:
   
   template<typename TI, typename VT>
   vtree_iterator(const vtree_iterator<TI, VT>& slf)
-    : _itr(slf.get_source_iteartor() )
+    : _itr(slf.get_source_iterator() )
     , _pos(slf.get_position() )
   {
   }
@@ -91,7 +91,9 @@ public:
       _pos = _itr->second->size() - 1;
     }
     else
+    {
       --_pos;
+    }
     return *this;
   }
 
@@ -179,15 +181,21 @@ public:
     return *ans;
   }
 
-
   template<typename TI, typename VT>
   friend typename vtree_iterator<TI, VT>::difference_type operator - ( vtree_iterator<TI, VT> r1, vtree_iterator<TI, VT> r2 );
 
+  source_iterator get_source_iterator() const
+  {
+    return _itr;
+  }
 
-  source_iteartor   get_source_iteartor() const { return _itr;}
-  difference_type   get_position() const { return _pos; }
+  difference_type get_position() const
+  {
+    return _pos;
+  }
+
 private:
-  source_iteartor _itr;
+  source_iterator _itr;
   difference_type _pos;
 };
 
@@ -239,16 +247,19 @@ inline typename vtree_iterator<TI, VT>::difference_type operator -
   )
 {
   if ( r1._itr == r2._itr )
+  {
     return  r1._pos - r2._pos;
+  }
 
-  typename vtree_iterator<TI, VT>::source_iteartor titr = r2._itr;
+  typename vtree_iterator<TI, VT>::source_iterator titr = r2._itr;
   typename vtree_iterator<TI, VT>::difference_type result = titr->second->size() - r2._pos;
   
-  for ( ++titr; titr!=r1._itr; ++titr )
+  for ( ++titr; titr != r1._itr; ++titr )
+  {
     result += titr->second->size();
+  }
 
   result += r1._pos;
-
   return result;
 }
 

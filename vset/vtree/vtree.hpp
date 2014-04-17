@@ -376,7 +376,8 @@ public:
     return this->upper_bound(key) - this->lower_bound(key);
   }
 
-// TODO: find for c++03
+#ifdef __GXX_EXPERIMENTAL_CXX0X__
+
   iterator find(const key_type& key)
   {
     return this->get_aspect().template get<_find_>()(*this, key);
@@ -407,6 +408,25 @@ public:
     return this->get_aspect().template get<_upper_bound_>()(*this, key);
   }
 
+#else
+
+  iterator find(const key_type& key) const
+  {
+    return this->get_aspect().template get<_find_>()(*this, key);
+  }
+
+  iterator lower_bound(const key_type& key) const
+  {
+    return this->get_aspect().template get<_lower_bound_>()(*this, key);
+  }
+
+  iterator upper_bound(const key_type& key) const
+  {
+    return this->get_aspect().template get<_upper_bound_>()(*this, key);
+  }
+
+#endif
+
   std::pair<iterator, iterator> equal_range(const key_type& x)
   {
     return std::make_pair(this->lower_bound(x), this->upper_bound(x) );
@@ -429,13 +449,13 @@ public:
 template<typename A>
 inline bool operator==(const vtree<A>& __x, const vtree<A>& __y)
 {
-  throw not_impl("inline bool operator==(const vtree<A>& __x, const vtree<A>& __y)");
+  return __x.size() == __y.size() && std::equal(__x.begin(), __x.end(), __y.begin());
 }
 
 template<typename A>
 inline bool operator< (const vtree<A>& __x, const vtree<A>& __y)
 {
-  throw not_impl("inline bool operator< (const vtree<A>& __x, const vtree<A>& __y)");
+  return std::lexicographical_compare(__x.begin(), __x.end(), __y.begin(), __y.end());
 }
 
 template<typename A>

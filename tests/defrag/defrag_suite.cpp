@@ -24,32 +24,30 @@ UNIT(defrag, "")
   }
 
   std::cout << std::endl;
-  for(unsigned int i = 0; i < 220; ++i) {
+  for(unsigned int i = 0; i < 220; ++i)
+  {
     size_t size = 0;
     size_t size_max = 1;
     multiset_type::container_type& container = int_set.get_container();
-    for (auto it = container.begin(); it != container.end(); ++it) {
-      //auto first = (*it).first;
+    for (auto it = container.begin(); it != container.end(); ++it)
+    {
       auto second = (*it).second;
 
-      //std::cout << "  Chunk: " << first.first << ":" << first.second << " size: " << second->size() << std::endl;
       size += second->size();
       size_max += second->capacity();
-      /*for(unsigned int j = 0; j < second->size(); ++j) {
-        std::cout << "\t" << second->at(j) << std::endl;
-      }*/
     }
 
     t << equal<expect, size_t>( int_set.size(), etalon.size()) << FAS_TESTING_FILE_LINE;
-    t << is_true<expect>( (size * 100)/size_max > 25) << FAS_TESTING_FILE_LINE;
-    //std::cout << "Fragmentation " << size << "/" << size_max << " " << (size * 100)/size_max << "% used" << std::endl;
+    t << is_true<expect>( (size * 100)/size_max > 25) << FAS_TESTING_FILE_LINE;;
 
     size_t skip = 0;
     auto it = container.begin();
-    while( it != container.end() ) {
+    while( it != container.end() )
+    {
       size_t skipped = 0;
       for (; skipped < skip && it != container.end(); ++it, ++skipped);
-      if( it != container.end() ) {
+      if( it != container.end() )
+      {
         int erase_item = (*it).second->back();
         int_set.erase(erase_item);
         etalon.erase(erase_item);

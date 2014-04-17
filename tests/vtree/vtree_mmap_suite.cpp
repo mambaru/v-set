@@ -8,7 +8,6 @@
 #include <vset/vtree/vtree.hpp>
 #include <vset/vtree/strategy.hpp>
 
-//#include <pmi/vset.hpp>
 #include <stdexcept>
 #include <sstream>
 #include <set>
@@ -80,7 +79,6 @@ struct init_random
   template<typename Container>
   void operator()(Container& cnt)  const
   {
-
     std::copy(vect.begin(), vect.end(), std::back_inserter(cnt));
   }
 };
@@ -95,11 +93,8 @@ bool equal( const Container1& cnt1, const Container2& cnt2)
   typename Container1::const_iterator cur1 = cnt1.begin();
   typename Container2::const_iterator  cur2 = cnt2.begin();
 
-  /*std::cout << "equal size " << cnt1.size() << std::endl;
-  std::cout << "equal size " << cnt2.size() << std::endl;*/
   for (size_t i=0; i < cnt1.size(); ++i, ++cur1, ++cur2)
   {
-    //std::cout << "equal " << *cur1 << "=="<< *cur2 << std::endl;
     if ( *cur1 != *cur2 )
       return false;
   }
@@ -114,14 +109,6 @@ public:
   typedef vset::vtree::vtree< vset::vtree::strategy::vtree_fsb_mmap<int, std::less<int>, ArraySize> > set_type;
   typedef typename set_type::iterator iterator;
   typedef typename set_type::const_iterator const_iterator;
-  //typedef typename vset_helper<int, std::less<int>, alloc_type::persistent, ArraySize >::vset_type set_type;
-  //typedef vset<int> set_type;
-
-  /*typedef typename set_type::value_compare value_compare;
-  typedef typename set_type::allocator_type allocator_type;
-  typedef typename allocator_type::allocation_manager allocation_manager;
-  typedef typename allocation_manager::buffer buffer_type;
-  */
 
   persist_container(const std::string& filename, bool clear)
   {
@@ -130,22 +117,13 @@ public:
     _vset = new set_type;
     
     _vset->get_allocator().memory().buffer().open( filename.c_str() );
-    //_vset->get_allocator().memory().buffer().truncate(0);
     _vset->get_allocator().memory().buffer().reserve( 1024*1024);
     std::cout << "persist_container size after open: " << _vset->size() << std::endl;
     if ( clear )
     {
       _vset->clear();
-      //_vset->get_allocator().memory().buffer().clear();
       std::cout << "persist_container size after clear: " << _vset->size() << std::endl;
     }
-    /*_buffer = new buffer_type;
-    _buffer->open(filename.c_str(), 16);
-    if (clear)
-      _buffer->clear();
-    _manager = new allocation_manager(*_buffer);
-    _vset = new set_type( std::less<int>(), *_manager );
-    */
   }
 
   ~persist_container()
@@ -164,8 +142,6 @@ public:
     _vset->get_allocator().memory().buffer().sync();
     _vset->get_allocator().memory().buffer().close();
     delete _vset;
-    /*delete _manager;
-    delete _buffer;*/
   }
 
   set_type& operator*() const
@@ -179,9 +155,7 @@ public:
   }
 
 private:
-  persist_container(const persist_container& ) {}
-  /*buffer_type* _buffer;
-  allocation_manager* _manager;*/
+  persist_container(const persist_container& ) = delete;
   set_type* _vset;
 };
 
@@ -189,10 +163,7 @@ template<int ArraySize>
 class non_persist_container
 {
 public:
-  // typedef vset<int, std::less<int>, std::allocator< sorted_array<int, 1024, std::less<int> > > > set_type;
 
-  //typedef typename vset_helper<int, std::less<int>, alloc_type::inmemmory, ArraySize >::vset_type set_type;
-  // TODO: в отдельный тест-файл
   typedef vset::vtree::vtree< vset::vtree::strategy::vtree_fsb_mmap<int, std::less<int>, ArraySize> > set_type;
   typedef typename set_type::iterator iterator;
 
@@ -255,16 +226,11 @@ void test_insert1(T& /*t*/, const Container& cnt, const F& init, bool onlyCheck)
       if ( values[i]!= *itr/**(cnt->begin() + i)*/)
       {
         std::cout << "<<<";
-        /*for (size_t j = 1; j < 10; ++j )
-          std::cout << "[" << values[j+1] << "=" << *(cnt->begin() + j+1) << "],";
-        i = values.size()-10;
-        */
       }
     }
 
     std::cout << std::endl;
 
-    //cnt->check();
     std::cout << "END CHECK" << std::endl;
     raise("test_insert1", __FILE__, __LINE__);
 
@@ -275,29 +241,29 @@ void test_insert1(T& /*t*/, const Container& cnt, const F& init, bool onlyCheck)
 
 
 template<typename Container, typename T>
-void test_insert(T& t, bool testPersist)
+void test_insert(T& t)
 {
   std::cout << "test_insert {" << std::endl;
   
   test_stack.push("test_insert");
 
   test_insert1(t, Container("test_insert.bin", true), init_sequence(1, 1, 1), false );
-  if ( testPersist ) test_insert1(t, Container("test_insert.bin", false), init_sequence(1, 1, 1), true );
+  test_insert1(t, Container("test_insert.bin", false), init_sequence(1, 1, 1), true );
 
   test_insert1(t, Container("test_insert.bin", true), init_sequence(10, 1, 5), false );
-  if ( testPersist ) test_insert1(t, Container("test_insert.bin", false), init_sequence(10, 1, 5), true );
+  test_insert1(t, Container("test_insert.bin", false), init_sequence(10, 1, 5), true );
 
   test_insert1(t, Container("test_insert.bin", true), init_sequence(256, 1, 5), false );
-  if ( testPersist ) test_insert1(t, Container("test_insert.bin", false), init_sequence(256, 1, 5), true );
+  test_insert1(t, Container("test_insert.bin", false), init_sequence(256, 1, 5), true );
 
   test_insert1(t, Container("test_insert.bin", true), init_sequence(2048, 1, 500), false );
-  if ( testPersist ) test_insert1(t, Container("test_insert.bin", false), init_sequence(2048, 1, 500), true );
+  test_insert1(t, Container("test_insert.bin", false), init_sequence(2048, 1, 500), true );
 
   init_random rnd(100000, 1, 1000);
   std::cout << "------------1-----------" << std::endl;
   test_insert1(t, Container("test_insert1.bin", true), rnd, false );
   std::cout << "------------2-----------" << std::endl;
-  if ( testPersist ) test_insert1(t, Container("test_insert1.bin", false), rnd, true );
+  test_insert1(t, Container("test_insert1.bin", false), rnd, true );
 
   test_stack.pop();
   std::cout << "}test_insert" << std::endl;
@@ -319,19 +285,7 @@ void test_erase1(T& /*t*/, const Container& cnt, const F& init, bool onlyCheck)
   std::list<int>::iterator beg = values1.begin();
   std::list<int>::iterator end = values1.end();
 
-  if (0)
-  {
-    Container cnt2("aaaa", 10);
-    typename Container::const_iterator lower = cnt2->lower_bound(1);
-    typename Container::const_iterator upper = cnt2->upper_bound(10);
-    /*auto lower = cnt.lower_bound(1);
-    auto upper = cnt.upper_bound(10);
-    */
-    cnt2->erase(lower, upper);
-  }
-
   // Перемещаем каждый второй
-
   for ( ;beg!=end; ++beg)
   {
     values2.push_back(*beg);
@@ -349,14 +303,6 @@ void test_erase1(T& /*t*/, const Container& cnt, const F& init, bool onlyCheck)
   {
     for ( std::list<int>::iterator beg = values2.begin(); beg!=values2.end(); ++beg )
     {
-
-      /*
-      std::cout << *beg << " [";
-      for (typename Container::iterator tmpi = cnt->begin(); tmpi != cnt->end(); ++tmpi )
-        std::cout << *tmpi <<",";
-      std::cout << "]" << std::endl ;
-      */
-
       try
       {
         if ( cnt->find( *beg ) == cnt->end() )
@@ -364,12 +310,7 @@ void test_erase1(T& /*t*/, const Container& cnt, const F& init, bool onlyCheck)
           std::cout << "fatal " << *beg << std::endl ;
           abort();
         }
-        /*
-        else
-          std::cout << "FOUND" << std::endl ;
-        */
 
-        //typename Container::iterator lower = cnt->lower_bound(*beg);
         typename Container::iterator upper = cnt->upper_bound(*beg);
         if ( upper != cnt->end() )
         {
@@ -384,15 +325,7 @@ void test_erase1(T& /*t*/, const Container& cnt, const F& init, bool onlyCheck)
       {
         raise( e.what(), __FILE__, __LINE__);
       }
-
-      /*std::cout << " [";
-      for (auto tmpi = cnt->begin(); tmpi != cnt->end(); ++tmpi )
-        std::cout << *tmpi <<",";
-      std::cout << "]" << std::endl;
-      */
-
     }
-    // cnt->check();
   }
 
   if ( values1.size() != cnt->size() )
@@ -413,9 +346,6 @@ void test_erase1(T& /*t*/, const Container& cnt, const F& init, bool onlyCheck)
       if ( *beg != *itr /**(cnt->begin() + i)*/)
       {
         std::cout << "<<<";
-        /*for (size_t j = 1; j < 10; ++j )
-          std::cout << "[" << values[j+1] << "=" << *(cnt->begin() + j+1) << "],";
-        i = values.size()-10;*/
       }
     }
 
@@ -427,44 +357,39 @@ void test_erase1(T& /*t*/, const Container& cnt, const F& init, bool onlyCheck)
 }
 
 template<typename Container, typename T>
-void test_erase(T& t, bool testPersist)
+void test_erase(T& t)
 {
   test_stack.push("test_erase");
 
-
   test_erase1( t, Container("test_erase.bin", true), init_sequence(1, 1, 1), false );
-  if ( testPersist ) test_erase1(t, Container("test_erase.bin", false), init_sequence(1, 1, 1), true );
-
+  test_erase1(t, Container("test_erase.bin", false), init_sequence(1, 1, 1), true );
 
   test_erase1( t,  Container("test_erase.bin", true), init_sequence(10, 1, 20), false );
-
-  if ( testPersist ) test_erase1(t, Container("test_erase.bin", false), init_sequence(10, 1, 20), true );
+  test_erase1(t, Container("test_erase.bin", false), init_sequence(10, 1, 20), true );
 
   test_erase1( t, Container("test_erase.bin", true), init_sequence(256, 1, 512), false );
-  if ( testPersist ) test_erase1(t, Container("test_erase.bin", false), init_sequence(256, 1, 512), true );
+  test_erase1(t, Container("test_erase.bin", false), init_sequence(256, 1, 512), true );
 
   test_erase1( t, Container("test_erase.bin", true), init_sequence(2048, 0, 2048), false );
-  if ( testPersist ) test_erase1(t, Container("test_erase.bin", false), init_sequence(2048, 0, 2048), true );
+  test_erase1(t, Container("test_erase.bin", false), init_sequence(2048, 0, 2048), true );
 
   init_sequence init(10000, 0, 100000);
   test_erase1( t, Container("test_erase.bin", true), init, false );
-  if ( testPersist ) test_erase1(t, Container("test_erase.bin", false), init, true );
-
+  test_erase1(t, Container("test_erase.bin", false), init, true );
 
   test_stack.pop();
 }
 
 
 template<typename Container, typename T>
-void test_all(T& t, bool testPersist)
+void test_all(T& t)
 {
-  std::cout << "------------------- test_all testPersist " << testPersist << std::endl;
   test_stack.push("test_all");
   std::cout << "test_all insert {" << std::endl;
-  test_insert<Container>(t, testPersist);
+  test_insert<Container>(t);
   std::cout << "}test_all insert" << std::endl;
   std::cout << "test_all erase {" << std::endl;
-  test_erase<Container>(t, testPersist);
+  test_erase<Container>(t);
   std::cout << "}test_all erase" << std::endl;
   test_stack.pop();
 }
@@ -478,18 +403,7 @@ void test_persist(T& t)
   std::cout << "------------------- test_persist ------------------- " << BlockSize << std::endl;
   test_stack.push("test_persist");
   typedef persist_container<BlockSize> container;
-  test_all<container>(t, true);
-  test_stack.pop();
-  // test_all(persist_container("set.bin", true), !clear);
-}
-
-template<int BlockSize, typename T>
-void test_non_persist(T& t)
-{
-  std::cout << "------------------- test_non_persist ------------------- " << BlockSize << std::endl;
-  test_stack.push("test_non_persist");
-  typedef non_persist_container<BlockSize> container;
-  test_all<container>(t, false);
+  test_all<container>(t);
   test_stack.pop();
 }
 
@@ -498,66 +412,29 @@ void test_all_persist(T& t)
 {
   std::cout << "------------------- test_all_persist -------------------" << std::endl;
   test_stack.push("test_all_persist");
-  t << fas::testing::nothing();
 
-
-  /*
   test_persist<3>(t);
   test_persist<4>(t);
   test_persist<5>(t);
-  test_persist<6>(t);
   test_persist<7>(t);
-  
-  test_persist<13>(t);
-  
-  test_persist<32>(t);
+  /*test_persist<13>(t);
   test_persist<64>(t);
-  
-  test_persist<128>(t);
   test_persist<256>(t);
   test_persist<500>(t);
   test_persist<1000>(t);
-
   test_persist<1024>(t);
-  test_persist<4000>(t);
-  */
-  
+  test_persist<4000>(t);*/
 
   test_stack.pop();
+
+  t << fas::testing::nothing();
 }
 
-template<typename T>
-void test_all_non_persist(T& t)
-{
-  std::cout << "------------------- test_all_non_persist -------------------" << std::endl;
-  test_stack.push("test_all_non_persist");
-
-  /*
-  
-  test_non_persist<3>(t);
-  test_non_persist<4>(t);
-  test_non_persist<5>(t);
-  test_non_persist<6>(t);
-  test_non_persist<7>(t);
-  test_non_persist<13>(t);
-  test_non_persist<32>(t);
-  test_non_persist<64>(t);
-  test_non_persist<128>(t);
-  test_non_persist<256>(t);
-  test_non_persist<500>(t);
-  test_non_persist<1000>(t);
-  test_non_persist<1024>(t);
-  test_non_persist<4000>(t);
-  */
-  test_stack.pop();
-}
 UNIT(vtree_mmap_test, "")
 {
   using namespace fas::testing;
-  //test_all_non_persist(t);
   test_all_persist(t);
   t << nothing();
-  
 }
 
 BEGIN_SUITE(vtree_mmap_suite, "")

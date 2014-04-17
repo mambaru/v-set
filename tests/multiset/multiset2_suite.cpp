@@ -18,7 +18,6 @@ UNIT(multiset_alloc, "")
   typedef multiset<int, std::greater<int>, buffer_allocator<512> > multiset_type;
   multiset_type int_set;
   int_set.get_allocator().memory().buffer().reserve(10000000);
-  //int_set.get_allocator().memory()/*.buffer().open("./multiset_mmap.bin")*/;
 
   int_set.insert(1);
   int_set.insert(1);
@@ -68,7 +67,9 @@ UNIT(multiset2, "")
   typedef multiset<int, std::greater<int>, allocator<3> > multiset_type;
   multiset_type int_set;
   for (int i=0; i < 9; i++)
+  {
     int_set.insert(i);
+  }
 
   for (int i=0; i < 9; i++)
   {
@@ -82,13 +83,10 @@ UNIT(multiset2, "")
     t << equal<expect>( *(--lower), i) << " i=" << i << " " << FAS_TESTING_FILE_LINE;
   }
 
-  for (int i=0; i < 9; i+=2)
+  for (int i = 0; i < 9; i += 2)
+  {
     int_set.erase(i);
-
-  std::cout <<std::endl;
-  for ( auto i=int_set.begin(); i!=int_set.end(); ++i)
-    std::cout << *i << "[" << i.get_source_iteartor()->first.first << "," << i.get_source_iteartor()->first.second << std::endl;
-  std::cout <<std::endl;
+  }
 
   for ( int i=0; i < 9; ++i )
   {

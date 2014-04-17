@@ -27,8 +27,8 @@ struct ad_defrag_container
     typedef typename container_type::iterator container_iterator;
 
     container_type& container = t.get_container();
-    //container_iterator itr = container.erase( block_itr.get_source_iteartor(), block_itr.get_source_iteartor() );
-    container_iterator itr = block_itr.get_source_iteartor();
+    //container_iterator itr = container.erase( block_itr.get_source_iterator(), block_itr.get_source_iterator() );
+    container_iterator itr = block_itr.get_source_iterator();
     if( itr != container.end() ) {
       container_iterator next = itr;
       next++;

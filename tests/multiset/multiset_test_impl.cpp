@@ -16,7 +16,6 @@ struct data
   int data3;
 };
 
-//typedef vset::memory::fsb::aspect<data> mmap_data_aspect;
 typedef vset::memory::strategy::fsb_mmap<data> mmap_data_aspect;
 typedef vset::memory::manager<mmap_data_aspect> data_buffer;
 typedef data_buffer::const_pointer data_const_pointer;
@@ -45,115 +44,98 @@ struct cmp123
     ( ! ( right->data1 < left->data1 ) && left->data2 < right->data2 ) ||
     ( ! ( right->data1 < left->data1 ) && ! ( right->data2 < left->data2 ) && left->data3 < right->data3 );
 
-    /*
-    
-    if ( left->data1 < right->data1 )
-      return true;
-
-    if ( right->data1 < left->data1 )
-      return false;
-
-    if ( left->data2 < right->data2 )
-      return true;
-
-    if ( right->data2 < left->data2 )
-      return false;
-
-    if ( left->data3 < right->data3 )
-      return true;
-
-    if ( right->data3 < left->data3 )
-      return false;
-    
-    */
-
     return false;
   }
 };
 
-//!typedef vset::multiset< offset_t, cmp123, vset::mmap_allocator<13> > index123_type;
 typedef vset::multiset< offset_t, cmp123, vset::buffer_allocator<9> > index123_type;
 
 data generate()
 {
-  // return data{ std::rand()%(TEST_COUNT/10), std::rand()%(TEST_COUNT/10), std::rand()%(TEST_COUNT/10)};
   return data{ std::rand()%(TEST_COUNT*10), std::rand()%(TEST_COUNT*10), std::rand()%(TEST_COUNT*10)};
 }
 
 bool create(data_buffer& buffer, index123_type& index123)
 {
-  //std::cout << "create " << std::endl;
   data_pointer ptr = buffer.allocate(1);
   *ptr = generate();
-  // auto itr = index123.find(static_cast<offset_t>( static_cast<size_t>(ptr) ));
   auto itr = index123.find( ptr.get_offset() );
   if (itr == index123.end())
-    index123.insert( /*static_cast<offset_t>( static_cast<size_t>(ptr) )*/ ptr.get_offset() );
+  {
+    index123.insert( ptr.get_offset() );
+  }
   else
+  {
     buffer.deallocate(ptr, 1);
+  }
+
   return itr == index123.end();
-  return true;
 }
 
 void create_one(data_buffer& buffer, index123_type& index123)
 {
-  // std::cout << "create_one " << std::endl;
   while(!create(buffer,index123));
 }
 
-void check(data_buffer& buffer, index123_type& index123)
+bool check(data_buffer& buffer, index123_type& index123)
 {
   size_t buffer_size = std::distance(buffer.begin(), buffer.end());
   size_t buffer2_size = buffer.count();
   size_t index_size = index123.size();
   size_t index2_size = std::distance(index123.begin(), index123.end());
-  if (buffer_size != index_size || buffer2_size != index2_size || buffer2_size != index_size)
+  bool size_check_fail = (buffer_size != index_size || buffer2_size != index2_size || buffer2_size != index_size);
+  if ( size_check_fail )
   {
+    std::cout << std::endl << "buffer/index size check failed!" << std::endl;
     std::cout << "buffer_size " << buffer_size << std::endl;
     std::cout << "index_size " << index_size << std::endl;
-    abort();
+    return false;
   }
 
   if ( index123.size() < 2 )
-    return;
+  {
+    return true;
+  }
   
   cmp123 cmp(buffer);
   index123_type::iterator itr1 = index123.begin();
   index123_type::iterator itr2 = itr1 + 1;
-  // ++itr2;
   for ( ;itr2!=index123.end(); ++itr1, ++itr2)
   {
-//    std::cout << "."; std::cout.flush();
     if ( cmp(*itr1, *itr2) )
+    {
       continue;
+    }
     if ( !cmp(*itr2, *itr1) )
+    {
       continue;
+    }
 
-    std::cout << "comp fail" << std::endl;
-    abort();
+    std::cout << std::endl << "comparator failed!" << std::endl;
+    return false;
   }
-//  std::cout << std::endl;
-  
+
+  return true;
 }
 
-void init(data_buffer& buffer, index123_type& index123)
+bool init(data_buffer& buffer, index123_type& index123)
 {
-  std::cout << "init" << std::endl;
   for (int i = 0; i < TEST_COUNT; )
   {
     if ( create(buffer, index123) )
     {
       ++i;
-      if (i%1000 == 0)
+      if (i % 1000 == 0)
       {
         buffer.buffer().reserve( buffer.buffer().size() + 100);
-        std::cout << "create\t" << i << std::endl;
-        check(buffer, index123);
+        if( !check(buffer, index123) )
+        {
+          return false;
+        }
       }
     }
   }
-
-  std::cout << index123.size() << std::endl;
+  return true;
 }
 
 bool erase_one(data_buffer& buffer, index123_type& index123)
@@ -168,7 +150,7 @@ bool erase_one(data_buffer& buffer, index123_type& index123)
   {
     std::cout << ptr->data1 << "," << ptr->data2 << ", " << ptr->data3 << std::endl;
     std::cout << "std::distance(lower,upper): "  << std::distance(lower,upper) << std::endl;
-    abort();
+    return false;
   }
   
   index123.erase( offset );
@@ -176,32 +158,12 @@ bool erase_one(data_buffer& buffer, index123_type& index123)
   size_t buffer_size2 = std::distance(buffer.begin(), buffer.end());
   if ( (buffer_size - buffer_size2) != 1)
   {
-    std::cout  << "fuck " << (buffer_size-1) << "!=" << buffer_size2 << std::endl;
-    abort();
+    std::cout  << "Buffer size check failed - " << (buffer_size-1) << "!=" << buffer_size2 << std::endl;
+    return false;
   }
   
   return true;
 }
-
-/*
-bool erase_range(data_buffer& buffer, index123_type& index123)
-{
-  size_t buffer_size = std::distance(buffer.begin(), buffer.end());
-  if ( buffer_size < 10)
-    return erase(buffer, index123)
-  data_pointer ptr = buffer.begin() + rand()%buffer_size;
-  auto itr = index123.find(static_cast<offset_t>( static_cast<size_t>(ptr) ));
-  index123.erase(itr);
-  buffer.deallocate(ptr, 1);
-  size_t buffer_size2 = std::distance(buffer.begin(), buffer.end());
-  if ( (buffer_size - buffer_size2) != 1)
-  {
-    std::cout  << "fuck " << (buffer_size-1) << "!=" << buffer_size2 << std::endl;
-    abort();
-  }
-  return true;
-}
-*/
 
 bool erase_begin(data_buffer& buffer, index123_type& index123)
 {
@@ -212,107 +174,67 @@ bool erase_begin(data_buffer& buffer, index123_type& index123)
   return true;
 }
 
-
-void clear(data_buffer& buffer, index123_type& index123)
+bool clear(data_buffer& buffer, index123_type& index123)
 {
-  std::cout << "clear" << std::endl;
   for (int i = 0; i < TEST_COUNT; )
   {
-    // std::cout << "erase i=" << i << std::endl;
     if ( erase_one(buffer, index123) )
     {
       ++i;
       if (i%1000 == 0)
       {
-        std::cout << "check erase... \t" << TEST_COUNT - i;
-        std::cout.flush();
-        check(buffer, index123);
-        std::cout << std::endl;
+        if( !check(buffer, index123) )
+        {
+          return false;
+        }
       }
     }
   }
 
-  std::cout << index123.size() << std::endl;
+  return true;
 }
 
-void stress(data_buffer& buffer, index123_type& index123, int count)
+bool stress(data_buffer& buffer, index123_type& index123, int count)
 {
   for(int i =0 ; i < count && index123.size() > 1; i++)
   {
     erase_one(buffer, index123);
-    if (i%100 == 0)
+    if (i % 100 == 0)
     {
-      std::cout << "stres1 " << i << " size=" << index123.size() << " bufsize="<< buffer.count() << std::endl;
-      check(buffer, index123);
+      if( !check(buffer, index123) )
+      {
+        return false;
+      }
     }
     create_one(buffer, index123);
-    if (i%100 == 0)
+    if (i % 100 == 0)
     {
-      std::cout << "stres2 " << i << " size=" << index123.size() << std::endl;
-      check(buffer, index123);
+      if( !check(buffer, index123) )
+      {
+        return false;
+      }
     }
   }
-}
 
-void stress2(data_buffer& buffer, index123_type& index123, int count)
-{
-  for(int i =0 ; /*i < count &&*/ index123.size() > 2; i++)
-  {
-    for(int k =0 ; k < count && index123.size() > 2; k++)
-    {
-      erase_one(buffer, index123);
-      erase_one(buffer, index123);
-      create_one(buffer, index123);
-      if (k%100 == 0)
-        std::cout << "2stres1 " << k << " size=" << index123.size() << " bufsize="<< buffer.count() << std::endl;
-    }
-
-    std::cout << "2stres1 " << i << " size=" << index123.size() << " bufsize="<< buffer.count() << std::endl;
-    check(buffer, index123);
-    /*
-    erase_one(buffer, index123);
-    erase_one(buffer, index123);
-    if (i%100 == 0)
-    {
-      std::cout << "2stres1 " << i << " size=" << index123.size() << " bufsize="<< buffer.count() << std::endl;
-      check(buffer, index123);
-    }
-    create_one(buffer, index123);
-    if (i%100 == 0)
-    {
-      std::cout << "2stres2 " << i << std::endl;
-      check(buffer, index123);
-    }*/
-  }
+  return true;
 }
 
 bool multiset_test()
 {
   //std::srand( time(0) );
-  std::cout << "multiset_test()" << std::endl;
   data_buffer buffer;
-  std::cout << "open..." << std::endl;
   buffer.buffer().open("./test2_.bin");
-  /*if ( buffer.buffer().count() != 0 )
-    abort();*/
-  std::cout << "reserve..." << std::endl;
   buffer.buffer().reserve(TEST_COUNT*sizeof(data)+TEST_COUNT);
   buffer.buffer().clear();
 
-  //cmp123 cmp = cmp123(buffer);
   index123_type index123( (cmp123(buffer)) );
-  std::cout << "open..." << std::endl;
-  std::cout << std::distance(index123.begin(), index123.end()) << std::endl;
-  //index123.get_allocator().memory().buffer().open("./test2_index123.bin");
-  //index123.get_allocator().memory().buffer().reserve(TEST_COUNT*sizeof(size_t));
   index123.clear();
 
-  init(buffer, index123);
-  check(buffer, index123);
-  //stress2(buffer, index123, 100);
-  stress(buffer, index123, 10000);
-  check(buffer, index123);
-  clear(buffer, index123);
-  check(buffer, index123);
-  return true;
+  return
+    init(buffer, index123)
+    && check(buffer, index123)
+    && stress(buffer, index123, 10000)
+    && check(buffer, index123)
+    && clear(buffer, index123)
+    && check(buffer, index123);
 }
