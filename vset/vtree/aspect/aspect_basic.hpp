@@ -25,7 +25,8 @@
 #include <vset/vtree/aspect/ad_erase_range.hpp>
 #include <vset/vtree/aspect/ad_erase_iterator.hpp>
 #include <vset/vtree/aspect/ad_defrag_container.hpp>
-#include <vset/vtree/aspect/ad_swap.hpp>
+#include <vset/vtree/aspect/ad_swap_container.hpp>
+#include <vset/vtree/aspect/ad_capacity.hpp>
 #include <fas/aop.hpp>
 
 namespace vset{ namespace vtree{
@@ -48,7 +49,8 @@ struct aspect_basic: fas::aspect< fas::type_list_n<
   fas::advice< _erase_range_, ad_erase_range>,
   fas::advice< _erase_value_, ad_erase_value>,
   fas::advice< _defrag_container_, ad_defrag_container>,
-  fas::advice< _swap_, ad_swap >
+  fas::advice< _swap_container_, ad_swap_container >,
+  fas::advice< _capacity_, ad_capacity >
 >::type > {};
 
 }}

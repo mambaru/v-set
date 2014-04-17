@@ -61,25 +61,26 @@ public:
   typedef typename super::aspect::template advice_cast<_key_type_>::type          key_type;
 
   typedef typename allocator_builder::template apply<self>::type                  allocator_type;
-  typedef typename allocator_type::size_type           size_type;
-  typedef typename allocator_type::difference_type     difference_type;
+  typedef typename allocator_type::size_type                                      size_type;
+  typedef typename allocator_type::difference_type                                difference_type;
 
-  typedef std::pair<value_type, value_type>  container_key;
-  typedef compare_pair<container_key, key_compare> container_comparator;
+  typedef std::pair<value_type, value_type>                                       container_key;
+  typedef compare_pair<container_key, key_compare>                                container_comparator;
   typedef typename super::aspect
-                        ::template advice_cast<_container_>::type
-                        ::template apply< container_key, typename allocator_type::pointer, container_comparator >
-                        ::type container_type;
+    ::template advice_cast<_container_>::type
+    ::template apply<
+       container_key,
+       typename allocator_type::pointer, container_comparator >::type               container_type;
 
-  typedef vtree_iterator<typename container_type::iterator, value_type> iterator;
+  typedef vtree_iterator<typename container_type::iterator, value_type>             iterator;
   typedef vtree_iterator<typename container_type::const_iterator, const value_type> const_iterator;
-  typedef std::reverse_iterator<iterator> reverse_iterator;
-  typedef std::reverse_iterator<const_iterator> const_reverse_iterator;
+  typedef std::reverse_iterator<iterator>                                           reverse_iterator;
+  typedef std::reverse_iterator<const_iterator>                                     const_reverse_iterator;
 
-  typedef typename std::iterator_traits<iterator>::pointer pointer;
-  typedef typename std::iterator_traits<iterator>::reference reference;
-  typedef typename std::iterator_traits<const_iterator>::pointer const_pointer;
-  typedef typename std::iterator_traits<const_iterator>::reference const_reference;
+  typedef typename std::iterator_traits<iterator>::pointer                          pointer;
+  typedef typename std::iterator_traits<iterator>::reference                        reference;
+  typedef typename std::iterator_traits<const_iterator>::pointer                    const_pointer;
+  typedef typename std::iterator_traits<const_iterator>::reference                  const_reference;
   
   allocator_type  _allocator;
   container_type  _container;
@@ -105,7 +106,7 @@ public:
   }
 
   template<typename InputIterator>
-  vtree(InputIterator beg, InputIterator end, const value_compare& comp, const allocator_type&  alloc= allocator_type() )
+  vtree(InputIterator beg, InputIterator end, const value_compare& comp, const allocator_type&  alloc = allocator_type() )
     : _allocator(alloc)
     , _container( container_comparator(comp) ) 
   {
@@ -138,10 +139,7 @@ public:
   {
     this->get_aspect().template get<_compare_>() = comp;
     _allocator = this->get_aspect().template get<_allocator_>()(*this);
-    for(auto item : il)
-    {
-      this->insert(item);
-    }
+    this->insert(il.begin(), il.end());
   }
 
 #endif
@@ -181,11 +179,6 @@ public:
   }
 
   allocator_type get_allocator() const
-  {
-    return _allocator;
-  }
-
-  allocator_type& get_allocator()
   {
     return _allocator;
   }
@@ -281,12 +274,14 @@ public:
 
   void swap( vtree& s )
   {
-    this->get_aspect().template get<_swap_>()(*this, s);
+    this->get_aspect().template get<_swap_container_>()(*this, s);
+    _allocator = this->get_aspect().template get<_allocator_>()(*this);
+    s._allocator = this->get_aspect().template get<_allocator_>()(s);
   }
 
   size_t capacity() const
   {
-    return this->_container.size() * super::aspect::template advice_cast< ::vset::vtree::_array_type_ >::type::dimension;
+    return this->get_aspect().template get<_capacity_>()(*this);
   }
 
   iterator insert(const value_type& value)

@@ -4,8 +4,8 @@
 // Copyright: See COPYING file that comes with this distribution
 //
 
-#ifndef VSET_VTREE_ASPECT_AD_SWAP_HPP
-#define VSET_VTREE_ASPECT_AD_SWAP_HPP
+#ifndef VSET_VTREE_ASPECT_AD_SWAP_CONTAINER_HPP
+#define VSET_VTREE_ASPECT_AD_SWAP_CONTAINER_HPP
 
 #include <vset/vtree/aspect/tags.hpp>
 #include <string.h>
@@ -13,14 +13,13 @@
 
 namespace vset{ namespace vtree{
 
-struct ad_swap
+struct ad_swap_container
 {
   template<typename T>
   void operator()(T& a, T& b)
   {
     a.get_container().swap(b.get_container());
     std::swap(a.get_aspect().template get<_size_>(), b.get_aspect().template get<_size_>());
-    std::swap(a.get_allocator(), b.get_allocator());
   }
 };
 

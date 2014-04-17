@@ -62,7 +62,7 @@ public:
   
   multiset(): super() {}
 
-  explicit multiset(const key_compare& comp,const allocator_type& alloc = allocator_type() )
+  explicit multiset(const key_compare& comp, const allocator_type& alloc = allocator_type() )
     : super(comp, alloc)
   {
   }

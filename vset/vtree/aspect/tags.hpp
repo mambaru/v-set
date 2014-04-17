@@ -21,7 +21,7 @@ struct _container_;
 struct _restore_;
 struct _size_;
 struct _clear_;
-struct _swap_;
+struct _swap_container_;
 
 struct _node_for_insert_;
 struct _insert_to_container_;
@@ -32,7 +32,7 @@ struct _split_node_;
 struct _insert_value_;
 struct _update_node_key_;
 struct _first_proper_node_;
-
+struct _capacity_;
 
 struct _find_;
 struct _lower_bound_;
