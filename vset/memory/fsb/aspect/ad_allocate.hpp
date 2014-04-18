@@ -36,7 +36,9 @@ private:
     typedef typename T::aspect::template advice_cast< _buffer_data_type_ >::type data_type;
    
     if ( t.get_aspect().template get< _buffer_size_ >()(t) == 0 )
+    {
       t.get_aspect().template get<_acquire_>()(t);
+    }
 
     data_type data = t.get_aspect().template get<_buffer_data_>()(t);
     chain_type* chn = reinterpret_cast<chain_type*>(data);
@@ -49,7 +51,9 @@ private:
       chn = reinterpret_cast<chain_type*>(data);
       p.set_address(chn->mark());
       if (!p)
+      {
         abort();
+      }
     }
     return p;
   }

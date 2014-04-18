@@ -31,10 +31,14 @@ struct compare_list
     typedef typename fas::tail<L>::type tail;
 
     if ( head()(l, r) )
+    {
       return true;
+    }
 
     if ( head()(r, l) )
+    {
       return false;
+    }
 
     return _(tail(), l, r);
   }
@@ -60,8 +64,7 @@ struct compare_list2
   {
     typedef typename fas::push_back< typename fas::head<R>::type, L >::type left;
     typedef typename fas::erase_c< 0, R >::type right;
-    return _2_( left(), l, r)
-            || _1_( left(), right(), l, r );
+    return _2_( left(), l, r) || _1_( left(), right(), l, r );
   }
 
   template< typename L, typename D>

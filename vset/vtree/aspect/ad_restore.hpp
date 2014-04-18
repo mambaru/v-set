@@ -20,7 +20,7 @@ namespace vset{ namespace vtree{
     typedef typename T::allocator_type::memory_type::pointer pointer;
     pointer beg = t.get_allocator().memory().begin();
     pointer end = t.get_allocator().memory().end();
-    for (;beg!=end;++beg)
+    for (;beg != end; ++beg)
     {
       t.get_aspect().template get<_insert_to_container_>()(t, std::make_pair( beg->front(), beg->back() ), beg);
       t.get_aspect().template get<_size_>() += beg->size();

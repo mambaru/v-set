@@ -17,7 +17,6 @@ struct ad_lower_node
   typename T::container_type::iterator
   operator()(T& t, const typename T::value_type& value)
   {
-    typedef typename T::value_type value_type;
     typedef typename T::container_type container_type;
     typedef typename container_type::iterator iterator;
 
@@ -42,7 +41,6 @@ struct ad_lower_node
   typename T::container_type::const_iterator
   operator()(const T& t, const typename T::value_type& value) const
   {
-    typedef typename T::value_type value_type;
     typedef typename T::container_type container_type;
     typedef typename container_type::const_iterator const_iterator;
 

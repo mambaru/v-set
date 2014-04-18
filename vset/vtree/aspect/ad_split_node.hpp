@@ -30,38 +30,32 @@ struct ad_split_node
     typedef typename helper<T>::container_type container_type;
 
     typedef typename T::allocator_type allocator_type;
-    typedef typename allocator_type::value_type array_type;
-    typedef typename allocator_type::pointer    array_pointer;
+    typedef typename allocator_type::pointer array_pointer;
 
     container_type& container = t.get_container();
-
     if ( itr == container.end() )
+    {
       return itr;
+    }
 
     array_pointer arr1 = itr->second;
     array_pointer arr2 = t.get_allocator().allocate(1);
-    if ( !arr2) // == 0 ambigous
+    if ( !arr2 )
+    {
       abort();//return container.end(); // TODO: проверить что offset_pointer при сравнении с числом не сравнивает оффыеты
+    }
 
     size_t offset = arr1->size();
 
     if ( offset < 2 )
+    {
       return itr;
+    }
 
     offset /= 2;
 
-    arr2->assign(
-      arr1->begin() + offset,
-      arr1->end(),
-      t.get_aspect().template get<_compare_>()
-    );
-
-    arr1->resize(
-      offset,
-      value_type(),
-      t.get_aspect().template get<_compare_>()
-    );
-
+    arr2->assign( arr1->begin() + offset, arr1->end(), t.get_aspect().template get<_compare_>() );
+    arr1->resize( offset, value_type(), t.get_aspect().template get<_compare_>() );
     container.erase( itr );
     container_iterator itr1 = t.get_aspect().template get<_insert_to_container_>()(t, std::make_pair(arr1->front(), arr1->back()), arr1);
     container_iterator itr2 = t.get_aspect().template get<_insert_to_container_>()(t, std::make_pair(arr2->front(), arr2->back()), arr2);

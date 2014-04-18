@@ -33,7 +33,9 @@ private:
     typedef Pointer pointer;
 
     if ( t.get_aspect().template get< _buffer_size_ >()(t) == 0 )
+    {
       return pointer( &t );
+    }
 
     typedef typename T::aspect::template advice_cast<_chain_type_>::type chain_type;
     typedef typename T::aspect::template advice_cast<_value_type_>::type value_type;
@@ -44,7 +46,9 @@ private:
     chain_type* chn = reinterpret_cast<chain_type*>(data);
 
     if ( value_type* value = chn->first_value() )
+    {
       return pointer( &t, reinterpret_cast<data_type>(value) - data );
+    }
     
     return pointer( &t );
   }

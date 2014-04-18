@@ -43,13 +43,19 @@ struct chunk
   size_t count() const
   {
     if ( this->empty() )
+    {
       return 0;
+    }
     else if ( this->filled() )
+    {
       return this->max_count();
+    }
 
     size_t cnt = 0;
     for ( size_t i = 0; i < sizeof(size_t)*8; ++i )
+    {
       cnt += ( 0 != (bits & ( static_cast<size_t>(1) << i)) );
+    }
     return cnt;
   }
 
@@ -67,7 +73,9 @@ struct chunk
   {
     size_t index = next_occuped(0);
     if ( index == static_cast<size_t>(-1) )
+    {
       return 0;
+    }
     return data + index;
   }
 
@@ -80,7 +88,9 @@ struct chunk
   {
     size_t index = pred_occuped( max_count() - 1 );
     if ( index == static_cast<size_t>(-1) )
+    {
       return 0;
+    }
     return data + index;
   }
 
@@ -93,7 +103,9 @@ struct chunk
   {
     size_t index = next_occuped(current - data + 1);
     if ( index == static_cast<size_t>(-1) )
+    {
       return 0;
+    }
     return data + index;
   }
 
@@ -104,9 +116,11 @@ struct chunk
 
   const T* pred_value(const T* current) const
   {
-    size_t index = pred_occuped(current - data - 1 /*+ 1*/);
+    size_t index = pred_occuped(current - data - 1 );
     if ( index == static_cast<size_t>(-1) )
+    {
       return 0;
+    }
     return data + index;
   }
 
@@ -118,8 +132,12 @@ struct chunk
   size_t next_occuped(size_t pos = 0) const
   {
     for ( size_t i = pos; i < sizeof(size_t)*8; ++i )
+    {
       if ( bits & ( static_cast<size_t>(1) << i) )
+      {
         return i;
+      }
+    }
     return static_cast<size_t>(-1);
   }
 
@@ -128,7 +146,9 @@ struct chunk
     for ( size_t i = pos ; i < max_count(); --i )
     {
       if ( bits & ( static_cast<size_t>(1) << i) )
+      {
         return i;
+      }
     }
     return static_cast<size_t>(-1);
   }
@@ -136,8 +156,12 @@ struct chunk
   size_t first_free() const
   {
     for ( size_t i = 0; i < sizeof(size_t)*8; ++i )
+    {
       if ( ! ( bits & ( static_cast<size_t>(1) << i) ) )
+      {
         return i;
+      }
+    }
     return static_cast<size_t>(-1);
   }
 
@@ -145,7 +169,9 @@ struct chunk
   {
     size_t index = first_free();
     if ( index == static_cast<size_t>(-1) )
+    {
       return 0;
+    }
     return mark(index);
   }
 
@@ -159,9 +185,13 @@ struct chunk
   {
     size_t index = addr - data;
     if ( index < 64 )
+    {
       bits &= ~( static_cast<size_t>(1)<<index);
+    }
     else
+    {
       throw std::invalid_argument("chunk<T>::free");
+    }
   }
 };
 

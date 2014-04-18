@@ -70,8 +70,6 @@ struct allocator
     _memory.deallocate(p, num);
   }
 
-/// ex
-
   const memory_type memory() const
   {
     return _memory;

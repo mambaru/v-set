@@ -21,11 +21,10 @@ struct ad_upper_bound
     typedef typename T::container_type container_type;
     typedef typename container_type::iterator container_iterator;
 
-    typedef typename T::iterator                iterator;
-    typedef typename T::allocator_type          allocator_type;
+    typedef typename T::iterator iterator;
+    typedef typename T::allocator_type allocator_type;
     typedef typename allocator_type::value_type array_type;
-    typedef typename array_type::iterator       array_iterator;
-    typedef typename allocator_type::pointer    array_pointer;
+    typedef typename array_type::iterator array_iterator;
 
     container_type& container = t.get_container();
 
@@ -60,14 +59,13 @@ struct ad_upper_bound
   typename T::const_iterator
   operator()(const T& t, const typename T::value_type& value) const
   {
-    typedef typename T::container_type          container_type;
+    typedef typename T::container_type container_type;
     typedef typename container_type::const_iterator const_container_iterator;
 
-    typedef typename T::const_iterator          const_iterator;
-    typedef typename T::allocator_type          allocator_type;
+    typedef typename T::const_iterator const_iterator;
+    typedef typename T::allocator_type allocator_type;
     typedef typename allocator_type::value_type array_type;
     typedef typename array_type::const_iterator const_array_iterator;
-    typedef typename allocator_type::pointer    array_pointer;
     
     const container_type& container = t.get_container();
 
@@ -77,7 +75,6 @@ struct ad_upper_bound
     }
 
     const_container_iterator cont_itr = t.get_aspect().template get<_upper_node_>()(t, value);
-
     if ( cont_itr == container.cend() )
     {
       return t.cend();

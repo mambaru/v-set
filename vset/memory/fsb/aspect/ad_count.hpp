@@ -22,7 +22,9 @@ struct ad_count
     typedef ::vset::buffer::_size_      _buffer_size_;
 
     if ( t.get_aspect().template get< _buffer_size_ >()(t) == 0 )
+    {
       return 0;
+    }
 
     typedef ::vset::buffer::_data_      _buffer_data_;
     typedef ::vset::buffer::_data_type_ _buffer_data_type_;

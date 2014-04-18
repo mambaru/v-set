@@ -35,7 +35,6 @@ int main()
   std::cout << (finish - start).to_double() << std::endl;
   std::cout << fas::rate(finish - start)*MAX_COUNT << std::endl;
 
-
   std::cin.get();
   return 0;
 }

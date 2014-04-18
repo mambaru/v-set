@@ -9,7 +9,6 @@
 #include <set>
 
 #include "config.hpp"
-//using namespace vset;
 
 struct data
 {
@@ -20,7 +19,6 @@ struct data
   int data5;
   int data6;
 };
-
 
 bool operator == (data l, data r)
 {
@@ -55,7 +53,6 @@ struct cmp_data3
     ;
   }
 };
-
 
 #define MAX_TEST 10
 #define MAX_DATA 10000000
@@ -97,10 +94,14 @@ int main()
     time3.insert(finish - start);
 
     if ( !(d1==d2) )
+    {
       abort();
+    }
 
     if ( !(d1==d3) )
+    {
       abort();
+    }
   }
 
   std::cout << "---------------------------" << std::endl;

@@ -18,7 +18,7 @@ struct ad_first_proper_node
   bool not_equal(T& t, const V& first, const V& second) const
   {
     return t.get_aspect().template get<_compare_>()(first, second)
-           || t.get_aspect().template get<_compare_>()(second, first);
+      || t.get_aspect().template get<_compare_>()(second, first);
   }
   
   template<typename T, typename Itr>
@@ -28,25 +28,34 @@ struct ad_first_proper_node
     Itr beg = itr;
     Itr end = t.get_container().end();
 
-    if (itr==end)
+    if (itr == end)
+    {
       abort();
+    }
     
-    if (beg==end)
+    if (beg == end)
+    {
       return itr;
+    }
     
     const value_type& value = itr->first.first;
-
-    for ( ++beg; beg!=end; ++beg )
+    for ( ++beg; beg != end; ++beg )
     {
       if ( not_equal(t, beg->first.first, value) )
+      {
         return itr;
+      }
 
       if ( !beg->second->filled() )
+      {
         return beg;
+      }
     }
 
-    if (itr==end)
+    if (itr == end)
+    {
       abort();
+    }
 
     return itr;
   }

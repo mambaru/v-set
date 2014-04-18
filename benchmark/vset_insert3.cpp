@@ -15,11 +15,10 @@ using namespace vset;
 template <int _innerslots, int _leafslots>
 struct btree_traits_speed
 {
-    static const bool   selfverify = false;
-    static const bool   debug = false;
-
-    static const int    leafslots = _innerslots;
-    static const int    innerslots = _leafslots;
+  static const bool selfverify = false;
+  static const bool debug = false;
+  static const int leafslots = _innerslots;
+  static const int innerslots = _leafslots;
 };
 
 struct ad_container
@@ -32,8 +31,8 @@ struct ad_container
 };
 
 struct aspect: fas::aspect< fas::type_list_n<
-    fas::advice< vset::vtree::_container_, ad_container >,
-    vtree::strategy::vtree_fsb_inmem<int, std::less<int>, 512>
+  fas::advice< vset::vtree::_container_, ad_container >,
+  vtree::strategy::vtree_fsb_inmem<int, std::less<int>, 512>
 >::type >{};
 
 typedef vtree::vtree< aspect > storage_type;
@@ -44,7 +43,7 @@ int main()
 
   fas::nanospan minspan(fas::nanospan::xmax, fas::nanospan::xmax);
   fas::nanospan start = fas::process_nanotime();
-  for (int i=0; i < MAX_COUNT; ++i)
+  for (int i = 0; i < MAX_COUNT; ++i)
   {
     stg.insert( rand() );
   }
@@ -62,10 +61,11 @@ int main()
     {
       finish = fas::process_nanotime();
       fas::nanospan tmp = finish - start2;
-      if (i!=0 && tmp < minspan)
+      if (i != 0 && tmp < minspan)
       {
         minspan = tmp;
       }
+
       if ( SHOW_PROCESS )
       {
         std::cout << "find time (" << i << "):" << (finish - start).to_double() << std::endl;
@@ -84,7 +84,6 @@ int main()
   std::cout << "final find rate (" << MAX_COUNT << "):" <<fas::rate(finish - start)*MAX_COUNT << std::endl;
   std::cout << "min find time (" << MIN_COUNT << "):" << (minspan).to_double() << std::endl;
   std::cout << "min find rate (" << MIN_COUNT << "):" <<fas::rate(minspan)*MIN_COUNT << std::endl;
-
   std::cout << "DONE" << std::endl;
 
   std::cin.get();

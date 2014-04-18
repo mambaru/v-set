@@ -22,10 +22,9 @@ struct ad_lower_bound
     typedef typename container_type::iterator container_iterator;
 
     typedef typename T::iterator iterator;
-    typedef typename T::allocator_type          allocator_type;
+    typedef typename T::allocator_type allocator_type;
     typedef typename allocator_type::value_type array_type;
-    typedef typename array_type::iterator       array_iterator;
-    typedef typename allocator_type::pointer    array_pointer;
+    typedef typename array_type::iterator array_iterator;
     
     container_type& container = t.get_container();
 
@@ -64,11 +63,10 @@ struct ad_lower_bound
     typedef typename T::container_type          container_type;
     typedef typename container_type::const_iterator const_container_iterator;
 
-    typedef typename T::const_iterator          const_iterator;
-    typedef typename T::allocator_type          allocator_type;
+    typedef typename T::const_iterator const_iterator;
+    typedef typename T::allocator_type allocator_type;
     typedef typename allocator_type::value_type array_type;
     typedef typename array_type::const_iterator const_array_iterator;
-    typedef typename allocator_type::pointer    array_pointer;
 
     const container_type& container = t.get_container();
 

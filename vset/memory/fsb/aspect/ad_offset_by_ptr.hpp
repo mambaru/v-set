@@ -17,8 +17,10 @@ struct ad_offset_by_ptr
   template<typename T>
   size_t operator()(T& t, typename T::aspect::template advice_cast<_value_type_>::type* ptr) const
   {
-    if ( ptr==0 )
+    if ( ptr == 0 )
+    {
       return static_cast<size_t>(-1);
+    }
 
     typedef ::vset::buffer::_data_      _buffer_data_;
     typedef ::vset::buffer::_data_type_ _buffer_data_type_;

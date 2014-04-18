@@ -25,8 +25,10 @@ struct ad_clear
     container_iterator beg = container.begin();
     container_iterator end = container.end();
 
-    for (;beg!=end; ++beg)
+    for (;beg != end; ++beg)
+    {
       t.get_allocator().deallocate(beg->second, 1);
+    }
 
     t.get_aspect().template get<_size_>() = 0;
     container.clear();

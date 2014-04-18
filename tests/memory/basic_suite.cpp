@@ -117,7 +117,6 @@ UNIT(test_allocator, "")
   using namespace vset;
 
   typedef memory::manager< vset::memory::strategy::fsb_mmap<char> > manager;
-  typedef memory::provider< manager > provider;
   typedef memory::allocator< memory::provider< manager > > allocator;
 
   manager m;

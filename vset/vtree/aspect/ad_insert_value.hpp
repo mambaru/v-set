@@ -40,19 +40,27 @@ struct ad_insert_value
     }
 
     if ( itr == container.end() )
+    {
       abort();
+    }
 
     if ( itr->second->filled() )
+    {
       itr = t.get_aspect().template get<_split_node_>()(t, itr, value);
+    }
 
     if ( itr == container.end() )
+    {
       abort();
+    }
     itr->second->begin();
     
     array_iterator aitr = itr->second->insert(value, t.get_aspect().template get<_compare_>() );
     itr = t.get_aspect().template get<_update_node_key_>()(t, itr);
     if ( itr == container.end() )
+    {
       abort();
+    }
     itr->second->begin();
     
     ++(t.get_aspect().template get<_size_>());

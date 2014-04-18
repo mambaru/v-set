@@ -27,9 +27,7 @@ int main()
 
 #include "config.hpp"
 
-
 typedef std::multiset<int> storage_type;
-// typedef vtree::vtree< vtree::aspect<int, std::less<int>, 512-4*4> > storage_type;
 
 int main()
 {
@@ -37,8 +35,10 @@ int main()
 
   fas::nanospan minspan(fas::nanospan::xmax, fas::nanospan::xmax);
   fas::nanospan start = fas::process_nanotime();
-  for (int i=0; i < MAX_COUNT; ++i)
+  for (int i = 0; i < MAX_COUNT; ++i)
+  {
     stg.insert( rand() );
+  }
   fas::nanospan finish = fas::process_nanotime();
 
   std::cout << "init time: " << (finish - start).to_double() << std::endl;
@@ -54,7 +54,10 @@ int main()
       finish = fas::process_nanotime();
       fas::nanospan tmp = finish - start2;
       if (i!=0 && tmp < minspan)
+      {
         minspan = tmp;
+      }
+
       if ( SHOW_PROCESS )
       {
         std::cout << "find time (" << i << "):" << (finish - start).to_double() << std::endl;
@@ -63,15 +66,11 @@ int main()
         std::cout << "find rate (" << MIN_COUNT << "):" <<fas::rate(tmp)*MAX_COUNT << std::endl;
       }
       start2 = fas::process_nanotime();
-      
     }
-
   }
   finish = fas::process_nanotime();
 
   std::cout << "---------------------------------" << std::endl;
-  // std::cout << (finish - start).to_double() << std::endl;
-  // std::cout << fas::rate(finish - start)*MAX_COUNT << std::endl;
   std::cout << "final find time (" << MAX_COUNT << "):" << (finish - start).to_double() << std::endl;
   std::cout << "final find rate (" << MAX_COUNT << "):" <<fas::rate(finish - start)*MAX_COUNT << std::endl;
   std::cout << "min find time (" << MIN_COUNT << "):" << (minspan).to_double() << std::endl;

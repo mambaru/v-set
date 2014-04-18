@@ -13,7 +13,7 @@
 
 namespace vset { namespace buffer{
 
-template<typename A /*persistent::filesync::aspect*/ >
+template< typename A >
 class persistent_buffer
   : public persistent_buffer_base<A>
 {
@@ -62,8 +62,6 @@ public:
   {
     super::_reserve(*this, size);
   }
-
-  /// ////////////////////////////////////
 
   void close()
   {

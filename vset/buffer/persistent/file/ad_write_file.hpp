@@ -16,7 +16,6 @@
 #include <stdexcept>
 #include <errno.h>
 
-
 namespace vset { namespace buffer { namespace persistent{ namespace file{
 
 struct ad_write_file
@@ -25,7 +24,9 @@ struct ad_write_file
   void operator()( T& t, const char* data, size_t size, size_t offset )
   {
     if ( -1 == ::pwrite( t.get_aspect().template get<_descriptor_>(), data, size, offset) )
+    {
       throw std::runtime_error(strerror(errno));
+    }
   }
 };
 

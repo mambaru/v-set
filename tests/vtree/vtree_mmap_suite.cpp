@@ -16,9 +16,11 @@
 #include <vector>
 
 std::stack<std::string> test_stack;
+std::stringstream output_buffer;
 
 void raise(const std::string& text, const std::string& file = __FILE__, int pos = __LINE__  )
 {
+  std::cout << output_buffer.str();
   while ( !test_stack.empty() )
   {
     std::cout << test_stack.top() << std::endl;
@@ -45,9 +47,10 @@ struct init_sequence
     double step = double(last - first)/count;
     double curr = first;
 
-    for (;count!=0; curr+= step, --count)
+    for (; count != 0; curr += step, --count)
+    {
       vect.push_back( static_cast<int>(curr) );
-
+    }
   }
 
   template<typename Container>
@@ -71,9 +74,10 @@ struct init_random
     , last(last)
   {
     int dist = last - first;
-    for (;count!=0; --count)
+    for (; count != 0; --count)
+    {
       vect.push_back( first + std::rand()%dist );
-
+    }
   }
 
   template<typename Container>
@@ -88,15 +92,18 @@ template<typename Container1, typename Container2>
 bool equal( const Container1& cnt1, const Container2& cnt2)
 {
   if (cnt1.size() != cnt2.size() )
+  {
     return false;
+  }
 
   typename Container1::const_iterator cur1 = cnt1.begin();
   typename Container2::const_iterator  cur2 = cnt2.begin();
-
   for (size_t i=0; i < cnt1.size(); ++i, ++cur1, ++cur2)
   {
     if ( *cur1 != *cur2 )
+    {
       return false;
+    }
   }
   return true;
 }
@@ -112,32 +119,34 @@ public:
 
   persist_container(const std::string& filename, bool clear)
   {
-    std::cout << "persist_container::persist_container() clear = " << clear << std::endl;
+    output_buffer << "persist_container::persist_container() clear = " << clear << std::endl;
     
     _vset = new set_type;
     
     _vset->get_allocator().memory().buffer().open( filename.c_str() );
     _vset->get_allocator().memory().buffer().reserve( 1024*1024);
-    std::cout << "persist_container size after open: " << _vset->size() << std::endl;
+    output_buffer << "persist_container size after open: " << _vset->size() << std::endl;
     if ( clear )
     {
       _vset->clear();
-      std::cout << "persist_container size after clear: " << _vset->size() << std::endl;
+      output_buffer << "persist_container size after clear: " << _vset->size() << std::endl;
     }
   }
 
   ~persist_container()
   {
-    std::cout << "~persist_container() " << _vset->size() << std::endl;
-    std::cout << "~persist_container() " << _vset->get_allocator().memory().buffer().size() << std::endl;
+    output_buffer << "~persist_container() " << _vset->size() << std::endl;
+    output_buffer << "~persist_container() " << _vset->get_allocator().memory().buffer().size() << std::endl;
 
     typedef typename set_type::allocator_type::memory_type::pointer pointer;
     pointer beg = _vset->get_allocator().memory().begin();
     pointer end = _vset->get_allocator().memory().end();
     size_t count = 0;
-    for (;beg!=end;++beg)
-      count+=beg->size();
-    std::cout << "~persist_container() " << count << std::endl;
+    for (;beg != end; ++beg)
+    {
+      count += beg->size();
+    }
+    output_buffer << "~persist_container() " << count << std::endl;
     
     _vset->get_allocator().memory().buffer().sync();
     _vset->get_allocator().memory().buffer().close();
@@ -196,54 +205,60 @@ private:
 template<typename T, typename Container, typename F>
 void test_insert1(T& /*t*/, const Container& cnt, const F& init, bool onlyCheck)
 {
-  std::cout << "test_insert1 onlyCheck=" << onlyCheck << "{"  << std::endl;
+  output_buffer << "test_insert1 onlyCheck=" << onlyCheck << "{"  << std::endl;
   std::stringstream ss;
-  if ( onlyCheck ) test_stack.push("test_insert1 onlyCheck");
-  else test_stack.push("test_insert1");
+  if ( onlyCheck )
+  {
+    test_stack.push("test_insert1 onlyCheck");
+  }
+  else
+  {
+    test_stack.push("test_insert1");
+  }
   std::vector<int> values;
   init(values);
   if ( !onlyCheck )
+  {
     cnt->insert( values.begin(), values.end() );
-  std::cout << "<<<--- 1" << std::endl;
+  }
+  output_buffer << "<<<--- 1" << std::endl;
   if ( values.size() != cnt->size() )
   {
-    std::cout << "----------------------" << std::endl;
-    std::cout << values.size() << std::endl;
-    std::cout << cnt->size() << std::endl;
-    std::cout << "======================" << std::endl;
+    output_buffer << "----------------------" << std::endl;
+    output_buffer << values.size() << std::endl;
+    output_buffer << cnt->size() << std::endl;
+    output_buffer << "======================" << std::endl;
     raise("values1.size() != cnt->size()", __FILE__, __LINE__);
   }
-  std::cout << "<<<--- 2" << std::endl;
+  output_buffer << "<<<--- 2" << std::endl;
   std::sort(values.begin(), values.end());
-  std::cout << "<<<--- 3" << std::endl;
+  output_buffer << "<<<--- 3" << std::endl;
   if (!equal(*cnt, values))
   {
     typename Container::iterator itr = cnt->begin();
     for (size_t i = 0; i < values.size(); ++i, ++itr )
     {
-      std::cout << "<<<--- X" << std::endl;
-      std::cout << "[" << values[i] << "=" << /**(cnt->begin() + i) << */"=" << *itr<< "],";
-      if ( values[i]!= *itr/**(cnt->begin() + i)*/)
+      output_buffer << "<<<--- X" << std::endl;
+      output_buffer << "[" << values[i] << "=" << "=" << *itr<< "],";
+      if ( values[i] != *itr )
       {
-        std::cout << "<<<";
+        output_buffer << "<<<";
       }
     }
 
-    std::cout << std::endl;
-
-    std::cout << "END CHECK" << std::endl;
+    output_buffer << std::endl << "END CHECK" << std::endl;
     raise("test_insert1", __FILE__, __LINE__);
 
   }
   test_stack.pop();
-  std::cout << "}test_insert1"<< std::endl;
+  output_buffer << "}test_insert1"<< std::endl;
 }
 
 
 template<typename Container, typename T>
 void test_insert(T& t)
 {
-  std::cout << "test_insert {" << std::endl;
+  output_buffer << "test_insert {" << std::endl;
   
   test_stack.push("test_insert");
 
@@ -260,27 +275,35 @@ void test_insert(T& t)
   test_insert1(t, Container("test_insert.bin", false), init_sequence(2048, 1, 500), true );
 
   init_random rnd(100000, 1, 1000);
-  std::cout << "------------1-----------" << std::endl;
+  output_buffer << "------------1-----------" << std::endl;
   test_insert1(t, Container("test_insert1.bin", true), rnd, false );
-  std::cout << "------------2-----------" << std::endl;
+  output_buffer << "------------2-----------" << std::endl;
   test_insert1(t, Container("test_insert1.bin", false), rnd, true );
 
   test_stack.pop();
-  std::cout << "}test_insert" << std::endl;
+  output_buffer << "}test_insert" << std::endl;
 }
 
 template<typename T, typename Container, typename F>
 void test_erase1(T& /*t*/, const Container& cnt, const F& init, bool onlyCheck)
 {
-  std::cout << "void test_erase1(const Container& cnt, const F& init, bool onlyCheck) " << init.count << std::endl;
+  output_buffer << "void test_erase1(const Container& cnt, const F& init, bool onlyCheck) " << init.count << std::endl;
   std::stringstream ss;
-  if ( onlyCheck ) test_stack.push("test_insert1 onlyCheck");
-  else test_stack.push("test_erase1");
+  if ( onlyCheck )
+  {
+    test_stack.push("test_insert1 onlyCheck");
+  }
+  else
+  {
+    test_stack.push("test_erase1");
+  }
   std::list<int> values1, values2;
   init(values1);
 
   if ( !onlyCheck )
+  {
     cnt->insert( values1.begin(), values1.end() );
+  }
 
   std::list<int>::iterator beg = values1.begin();
   std::list<int>::iterator end = values1.end();
@@ -307,17 +330,21 @@ void test_erase1(T& /*t*/, const Container& cnt, const F& init, bool onlyCheck)
       {
         if ( cnt->find( *beg ) == cnt->end() )
         {
-          std::cout << "fatal " << *beg << std::endl ;
-          abort();
+          output_buffer << "fatal " << *beg << std::endl ;
+          raise( "Cannot find value while iterating", __FILE__, __LINE__);
         }
 
         typename Container::iterator upper = cnt->upper_bound(*beg);
         if ( upper != cnt->end() )
         {
           if ( *upper == *beg )
-            std::cout << "fatal2" << *upper << std::endl ;
+          {
+            output_buffer << "fatal2" << *upper << std::endl ;
+          }
           else
-            std::cout << "UPPER " << *upper << std::endl ;
+          {
+            output_buffer << "UPPER " << *upper << std::endl ;
+          }
         }
         cnt->erase( *beg );
       }
@@ -330,9 +357,9 @@ void test_erase1(T& /*t*/, const Container& cnt, const F& init, bool onlyCheck)
 
   if ( values1.size() != cnt->size() )
   {
-    std::cout << values1.size() << std::endl;
-    std::cout << values2.size() << std::endl;
-    std::cout << cnt->size() << std::endl;
+    output_buffer << values1.size() << std::endl;
+    output_buffer << values2.size() << std::endl;
+    output_buffer << cnt->size() << std::endl;
     raise("values1.size() != cnt->size()", __FILE__, __LINE__);
   }
 
@@ -342,14 +369,14 @@ void test_erase1(T& /*t*/, const Container& cnt, const F& init, bool onlyCheck)
     beg = values1.begin();
     for (size_t i = 0; i < values1.size(); ++i, ++itr, ++beg )
     {
-      std::cout << "[" << *beg << "=" << /**(cnt->begin() + i) << */"=" << *itr<< "],";
-      if ( *beg != *itr /**(cnt->begin() + i)*/)
+      output_buffer << "[" << *beg << "=" << "=" << *itr<< "],";
+      if ( *beg != *itr )
       {
-        std::cout << "<<<";
+        output_buffer << "<<<";
       }
     }
 
-    std::cout << std::endl;
+    output_buffer << std::endl;
 
     raise("test_erase1", __FILE__, __LINE__);
   }
@@ -385,12 +412,12 @@ template<typename Container, typename T>
 void test_all(T& t)
 {
   test_stack.push("test_all");
-  std::cout << "test_all insert {" << std::endl;
+  output_buffer << "test_all insert {" << std::endl;
   test_insert<Container>(t);
-  std::cout << "}test_all insert" << std::endl;
-  std::cout << "test_all erase {" << std::endl;
+  output_buffer << "}test_all insert" << std::endl;
+  output_buffer << "test_all erase {" << std::endl;
   test_erase<Container>(t);
-  std::cout << "}test_all erase" << std::endl;
+  output_buffer << "}test_all erase" << std::endl;
   test_stack.pop();
 }
 
@@ -400,7 +427,7 @@ void test_persist(T& t)
   ::truncate( "./test_erase.bin", 0);
   ::truncate( "./test_insert.bin", 0);
   ::truncate( "./test_insert1.bin", 0);
-  std::cout << "------------------- test_persist ------------------- " << BlockSize << std::endl;
+  output_buffer << "------------------- test_persist ------------------- " << BlockSize << std::endl;
   test_stack.push("test_persist");
   typedef persist_container<BlockSize> container;
   test_all<container>(t);
@@ -410,7 +437,7 @@ void test_persist(T& t)
 template<typename T>
 void test_all_persist(T& t)
 {
-  std::cout << "------------------- test_all_persist -------------------" << std::endl;
+  output_buffer << "------------------- test_all_persist -------------------" << std::endl;
   test_stack.push("test_all_persist");
 
   test_persist<3>(t);

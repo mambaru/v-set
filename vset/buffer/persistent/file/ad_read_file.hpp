@@ -20,7 +20,9 @@ struct ad_read_file
   void operator()( T& t, char* data, size_t size, size_t offset )
   {
     if ( -1 == ::pread( t.get_aspect().template get<_descriptor_>() , data, size, offset) )
+    {
       throw std::runtime_error(strerror(errno));
+    }
   }
 };
 

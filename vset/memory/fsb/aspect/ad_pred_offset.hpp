@@ -30,13 +30,17 @@ struct ad_pred_offset
     if ( offset == static_cast<size_t>(-1) )
     {
       if ( value_type* current = chn->last_value() )
+      {
         offset = reinterpret_cast<data_type>(current) - data;
+      }
     }
     else for (size_t i = 0 ; i < count ; ++i)
     {
       
       if ( value_type* current = chn->pred_value( reinterpret_cast<value_type*>(data + offset) ) )
+      {
         offset = reinterpret_cast<data_type>(current) - data;
+      }
       else
       {
         return static_cast<size_t>(-1);

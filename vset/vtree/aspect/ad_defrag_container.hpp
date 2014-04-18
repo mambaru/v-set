@@ -27,14 +27,17 @@ struct ad_defrag_container
     typedef typename container_type::iterator container_iterator;
 
     container_type& container = t.get_container();
-    //container_iterator itr = container.erase( block_itr.get_source_iterator(), block_itr.get_source_iterator() );
     container_iterator itr = block_itr.get_source_iterator();
-    if( itr != container.end() ) {
+    if( itr != container.end() )
+    {
       container_iterator next = itr;
       next++;
-      if( next != container.end() ) {
-        if( 2 * (itr->second->size() + next->second->size()) <= itr->second->capacity() ) {
-          for(unsigned int i = 0; i < next->second->size(); i++) {
+      if( next != container.end() )
+      {
+        if( 2 * (itr->second->size() + next->second->size()) <= itr->second->capacity() )
+        {
+          for(unsigned int i = 0; i < next->second->size(); i++)
+          {
             itr->second->push_back(next->second->at(i), t.get_aspect().template get<_compare_>());
           }
           container.erase( next );

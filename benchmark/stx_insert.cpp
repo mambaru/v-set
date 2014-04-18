@@ -8,19 +8,17 @@
 
 #include "config.hpp"
 
-
 template <int _innerslots, int _leafslots>
 struct btree_traits_speed
 {
-    static const bool   selfverify = false;
-    static const bool   debug = false;
+    static const bool selfverify = false;
+    static const bool debug = false;
 
-    static const int    leafslots = _innerslots;
-    static const int    innerslots = _leafslots;
+    static const int leafslots = _innerslots;
+    static const int innerslots = _leafslots;
 };
 
-typedef stx::btree_multiset<int, std::less<int>,
-                            struct btree_traits_speed<CHUNK_SIZE, CHUNK_SIZE> > storage_type;
+typedef stx::btree_multiset<int, std::less<int>, struct btree_traits_speed<CHUNK_SIZE, CHUNK_SIZE> > storage_type;
 
 int main()
 {
@@ -28,8 +26,10 @@ int main()
 
   fas::nanospan minspan(fas::nanospan::xmax, fas::nanospan::xmax);
   fas::nanospan start = fas::process_nanotime();
-  for (int i=0; i < MAX_COUNT; ++i)
+  for (int i = 0; i < MAX_COUNT; ++i)
+  {
     stg.insert( rand() );
+  }
   fas::nanospan finish = fas::process_nanotime();
 
   std::cout << "init time: " << (finish - start).to_double() << std::endl;
@@ -37,15 +37,18 @@ int main()
 
   start = fas::process_nanotime();
   fas::nanospan start2 = start;
-  for (int i=0; i < MAX_COUNT; ++i)
+  for (int i = 0; i < MAX_COUNT; ++i)
   {
     stg.find( rand() );
-    if (i%MIN_COUNT==0)
+    if (i % MIN_COUNT == 0)
     {
       finish = fas::process_nanotime();
       fas::nanospan tmp = finish - start2;
-      if (i!=0 && tmp < minspan)
+      if (i != 0 && tmp < minspan)
+      {
         minspan = tmp;
+      }
+
       if ( SHOW_PROCESS )
       {
         std::cout << "find time (" << i << "):" << (finish - start).to_double() << std::endl;
@@ -60,8 +63,6 @@ int main()
   finish = fas::process_nanotime();
 
   std::cout << "---------------------------------" << std::endl;
-  // std::cout << (finish - start).to_double() << std::endl;
-  // std::cout << fas::rate(finish - start)*MAX_COUNT << std::endl;
   std::cout << "final find time (" << MAX_COUNT << "):" << (finish - start).to_double() << std::endl;
   std::cout << "final find rate (" << MAX_COUNT << "):" <<fas::rate(finish - start)*MAX_COUNT << std::endl;
   std::cout << "min find time (" << MIN_COUNT << "):" << (minspan).to_double() << std::endl;
@@ -72,44 +73,3 @@ int main()
   std::cin.get();
   return 0;
 }
-/*
-const int MAX_COUNT = 1024*1024*10;
-
-/// Traits used for the speed tests, BTREE_DEBUG is not defined.
-template <int _innerslots, int _leafslots>
-struct btree_traits_speed
-{
-    static const bool   selfverify = false;
-    static const bool   debug = false;
-
-    static const int    leafslots = _innerslots;
-    static const int    innerslots = _leafslots;
-};
-
-typedef stx::btree_multiset<int, std::less<int>,
-                            struct btree_traits_speed<128, 128> > btree_type;
-int main()
-{
-  btree_type vtr;
-
-  fas::nanospan start = fas::process_nanotime();
-  for (int i=0; i < MAX_COUNT; ++i)
-    vtr.insert( rand() );
-  fas::nanospan finish = fas::process_nanotime();
-
-  std::cout << (finish - start).to_double() << std::endl;
-  std::cout << fas::rate(finish - start)*MAX_COUNT << std::endl;
-
-  start = fas::process_nanotime();
-  for (int i=0; i < MAX_COUNT; ++i)
-    vtr.find( rand() );
-  finish = fas::process_nanotime();
-
-  std::cout << (finish - start).to_double() << std::endl;
-  std::cout << fas::rate(finish - start)*MAX_COUNT << std::endl;
-
-
-  std::cin.get();
-  return 0;
-}
-*/

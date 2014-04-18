@@ -18,18 +18,14 @@ struct ad_data
   const typename T::aspect::template advice_cast<_data_type_>::type
   operator()( T& t ) const
   {
-    typedef typename T::aspect::template advice_cast<_head_type_>::type head_type;
-    return t.get_aspect().template get<_buffer_>()
-           + t.get_aspect().template get<_head_>()(t)->offset();
+    return t.get_aspect().template get<_buffer_>() + t.get_aspect().template get<_head_>()(t)->offset();
   }
 
   template<typename T>
   typename T::aspect::template advice_cast<_data_type_>::type
   operator()( T& t )
   {
-    typedef typename T::aspect::template advice_cast<_head_type_>::type head_type;
-    return t.get_aspect().template get<_buffer_>()
-           + t.get_aspect().template get<_head_>()(t)->offset();
+    return t.get_aspect().template get<_buffer_>() + t.get_aspect().template get<_head_>()(t)->offset();
   }
 
 };

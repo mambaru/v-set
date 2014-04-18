@@ -21,8 +21,7 @@ struct ad_create_node
   {
     typedef typename T::allocator_type allocator_type;
     typedef typename allocator_type::value_type array_type;
-    typedef typename allocator_type::pointer    pointer;
-    typedef typename array_type::iterator       array_iterator;
+    typedef typename allocator_type::pointer pointer;
 
     pointer parr = t.get_allocator().allocate(1);
     t.get_allocator().construct(parr, array_type() );

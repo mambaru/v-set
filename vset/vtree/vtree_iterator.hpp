@@ -15,7 +15,6 @@ struct mapped_type_helper<T*>
   typedef T value_type;
 };
 
-/*TODOЖ навести порядок*/
 template<typename SourceIterator, typename ValueType>
 class vtree_iterator
 {

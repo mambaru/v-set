@@ -59,7 +59,9 @@ struct chain
   const T* first_value() const
   {
     if ( const chunk_type* beg = first_occuped() )
+    {
       return beg->first_value();
+    }
     return 0;
   }
 
@@ -71,7 +73,9 @@ struct chain
   const T* last_value() const
   {
     if ( const chunk_type* beg = last_occuped() )
+    {
       return beg->last_value();
+    }
     return 0;
   }
 
@@ -86,12 +90,16 @@ struct chain
     const chunk_type* chk = first_chunk() + offset/sizeof(chunk_type);
 
     if ( const T* result =  chk->next_value(value) )
+    {
       return result;
+    }
 
     for ( ++chk; chk->empty(); ++chk)
     {
       if ( static_cast<size_t>(chk - this->first_chunk()) == size )
+      {
         return 0;
+      }
     }
 
     return chk->first_value();
@@ -108,15 +116,21 @@ struct chain
     const chunk_type* chk = first_chunk() + offset/sizeof(chunk_type);
 
     if ( const T* result =  chk->pred_value(value) )
+    {
       return result;
+    }
 
     if ( chk == this->first_chunk() )
-        return 0;
+    {
+      return 0;
+    }
 
     for ( --chk; chk->empty(); --chk)
     {
       if ( chk == this->first_chunk() )
+      {
         return 0;
+      }
     }
     return chk->last_value();
   }
@@ -134,7 +148,9 @@ struct chain
     for ( ;beg!=end; ++beg)
     {
       if ( !beg->empty() )
+      {
         return beg;
+      }
     }
     return 0;
   }
@@ -152,7 +168,9 @@ struct chain
     for ( ;beg!=end; --beg)
     {
       if ( !beg->empty() )
+      {
         return beg;
+      }
     }
     return 0;
   }
@@ -200,7 +218,9 @@ struct chain
   T* mark()
   {
     if ( chunk_type* chk = find_free() )
+    {
       return chk->mark();
+    }
     return 0;
   }
 
@@ -212,18 +232,20 @@ struct chain
 
     offset = chk - first_chunk();
     if ( offset < first_free )
+    {
       first_free = offset;
+    }
   }
-
-  ///
 
   size_t count() const
   {
     size_t cnt=0;
     const chunk_type* beg = first_chunk();
     const chunk_type* end = first_chunk() + size;
-    for (;beg!=end;++beg)
+    for (; beg != end; ++beg)
+    {
       cnt+=beg->count();
+    }
     return cnt;
   }
 

@@ -14,8 +14,6 @@
 #include <stdexcept>
 #include <errno.h>
 
-
-
 namespace vset { namespace buffer { namespace persistent{ namespace file{
 
 struct ad_open_file
@@ -24,12 +22,16 @@ struct ad_open_file
   void operator()( T& t )
   {
     if ( t.get_aspect().template get<_descriptor_>() != -1 )
+    {
       t.get_aspect().template get<_close_file_>();
+    }
 
     int d = ::open( t.get_aspect().template get<_file_name_>().c_str(), O_RDWR | O_CREAT, S_IRUSR | S_IWUSR | S_IRGRP | S_IROTH );
     t.get_aspect().template get<_descriptor_>() = d;
-    if (d==-1)
+    if (d == -1)
+    {
       throw std::runtime_error(strerror(errno));
+    }
   }
 };
 
