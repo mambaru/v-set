@@ -17,31 +17,37 @@ class multiset<V, C, std::allocator<V> >
   
 };
 
-namespace helper
+namespace aspect_maker
 {
   FAS_HAS_TYPENAME(is_aspect_maker, aspect_maker)
   
   template<typename V, typename C, typename A>
-  struct multiset_helper
+  struct make
   {
     typedef typename A::template apply<V, C>::type aspect;
   };
 
   template<typename V, typename C, typename A, bool >
-  struct multiset;
+  struct multiset_impl;
 
   template<typename V, typename C, typename A>
-  struct multiset<V, C, A, true>
+  struct multiset_impl<V, C, A, true>
   {
-    typedef vtree::vtree< typename multiset_helper<V, C, A>::aspect  > type;
+    typedef vtree::vtree< typename make<V, C, A>::aspect  > type;
+  };
+
+  template<typename V, typename C, typename A>
+  struct multiset
+  {
+    typedef typename multiset_impl<V, C, A, aspect_maker::is_aspect_maker<A>::value >::type type;
   };
 }
 
 template<typename V, typename C, typename A >
 class multiset
-  : public helper::multiset<V, C, A, helper::is_aspect_maker<A>::value >::type
+  : public aspect_maker::multiset<V, C, A >::type
 {
-  typedef typename helper::multiset<V, C, A, helper::is_aspect_maker<A>::value >::type super;
+  typedef typename aspect_maker::multiset<V, C, A >::type super;
   
 public:
   typedef typename super::key_type    key_type;

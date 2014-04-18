@@ -14,7 +14,7 @@
 #include <fas/aop.hpp>
 #include <iostream>
 
-#include <vset/memory/detail/helper.hpp>
+#include <vset/memory/aspect_maker.hpp>
 
 namespace vset { namespace memory{
 
@@ -27,11 +27,11 @@ class manager_base
   
 protected:
 
-  typedef typename helper<self>::value_type      value_type;
-  typedef typename helper<self>::buffer_type     buffer_type;
-  typedef typename helper<self>::pointer         pointer;
-  typedef typename helper<self>::const_pointer   const_pointer;
-  typedef typename helper<self>::difference_type difference_type;
+  typedef typename aspect_maker<self>::value_type      value_type;
+  typedef typename aspect_maker<self>::buffer_type     buffer_type;
+  typedef typename aspect_maker<self>::pointer         pointer;
+  typedef typename aspect_maker<self>::const_pointer   const_pointer;
+  typedef typename aspect_maker<self>::difference_type difference_type;
 
   typedef size_t size_type;
 

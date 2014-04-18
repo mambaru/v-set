@@ -4,16 +4,16 @@
 // Copyright: See COPYING file that comes with this distribution
 //
 
-#ifndef VSET_MEMORY_DETAIL_HELPER_HPP
-#define VSET_MEMORY_DETAIL_HELPER_HPP
+#ifndef VSET_MEMORY_ASPECT_MAKER_HPP
+#define VSET_MEMORY_ASPECT_MAKER_HPP
 
 #include <vset/memory/tags.hpp>
 #include <iterator>
 
 namespace vset { namespace memory{
 
-template<typename C >
-struct helper
+template< typename C >
+struct aspect_maker
 {
 private:
   typedef C aspect_class;

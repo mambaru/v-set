@@ -9,7 +9,7 @@
 
 #include <vset/memory/tags.hpp>
 #include <fas/typemanip/type2type.hpp>
-#include <vset/memory/detail/helper.hpp>
+#include <vset/memory/aspect_maker.hpp>
 
 namespace vset { namespace memory{
 
@@ -19,11 +19,11 @@ class provider
 public:
   typedef Manager manager;
 
-  typedef typename helper<manager>::value_type      value_type;
-  typedef typename helper<manager>::buffer_type     buffer_type;
-  typedef typename helper<manager>::pointer         pointer;
-  typedef typename helper<manager>::const_pointer   const_pointer;
-  typedef typename helper<manager>::difference_type difference_type;
+  typedef typename aspect_maker<manager>::value_type      value_type;
+  typedef typename aspect_maker<manager>::buffer_type     buffer_type;
+  typedef typename aspect_maker<manager>::pointer         pointer;
+  typedef typename aspect_maker<manager>::const_pointer   const_pointer;
+  typedef typename aspect_maker<manager>::difference_type difference_type;
   
   typedef value_type& reference;
   typedef const value_type& const_reference;
