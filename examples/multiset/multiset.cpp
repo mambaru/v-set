@@ -1,16 +1,7 @@
 
 #include <vset/comparators/compare_member.hpp>
-#include <vset/comparators/compare_list.hpp>
-#include <vset/comparators/offset_compare.hpp>
-#include <vset/comparators/pointer_compare.hpp>
-
-#include <vset/memory/manager.hpp>
-#include <vset/allocators/mmap_allocator.hpp>
 #include <vset/multiset.hpp>
-
 #include <fas/type_list/type_list_n.hpp>
-#include <set>
-#include <vector>
 #include <iostream>
 
 struct employee
