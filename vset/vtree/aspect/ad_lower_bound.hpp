@@ -89,12 +89,12 @@ struct ad_lower_bound
       t.get_aspect().template get<_compare_>()
     );
 
-    if ( itr == cont_itr->second->end() )
+    if ( itr == cont_itr->second->cend() )
     {
       return ++const_iterator( cont_itr, cont_itr->second->size() - 1 );
     }
 
-    return const_iterator( cont_itr, std::distance(cont_itr->second->begin(), itr) );
+    return const_iterator( cont_itr, std::distance(cont_itr->second->cbegin(), itr) );
   }
 };
 

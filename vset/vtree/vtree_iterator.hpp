@@ -35,6 +35,13 @@ public:
   typedef typename std::iterator_traits<ValueType*>::pointer pointer;
   typedef typename std::iterator_traits<ValueType*>::reference reference;
   
+  vtree_iterator()
+    : _itr()
+    , _pos(0)
+  {
+
+  }
+
   vtree_iterator(source_iterator itr, difference_type pos)
     : _itr(itr)
     , _pos(pos)

@@ -17,8 +17,10 @@ else(UNIX)
 endif(UNIX)
 
 add_subdirectory(compare)
+add_subdirectory(multiset)
 
 add_custom_target(
     examples DEPENDS    
     compare_example
+    multiset_example
 )
