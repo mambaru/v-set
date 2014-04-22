@@ -12,6 +12,8 @@
 #include <fas/type_list/type_list_n.hpp>
 #include <iostream>
 
+typedef unsigned short offset_t;
+
 struct employee
 {
   int company_id;
@@ -37,7 +39,7 @@ struct employee_key
 {
   int company_id;
   int division_id;
-  size_t offset;
+  offset_t offset;
 
   employee_key()
     : company_id(0)
@@ -46,14 +48,14 @@ struct employee_key
   {
   }
 
-  employee_key(int cmp_id, int div_id, size_t off)
+  employee_key(int cmp_id, int div_id, offset_t off)
     : company_id(cmp_id)
     , division_id(div_id)
     , offset(off)
   {
   }
 
-  employee_key(const employee& emp, size_t off)
+  employee_key(const employee& emp, offset_t off)
     : company_id(emp.company_id)
     , division_id(emp.division_id)
     , offset(off)
