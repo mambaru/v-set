@@ -15,10 +15,7 @@ else(UNIX)
 
 endif(UNIX)
 
-
 add_executable(multiset_insert EXCLUDE_FROM_ALL multiset_insert.cpp)
-add_executable(stx_insert EXCLUDE_FROM_ALL stx_insert.cpp)
-add_executable(stx_insert2 EXCLUDE_FROM_ALL stx_insert2.cpp)
 add_executable(vset_insert EXCLUDE_FROM_ALL vset_insert.cpp)
 add_executable(vset_insert2 EXCLUDE_FROM_ALL vset_insert2.cpp)
 # not support reverse_iterator::base
@@ -28,17 +25,30 @@ add_executable(vmultiset2 EXCLUDE_FROM_ALL vmultiset2.cpp)
 add_executable(vmultiset3 EXCLUDE_FROM_ALL vmultiset3.cpp)
 add_executable(compare EXCLUDE_FROM_ALL compare.cpp)
 
+CONFIGURE_LIBRARY(stx/btree_multiset.h "/usr/include /usr/local/include" stx-btree "")
+if(HAVE_INCLUDE_stx-btree)
+  add_executable(stx_insert EXCLUDE_FROM_ALL stx_insert.cpp)
+  add_executable(stx_insert2 EXCLUDE_FROM_ALL stx_insert2.cpp)
+  SET( 
+    stx_sources 
+    stx_insert
+    stx_insert2 
+  )
+  MESSAGE(STATUS "Building stx-btree dependant sources")
+else(HAVE_INCLUDE_stx-btree)
+  SET( stx_sources "" )
+endif(HAVE_INCLUDE_stx-btree)
+
 add_custom_target(
     benchmark DEPENDS
-    multiset_insert
-    stx_insert
+    multiset_insert    
     vmultiset
     vmultiset2
     vmultiset3
     compare
-    
-    stx_insert2
+        
     vset_insert
     vset_insert2
-    #vset_insert3
+        
+    ${stx_sources}
 )
