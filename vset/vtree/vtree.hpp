@@ -6,7 +6,10 @@
 #include <map>
 #include <limits>
 #include <algorithm>
-#include <type_traits>
+
+#ifdef __GXX_EXPERIMENTAL_CXX0X__
+  #include <type_traits>
+#endif
 
 #include <vset/vtree/vtree_iterator.hpp>
 #include <vset/vtree/aspect/tags.hpp>
@@ -412,17 +415,20 @@ public:
 
   iterator find(const key_type& key) const
   {
-    return this->get_aspect().template get<_find_>()(*this, key);
+    self* t = const_cast<self*>(this);
+    return t->get_aspect().template get<_find_>()(*t, key);
   }
 
   iterator lower_bound(const key_type& key) const
   {
-    return this->get_aspect().template get<_lower_bound_>()(*this, key);
+    self* t = const_cast<self*>(this);
+    return t->get_aspect().template get<_lower_bound_>()(*t, key);
   }
 
   iterator upper_bound(const key_type& key) const
   {
-    return this->get_aspect().template get<_upper_bound_>()(*this, key);
+    self* t = const_cast<self*>(this);
+    return t->get_aspect().template get<_upper_bound_>()(*t, key);
   }
 
 #endif

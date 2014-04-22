@@ -26,4 +26,5 @@ add_custom_target(
     compare_example
     multiset_example
     index_storage_example
+    pointer_storage_example
 )

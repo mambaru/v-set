@@ -17,6 +17,20 @@ struct employee
   int company_id;
   int division_id;
   int employee_id;
+
+  employee()
+    : company_id(0)
+    , division_id(0)
+    , employee_id(0)
+  {
+  }
+
+  employee(int cmp_id, int div_id, int emp_id)
+    : company_id(cmp_id)
+    , division_id(div_id)
+    , employee_id(emp_id)
+  {
+  }
 };
 
 struct employee_key
@@ -52,8 +66,8 @@ typedef ::vset::memory::manager< ::vset::memory::strategy::fsb_mmap<employee> > 
 
 //employee comparator
 typedef ::vset::compare_list< fas::type_list_n<
-  ::vset::compare_member< employee_key, decltype(employee_key::company_id), &employee_key::company_id, std::less<decltype(employee_key::company_id)> >,
-  ::vset::compare_member< employee_key, decltype(employee_key::division_id), &employee_key::division_id, std::less<decltype(employee_key::division_id)> >
+  ::vset::compare_member< employee_key, int, &employee_key::company_id, std::less<int> >,
+  ::vset::compare_member< employee_key, int, &employee_key::division_id, std::less<int> >
 >::type > employee_cmp;
 
 //inmemory index
@@ -62,7 +76,7 @@ typedef ::vset::multiset< employee_key, employee_cmp, ::vset::allocator<1024> > 
 void insert_employee(employees_storage &storage, employee_index& index, const employee& emp)
 {
   employees_storage::pointer ptr = storage.allocate(1);
-  new (ptr) employee(emp);
+  *ptr = emp;
   index.insert(employee_key(emp, ptr.get_offset()));
 }
 
@@ -83,37 +97,37 @@ int main()
 
   //output persistent data
   std::cout << "Data loaded from disk:" << std::endl;
-  for(auto emp: index)
+  for( employee_index::iterator itr = index.begin(); itr != index.end(); ++itr )
   {
-    std::cout << "Company id: " << emp.company_id
-              << ". Division id: " << emp.division_id
-              << ". Storage offset: " << emp.offset << std::endl;
+    std::cout << "Company id: " << itr->company_id
+              << ". Division id: " << itr->division_id
+              << ". Storage offset: " << itr->offset << std::endl;
   }
 
   //cleaning storage and index
   employees_storage::pointer ptr = storage.begin();
-  for(auto emp: index)
+  for( employee_index::iterator itr = index.begin(); itr != index.end(); ++itr )
   {
-    ptr.set_offset(emp.offset);
+    ptr.set_offset(itr->offset);
     storage.deallocate(ptr, 1);
   }
   index.clear();
 
   std::cout << std::endl << "Index size after erase " << index.size() << std::endl;
 
-  insert_employee(storage, index, {1, 1, 101});
-  insert_employee(storage, index, {2, 3, 105});
-  insert_employee(storage, index, {1, 1, 108});
+  insert_employee(storage, index, employee(1, 1, 101));
+  insert_employee(storage, index, employee(2, 3, 105));
+  insert_employee(storage, index, employee(1, 1, 108));
 
   std::cout << std::endl << "Data after insert:" << std::endl;
-  for(auto emp: index)
+  for( employee_index::iterator itr = index.begin(); itr != index.end(); ++itr )
   {
-    std::cout << "Company id: " << emp.company_id
-              << ". Division id: " << emp.division_id
-              << ". Storage offset: " << emp.offset << std::endl;
+    std::cout << "Company id: " << itr->company_id
+              << ". Division id: " << itr->division_id
+              << ". Storage offset: " << itr->offset << std::endl;
   }
   
-  auto emp_ptr = index.find( {2,3,0ULL} );
+  employee_index::iterator emp_ptr = index.find( employee_key(2, 3, 0ULL) );
 
   if( emp_ptr != index.end() )
   {

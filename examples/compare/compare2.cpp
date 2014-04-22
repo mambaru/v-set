@@ -18,6 +18,20 @@ struct data
   int data1;
   int data2;
   int data3;
+
+  data()
+    : data1(),
+      data2(),
+      data3()
+  {
+  }
+
+  data(int d1, int d2, int d3)
+    : data1(d1),
+      data2(d2),
+      data3(d3)
+  {
+  }
 };
 
 struct compare1:
@@ -75,33 +89,33 @@ int main()
   idx2.clear();
   
   data_storage::pointer ptr = stg.allocate(1);
-  *ptr = data{1,2,3};
+  *ptr = data(1,2,3);
   idx1.insert( ptr.get_offset() );
   idx2.insert( ptr.get_offset() );
 
   ptr = stg.allocate(1);
-  *ptr = data{1,3,4};
+  *ptr = data(1,3,4);
   idx1.insert( ptr.get_offset() );
   idx2.insert( ptr.get_offset() );
   
   ptr = stg.allocate(1);
-  *ptr = data{1,3,5};
+  *ptr = data(1,3,5);
   idx1.insert( ptr.get_offset() );
   idx2.insert( ptr.get_offset() );
 
   ptr = stg.end();
   
-  for (offset_t off : idx1)
+  for( index1::iterator itr = idx1.begin(); itr != idx1.end(); ++itr )
   {
-    ptr.set_offset(off);
+    ptr.set_offset(*itr);
     std::cout << ptr->data1 << " " << ptr->data2 << " " << ptr->data3 << std::endl;
   }
 
   std::cout << "---" << std::endl;
 
-  for (offset_t off : idx2)
+  for( index2::iterator itr = idx2.begin(); itr != idx2.end(); ++itr )
   {
-    ptr.set_offset(off);
+    ptr.set_offset(*itr);
     std::cout << ptr->data1 << " " << ptr->data2 << " " << ptr->data3 << std::endl;
   }
   return 0;

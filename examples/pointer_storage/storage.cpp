@@ -17,6 +17,18 @@ struct employee
   int company_id;
   int division_id;
   int employee_id;
+
+  employee()
+    : company_id()
+    , division_id()
+    , employee_id()
+  {}
+
+  employee(int cmp_id, int div_id, int emp_id)
+    : company_id(cmp_id)
+    , division_id(div_id)
+    , employee_id(emp_id)
+  {}
 };
 
 typedef size_t offset_t;
@@ -26,8 +38,8 @@ typedef ::vset::memory::manager< ::vset::memory::strategy::fsb_mmap<employee> > 
 
 //employee comparator
 typedef ::vset::compare_list< fas::type_list_n<
-  ::vset::compare_member< employee, decltype(employee::company_id), &employee::company_id, std::less<decltype(employee::company_id)> >,
-  ::vset::compare_member< employee, decltype(employee::division_id), &employee::division_id, std::less<decltype(employee::division_id)> >
+  ::vset::compare_member< employee, int, &employee::company_id, std::less<int> >,
+  ::vset::compare_member< employee, int, &employee::division_id, std::less<int> >
 >::type > employee_cmp;
 
 typedef ::vset::offset_compare< offset_t, employees_storage, employee_cmp > employee_offset_cmp;
@@ -39,7 +51,7 @@ struct EmployeeCmp : employee_offset_cmp
 };
 
 //inmemory index
-typedef ::vset::multiset< EmployeeCmp::offset_t, EmployeeCmp, ::vset::allocator<1024> > EmployeeIndex;
+typedef ::vset::multiset< EmployeeCmp::offset_t, EmployeeCmp, ::vset::allocator<1024> > employee_index;
 
 int main()
 {
@@ -48,7 +60,7 @@ int main()
   //open persistent buffer
   storage.buffer().open( "./pointer_storage.bin" );
 
-  EmployeeIndex index( EmployeeCmp( storage.end() ) );
+  employee_index index( EmployeeCmp( storage.end() ) );
 
   //initialize service pointer
   employees_storage::pointer worker_pointer;
@@ -70,18 +82,18 @@ int main()
 
   //output persistent data
   std::cout << "Data loaded from disk:" << std::endl;
-  for(auto emp: index)
+  for( employee_index::iterator itr = index.begin(); itr != index.end(); ++itr)
   {
-    worker_pointer.set_offset(emp);
+    worker_pointer.set_offset(*itr);
     std::cout << "Company id: " << worker_pointer->company_id
               << ". Division id: " << worker_pointer->division_id
               << ". Emp id: " << worker_pointer->employee_id << std::endl;
   }
 
   //cleaning storage and index
-  for(auto emp: index)
+  for( employee_index::iterator itr = index.begin(); itr != index.end(); ++itr)
   {
-    worker_pointer.set_offset(emp);
+    worker_pointer.set_offset(*itr);
     storage.deallocate(worker_pointer, 1);
   }
   worker_pointer = storage.begin();
@@ -91,39 +103,33 @@ int main()
 
   employee worker;
 
-  worker = {1, 1, 101};
-  offset_t worker_offset = storage.allocate(1).get_offset();
-  worker_pointer.set_offset(worker_offset);
-  new (worker_pointer) employee();
+  worker = employee(1, 1, 101);
+  worker_pointer = storage.allocate(1);
   *worker_pointer = worker;
-  index.insert(worker_offset);
+  index.insert(worker_pointer.get_offset());
 
-  worker = {2, 3, 105};
-  worker_offset = storage.allocate(1).get_offset();
-  worker_pointer.set_offset(worker_offset);
-  new (worker_pointer) employee();
+  worker = employee(2, 3, 105);
+  worker_pointer = storage.allocate(1);
   *worker_pointer = worker;
-  index.insert(worker_offset);
+  index.insert(worker_pointer.get_offset());
 
-  worker = {1, 1, 108};
-  worker_offset = storage.allocate(1).get_offset();
-  worker_pointer.set_offset(worker_offset);
-  new (worker_pointer) employee();
+  worker = employee(1, 1, 108);
+  worker_pointer = storage.allocate(1);
   *worker_pointer = worker;
-  index.insert(worker_offset);
+  index.insert(worker_pointer.get_offset());
 
   std::cout << std::endl << "Data after insert:" << std::endl;
-  for(auto emp: index)
+  for( employee_index::iterator itr = index.begin(); itr != index.end(); ++itr)
   {
-    worker_pointer.set_offset(emp);
+    worker_pointer.set_offset(*itr);
     std::cout << "Company id: " << worker_pointer->company_id
               << ". Division id: " << worker_pointer->division_id
               << ". Emp id: " << worker_pointer->employee_id << std::endl;
   }
   
   worker_pointer = storage.begin();
-  *worker_pointer = {2,3,0};
-  auto emp_ptr = index.find( worker_pointer.get_offset() );
+  *worker_pointer = employee(2,3,0);
+  employee_index::iterator emp_ptr = index.find( worker_pointer.get_offset() );
   worker_pointer.set_offset(*emp_ptr);
   std::cout << "Found employee from company 1 and division 3 - id " << worker_pointer->employee_id << std::endl;
 
