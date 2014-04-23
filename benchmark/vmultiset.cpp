@@ -12,7 +12,8 @@ int main()
 {
   storage_type stg;
   stg.get_allocator().memory().buffer().open("./vset.bin");
-  stg.get_allocator().memory().buffer().clear();
+  stg.clear();
+  //stg.get_allocator().memory().buffer().clear();
   stg.get_allocator().memory().buffer().reserve(MAX_COUNT*8*2);
 
   fas::nanospan minspan(fas::nanospan::xmax, fas::nanospan::xmax);

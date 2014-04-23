@@ -20,7 +20,7 @@
 
 namespace vset { namespace memory{ namespace fsb{
 
-struct aspect_pointer: fas::aspect< typename fas::type_list_n<
+struct aspect_pointer: fas::aspect< fas::type_list_n<
   fas::advice<_get_by_offset_, ad_get_by_offset>,
   fas::advice<_offset_by_ptr_, ad_offset_by_ptr>,
   fas::advice<_next_offset_, ad_next_offset>,

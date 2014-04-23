@@ -4,7 +4,8 @@
 // Copyright: See COPYING file that comes with this distribution
 //
 
-#pragma once
+#ifndef COMPARATORS_OFFSET_COMPARE_HPP
+#define COMPARATORS_OFFSET_COMPARE_HPP
 
 namespace vset{
   
@@ -43,3 +44,5 @@ private:
 };
 
 }
+
+#endif

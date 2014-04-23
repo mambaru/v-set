@@ -4,7 +4,8 @@
 // Copyright: See COPYING file that comes with this distribution
 //
 
-#pragma once
+#ifndef COMPARATORS_POINTER_COMPARE_HPP
+#define COMPARATORS_POINTER_COMPARE_HPP
 
 namespace vset{
   
@@ -20,3 +21,5 @@ public:
 };
 
 }
+
+#endif

@@ -46,7 +46,7 @@ struct cmp_data3
     //std::cout << l.data1 << std::endl;
     return l.data1 < r.data1 ||
     ( ! ( r.data1 < l.data1 ) && l.data2 > r.data2 ) ||
-    ( ! ( r.data1 < l.data1 ) && ! ( r.data2 > l.data2 ) && l.data3 < r.data3 ) ||
+    ( ! ( r.data1 < l.data1 ) && !( r.data2 > l.data2 ) && l.data3 < r.data3 ) ||
     ( ! ( r.data1 < l.data1 ) && !( r.data2 > l.data2 ) && !( r.data3 < l.data3 ) && l.data4 < r.data4 ) ||
     ( ! ( r.data1 < l.data1 ) && !( r.data2 > l.data2 ) && !( r.data3 < l.data3 ) && !( r.data4 < l.data4 ) && l.data5 < r.data5 ) ||
     ( ! ( r.data1 < l.data1 ) && !( r.data2 > l.data2 ) && !( r.data3 < l.data3 ) && !( r.data4 < l.data4 ) && !( r.data5 < l.data5 ) && l.data6 < r.data6 )
@@ -56,13 +56,29 @@ struct cmp_data3
 
 #define MAX_TEST 10
 #define MAX_DATA 10000000
+
+struct f_generate
+{
+  data operator()() const
+  {
+    data d;
+    d.data1 = std::rand()%100;
+    d.data2 = std::rand()%100;
+    d.data3 = std::rand()%100;
+    d.data4 = std::rand()%100;
+    d.data5 = std::rand()%100;
+    d.data6 = std::rand()%100;
+    return d;
+  }
+};
+
 int main()
 {
   std::srand(time(0));
   std::vector<data> d;
   d.resize(MAX_DATA);
-  std::generate(d.begin(), d.end(), [](){return data{std::rand()%100, std::rand()%100, std::rand()%100, std::rand()%100, std::rand()%100, std::rand()%100};});
-  
+  //std::generate(d.begin(), d.end(), [](){return data{std::rand()%100, std::rand()%100, std::rand()%100, std::rand()%100, std::rand()%100, std::rand()%100};});
+  std::generate(d.begin(), d.end(), f_generate());
   std::set<fas::nanospan> time1;
   std::set<fas::nanospan> time2;
   std::set<fas::nanospan> time3;

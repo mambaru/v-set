@@ -4,7 +4,8 @@
 // Copyright: See COPYING file that comes with this distribution
 //
 
-#pragma once
+#ifndef COMPARATORS_COMPARE_HPP
+#define COMPARATORS_COMPARE_HPP
 
 namespace vset{
   
@@ -19,3 +20,5 @@ struct compare
 };
 
 }
+
+#endif

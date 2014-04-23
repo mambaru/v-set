@@ -4,7 +4,8 @@
 // Copyright: See COPYING file that comes with this distribution
 //
 
-#pragma once
+#ifndef COMPARATORS_COMPARE_LIST_HPP
+#define COMPARATORS_COMPARE_LIST_HPP
 
 #include <fas/type_list/type_list.hpp>
 #include <fas/type_list/empty_list.hpp>
@@ -86,5 +87,7 @@ struct compare_list2
   }
 };
 
-
 }
+
+#endif
+
