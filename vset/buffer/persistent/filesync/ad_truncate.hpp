@@ -21,7 +21,6 @@ struct ad_truncate
   {
     typedef typename T::aspect::template advice_cast<_head_type_>::type head_type;
     head_type* head = t.get_aspect().template get<_head_>()(t);
-    size_t capacity = head->capacity();
     size_t size = head->size();
     size_t data_offset = head->offset();
 

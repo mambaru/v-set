@@ -10,6 +10,7 @@
 
 UNIT(defrag, "")
 {
+  
   using namespace fas::testing;
   using namespace vset;
 
@@ -28,10 +29,11 @@ UNIT(defrag, "")
   {
     size_t size = 0;
     size_t size_max = 1;
-    multiset_type::container_type& container = int_set.get_container();
-    for (auto it = container.begin(); it != container.end(); ++it)
+    typedef multiset_type::container_type container_type;
+    container_type& container = int_set.get_container();
+    for (  container_type::iterator it = container.begin(); it != container.end(); ++it)
     {
-      auto second = (*it).second;
+      typename container_type::value_type::second_type second = (*it).second;
 
       size += second->size();
       size_max += second->capacity();
@@ -41,7 +43,7 @@ UNIT(defrag, "")
     t << is_true<expect>( (size * 100)/size_max > 25) << FAS_TESTING_FILE_LINE;;
 
     size_t skip = 0;
-    auto it = container.begin();
+    container_type::iterator it = container.begin();
     while( it != container.end() )
     {
       size_t skipped = 0;
