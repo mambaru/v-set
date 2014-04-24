@@ -164,7 +164,7 @@ public:
   }
 
 private:
-  persist_container(const persist_container& ) = delete;
+  persist_container(const persist_container& );
   set_type* _vset;
 };
 
@@ -460,7 +460,9 @@ void test_all_persist(T& t)
 UNIT(vtree_mmap_test, "")
 {
   using namespace fas::testing;
-  test_all_persist(t);
+#if ( ! (__GNUC__==4 && __GNUC_MINOR__==6) )
+  test_all_persist(t); // internal compiler error 
+#endif
   t << nothing();
 }
 

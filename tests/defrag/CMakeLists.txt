@@ -5,4 +5,4 @@ add_executable(
   defrag_suite.cpp
 )
 
-add_test(test_multiset test_multiset)
+add_test(test_defrag test_defrag)

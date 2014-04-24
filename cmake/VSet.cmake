@@ -20,9 +20,10 @@ if(UNIX)
     message(STATUS "C++ compiler version: ${gcc_compiler_version} major: ${gcc_major_version} minor: ${gcc_minor_version} number: ${gcc_version_number} [${CMAKE_CXX_COMPILER}]")
 
     SET(CMAKE_CXX_STANDARD  "")
-    if ( NOT ${gcc_version_number} LESS 4007 )
+    if ( NOT ${gcc_version_number} LESS 4006 )
       SET(CMAKE_CXX_STANDARD    "${CMAKE_CXX_STANDARD} -std=c++0x")
     endif()
+
     if ( NOT ${gcc_version_number} LESS 4008 )
       SET(CMAKE_CXX_STANDARD    "${CMAKE_CXX_STANDARD} -ftemplate-backtrace-limit=0")
     endif()

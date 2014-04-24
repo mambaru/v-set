@@ -14,9 +14,9 @@ UNIT(vtree_copy_ctor, "")
   using namespace vset;
 
   //copy constructor is disabled
-  /*typedef vtree::vtree< vtree::strategy::vtree_fsb_mmap<char, std::less<char>, 3> > int_vtree;
-  int_vtree tree;
-  int_vtree tree1(tree);*/
+  /*typedef vtree::vtree< vtree::strategy::vtree_fsb_mmap<char, std::less<char>, 3> > ctor_int_vtree;
+  ctor_int_vtree ctor_tree;
+  ctor_int_vtree ctor_tree1(ctor_tree);*/
 
   struct test_type
   {

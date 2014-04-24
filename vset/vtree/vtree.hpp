@@ -123,14 +123,20 @@ public:
   {
     //если есть _open_file_ копирование недоступно
     struct copy_ctor_disabled_for_mapped_files;
-    typename fas::static_error< copy_ctor_disabled_for_mapped_files, super::aspect::template has_advice< ::vset::buffer::persistent::_open_file_ >::value == 0 >::type error;
+    //typename fas::static_error< copy_ctor_disabled_for_mapped_files, super::aspect::template has_advice< ::vset::buffer::persistent::_open_file_ >::value == 0 >::type error;
+    
+    typedef typename fas::static_error< 
+      copy_ctor_disabled_for_mapped_files, 
+      super::aspect::template has_advice< ::vset::buffer::persistent::_open_file_ >::value == 0 
+    >::type error;
+    this->dummy( error() );
     this->insert(__x.begin(), __x.end());
   }
 
 #ifdef __GXX_EXPERIMENTAL_CXX0X__
 
   vtree(vtree&& __x)
-  noexcept(std::is_nothrow_copy_constructible<allocator_type>::value)
+  //noexcept(std::is_nothrow_copy_constructible<allocator_type>::value)
   {
     vtree tmp;
     this->swap(__x);
@@ -449,6 +455,11 @@ public:
 
   template<typename AA>
   friend bool operator<(const vtree<AA>&, const vtree<AA>&);
+  
+private:
+  
+  template<typename T>
+  void dummy(T){}
 
 };
 

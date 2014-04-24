@@ -61,17 +61,25 @@ struct access_stub
   }
 };
 
+data create_data(int data1, int data2, int data3)
+{
+  data d;
+  d.data1 = data1;
+  d.data2 = data2;
+  d.data3 = data3;
+  return d;
+}
 
 
 template<typename C>
 bool test(C c)
 {
   bool flag = true;
-  flag &= !c( data{1,2,3}, data{1,2,3}) && !c( data{1,2,3}, data{1,2,3} );
-  flag &=  c( data{1,2,3}, data{2,3,4}) && !c( data{2,3,4}, data{1,2,3} );
-  flag &=  c( data{2,3,3}, data{2,2,2}) && !c( data{2,2,2}, data{2,3,3} );
-  flag &=  c( data{2,5,4}, data{2,3,4}) && !c( data{2,3,4}, data{2,5,4} );
-  flag &=  c( data{2,3,2}, data{2,3,3}) && !c( data{2,3,3}, data{2,3,2} );
+  flag &= !c( create_data(1,2,3), create_data(1,2,3)) && !c( create_data(1,2,3), create_data(1,2,3) );
+  flag &=  c( create_data(1,2,3), create_data(2,3,4)) && !c( create_data(2,3,4), create_data(1,2,3) );
+  flag &=  c( create_data(2,3,3), create_data(2,2,2)) && !c( create_data(2,2,2), create_data(2,3,3) );
+  flag &=  c( create_data(2,5,4), create_data(2,3,4)) && !c( create_data(2,3,4), create_data(2,5,4) );
+  flag &=  c( create_data(2,3,2), create_data(2,3,3)) && !c( create_data(2,3,3), create_data(2,3,2) );
   return flag;
 }
 
@@ -117,9 +125,6 @@ UNIT(comparator_set, "")
   set4.insert(d);
   set4.insert(d+1);
   set4.insert(d+2);
-  //t << is_true<expect>( test(cmp_data() ) ) << FAS_TESTING_FILE_LINE;
-  //t << is_true<expect>( test(cmp_data2() ) ) << FAS_TESTING_FILE_LINE;
-
   t << nothing();
 }
 

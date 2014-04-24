@@ -46,5 +46,7 @@ UNIT(multiset_mmap, "")
 }
 
 BEGIN_SUITE(multiset_mmap_suite, "")
+#if ( ! (__GNUC__==4 && __GNUC_MINOR__==6) )
   ADD_UNIT(multiset_mmap)
+#endif
 END_SUITE(multiset_mmap_suite)
