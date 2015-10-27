@@ -48,7 +48,7 @@ UNIT(vtree_compare, "")
     t << is_true<expect>(tree1 < tree2);
   }
 
-  t << nothing();
+  t << nothing;
 }
 
 BEGIN_SUITE(vtree_compare_suite, "")

@@ -42,7 +42,7 @@ UNIT(vtree_create_filesync, "")
   //t << equal<expect, size_t>(tree.size(), 5);
   //tree.get_allocator().memory().buffer().close();
   
-  t << nothing();
+  t << nothing;
 }
 
 BEGIN_SUITE(vtree_basic_suite, "")

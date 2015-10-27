@@ -23,8 +23,9 @@ struct ad_split_node
 
   template<typename T>
   typename helper<T>::iterator
-  operator()(T& t, typename helper<T>::iterator itr, const typename T::value_type& value)
+  operator()(T& t, typename helper<T>::iterator itr, const typename T::key_type& value)
   {
+    typedef typename T::key_type key_type;
     typedef typename T::value_type value_type;
     typedef typename helper<T>::iterator container_iterator;
     typedef typename helper<T>::container_type container_type;
@@ -54,11 +55,18 @@ struct ad_split_node
 
     offset /= 2;
 
-    arr2->assign( arr1->begin() + offset, arr1->end(), t.get_aspect().template get<_compare_>() );
-    arr1->resize( offset, value_type(), t.get_aspect().template get<_compare_>() );
+    arr2->assign( arr1->begin() + offset, arr1->end(), t.get_aspect().template get<_value_compare_>() );
+    arr1->resize( offset, value_type(), t.get_aspect().template get<_value_compare_>() );
     container.erase( itr );
-    container_iterator itr1 = t.get_aspect().template get<_insert_to_container_>()(t, std::make_pair(arr1->front(), arr1->back()), arr1);
-    container_iterator itr2 = t.get_aspect().template get<_insert_to_container_>()(t, std::make_pair(arr2->front(), arr2->back()), arr2);
+    
+    const typename T::aspect::template advice_cast<_get_key_>::type& get_key = t.get_aspect().template get<_get_key_>();
+    
+    const key_type& k1f = get_key(t, arr1->front());
+    const key_type& k1b = get_key(t, arr1->back());
+    container_iterator itr1 = t.get_aspect().template get<_insert_to_container_>()(t, std::make_pair(k1f, k1b/*arr1->front(), arr1->back()*/), arr1);
+    const key_type& k2f = get_key(t, arr2->front());
+    const key_type& k2b = get_key(t, arr2->back());
+    container_iterator itr2 = t.get_aspect().template get<_insert_to_container_>()(t, std::make_pair(k2f, k2b/*arr2->front(), arr2->back()*/), arr2);
 
     itr = t.get_aspect().template get<_node_for_insert_>()(t, itr1, itr2, value);
 

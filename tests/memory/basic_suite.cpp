@@ -108,7 +108,7 @@ UNIT(test_unit, "")
   allocator2.buffer().close();
   allocator.buffer().close();
 
-  t << nothing();
+  t << nothing;
 }
 
 UNIT(test_allocator, "")
@@ -126,7 +126,7 @@ UNIT(test_allocator, "")
   *(a.allocate(1))='X';
   a.memory().buffer().sync();
   a.memory().buffer().close();
-  t << nothing();
+  t << nothing;
 }
 
 BEGIN_SUITE(basic_suite, "")

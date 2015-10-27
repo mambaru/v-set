@@ -42,7 +42,7 @@ UNIT(multiset_mmap, "")
 
   int_set.clear();
 
-  t << nothing();
+  t << nothing;
 }
 
 BEGIN_SUITE(multiset_mmap_suite, "")

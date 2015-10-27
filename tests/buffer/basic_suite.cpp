@@ -56,7 +56,7 @@ UNIT(test_unit, "")
   buffer< strategy::inmem > buff;
   first_test( t, buff);
   second_test( t, buff, "simple");
-  t << nothing();
+  t << nothing;
 }
 
 UNIT(persistent_unit, "")
@@ -80,7 +80,7 @@ UNIT(persistent_unit, "")
   second_test( t, pbuf2, "open exist");
   pbuf.close();
   pbuf2.close();
-  t << nothing();
+  t << nothing;
 }
 
 UNIT(mmap_unit, "")
@@ -104,7 +104,7 @@ UNIT(mmap_unit, "")
   second_test( t, pbuf2, "open exist");
   pbuf.close();
   pbuf2.close();
-  t << nothing();
+  t << nothing;
 }
 
 

@@ -16,7 +16,7 @@ struct ad_upper_bound
 {
   template<typename T>
   typename T::iterator
-  operator()(T& t, const typename T::value_type& value)
+  operator()(T& t, const typename T::key_type& value)
   {
     typedef typename T::container_type container_type;
     typedef typename container_type::iterator container_iterator;
@@ -57,7 +57,7 @@ struct ad_upper_bound
 
   template<typename T>
   typename T::const_iterator
-  operator()(const T& t, const typename T::value_type& value) const
+  operator()(const T& t, const typename T::key_type& value) const
   {
     typedef typename T::container_type container_type;
     typedef typename container_type::const_iterator const_container_iterator;

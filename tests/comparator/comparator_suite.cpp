@@ -109,7 +109,7 @@ UNIT(comparator_basic, "")
   t << is_true<expect>( test(cmp_data2() ) ) << FAS_TESTING_FILE_LINE;
   t << is_true<expect>( test(cmp_data3() ) ) << FAS_TESTING_FILE_LINE;
 
-  t << nothing();
+  t << nothing;
 }
 
 UNIT(comparator_set, "")
@@ -125,7 +125,7 @@ UNIT(comparator_set, "")
   set4.insert(d);
   set4.insert(d+1);
   set4.insert(d+2);
-  t << nothing();
+  t << nothing;
 }
 
 BEGIN_SUITE(comparator_suite, "")

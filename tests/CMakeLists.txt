@@ -1,5 +1,6 @@
 project(tests)
 
+include_directories(../../faslib)
 include_directories(../faslib)
 include_directories(../)
 

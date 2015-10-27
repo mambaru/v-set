@@ -25,8 +25,8 @@ struct ad_create_node
 
     pointer parr = t.get_allocator().allocate(1);
     t.get_allocator().construct(parr, array_type() );
-    
-    return t.get_aspect().template get<_insert_to_container_>()(t, std::make_pair(value, value), parr);
+    const typename T::key_type& key = t.get_aspect().template get<_get_key_>()(t, value);
+    return t.get_aspect().template get<_insert_to_container_>()(t, std::make_pair(key, key), parr);
   }
 };
 

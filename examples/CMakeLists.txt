@@ -1,5 +1,7 @@
 
 include_directories(${CMAKE_SOURCE_DIR}/faslib)
+include_directories(${CMAKE_SOURCE_DIR}/../faslib)
+include_directories(${CMAKE_SOURCE_DIR}/../../faslib)
 include_directories(${CMAKE_SOURCE_DIR})
 
 #if(UNIX)

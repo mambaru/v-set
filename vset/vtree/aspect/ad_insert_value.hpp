@@ -24,9 +24,10 @@ struct ad_insert_value
     typedef typename allocator_type::value_type array_type;
     typedef typename array_type::iterator array_iterator;
 
+    const typename T::key_type& key= t.get_aspect().template get<_get_key_>()(t, value);
     container_type& container = t.get_container();
     // находим ближайший подходящий нод
-    container_iterator itr = t.get_aspect().template get<_lower_node_>()(t, value);
+    container_iterator itr = t.get_aspect().template get<_lower_node_>()(t, key);
 
     if ( itr == container.end() )
     {
@@ -46,7 +47,7 @@ struct ad_insert_value
 
     if ( itr->second->filled() )
     {
-      itr = t.get_aspect().template get<_split_node_>()(t, itr, value);
+      itr = t.get_aspect().template get<_split_node_>()(t, itr, key);
     }
 
     if ( itr == container.end() )
@@ -55,7 +56,7 @@ struct ad_insert_value
     }
     itr->second->begin();
     
-    array_iterator aitr = itr->second->insert(value, t.get_aspect().template get<_compare_>() );
+    array_iterator aitr = itr->second->insert(value, t.get_aspect().template get<_value_compare_>() );
     itr = t.get_aspect().template get<_update_node_key_>()(t, itr);
     if ( itr == container.end() )
     {

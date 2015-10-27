@@ -67,13 +67,16 @@ public:
   typedef typename allocator_type::size_type                                      size_type;
   typedef typename allocator_type::difference_type                                difference_type;
 
-  typedef std::pair<value_type, value_type>                                       container_key;
+  typedef std::pair<key_type, key_type>                                           container_key;
   typedef compare_pair<container_key, key_compare>                                container_comparator;
+  
   typedef typename super::aspect
     ::template advice_cast<_container_>::type
     ::template apply<
        container_key,
-       typename allocator_type::pointer, container_comparator >::type               container_type;
+       typename allocator_type::pointer, 
+       container_comparator 
+    >::type                                                                         container_type;
 
   typedef vtree_iterator<typename container_type::iterator, value_type>             iterator;
   typedef vtree_iterator<typename container_type::const_iterator, const value_type> const_iterator;

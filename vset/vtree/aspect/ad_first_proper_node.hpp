@@ -17,14 +17,14 @@ struct ad_first_proper_node
   template<typename T, typename V>
   bool not_equal(T& t, const V& first, const V& second) const
   {
-    return t.get_aspect().template get<_compare_>()(first, second)
-      || t.get_aspect().template get<_compare_>()(second, first);
+    return t.get_aspect().template get<_key_compare_>()(first, second)
+      || t.get_aspect().template get<_key_compare_>()(second, first);
   }
   
   template<typename T, typename Itr>
   Itr operator()(T& t, Itr itr )
   {
-    typedef typename T::value_type value_type;
+    typedef typename T::key_type key_type;
     Itr beg = itr;
     Itr end = t.get_container().end();
 
@@ -38,7 +38,7 @@ struct ad_first_proper_node
       return itr;
     }
     
-    const value_type& value = itr->first.first;
+    const key_type& value = itr->first.first;
     for ( ++beg; beg != end; ++beg )
     {
       if ( not_equal(t, beg->first.first, value) )

@@ -43,7 +43,7 @@ struct _erase_range_;
 struct _erase_value_;
 struct _defrag_container_;
 
-
+struct _get_key_;
 }}
 
 #endif

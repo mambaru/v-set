@@ -9,10 +9,11 @@
 
 #include <fas/typemanip/empty_type.hpp>
 #include <vset/vtree/strategy.hpp>
+#include <fas/aop/aspect.hpp>
 
 namespace vset{
 
-template<size_t N>
+template<size_t N, typename A = fas::aspect<> >
 struct allocator
 {
   typedef fas::empty_type aspect_maker;
@@ -20,7 +21,7 @@ struct allocator
   template<typename V, typename C>
   struct apply
   {
-    typedef vtree::strategy::vtree_std_alloc<V, C, N> type;
+    typedef typename fas::merge_aspect< A, vtree::strategy::vtree_std_alloc<V, C, N> >::type type;
   };
 };
   

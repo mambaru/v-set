@@ -37,7 +37,7 @@ UNIT(multiset_basic, "")
   t << equal<expect, size_t>( int_set.size(), 2) << FAS_TESTING_FILE_LINE;
 
 
-  t << nothing();
+  t << nothing;
 }
 
 BEGIN_SUITE(multiset_suite, "")

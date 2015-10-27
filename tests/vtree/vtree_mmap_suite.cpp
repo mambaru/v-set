@@ -454,7 +454,7 @@ void test_all_persist(T& t)
 
   test_stack.pop();
 
-  t << fas::testing::nothing();
+  t << fas::testing::nothing;
 }
 
 UNIT(vtree_mmap_test, "")
@@ -463,7 +463,7 @@ UNIT(vtree_mmap_test, "")
 #if ( ! (__GNUC__==4 && __GNUC_MINOR__==6) )
   test_all_persist(t); // internal compiler error 
 #endif
-  t << nothing();
+  t << nothing;
 }
 
 BEGIN_SUITE(vtree_mmap_suite, "")

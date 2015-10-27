@@ -17,7 +17,7 @@ struct ad_node_for_insert
   template<typename T, typename V>
   bool less(T& t, const V& first, const V& second) const
   {
-    return t.get_aspect().template get<_compare_>()(first, second);
+    return t.get_aspect().template get<_key_compare_>()(first, second);
   }
 
   template<typename T, typename V>

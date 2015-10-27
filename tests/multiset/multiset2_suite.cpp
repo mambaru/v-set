@@ -55,7 +55,7 @@ UNIT(multiset_alloc, "")
 
   t << is_true<expect>( flag ) << FAS_TESTING_FILE_LINE;
 
-  t << nothing();
+  t << nothing;
 }
 
 UNIT(multiset2, "")

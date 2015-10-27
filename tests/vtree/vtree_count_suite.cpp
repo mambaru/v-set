@@ -39,7 +39,7 @@ UNIT(vtree_count, "")
   tree1.insert(546);
   t << equal<expect, typename int_vtree::size_type>( tree1.capacity(), static_cast< typename int_vtree::size_type>(6) ) << FAS_TESTING_FILE_LINE;
 
-  t << nothing();
+  t << nothing;
 }
 
 BEGIN_SUITE(vtree_count_suite, "")

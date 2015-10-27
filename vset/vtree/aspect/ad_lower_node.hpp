@@ -15,7 +15,7 @@ struct ad_lower_node
 {
   template<typename T>
   typename T::container_type::iterator
-  operator()(T& t, const typename T::value_type& value)
+  operator()(T& t, const typename T::key_type& value)
   {
     typedef typename T::container_type container_type;
     typedef typename container_type::iterator iterator;
@@ -29,7 +29,7 @@ struct ad_lower_node
     }
 
     if ( itr!=container.end() && itr!=container.begin()
-         && t.get_aspect().template get<_compare_>()(value, itr->first.first) )
+         && t.get_aspect().template get<_key_compare_>()(value, itr->first.first) )
     {
       --itr;
     }
@@ -39,7 +39,7 @@ struct ad_lower_node
 
   template<typename T>
   typename T::container_type::const_iterator
-  operator()(const T& t, const typename T::value_type& value) const
+  operator()(const T& t, const typename T::key_type& value) const
   {
     typedef typename T::container_type container_type;
     typedef typename container_type::const_iterator const_iterator;
@@ -55,7 +55,7 @@ struct ad_lower_node
     if (
       itr != container.cend()
       && itr != container.cbegin()
-      && t.get_aspect().template get<_compare_>()(value, itr->first.first) )
+      && t.get_aspect().template get<_value_compare_>()(value, itr->first.first) )
     {
       --itr;
     }

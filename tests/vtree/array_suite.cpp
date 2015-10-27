@@ -14,7 +14,7 @@ UNIT(test_array, "")
   using namespace vset;
 
   array<int, 1024> arr;
-  t << nothing();
+  t << nothing;
 }
 
 UNIT(test_sorted_array, "")
@@ -23,7 +23,7 @@ UNIT(test_sorted_array, "")
   using namespace vset;
 
   sorted_array<int, 1024> arr;
-  t << nothing();
+  t << nothing;
 }
 
 BEGIN_SUITE(array_suite, "")

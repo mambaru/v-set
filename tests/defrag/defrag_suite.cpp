@@ -59,7 +59,7 @@ UNIT(defrag, "")
     }
   }
 
-  t << nothing();
+  t << nothing;
 }
 
 BEGIN_SUITE(defrag_suite, "")
