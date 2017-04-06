@@ -14,7 +14,7 @@ class pointer_compare: C
 {
 public:
   template<typename D>
-  bool operator()(const D* l, const D* r) const
+  bool operator()(const D& l, const D& r) const
   {
     return C::operator()( *l, *r);
   }
