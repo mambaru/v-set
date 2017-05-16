@@ -25,8 +25,8 @@ struct ad_multimap
 
 struct ad_get_key
 {
-  template<typename T, typename V>
-  const typename T::key_type& operator()(T& t, const typename T::value_type& value) const
+  template<typename T>
+  const typename T::key_type& operator()(T&, const typename T::value_type& value) const
   {
     return value;
   }
