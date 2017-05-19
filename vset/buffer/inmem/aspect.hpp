@@ -24,6 +24,7 @@ namespace vset { namespace buffer { namespace inmem{
 struct aspect: fas::aspect< fas::type_list_n<
   fas::value< _container_, std::vector<char> >,
   fas::type<_data_type_, char*>,
+  fas::type<_const_data_type_, const char*>,
   fas::type<_size_type_, std::vector<char>::size_type >,
   fas::advice< _data_, ad_data >,
   fas::advice< _size_, ad_size >,

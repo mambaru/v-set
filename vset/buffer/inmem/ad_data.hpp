@@ -15,10 +15,10 @@ namespace vset { namespace buffer { namespace inmem{
 struct ad_data
 {
   template<typename T>
-  const typename T::aspect::template advice_cast<_data_type_>::type
+  const typename T::aspect::template advice_cast<_const_data_type_>::type 
   operator()( T& t ) const
   {
-    return &(t.get_aspect().template get<_container_>()[0]);
+     return &(t.get_aspect().template get<_container_>()[0]);
   }
 
   template<typename T>

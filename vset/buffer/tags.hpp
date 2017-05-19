@@ -14,6 +14,7 @@ struct _destructor_;
 
 struct _size_type_;
 struct _data_type_;
+struct _const_data_type_;
 
 struct _data_;
 struct _size_;

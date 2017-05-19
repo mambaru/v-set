@@ -32,6 +32,7 @@ struct aspect: fas::aspect< fas::type_list_n<
   fas::group<_constructor_, _basic_init_>,
   fas::group<_destructor_, _close_file_>,
   fas::type< _data_type_, char*>,
+  fas::type<_const_data_type_, const char*>,
   fas::type< _size_type_, size_t>,
   fas::type< _head_type_, head<0> >,
 
