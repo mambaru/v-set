@@ -42,7 +42,7 @@ else(UNIX)
 
 endif(UNIX)
 
-SET(FASLIB_DIR "${CMAKE_SOURCE_DIR}/faslib")
+SET(FASLIB_DIR "${CMAKE_SOURCE_DIR}/../faslib")
 SET(FAS_TESTING_CPP "${FASLIB_DIR}/fas/testing/testing.cpp")
 
 

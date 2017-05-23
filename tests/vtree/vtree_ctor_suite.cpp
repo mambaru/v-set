@@ -23,7 +23,7 @@ UNIT(vtree_copy_ctor, "")
     char key;
     char value;
 
-    bool operator==(const test_type &other)
+    bool operator==(const test_type &other) const
     {
       return key == other.key && value == other.value;
     }

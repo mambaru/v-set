@@ -40,6 +40,23 @@ UNIT(multiset_basic, "")
   t << nothing;
 }
 
+UNIT(multiset_lower_up, "")
+{
+  using namespace fas::testing;
+  vset::multiset<int> ms;
+  for (int i=0; i < 1000; ++i)
+    ms.insert(i);
+  for (int i=0; i < 900; ++i)
+  {
+    vset::multiset<int>::iterator lower = ms.lower_bound(i);
+    vset::multiset<int>::iterator upper = ms.upper_bound(i + 10);
+    t << equal<expect>( *lower, i ) << FAS_FL;
+    t << equal<expect>( *(--upper), i+10 ) << FAS_FL;
+  }
+
+}
+
 BEGIN_SUITE(multiset_suite, "")
   ADD_UNIT(multiset_basic)
+  ADD_UNIT(multiset_lower_up)
 END_SUITE(multiset_suite)

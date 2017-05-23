@@ -4,7 +4,7 @@ include_directories(../../faslib)
 include_directories(../faslib)
 include_directories(../)
 
-SET(FAS_TESTING_CPP ${CMAKE_SOURCE_DIR}/faslib/fas/testing/testing.cpp)
+#SET(FAS_TESTING_CPP ${CMAKE_SOURCE_DIR}/faslib/fas/testing/testing.cpp)
 
 #if(UNIX)
 #  SET(CMAKE_CXX_FLAGS "-W -Wall -Wextra -Werror -pedantic -fno-rtti -Wno-long-long -Wno-unused-variable -std=c++11")

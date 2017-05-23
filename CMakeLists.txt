@@ -7,7 +7,9 @@ enable_testing()
 set(CMAKE_MODULE_PATH "${CMAKE_CURRENT_SOURCE_DIR}/cmake")
 include(VSet)
 
-#add_subdirectory(faslib)
+include_directories(faslib)
+include_directories(${CMAKE_SOURCE_DIR}/../faslib)
+
 add_subdirectory(tests)
 add_subdirectory(examples)
 add_subdirectory(benchmark)
