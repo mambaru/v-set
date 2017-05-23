@@ -9,6 +9,7 @@
 
 #include <vset/vtree/aspect/tags.hpp>
 #include <algorithm>
+#include <iostream>
 
 namespace vset{ namespace vtree{
 
@@ -34,11 +35,14 @@ struct ad_lower_bound
     }
 
     container_iterator cont_itr = t.get_aspect().template get<_lower_node_>()(t, value);
-
+    
     if ( cont_itr == container.end() )
     {
       return t.end();
     }
+    
+    std::cout << cont_itr->first.first << "," << cont_itr->first.second << ": " 
+              <<  t.get_aspect().template get<_key_compare_>()( cont_itr->first.first, cont_itr->first.second ) << std::endl;
     
     array_iterator itr = std::lower_bound(
       cont_itr->second->begin(),
