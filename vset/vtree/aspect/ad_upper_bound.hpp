@@ -44,7 +44,7 @@ struct ad_upper_bound
       cont_itr->second->begin(),
       cont_itr->second->end(),
       value,
-      t.get_aspect().template get<_compare_>()
+      t.get_aspect().template get<_key_compare_>()
     );
 
     if ( itr == cont_itr->second->end() )

@@ -28,8 +28,10 @@ struct ad_lower_node
       itr = (++container.rbegin()).base();
     }
 
-    if ( itr!=container.end() && itr!=container.begin()
-         && t.get_aspect().template get<_key_compare_>()(value, itr->first.first) )
+    // value < itr->first.first
+    if ( itr!=container.end() 
+      && itr!=container.begin()
+      && t.get_aspect().template get<_key_compare_>()(value, itr->first.first) )
     {
       --itr;
     }
@@ -52,8 +54,7 @@ struct ad_lower_node
       itr = (++container.crbegin()).base();
     }
 
-    if (
-      itr != container.cend()
+    if ( itr != container.cend()
       && itr != container.cbegin()
       && t.get_aspect().template get<_value_compare_>()(value, itr->first.first) )
     {
