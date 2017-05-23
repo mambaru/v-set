@@ -65,6 +65,7 @@ UNIT(multiset_mmap_lu, "")
     
     int_index::iterator lower = index.lower_bound( val.get_offset() );
     int_index::iterator upper = index.upper_bound( val.get_offset() );
+    t << equal<expect, size_t>( std::distance(lower, upper), 1 ) << FAS_FL;
     --upper;
     ptr.set_offset(*lower);
     item a = *ptr;
@@ -72,19 +73,19 @@ UNIT(multiset_mmap_lu, "")
     item b = *ptr;
     t << equal<expect>(a.item1, b.item1) << FAS_FL;
     t << equal<expect>(a.item2, b.item2) << FAS_FL;
-    //t << message("a= ")  << a.item1 << ", " <<  a.item2;
   }
   
+  /*
   int_index::iterator beg = index.begin();
   for ( ; beg != index.end(); ++beg) 
   {
     ptr.set_offset(*beg);
     item a = *ptr;
     t << message("a= ")  << a.item1 << ", " <<  a.item2;
-  }
+  }*/
 }
 
 BEGIN_SUITE(multiset_mmap_cmp_suite, "")
-  //ADD_UNIT(multiset_mmap_cmp)
+  ADD_UNIT(multiset_mmap_cmp)
   ADD_UNIT(multiset_mmap_lu)
 END_SUITE(multiset_mmap_cmp_suite)
