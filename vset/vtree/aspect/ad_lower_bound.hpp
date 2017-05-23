@@ -41,7 +41,8 @@ struct ad_lower_bound
       return t.end();
     }
     
-    std::cout << cont_itr->first.first << "," << cont_itr->first.second << std::endl;
+    std::cout << cont_itr->first.first << "," << cont_itr->first.second << ": " 
+              <<  t.get_aspect().template get<_key_compare_>()( cont_itr->first.first, cont_itr->first.second ) << std::endl;
     
     array_iterator itr = std::lower_bound(
       cont_itr->second->begin(),

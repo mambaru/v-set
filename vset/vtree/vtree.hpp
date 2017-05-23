@@ -146,8 +146,8 @@ public:
   }
 
   vtree( std::initializer_list<value_type> il, const value_compare& comp = value_compare(), const allocator_type&  alloc = allocator_type())
-    : _allocator(alloc),
-      _container()
+    : _allocator(alloc)
+    , _container( container_comparator(comp) ) 
   {
     this->get_aspect().template get<_compare_>() = comp;
     _allocator = this->get_aspect().template get<_allocator_>()(*this);
