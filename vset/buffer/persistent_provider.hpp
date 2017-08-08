@@ -22,7 +22,7 @@ public:
   typedef typename T::aspect::template advice_cast<_data_type_>::type data_type;
   typedef typename T::aspect::template advice_cast<_size_type_>::type size_type;
 
-  persistent_provider(T* target)
+  explicit persistent_provider(T* target)
     : provider<T>(target)
   {
   }

@@ -23,7 +23,7 @@ namespace vset{ namespace vtree{
 struct not_impl: std::domain_error
 {
   not_impl(): std::domain_error("not_impl") {}
-  not_impl(const char* what): std::domain_error(what) {}
+  explicit not_impl(const char* what): std::domain_error(what) {}
 };
 
 

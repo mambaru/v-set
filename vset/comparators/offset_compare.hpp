@@ -24,7 +24,7 @@ public:
   {
   }
 
-  offset_compare( pointer_type ptr )
+  explicit offset_compare( pointer_type ptr )
     : lvp(ptr)
     , rvp(ptr)
   {

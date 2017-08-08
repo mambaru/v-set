@@ -97,7 +97,7 @@ public:
   {
   }
 
-  multiset( std::initializer_list<value_type> il, const value_compare& comp= value_compare(), const allocator_type&  alloc= allocator_type())
+  multiset( const std::initializer_list<value_type>& il, const value_compare& comp= value_compare(), const allocator_type&  alloc= allocator_type())
     : super( il, comp, alloc )
   {
   }

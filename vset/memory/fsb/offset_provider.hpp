@@ -17,7 +17,6 @@ template<typename T>
 class offset_provider
 {
 public:
-
   typedef typename T::aspect::template advice_cast<_value_type_>::type value_type;
   typedef value_type* pointer;
   typedef const value_type* const_pointer;
@@ -28,7 +27,7 @@ public:
     : _target(0)
   {}
   
-  offset_provider(T* offset)
+  offset_provider(T* offset, size_t=static_cast<size_t>(-1))
     : _target(offset)
   {}
 

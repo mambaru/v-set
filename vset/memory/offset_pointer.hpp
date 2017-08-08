@@ -29,7 +29,7 @@ public:
   {
   }
 
-  explicit offset_pointer(offset_provider provider, size_t offset = static_cast<size_t>(-1) )
+  offset_pointer(offset_provider provider, size_t offset = static_cast<size_t>(-1) )
     : _provider(provider)
     , offset(offset)
   {

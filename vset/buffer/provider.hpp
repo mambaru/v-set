@@ -18,7 +18,7 @@ public:
   typedef typename T::aspect::template advice_cast<_data_type_>::type data_type;
   typedef typename T::aspect::template advice_cast<_size_type_>::type size_type;
 
-  provider(T* target)
+  explicit provider(T* target)
     : _target(target)
   {
   }

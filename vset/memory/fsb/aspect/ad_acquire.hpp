@@ -44,9 +44,12 @@ struct ad_acquire
 
     ch->acquire(1);
 
+    new ( data + (offset == 0 ? sizeof(chain_type) : offset) ) chunk_type;
+    /*
     offset == 0
-      ? new ( data + sizeof(chain_type) )chunk_type
-      : new ( data + offset )chunk_type;
+      ? new ( data + sizeof(chain_type) ) chunk_type
+      : new ( data + offset ) chunk_type;
+      */
     
     return true;
   }
