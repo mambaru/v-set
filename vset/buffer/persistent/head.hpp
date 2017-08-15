@@ -27,6 +27,11 @@ public:
   size_t offset() const { return _offset; }
   size_t size() const { return _size; }
   size_t capacity() const { return _capacity; }
+  void reset()
+  {
+    _size = 0;
+    _capacity=0;
+  }
 
   void set_size(size_t size) { _size = size; }
   void set_capacity(size_t capacity) { _capacity = capacity; }

@@ -19,8 +19,10 @@ struct ad_clear
   void operator()( T& t)
   {
     t.get_aspect().template get<_size_value_>() = 0;
-    t.get_aspect().template get<_head_>()(t)->set_size(0);
-    t.get_aspect().template get<_sync_>()(t, 0, 0 );
+    t.get_aspect().template get<_head_>()(t)->reset();
+    //t.get_aspect().template get<_head_>()(t)->set_size(0);
+    //t.get_aspect().template get<_head_>()(t)->set_capacity(0);
+    //t.get_aspect().template get<_sync_>()(t, 0, 0, true );
   }
 };
 

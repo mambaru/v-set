@@ -117,10 +117,12 @@ UNIT(test_allocator, "")
   using namespace vset;
 
   typedef memory::manager< vset::memory::strategy::fsb_mmap<char> > manager;
-  typedef memory::allocator< memory::provider< manager > > allocator;
+  typedef memory::provider< manager > provider;
+  typedef memory::allocator< provider > allocator;
 
   manager m;
-  allocator a(&m);
+  provider p(&m);
+  allocator a( p );
   a.memory().buffer().open("allocator2.bin");
   a.memory().buffer().clear();
   *(a.allocate(1))='X';

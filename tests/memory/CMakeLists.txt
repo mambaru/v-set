@@ -1,5 +1,5 @@
 add_executable(
-  test_memory EXCLUDE_FROM_ALL
+  test_memory
   ${FAS_TESTING_CPP}
   test_memory.cpp
   basic_suite.cpp 

@@ -94,7 +94,7 @@ public:
 public:
 
   vtree()
-    : _allocator( this->get_aspect().template get<_allocator_>()(*this) )
+    : _allocator( this->get_aspect().template get<_allocator_>()( *this ) )
   {}
 
   explicit vtree(const key_compare& comp,const allocator_type& alloc = allocator_type() )

@@ -8,6 +8,7 @@
 
 #define TEST_COUNT 10000
 
+namespace {
 
 struct data
 {
@@ -72,7 +73,6 @@ bool create(data_buffer& buffer, index123_type& index123)
   {
     buffer.deallocate(ptr, 1);
   }
-
   return itr == index123.end();
 }
 
@@ -118,12 +118,12 @@ bool check(data_buffer& buffer, index123_type& index123)
     std::cout << std::endl << "comparator failed!" << std::endl;
     return false;
   }
-
   return true;
 }
 
 bool init(data_buffer& buffer, index123_type& index123)
 {
+
   for (int i = 0; i < TEST_COUNT; )
   {
     if ( create(buffer, index123) )
@@ -222,11 +222,11 @@ bool stress(data_buffer& buffer, index123_type& index123, int count)
 
   return true;
 }
+}
 
 bool multiset_test()
 {
 #if ( ! (__GNUC__==4 && __GNUC_MINOR__==6) )
-  
   data_buffer buffer;
   buffer.buffer().open("./test2_.bin");
   buffer.buffer().reserve(TEST_COUNT*sizeof(data)+TEST_COUNT);
@@ -234,7 +234,6 @@ bool multiset_test()
 
   index123_type index123( (cmp123(buffer)) );
   index123.clear();
-
 
   return
     init(buffer, index123)

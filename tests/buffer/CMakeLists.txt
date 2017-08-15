@@ -1,7 +1,7 @@
 ENABLE_TESTING()
 
 add_executable(
-  test_buffer EXCLUDE_FROM_ALL
+  test_buffer 
   ${FAS_TESTING_CPP}
   test_buffer.cpp
   basic_suite.cpp 

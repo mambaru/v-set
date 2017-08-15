@@ -17,6 +17,7 @@
 UNIT(multiset_mmap_cmp, "")
 {
   using namespace fas::testing;
+  t << flush;
   t << is_true<assert>( multiset_test() ) << FAS_FL;
 }
 

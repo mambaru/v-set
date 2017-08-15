@@ -5,7 +5,7 @@ project(v-set CXX)
 enable_testing()
 
 set(CMAKE_MODULE_PATH "${CMAKE_CURRENT_SOURCE_DIR}/cmake")
-include(VSet)
+#include(VSet)
 
 include_directories(faslib)
 include_directories(${CMAKE_SOURCE_DIR}/../faslib)

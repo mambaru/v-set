@@ -1,5 +1,5 @@
 add_executable(
-  test_multiset EXCLUDE_FROM_ALL
+  test_multiset 
   ${FAS_TESTING_CPP}
   test_multiset.cpp
   multiset_suite.cpp
