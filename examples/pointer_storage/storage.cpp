@@ -47,11 +47,19 @@ typedef ::vset::offset_compare< offset_t, employees_storage, employee_cmp > empl
 struct EmployeeCmp : employee_offset_cmp
 {
   EmployeeCmp( ){}
-  EmployeeCmp( employees_storage::pointer ptr ): employee_offset_cmp( ptr ){}
+  explicit EmployeeCmp( employees_storage::pointer ptr ): employee_offset_cmp( ptr ){}
 };
 
 //inmemory index
 typedef ::vset::multiset< EmployeeCmp::offset_t, EmployeeCmp, ::vset::allocator<1024> > employee_index;
+
+template<typename P>
+void show_emlployees(P worker_pointer )
+{
+  std::cout << "Company id: " << worker_pointer->company_id
+              << ". Division id: " << worker_pointer->division_id
+              << ". Emp id: " << worker_pointer->employee_id << std::endl;
+}
 
 int main()
 {
@@ -85,9 +93,7 @@ int main()
   for( employee_index::iterator itr = index.begin(); itr != index.end(); ++itr)
   {
     worker_pointer.set_offset(*itr);
-    std::cout << "Company id: " << worker_pointer->company_id
-              << ". Division id: " << worker_pointer->division_id
-              << ". Emp id: " << worker_pointer->employee_id << std::endl;
+    show_emlployees(worker_pointer);
   }
 
   //cleaning storage and index
@@ -97,6 +103,7 @@ int main()
     storage.deallocate(worker_pointer, 1);
   }
   worker_pointer = storage.begin();
+  show_emlployees(worker_pointer);
   index.clear();
 
   std::cout << std::endl << "Index size after erase " << index.size() << std::endl;
@@ -122,9 +129,7 @@ int main()
   for( employee_index::iterator itr = index.begin(); itr != index.end(); ++itr)
   {
     worker_pointer.set_offset(*itr);
-    std::cout << "Company id: " << worker_pointer->company_id
-              << ". Division id: " << worker_pointer->division_id
-              << ". Emp id: " << worker_pointer->employee_id << std::endl;
+    show_emlployees(worker_pointer);
   }
   
   worker_pointer = storage.begin();

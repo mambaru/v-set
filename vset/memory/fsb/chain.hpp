@@ -51,7 +51,7 @@ struct chain
   }
 
   
-  size_t chunk_size() const
+  static size_t chunk_size()
   {
     return sizeof(chunk_type);
   }

@@ -27,7 +27,7 @@ struct ad_node_for_insert
   }
 
   template<typename T, typename Itr, typename V>
-  Itr operator()(T& t, Itr itr1, Itr itr2, const V& value )
+  Itr operator()(T& t, Itr itr1, Itr itr2, const V& value ) const
   {
     if ( less_equal(t, value, itr1->first.first) )
     {

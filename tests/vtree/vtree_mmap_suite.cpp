@@ -172,10 +172,12 @@ private:
 template<size_t ArraySize>
 class non_persist_container
 {
+  non_persist_container(const non_persist_container&){};
 public:
 
   typedef vset::vtree::vtree< vset::vtree::strategy::vtree_fsb_mmap<int, std::less<int>, ArraySize> > set_type;
   typedef typename set_type::iterator iterator;
+  
 
   non_persist_container(const std::string& filename, bool /*clear*/)
   {
@@ -207,7 +209,7 @@ template<typename T, typename Container, typename F>
 void test_insert1(T& /*t*/, const Container& cnt, const F& init, bool onlyCheck)
 {
   output_buffer << "test_insert1 onlyCheck=" << onlyCheck << "{"  << std::endl;
-  std::stringstream ss;
+  //std::stringstream ss;
   if ( onlyCheck )
   {
     test_stack.push("test_insert1 onlyCheck");
@@ -289,7 +291,7 @@ template<typename T, typename Container, typename F>
 void test_erase1(T& /*t*/, const Container& cnt, const F& init, bool onlyCheck)
 {
   output_buffer << "void test_erase1(const Container& cnt, const F& init, bool onlyCheck) " << init.count << std::endl;
-  std::stringstream ss;
+  //std::stringstream ss;
   if ( onlyCheck )
   {
     test_stack.push("test_insert1 onlyCheck");

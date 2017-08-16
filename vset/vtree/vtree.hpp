@@ -464,6 +464,7 @@ public:
   
 private:
   
+  
   template<typename T>
   void dummy(T){}
 

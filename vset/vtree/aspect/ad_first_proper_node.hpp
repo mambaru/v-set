@@ -22,7 +22,7 @@ struct ad_first_proper_node
   }
   
   template<typename T, typename Itr>
-  Itr operator()(T& t, Itr itr )
+  Itr operator()(T& t, Itr itr ) const
   {
     typedef typename T::key_type key_type;
     Itr beg = itr;

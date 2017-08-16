@@ -45,7 +45,7 @@ struct compare_list
   }
 
   template< typename D>
-  bool _( fas::empty_list, const D& , const D& ) const
+  static bool _( fas::empty_list, const D& , const D& )
   {
     return false;
   }
@@ -61,7 +61,7 @@ struct compare_list2
   }
 
   template< typename L, typename R,  typename D>
-  bool _1_( L, R, const D& l, const D& r) const
+  static bool _1_( L, R, const D& l, const D& r) 
   {
     typedef typename fas::push_back< typename fas::head<R>::type, L >::type left;
     typedef typename fas::erase_c< 0, R >::type right;
@@ -69,19 +69,19 @@ struct compare_list2
   }
 
   template< typename L, typename D>
-  bool _1_( L, fas::empty_list, const D& , const D& ) const
+  static bool _1_( L, fas::empty_list, const D& , const D& ) 
   {
     return false;
   }
 
   template< typename H, typename T, typename D>
-  bool _2_( fas::type_list<H, T>, const D& l, const D& r) const
+  static bool _2_( fas::type_list<H, T>, const D& l, const D& r) 
   {
     return !H()(r, l) && _2_( T(), l, r);
   }
 
   template< typename H, typename D>
-  bool _2_( fas::type_list<H, fas::empty_list>, const D& l, const D& r) const
+  static bool _2_( fas::type_list<H, fas::empty_list>, const D& l, const D& r) 
   {
     return H()(l, r);
   }

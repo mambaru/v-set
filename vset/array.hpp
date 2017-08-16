@@ -91,12 +91,12 @@ public:
     return _size;
   }
   
-  size_type max_size() const
+  static size_type max_size() 
   {
     return N;
   }
   
-  size_type capacity() const
+  static size_type capacity()
   {
     return N;
   }
@@ -118,7 +118,7 @@ public:
     _size = sz;
   }
   
-  void reserve ( size_type n ) {}
+  static void reserve ( size_type ) {}
 
   reverse_iterator rbegin()
   {

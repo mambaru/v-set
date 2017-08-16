@@ -120,7 +120,9 @@ UNIT(comparator_set, "")
   using namespace fas::testing;
   using namespace vset;
   std::set<data, cmp_data> set1;
+  set1.insert( create_data(1,2,3) );
   std::set<data, cmp_data2> set2;
+  set2.insert( create_data(1,2,3) );
   std::set<data*, vset::pointer_compare<cmp_data2> > set3;
   set3.insert(new data{ 1,2,3 } );
   std::set<int*, vset::pointer_compare<std::less<int> > > set4;

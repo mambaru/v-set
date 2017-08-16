@@ -47,13 +47,13 @@ public:
 struct empty_head
 {
 public:
-  size_t format() const { return 0; }
-  size_t offset() const { return 0; }
-  size_t size() const { return 0; }
-  size_t capacity() const { return 0; }
+  static size_t format()  { return 0; }
+  static size_t offset()  { return 0; }
+  static size_t size()  { return 0; }
+  static size_t capacity()  { return 0; }
 
-  void set_size(size_t ) { }
-  void set_capacity(size_t ) { }
+  static void set_size(size_t ) { }
+  static void set_capacity(size_t ) { }
 };
 
 

@@ -31,7 +31,7 @@ struct cmp123
 
   cmp123(): left(), right() {}
 
-  cmp123(const data_buffer& b)
+  explicit cmp123(const data_buffer& b)
     : left(b.end())
     , right(b.end())
   {}
@@ -44,8 +44,6 @@ struct cmp123
     return left->data1 < right->data1 ||
     ( ! ( right->data1 < left->data1 ) && left->data2 < right->data2 ) ||
     ( ! ( right->data1 < left->data1 ) && ! ( right->data2 < left->data2 ) && left->data3 < right->data3 );
-
-    return false;
   }
 };
 

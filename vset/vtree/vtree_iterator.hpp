@@ -86,7 +86,7 @@ public:
   self operator++(int)
   {
     self ans = *this;
-    ++*this;
+    this->operator++();
     return ans;
   }
 
@@ -107,7 +107,7 @@ public:
   self operator--(int)
   {
     self ans = *this;
-    --*this;
+    this->operator--();
     return ans;
   }
 
@@ -193,12 +193,12 @@ public:
 
   source_iterator get_source_iterator() const
   {
-    return _itr;
+    return this->_itr;
   }
 
   difference_type get_position() const
   {
-    return _pos;
+    return this->_pos;
   }
 
 private:

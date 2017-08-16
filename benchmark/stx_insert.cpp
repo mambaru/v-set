@@ -11,10 +11,13 @@
 template <int _innerslots, int _leafslots>
 struct btree_traits_speed
 {
+    //cppcheck-suppress unusedStructMember
     static const bool selfverify = false;
+    //cppcheck-suppress unusedStructMember
     static const bool debug = false;
-
+    //cppcheck-suppress unusedStructMember
     static const int leafslots = _innerslots;
+    //cppcheck-suppress unusedStructMember
     static const int innerslots = _leafslots;
 };
 

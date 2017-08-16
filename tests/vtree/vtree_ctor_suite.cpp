@@ -77,6 +77,7 @@ UNIT(vtree_copy_ctor, "")
     }
   }
 
+  // cppcheck-suppress accessMoved
   t << equal<expect, typename int_vtree::size_type>( tree1.size(), static_cast< typename int_vtree::size_type>(0) ) << FAS_TESTING_FILE_LINE;
   t << equal<expect, typename int_vtree::size_type>( tree2.size(), static_cast< typename int_vtree::size_type>(4) ) << FAS_TESTING_FILE_LINE;
 

@@ -61,7 +61,7 @@ struct offset_compare1:
   offset_compare1_type
 {
   offset_compare1():offset_compare1_type(){}
-  offset_compare1(data_storage::pointer ptr):offset_compare1_type(ptr){}
+  explicit offset_compare1(data_storage::pointer ptr):offset_compare1_type(ptr){}
 };
 
 typedef vset::offset_compare< offset_t, data_storage, compare2> offset_compare2_type;
@@ -69,7 +69,7 @@ struct offset_compare2:
   offset_compare2_type
 {
   offset_compare2():offset_compare2_type(){}
-  offset_compare2(data_storage::pointer ptr):offset_compare2_type(ptr){}
+  explicit offset_compare2(data_storage::pointer ptr):offset_compare2_type(ptr){}
 };
 
 typedef vset::multiset<offset_t, offset_compare1, vset::mmap_allocator<512> > index1;

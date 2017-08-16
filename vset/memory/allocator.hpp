@@ -24,7 +24,7 @@ struct allocator
   {
   }
   
-  allocator(const memory_type& m)
+  explicit allocator(const memory_type& m)
     : _memory(m)
   {
   }
@@ -44,40 +44,41 @@ struct allocator
     return static_cast<char*>(&value) - _memory.data();
   }
   
-  size_type max_size () const
+  static size_type max_size () 
   {
     return 1;
   }
 
   pointer allocate (size_type num, void *  hint = 0)
   {
-    return _memory.allocate(num, hint);
+    return this->_memory.allocate(num, hint);
   }
 
-  void construct (pointer p, const_reference value)
+  static void construct (pointer p, const_reference value)
   {
     *p = value;
   }
 
-  void destroy (pointer p)
+  static void destroy (pointer p)
   {
     p->~T();
   }
 
   void deallocate (pointer p, size_type num)
   {
-    _memory.deallocate(p, num);
+    this->_memory.deallocate(p, num);
   }
 
-  const memory_type memory() const
+  memory_type memory() const
   {
-    return _memory;
+    return this->_memory;
   }
 
+  /*
   memory_type memory()
   {
-    return _memory;
-  }
+    return this->_memory;
+  }*/
   
 private:
   memory_type _memory;

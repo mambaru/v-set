@@ -14,14 +14,14 @@ namespace vset{ namespace vtree{
 struct ad_multimap_insert
 {
   template<typename T, typename Itr, typename K, typename V>
-  Itr operator()(T& t, Itr itr, const K& key, const V& value )
+  Itr operator()(T& t, Itr itr, const K& key, const V& value ) const
   {
     return t.get_container().insert( itr, std::make_pair(key, value) );
   }
 
   template<typename T, typename K, typename V>
   typename T::container_type::iterator
-  operator()(T& t, const K& key, const V& value )
+  operator()(T& t, const K& key, const V& value ) const
   {
     return t.get_container().insert( std::make_pair(key, value) );
   }
