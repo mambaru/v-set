@@ -83,10 +83,10 @@ void create_one(data_buffer& buffer, index123_type& index123)
 
 bool check(data_buffer& buffer, index123_type& index123)
 {
-  size_t buffer_size = std::distance(buffer.begin(), buffer.end());
-  size_t buffer2_size = buffer.count();
-  size_t index_size = index123.size();
-  size_t index2_size = std::distance(index123.begin(), index123.end());
+  std::ptrdiff_t buffer_size = std::distance(buffer.begin(), buffer.end());
+  std::ptrdiff_t buffer2_size = std::ptrdiff_t(buffer.count());
+  std::ptrdiff_t index_size = std::ptrdiff_t(index123.size());
+  std::ptrdiff_t index2_size = std::distance(index123.begin(), index123.end());
   bool size_check_fail = (buffer_size != index_size || buffer2_size != index2_size || buffer2_size != index_size);
   if ( size_check_fail )
   {
@@ -123,7 +123,6 @@ bool check(data_buffer& buffer, index123_type& index123)
 
 bool init(data_buffer& buffer, index123_type& index123)
 {
-
   for (int i = 0; i < TEST_COUNT; )
   {
     if ( create(buffer, index123) )
@@ -144,7 +143,7 @@ bool init(data_buffer& buffer, index123_type& index123)
 
 bool erase_one(data_buffer& buffer, index123_type& index123)
 {
-  size_t buffer_size = std::distance(buffer.begin(), buffer.end());
+  std::ptrdiff_t buffer_size = std::distance(buffer.begin(), buffer.end());
   data_pointer ptr = buffer.begin() + (buffer_size > 0 ? rand()%buffer_size : 0);
   offset_t offset = ptr.get_offset();
   
@@ -159,7 +158,7 @@ bool erase_one(data_buffer& buffer, index123_type& index123)
   
   index123.erase( offset );
   buffer.deallocate(ptr, 1);
-  size_t buffer_size2 = std::distance(buffer.begin(), buffer.end());
+  std::ptrdiff_t buffer_size2 = std::distance(buffer.begin(), buffer.end());
   if ( (buffer_size - buffer_size2) != 1)
   {
     std::cout  << "Buffer size check failed - " << (buffer_size-1) << "!=" << buffer_size2 << std::endl;
@@ -172,7 +171,7 @@ bool erase_one(data_buffer& buffer, index123_type& index123)
 bool erase_begin(data_buffer& buffer, index123_type& index123)
 {
   data_pointer ptr = buffer.begin();
-  index123_type::iterator itr = index123.find( ptr.get_offset() /*static_cast<offset_t>( static_cast<size_t>(ptr) )*/);
+  index123_type::iterator itr = index123.find( ptr.get_offset() );
   index123.erase(itr);
   buffer.deallocate(ptr, 1);
   return true;
@@ -237,10 +236,13 @@ bool multiset_test()
 
   return
     init(buffer, index123)
+    
     && check(buffer, index123)
     && stress(buffer, index123, 10000)
     && check(buffer, index123)
     && clear(buffer, index123)
+    && init(buffer, index123)
+    && erase_begin(buffer, index123)
     && check(buffer, index123);
 #else
   return true;

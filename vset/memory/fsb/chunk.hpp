@@ -101,7 +101,7 @@ struct chunk
 
   const T* next_value(const T* current) const
   {
-    size_t index = next_occuped(current - data + 1);
+    size_t index = this->next_occuped( static_cast<size_t>(current - data + 1) );
     if ( index == static_cast<size_t>(-1) )
     {
       return 0;
@@ -116,7 +116,7 @@ struct chunk
 
   const T* pred_value(const T* current) const
   {
-    size_t index = pred_occuped(current - data - 1 );
+    size_t index = this->pred_occuped( static_cast<size_t>(current - data - 1) );
     if ( index == static_cast<size_t>(-1) )
     {
       return 0;
@@ -183,7 +183,7 @@ struct chunk
 
   void free(T* addr)
   {
-    size_t index = addr - data;
+    size_t index = static_cast<size_t>(addr - data);
     if ( index < 64 )
     {
       bits &= ~( static_cast<size_t>(1)<<index);

@@ -28,6 +28,7 @@ public:
   typedef typename mapped_type_helper<source_mapped_type>::value_type array_type;
   
   typedef typename array_type::value_type array_value_type;
+  typedef typename array_type::size_type  size_type;
 
   typedef typename std::iterator_traits<array_value_type*>::iterator_category iterator_category;
   typedef typename std::iterator_traits<ValueType*>::value_type value_type;
@@ -63,7 +64,7 @@ public:
 
   reference operator*() const
   {
-    return _itr->second->at(_pos);
+    return _itr->second->at( static_cast<size_type>(_pos) );
   }
   
   pointer operator->() const
@@ -94,7 +95,7 @@ public:
     if ( _pos == 0 )
     {
       --_itr;
-      _pos = _itr->second->size() - 1;
+      _pos = static_cast<difference_type>( _itr->second->size() ) - 1;
     }
     else
     {
@@ -112,15 +113,15 @@ public:
 
   self& operator += (difference_type n )
   {
-    if ( n >= static_cast<difference_type>( _itr->second->size() - _pos ) )
+    if ( n >= static_cast<difference_type>( _itr->second->size() ) - _pos )
     {
-      n -= _itr->second->size() - _pos;
+      n -= static_cast<difference_type>(_itr->second->size()) - _pos;
       ++_itr;
       _pos = 0;
 
       while ( n >= static_cast<difference_type>( _itr->second->size() ) )
       {
-        n -= _itr->second->size();
+        n -= static_cast<difference_type>( _itr->second->size() );
         ++_itr;
         _pos = 0;
       }
@@ -252,17 +253,18 @@ inline typename vtree_iterator<TI, VT>::difference_type operator -
     vtree_iterator<TI, VT> r2
   )
 {
+  typedef typename vtree_iterator<TI, VT>::difference_type difference_type;
   if ( r1._itr == r2._itr )
   {
     return  r1._pos - r2._pos;
   }
 
   typename vtree_iterator<TI, VT>::source_iterator titr = r2._itr;
-  typename vtree_iterator<TI, VT>::difference_type result = titr->second->size() - r2._pos;
+  difference_type result =  static_cast<difference_type>(titr->second->size()) - r2._pos;
   
   for ( ++titr; titr != r1._itr; ++titr )
   {
-    result += titr->second->size();
+    result += static_cast<difference_type>( titr->second->size() );
   }
 
   result += r1._pos;

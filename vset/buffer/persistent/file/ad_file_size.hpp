@@ -27,7 +27,7 @@ struct ad_file_size
     if ( -1 == stat( t.get_aspect().template get<_file_name_>().c_str(), &sb) )
       throw std::domain_error(strerror(errno));
 
-    return sb.st_size;
+    return static_cast<size_t>(sb.st_size);
   }
 };
 

@@ -15,12 +15,15 @@
 #include <vset/comparators/compare_list.hpp>
 #include <vset/comparators/pointer_compare.hpp>
 
+
 struct data
 {
   int data1;
   int data2;
   int data3;
 };
+
+data create_data(int data1, int data2, int data3);
 
 struct cmp_data
 {

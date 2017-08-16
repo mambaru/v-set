@@ -36,7 +36,7 @@ struct compare_pair
     : _comp()
   {}
   
-  compare_pair(C comp)
+  explicit compare_pair(C comp)
     : _comp(comp)
   {
   }
@@ -95,7 +95,9 @@ public:
 
   vtree()
     : _allocator( this->get_aspect().template get<_allocator_>()( *this ) )
-  {}
+    , _container()
+  {
+  }
 
   explicit vtree(const key_compare& comp,const allocator_type& alloc = allocator_type() )
     : _allocator(alloc)
@@ -108,6 +110,7 @@ public:
   template<typename InputIterator>
   vtree(InputIterator beg, InputIterator end)
     : _allocator( this->get_aspect().template get<_allocator_>()(*this) )
+    , _container()
   {
   }
 
@@ -121,8 +124,8 @@ public:
   }
 
   vtree(const vtree& __x)
-    : _allocator( this->get_aspect().template get<_allocator_>()(*this) ),
-      _container()
+    : _allocator( this->get_aspect().template get<_allocator_>()(*this) )
+    , _container()
   {
     //если есть _open_file_ копирование недоступно
     struct copy_ctor_disabled_for_mapped_files;
@@ -385,7 +388,7 @@ public:
 
   size_type count(const key_type& key) const
   {
-    return this->upper_bound(key) - this->lower_bound(key);
+    return static_cast<size_type>( this->upper_bound(key) - this->lower_bound(key) );
   }
 
 #ifdef __GXX_EXPERIMENTAL_CXX0X__

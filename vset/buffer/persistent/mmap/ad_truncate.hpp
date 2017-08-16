@@ -27,7 +27,7 @@ struct ad_truncate
 
     t.get_aspect().template get<_resize_file_>()(t, newsize);
     char* olddata = t.get_aspect().template get<_buffer_>();
-    char* data = (char*) ::mremap( olddata, oldsize, newsize, MREMAP_MAYMOVE);
+    char* data = static_cast<char*>( ::mremap( olddata, oldsize, newsize, MREMAP_MAYMOVE) );
     if ( data == MAP_FAILED)
       throw std::runtime_error(strerror(errno));
 

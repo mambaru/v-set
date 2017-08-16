@@ -15,7 +15,7 @@ struct employee
   {
   }
 
-  employee(int cmp_id, std::string nm)
+  employee(int cmp_id, const std::string& nm)
     : company_id(cmp_id)
     , name(nm)
   {
@@ -46,14 +46,14 @@ int main()
 
   std::pair<employee_multiset::iterator, employee_multiset::iterator> company_one_range = employees.equal_range( employee(1, "Tmp") );
   std::cout << std::endl << "Company 1 employees:" << std::endl;
-  for( employee_multiset::iterator itr = company_one_range.first; itr != company_one_range.second; itr++)
+  for( employee_multiset::iterator itr = company_one_range.first; itr != company_one_range.second; ++itr)
   {
     std::cout << "  " << itr->name << std::endl;
   }
 
   std::cout << std::endl << "Lets fire Dave." << std::endl;;
   employee_multiset::iterator dave_item;
-  for( employee_multiset::iterator itr = company_one_range.first; itr != company_one_range.second; itr++)
+  for( employee_multiset::iterator itr = company_one_range.first; itr != company_one_range.second; ++itr)
   {
     if( itr->name == "Dave" )
     {
@@ -67,7 +67,7 @@ int main()
   std::cout << "Count of all employees is " << employees.size() << std::endl;
   std::cout << "Count of company 1 employees is " << employees.count( employee(1, "Tmp") ) << std::endl;
   std::cout << "Company 1 employees (without Dave):" << std::endl;
-  for( employee_multiset::iterator itr = company_one_range.first; itr != company_one_range.second; itr++)
+  for( employee_multiset::iterator itr = company_one_range.first; itr != company_one_range.second; ++itr)
   {
     std::cout << "  " << itr->name << std::endl;
   }

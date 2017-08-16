@@ -27,7 +27,7 @@ struct ad_resize_file
       return;
     }
 
-    if ( -1 == ftruncate( t.get_aspect().template get<_descriptor_>(), size) )
+    if ( -1 == ::ftruncate( t.get_aspect().template get<_descriptor_>(), static_cast<off_t>(size) ) )
     {
       throw std::runtime_error(strerror(errno));
     }

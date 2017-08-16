@@ -20,8 +20,10 @@ struct ad_erase_range
   typename T::iterator
   operator()(T& t, typename T::const_iterator beg, typename T::const_iterator end)
   {
+    typedef typename T::difference_type difference_type;
     typename T::iterator last = t.end();
-    size_t dist = std::distance(beg, end);
+    
+    difference_type dist = std::distance(beg, end);
     if (dist!=0)
     {
       last = t.get_aspect().template get<_erase_iterator_>()(t, beg, false);

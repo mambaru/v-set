@@ -31,7 +31,7 @@ struct ad_truncate
     t.get_aspect().template get<_sync_>()(t);
     std::string filename = t.get_aspect().template get<_file_name_>();
     t.get_aspect().template get<_close_>()(t);
-    ::truncate(filename.c_str(), data_offset + s);
+    ::truncate(filename.c_str(), static_cast<off_t>(data_offset + s) );
     t.get_aspect().template get<_open_>()(t, filename);
   }
 };

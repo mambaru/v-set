@@ -20,6 +20,7 @@ struct ad_lower_bound
   operator()(T& t, const typename T::key_type& value)
   {
     typedef typename T::container_type container_type;
+    typedef typename T::difference_type difference_type;
     typedef typename container_type::iterator container_iterator;
 
     typedef typename T::iterator iterator;
@@ -51,7 +52,7 @@ struct ad_lower_bound
 
     if ( itr == cont_itr->second->end() )
     {
-      return ++iterator( cont_itr, cont_itr->second->size() - 1 );
+      return ++iterator( cont_itr, static_cast<difference_type>( cont_itr->second->size() - 1 ) );
     }
 
     return iterator( cont_itr, std::distance(cont_itr->second->begin(), itr) );
@@ -63,6 +64,7 @@ struct ad_lower_bound
   {
     typedef typename T::container_type          container_type;
     typedef typename container_type::const_iterator const_container_iterator;
+    typedef typename T::difference_type difference_type;
 
     typedef typename T::const_iterator const_iterator;
     typedef typename T::allocator_type allocator_type;
@@ -92,7 +94,7 @@ struct ad_lower_bound
 
     if ( itr == cont_itr->second->cend() )
     {
-      return ++const_iterator( cont_itr, cont_itr->second->size() - 1 );
+      return ++const_iterator( cont_itr, static_cast<difference_type>(cont_itr->second->size() - 1 ) );
     }
 
     return const_iterator( cont_itr, std::distance(cont_itr->second->cbegin(), itr) );

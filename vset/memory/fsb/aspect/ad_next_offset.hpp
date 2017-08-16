@@ -31,7 +31,7 @@ struct ad_next_offset
     {
       if ( value_type* current = chn->next_value( reinterpret_cast<value_type*>(data + offset) ) )
       {
-        offset = reinterpret_cast<data_type>(current) - data;
+        offset = static_cast<size_t>( reinterpret_cast<data_type>(current) - data );
       }
       else
       {

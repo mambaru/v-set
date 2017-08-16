@@ -25,13 +25,13 @@ public:
 
   offset_pointer()
     : _provider()
-    , offset(static_cast<size_t>(-1))
+    , _offset(static_cast<size_t>(-1))
   {
   }
 
   offset_pointer(offset_provider provider, size_t offset = static_cast<size_t>(-1) )
     : _provider(provider)
-    , offset(offset)
+    , _offset(offset)
   {
   }
 
@@ -67,68 +67,68 @@ public:
 
   T* get_address()
   {
-    if ( offset == static_cast<size_t>(-1) )
+    if ( _offset == static_cast<size_t>(-1) )
       return 0;
-    return _provider.get(offset);
+    return _provider.get(_offset);
   }
   
   const T* get_address() const
   {
-    if ( offset == static_cast<size_t>(-1) )
+    if ( _offset == static_cast<size_t>(-1) )
       return 0;
-    return _provider.get(offset);
+    return _provider.get(_offset);
   }
 
   self& set_address(T* t)
   {
-    this->offset = _provider.offset(t);
+    _offset = _provider.offset(t);
     return *this;
   }
 
   size_t get_offset() const
   {
-    return offset;
+    return _offset;
   }
 
   void set_offset(size_t offset) 
   {
-    this->offset = offset;
+    _offset = offset;
   }
 
   bool is_null() const
   {
-    return offset == static_cast<size_t>(-1);
+    return _offset == static_cast<size_t>(-1);
   }
 
   self& operator++()
   {
-    offset = _provider.next(offset);
+    _offset = _provider.next(_offset);
     return *this;
   }
 
   self operator++(int)
   {
     self ans = *this;
-    offset = _provider.next(offset);
+    _offset = _provider.next(_offset);
     return ans;
   }
 
   self& operator--()
   {
-    offset = _provider.pred(offset);
+    _offset = _provider.pred(_offset);
     return *this;
   }
 
   self operator--(int)
   {
     self ans = *this;
-    offset = _provider.pred(offset);
+    _offset = _provider.pred(_offset);
     return ans;
   }
 
   bool operator == (const self& r ) const
   {
-    return offset == r.offset && _provider==r._provider ;
+    return _offset == r._offset && _provider==r._provider ;
   }
 
   bool operator != (const self& r ) const
@@ -138,12 +138,12 @@ public:
 
   bool operator < (const self& r ) const
   {
-    return offset < r.offset;
+    return _offset < r._offset;
   }
 
   bool operator > (const self& r ) const
   {
-    return offset > r.offset;
+    return _offset > r._offset;
   }
 
   bool operator <= (const self& r ) const
@@ -158,29 +158,35 @@ public:
 
   self& operator += (difference_type n )
   {
-    offset = _provider.next(offset, n);
+    if ( n >= 0 )
+      _offset = _provider.next( _offset, static_cast<size_t>(n) );
+    else
+      return this->operator -= ( -1 * n );
     return *this;
   }
 
   self& operator -= (difference_type n )
   {
-    offset = _provider.pred(offset, n);
+    if ( n >= 0 )
+      _offset = _provider.pred( _offset, static_cast<size_t>(n) );
+    else
+      return this->operator += ( -1 * n );
     return *this;
   }
 
   reference operator[] ( difference_type n )
   {
-    return *(_provider.get( offset + sizeof(T)*n ));
+    return *(_provider.get( _offset + sizeof(T)*n ));
   }
 
   const reference operator[] ( difference_type n ) const
   {
-    return *(_provider.get( offset + sizeof(T)*n ));
+    return *(_provider.get( _offset + sizeof(T)*n ));
   }
 
 private:
   offset_provider _provider;
-  size_t offset;
+  size_t _offset;
 };
 
 

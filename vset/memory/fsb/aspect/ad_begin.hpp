@@ -47,7 +47,7 @@ private:
 
     if ( value_type* value = chn->first_value() )
     {
-      return pointer( &t, reinterpret_cast<data_type>(value) - data );
+      return pointer( &t, static_cast<size_t>(reinterpret_cast<data_type>(value) - data) );
     }
     
     return pointer( &t );

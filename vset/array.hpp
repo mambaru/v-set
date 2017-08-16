@@ -203,7 +203,7 @@ public:
   void assign ( InputIterator first, InputIterator last )
   {
     std::copy( first, last, _data );
-    _size = std::distance(first, last);
+    _size = static_cast<size_t>(std::distance(first, last));
   }
 
   void assign ( size_type n, const T& u )

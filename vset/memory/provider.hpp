@@ -32,7 +32,7 @@ public:
 
   provider(): _manager(0) {}
   
-  provider(Manager* m): _manager(m) {}
+  explicit provider(Manager* m): _manager(m) {}
 
   pointer begin()
   {

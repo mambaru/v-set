@@ -28,7 +28,7 @@ struct ad_offset_by_ptr
     typedef typename T::aspect::template advice_cast<_buffer_data_type_>::type data_type;
 
     data_type data = t.get_aspect().template get<_buffer_data_>()(t);
-    return reinterpret_cast<data_type>(ptr) - data;
+    return static_cast<size_t>(reinterpret_cast<data_type>(ptr) - data );
   }
 };
 

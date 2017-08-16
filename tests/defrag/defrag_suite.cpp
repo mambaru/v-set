@@ -19,13 +19,13 @@ UNIT(defrag, "")
 
   std::set<int> etalon;
 
-  for(unsigned int i = 0; i < 10 * 1024; ++i) {
+  for(int i = 0; i < 10 * 1024; ++i) {
     int_set.insert(i);
     etalon.insert(i);
   }
 
   std::cout << std::endl;
-  for(unsigned int i = 0; i < 220; ++i)
+  for(int i = 0; i < 220; ++i)
   {
     size_t size = 0;
     size_t size_max = 1;

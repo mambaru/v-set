@@ -20,7 +20,8 @@ struct ad_upper_bound
   {
     typedef typename T::container_type container_type;
     typedef typename container_type::iterator container_iterator;
-
+    typedef typename T::difference_type difference_type;
+    
     typedef typename T::iterator iterator;
     typedef typename T::allocator_type allocator_type;
     typedef typename allocator_type::value_type array_type;
@@ -49,7 +50,7 @@ struct ad_upper_bound
 
     if ( itr == cont_itr->second->end() )
     {
-      return ++iterator( cont_itr, cont_itr->second->size()-1 );
+      return ++iterator( cont_itr, static_cast<difference_type>(cont_itr->second->size()-1) );
     }
 
     return iterator( cont_itr, std::distance(cont_itr->second->begin(), itr) );
@@ -60,6 +61,7 @@ struct ad_upper_bound
   operator()(const T& t, const typename T::key_type& value) const
   {
     typedef typename T::container_type container_type;
+    typedef typename T::difference_type difference_type;
     typedef typename container_type::const_iterator const_container_iterator;
 
     typedef typename T::const_iterator const_iterator;
@@ -89,7 +91,7 @@ struct ad_upper_bound
 
     if ( itr == cont_itr->second->cend() )
     {
-      return ++const_iterator( cont_itr, cont_itr->second->size() - 1 );
+      return ++const_iterator( cont_itr, static_cast<difference_type>(cont_itr->second->size() - 1) );
     }
 
     return const_iterator( cont_itr, std::distance(cont_itr->second->cbegin(), itr) );

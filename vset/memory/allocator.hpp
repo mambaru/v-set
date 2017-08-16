@@ -6,7 +6,6 @@
 
 namespace vset { namespace memory{
 
-// TODO: привести к спецификации c++11
 template<typename Memory >
 struct allocator
 {

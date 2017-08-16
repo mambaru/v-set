@@ -24,7 +24,7 @@ struct ad_truncate
       typedef typename T::aspect::template advice_cast<_container_>::type container;
       container(
         t.get_aspect().template get<_container_>().begin(),
-        t.get_aspect().template get<_container_>().begin() + size
+        t.get_aspect().template get<_container_>().begin() + static_cast<std::ptrdiff_t>(size)
       ).swap( t.get_aspect().template get<_container_>() );
       
     }

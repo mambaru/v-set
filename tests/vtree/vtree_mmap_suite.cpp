@@ -18,7 +18,8 @@
 std::stack<std::string> test_stack;
 std::stringstream output_buffer;
 
-void raise(const std::string& text, const std::string& file = __FILE__, int pos = __LINE__  )
+void raise(const std::string& text, const std::string& file = __FILE__, int pos = __LINE__  );
+void raise(const std::string& text, const std::string& file, int pos  )
 {
   std::cout << output_buffer.str();
   while ( !test_stack.empty() )
@@ -39,10 +40,10 @@ struct init_sequence
 
   std::vector<int> vect;
 
-  init_sequence(int count, int first, int last)
-    : count(count)
-    , first(first)
-    , last(last)
+  init_sequence(int c, int f, int l)
+    : count(c)
+    , first(f)
+    , last(l)
   {
     double step = double(last - first)/count;
     double curr = first;
@@ -68,10 +69,10 @@ struct init_random
 
   std::vector<int> vect;
 
-  init_random(int count, int first, int last)
-    : count(count)
-    , first(first)
-    , last(last)
+  init_random(int c, int f, int l)
+    : count(c)
+    , first(f)
+    , last(l)
   {
     int dist = last - first;
     for (; count != 0; --count)
@@ -108,7 +109,7 @@ bool equal( const Container1& cnt1, const Container2& cnt2)
   return true;
 }
 
-template<int ArraySize>
+template<size_t ArraySize>
 class persist_container
 {
 public:
@@ -168,7 +169,7 @@ private:
   set_type* _vset;
 };
 
-template<int ArraySize>
+template<size_t ArraySize>
 class non_persist_container
 {
 public:
@@ -324,20 +325,20 @@ void test_erase1(T& /*t*/, const Container& cnt, const F& init, bool onlyCheck)
 
   if ( !onlyCheck )
   {
-    for ( std::list<int>::iterator beg = values2.begin(); beg!=values2.end(); ++beg )
+    for ( std::list<int>::iterator beg2 = values2.begin(); beg2!=values2.end(); ++beg2 )
     {
       try
       {
-        if ( cnt->find( *beg ) == cnt->end() )
+        if ( cnt->find( *beg2 ) == cnt->end() )
         {
-          output_buffer << "fatal " << *beg << std::endl ;
+          output_buffer << "fatal " << *beg2 << std::endl ;
           raise( "Cannot find value while iterating", __FILE__, __LINE__);
         }
 
-        typename Container::iterator upper = cnt->upper_bound(*beg);
+        typename Container::iterator upper = cnt->upper_bound(*beg2);
         if ( upper != cnt->end() )
         {
-          if ( *upper == *beg )
+          if ( *upper == *beg2 )
           {
             output_buffer << "fatal2" << *upper << std::endl ;
           }
@@ -346,7 +347,7 @@ void test_erase1(T& /*t*/, const Container& cnt, const F& init, bool onlyCheck)
             output_buffer << "UPPER " << *upper << std::endl ;
           }
         }
-        cnt->erase( *beg );
+        cnt->erase( *beg2 );
       }
       catch(const std::exception& e)
       {
@@ -421,7 +422,7 @@ void test_all(T& t)
   test_stack.pop();
 }
 
-template<int BlockSize, typename T>
+template<size_t BlockSize, typename T>
 void test_persist(T& t)
 {
   ::truncate( "./test_erase.bin", 0);

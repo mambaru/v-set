@@ -19,7 +19,7 @@ struct ad_read_file
   template<typename T>
   void operator()( T& t, char* data, size_t size, size_t offset )
   {
-    if ( -1 == ::pread( t.get_aspect().template get<_descriptor_>() , data, size, offset) )
+    if ( -1 == ::pread( t.get_aspect().template get<_descriptor_>() , data, size, static_cast<off_t>(offset) ) )
     {
       throw std::runtime_error(strerror(errno));
     }

@@ -48,13 +48,13 @@ struct ad_open
       t.get_aspect().template get<_resize_file_>()(t, file_size);
     }
 
-    char* data = (char*)::mmap(
+    char* data = static_cast<char*>( ::mmap(
       NULL,
       file_size,
       PROT_READ | PROT_WRITE, MAP_SHARED | MAP_NORESERVE |  MAP_POPULATE,
       t.get_aspect().template get<_descriptor_>(),
       0
-    );
+    ) );
 
     if ( data == MAP_FAILED)
       throw std::runtime_error(strerror(errno));

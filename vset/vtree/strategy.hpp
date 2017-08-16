@@ -35,7 +35,7 @@ struct creator // TODO: base type_advice и анологично для пров
 namespace strategy
 {
 
-template<typename V, typename Compare = std::less<V>, int N = 1024 >
+template<typename V, typename Compare = std::less<V>, size_t N = 1024 >
 struct vtree_fsb_mmap: fas::merge_aspect<
   aspect_tree<V, Compare>,
   aspect_memory< sorted_array< V, N, Compare >,  memory::strategy::fsb_mmap>,
@@ -44,7 +44,7 @@ struct vtree_fsb_mmap: fas::merge_aspect<
   aspect_basic
 >::type {};
 
-template<typename V, typename Compare = std::less<V>, int N = 1024 >
+template<typename V, typename Compare = std::less<V>, size_t N = 1024 >
 struct vtree_fsb_filesync: fas::merge_aspect<
   aspect_tree<V, Compare>,
   aspect_memory< sorted_array< V, N, Compare >, memory::strategy::fsb_filesync>,
@@ -54,7 +54,7 @@ struct vtree_fsb_filesync: fas::merge_aspect<
 >::type {};
 
 
-template<typename V, typename Compare = std::less<V>, int N = 1024 >
+template<typename V, typename Compare = std::less<V>, size_t N = 1024 >
 struct vtree_fsb_inmem: fas::merge_aspect<
   aspect_tree<V, Compare>,
   aspect_memory< sorted_array< V, N, Compare >, memory::strategy::fsb_inmem>,
@@ -62,7 +62,7 @@ struct vtree_fsb_inmem: fas::merge_aspect<
 >::type {};
 
 
-template<typename V, typename Compare = std::less<V>, int N = 1024 >
+template<typename V, typename Compare = std::less<V>, size_t N = 1024 >
 struct vtree_std_alloc: fas::merge_aspect<
   aspect_tree<V, Compare>,
   fas::type<_array_type_, sorted_array< V, N, Compare > >,
