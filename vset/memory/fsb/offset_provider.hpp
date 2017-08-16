@@ -34,13 +34,13 @@ public:
   const value_type* get(size_t offset) const
   {
     assert(_target!=0);
-    return _target->get_aspect().template get<_get_by_offset_>()(*_target, offset);
+    return _target->get_aspect().template get<_ptr_by_offset_>()(*_target, offset);
   }
 
   value_type* get(size_t offset)
   {
     assert(_target!=0);
-    return _target->get_aspect().template get<_get_by_offset_>()(*_target, offset);
+    return _target->get_aspect().template get<_ptr_by_offset_>()(*_target, offset);
   }
 
   size_t offset(value_type* p) const

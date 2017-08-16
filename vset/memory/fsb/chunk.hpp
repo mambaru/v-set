@@ -39,6 +39,11 @@ struct chunk
   {
     return sizeof(size_t)*8;
   }
+  
+  static size_t head_size()
+  {
+    return sizeof(size_t);
+  }
 
   size_t count() const
   {

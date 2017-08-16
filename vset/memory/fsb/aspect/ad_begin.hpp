@@ -47,7 +47,8 @@ private:
 
     if ( value_type* value = chn->first_value() )
     {
-      return pointer( &t, static_cast<size_t>(reinterpret_cast<data_type>(value) - data) );
+      return pointer( &t, t.get_aspect().template get<_offset_by_ptr_>()(t, value) );
+      //return pointer( &t, static_cast<size_t>(reinterpret_cast<data_type>(value) - data) );
     }
     
     return pointer( &t );

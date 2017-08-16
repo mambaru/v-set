@@ -10,7 +10,7 @@
 #include <vset/memory/fsb/tags.hpp>
 
 #include <vset/memory/fsb/aspect/ad_offset_by_ptr.hpp>
-#include <vset/memory/fsb/aspect/ad_get_by_offset.hpp>
+#include <vset/memory/fsb/aspect/ad_ptr_by_offset.hpp>
 #include <vset/memory/fsb/aspect/ad_next_offset.hpp>
 #include <vset/memory/fsb/aspect/ad_pred_offset.hpp>
 #include <vset/memory/fsb/offset_provider.hpp>
@@ -21,7 +21,7 @@
 namespace vset { namespace memory{ namespace fsb{
 
 struct aspect_pointer: fas::aspect< fas::type_list_n<
-  fas::advice<_get_by_offset_, ad_get_by_offset>,
+  fas::advice<_ptr_by_offset_, ad_ptr_by_offset>,
   fas::advice<_offset_by_ptr_, ad_offset_by_ptr>,
   fas::advice<_next_offset_, ad_next_offset>,
   fas::advice<_pred_offset_, ad_pred_offset>,

@@ -12,7 +12,7 @@
 
 namespace vset { namespace memory{ namespace fsb{
   
-struct ad_get_by_offset
+struct ad_ptr_by_offset
 {
   template<typename T>
   typename T::aspect::template advice_cast<_value_type_>::type*

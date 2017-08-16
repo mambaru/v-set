@@ -23,6 +23,11 @@ struct chain
     , first_free(0)
   {}
 
+  static size_t head_size()
+  {
+    return sizeof(self);
+  }
+
   void acquire(size_t count)
   {
     size += count;

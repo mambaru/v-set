@@ -142,7 +142,12 @@ bool init(data_buffer& buffer, index123_type& index123)
 bool erase_one(data_buffer& buffer, index123_type& index123)
 {
   std::ptrdiff_t buffer_size = std::distance(buffer.begin(), buffer.end());
-  data_pointer ptr = buffer.begin() + (buffer_size > 0 ? rand()%buffer_size : 0);
+  data_pointer ptr = buffer.begin() /* + buffer_size > 0 ? std::rand()%buffer_size : 0*/;
+  if ( buffer_size > 0 )
+  {
+    ptr += std::rand()%buffer_size;
+  }
+  
   offset_t offset = ptr.get_offset();
   
   index123_type::iterator lower = index123.lower_bound(offset);

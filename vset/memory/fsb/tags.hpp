@@ -11,7 +11,7 @@ namespace vset { namespace memory{ namespace fsb{
 
 struct _chunk_type_;
 struct _chain_type_;
-struct _get_by_offset_;
+struct _ptr_by_offset_;
 struct _offset_by_ptr_;
 struct _next_offset_;
 struct _pred_offset_;
