@@ -48,19 +48,19 @@ public:
     _target->get_aspect().template get<_clear_>()(*_target);
   }
   
-  void resize(size_type size)
+  void resize(size_type s)
   {
-    _target->get_aspect().template get<_resize_>()(*_target, size);
+    _target->get_aspect().template get<_resize_>()(*_target, s);
   }
 
-  void truncate(size_type size)
+  void truncate(size_type s)
   {
-    _target->get_aspect().template get<_truncate_>()(*_target, size);
+    _target->get_aspect().template get<_truncate_>()(*_target, s);
   }
 
-  void reserve( size_type size)
+  void reserve( size_type s)
   {
-    _target->get_aspect().template get<_reserve_>()(*_target, size);
+    _target->get_aspect().template get<_reserve_>()(*_target, s);
   }
 
 protected:

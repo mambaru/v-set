@@ -28,9 +28,9 @@ struct chain
     return sizeof(self);
   }
 
-  void acquire(size_t count)
+  void acquire(size_t c)
   {
-    size += count;
+    size += c;
   }
 
   chunk_type* first_chunk()

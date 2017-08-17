@@ -15,13 +15,14 @@
 
 const size_t CAPACITY = (777/64)*64 + (777%64!=0)*64;
 
-typedef char value_type;
+//typedef char value_type;
 
 template<typename T, typename Alloc>
 void test_char_init(T& t, Alloc& allocator)
 {
   using namespace fas::testing;
   typedef typename Alloc::pointer pointer;
+  typedef typename Alloc::value_type value_type;
 
   for (int i=0; i < MAX_TEST; ++i)
   {
@@ -46,6 +47,8 @@ void test_char_test(T& t, const Alloc& allocator)
 {
   using namespace fas::testing;
   typedef typename Alloc::const_pointer const_pointer;
+  typedef typename Alloc::value_type value_type;
+
   const_pointer beg = allocator.begin();
   const_pointer end = allocator.end();
   int i=0;

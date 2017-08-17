@@ -23,7 +23,7 @@ namespace vset{ namespace vtree{
 struct not_impl: std::domain_error
 {
   not_impl(): std::domain_error("not_impl") {}
-  explicit not_impl(const char* what): std::domain_error(what) {}
+  explicit not_impl(const char* txt): std::domain_error(txt) {}
 };
 
 
@@ -108,19 +108,21 @@ public:
   }
 
   template<typename InputIterator>
-  vtree(InputIterator beg, InputIterator end)
+  vtree(InputIterator b, InputIterator e)
     : _allocator( this->get_aspect().template get<_allocator_>()(*this) )
     , _container()
   {
+    this->insert(b, e);
   }
 
   template<typename InputIterator>
-  vtree(InputIterator beg, InputIterator end, const value_compare& comp, const allocator_type&  alloc = allocator_type() )
-    : _allocator(alloc)
+  vtree(InputIterator b, InputIterator e, const value_compare& comp, const allocator_type&  alloc = allocator_type() )
+    : _allocator( this->get_aspect().template get<_allocator_>()(*this) )
     , _container( container_comparator(comp) ) 
   {
     this->get_aspect().template get<_compare_>() = comp;
-    _allocator = this->get_aspect().template get<_allocator_>()(*this);
+    //_allocator = this->get_aspect().template get<_allocator_>()(*this);
+    this->insert(b, e);
   }
 
   vtree(const vtree& __x)
@@ -327,11 +329,11 @@ public:
 #endif
 
   template<typename InputIterator>
-  void insert(InputIterator beg, InputIterator end)
+  void insert(InputIterator b, InputIterator e)
   {
-    for (; beg != end; ++beg)
+    for (; b != e; ++b)
     {
-      this->insert(*beg);
+      this->insert(*b);
     }
   }
 

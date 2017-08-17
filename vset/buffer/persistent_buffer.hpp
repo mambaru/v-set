@@ -48,19 +48,19 @@ public:
     super::_clear(*this);
   }
   
-  void resize(size_type size)
+  void resize(size_type s)
   {
-    super::_resize(*this, size);
+    super::_resize(*this, s);
   }
 
-  void truncate(size_type size)
+  void truncate(size_type s)
   {
-    super::_truncate(*this, size);
+    super::_truncate(*this, s);
   }
 
-  void reserve( size_type size)
+  void reserve( size_type s)
   {
-    super::_reserve(*this, size);
+    super::_reserve(*this, s);
   }
 
   void close()
@@ -78,19 +78,19 @@ public:
     return super::_sync(*this);
   }
 
-  size_type sync(size_type offset, size_type size )
+  size_type sync(size_type offset, size_type s )
   {
-    return super::_sync(*this, offset, size);
+    return super::_sync(*this, offset, s);
   }
 
-  size_type sync(bool sync)
+  size_type sync(bool syn)
   {
-    return super::_sync(*this, sync);
+    return super::_sync(*this, syn);
   }
 
-  size_type sync(size_type offset, size_type size, bool sync )
+  size_type sync(size_type offset, size_type s, bool syn )
   {
-    return super::_sync(*this, offset, size, sync);
+    return super::_sync(*this, offset, s, syn);
   }
 };
 

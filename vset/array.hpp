@@ -200,10 +200,10 @@ public:
   }
 
   template <class InputIterator>
-  void assign ( InputIterator first, InputIterator last )
+  void assign ( InputIterator f, InputIterator l )
   {
-    std::copy( first, last, _data );
-    _size = static_cast<size_t>(std::distance(first, last));
+    std::copy( f, l, _data );
+    _size = static_cast<size_t>(std::distance(f, l));
   }
 
   void assign ( size_type n, const T& u )
@@ -228,11 +228,11 @@ public:
       throw std::out_of_range("array::insert");
 
     iterator first = position;
-    iterator last = this->end();
-    iterator d_last = last+1;
-    while (first != last)
+    iterator l = this->end();
+    iterator d_last = l+1;
+    while (first != l)
     {
-        *(--d_last) = *(--last);
+        *(--d_last) = *(--l);
     }
 
     *position = x;
@@ -250,16 +250,16 @@ public:
   }
 
   template <class InputIterator>
-  void insert ( iterator position, InputIterator first, InputIterator last )
+  void insert ( iterator position, InputIterator f, InputIterator l )
   {
-    difference_type dist = std::distance(first,last);
+    difference_type dist = std::distance(f,l);
     if (dist<=0)
       return;
     if ( this->size() + dist > this->max_size() )
       throw std::out_of_range("array::insert");
 
     std::copy_backward(position, end(), end()+dist );
-    std::copy(first, last, position);
+    std::copy(f, l, position);
     _size+=dist;
   }
 
@@ -289,12 +289,12 @@ public:
   
 #endif
 
-  iterator erase ( iterator first, iterator last )
+  iterator erase ( iterator f, iterator l )
   {
-    difference_type dist = std::distance(first,last);;
-    std::copy( last, this->end(), first);
+    difference_type dist = std::distance(f,l);;
+    std::copy( l, this->end(), f);
     this->resize( _size - dist );
-    return first;
+    return f;
   }
 
 private:

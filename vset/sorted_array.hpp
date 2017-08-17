@@ -48,9 +48,9 @@ public:
   }
 
   template <class InputIterator>
-  void assign( InputIterator first, InputIterator last, const value_compare& comp /*= value_compare()*/ )
+  void assign( InputIterator f, InputIterator l, const value_compare& comp /*= value_compare()*/ )
   {
-    super_()->assign(first, last);
+    super_()->assign(f, l);
     this->sort(comp);
   }
 

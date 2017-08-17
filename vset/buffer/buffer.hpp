@@ -48,19 +48,19 @@ public:
     super::_clear(*this);
   }
   
-  void resize(size_type size)
+  void resize(size_type s)
   {
-    super::_resize(*this, size);
+    super::_resize(*this, s);
   }
 
-  void truncate(size_type size)
+  void truncate(size_type s)
   {
-    super::_truncate(*this, size);
+    super::_truncate(*this, s);
   }
 
-  void reserve( size_type size)
+  void reserve( size_type s)
   {
-    super::_reserve(*this, size);
+    super::_reserve(*this, s);
   }
 };
 

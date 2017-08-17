@@ -33,8 +33,8 @@ public:
     _capacity=0;
   }
 
-  void set_size(size_t size) { _size = size; }
-  void set_capacity(size_t capacity) { _capacity = capacity; }
+  void set_size(size_t s) { _size = s; }
+  void set_capacity(size_t c) { _capacity = c; }
 
   head()
     : _format(ID)
