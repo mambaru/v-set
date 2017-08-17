@@ -23,7 +23,7 @@ struct chain
     , first_free(0)
   {}
 
-  static size_t head_size()
+  constexpr static size_t head_size()
   {
     return sizeof(self);
   }

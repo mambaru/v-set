@@ -11,8 +11,49 @@
 #include <vset/memory/fsb/aspect.hpp>
 #include <vset/buffer/persistent/filesync/aspect.hpp>
 
-#define MAX_TEST 777 
+size_t off2ptr(size_t off);
+size_t ptr2off(size_t ptr);
 
+const size_t CHAIN_HEAD = 16;
+const size_t CHANK_HEAD = 8;
+const size_t CHANK_COUNT = 64;
+const size_t VALUE_SIZE = 8;
+const size_t VALUE_BLOCK = VALUE_SIZE*64;
+const size_t CHANK_SIZE = CHANK_HEAD + VALUE_BLOCK ;
+
+size_t off2ptr(size_t off)
+{
+  size_t result = CHAIN_HEAD;
+  result += CHANK_HEAD + (off / CHANK_COUNT) * CHANK_HEAD;
+  result += VALUE_SIZE*off;
+  return result ;
+}
+
+size_t ptr2off(size_t ptr)
+{
+  size_t result = ptr - CHAIN_HEAD;
+  result -= (result/CHANK_SIZE) * CHANK_HEAD;
+  result -= CHANK_HEAD;
+  return result/VALUE_SIZE;
+}
+
+UNIT(test_offset, "")
+{
+  using namespace fas::testing;
+  // t << is_true<expect>(false) << FAS_FL;
+  // t << stop;
+  //return;
+  for (size_t i = 0; i < 10000; ++i )
+  {
+    size_t ptr = off2ptr(i);
+    size_t off = ptr2off(ptr);
+    //t << message("i=") << i << " off=" << off << " ptr=" << ptr << " > " << (ptr - CHAIN_HEAD) / CHANK_SIZE ;
+    t << equal<assert>(i, off+1 ) << " ptr=" << ptr <<  FAS_FL;
+    //return;
+  }
+}
+
+#define MAX_TEST 777 
 const size_t CAPACITY = (777/64)*64 + (777%64!=0)*64;
 
 //typedef char value_type;
@@ -128,6 +169,7 @@ UNIT(test_unit, "")
   allocator.buffer().close();
 
   t << nothing;
+  
 }
 
 UNIT(test_allocator, "")
@@ -151,6 +193,7 @@ UNIT(test_allocator, "")
 }
 
 BEGIN_SUITE(basic_suite, "")
+  ADD_UNIT(test_offset)
   ADD_UNIT(test_unit)
   ADD_UNIT(test_allocator)
 END_SUITE(basic_suite)

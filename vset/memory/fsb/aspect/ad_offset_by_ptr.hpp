@@ -12,7 +12,7 @@
 
 namespace vset { namespace memory{ namespace fsb{
 
-struct ad_offset_by_ptr
+struct ad_offset_by_ptr2
 {
   template<typename T>
   size_t operator()(T& t, typename T::aspect::template advice_cast<_value_type_>::type* ptr) const
@@ -29,22 +29,14 @@ struct ad_offset_by_ptr
 
     data_type data = t.get_aspect().template get<_buffer_data_>()(t);
     size_t real_offset = static_cast<size_t>(reinterpret_cast<data_type>(ptr) - data );
-    std::cout << " ad_offset_by_ptr " << real_offset;
     real_offset -= chain_type::head_size();
-    std::cout << ", " << real_offset;
-    real_offset -= real_offset/chunk_type::size();
-    std::cout << ", " << real_offset;
+    real_offset -= ( real_offset/chunk_type::size() ) * chunk_type::head_size();
     real_offset -= chunk_type::head_size();
-    std::cout << ", " << real_offset;
-    std::cout << " >> " << real_offset/sizeof(value_type) << std::endl;
-    /*if ( 0!=real_offset%sizeof(value_type) )
-      abort();*/
-    
     return real_offset/sizeof(value_type);
   }
 };
   
-struct ad_offset_by_ptr2
+struct ad_offset_by_ptr
 {
   template<typename T>
   size_t operator()(T& t, typename T::aspect::template advice_cast<_value_type_>::type* ptr) const

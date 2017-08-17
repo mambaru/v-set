@@ -35,12 +35,12 @@ struct chunk
     return bits == 0;
   }
 
-  static size_t max_count()
+  constexpr static size_t max_count()
   {
     return sizeof(size_t)*8;
   }
   
-  static size_t head_size()
+  constexpr static size_t head_size()
   {
     return sizeof(size_t);
   }
@@ -64,7 +64,7 @@ struct chunk
     return cnt;
   }
 
-  static size_t size()
+  constexpr static size_t size()
   {
     return sizeof(self);
   }
