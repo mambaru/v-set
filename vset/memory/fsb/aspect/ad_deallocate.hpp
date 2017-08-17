@@ -20,13 +20,14 @@ struct ad_deallocate
     typedef ::vset::buffer::_data_      _buffer_data_;
     typedef ::vset::buffer::_data_type_ _buffer_data_type_;
 
-    typedef typename T::aspect::template advice_cast<_value_type_>::type value_type;
+    //typedef typename T::aspect::template advice_cast<_value_type_>::type value_type;
     typedef typename T::aspect::template advice_cast<_chain_type_>::type chain_type;
     typedef typename T::aspect::template advice_cast<_buffer_data_type_>::type data_type;
 
     data_type data = t.get_aspect().template get<_buffer_data_>()(t);
     chain_type* chn = reinterpret_cast<chain_type*>(data);
-    chn->free( reinterpret_cast<value_type*>(data + ptr.get_offset() ) );
+    chn->free( ptr.get_address() );
+    //chn->free( reinterpret_cast<value_type*>(data + ptr.get_offset() ) );
   }
 };
 

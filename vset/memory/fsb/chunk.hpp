@@ -64,9 +64,9 @@ struct chunk
     return cnt;
   }
 
-  size_t size() const
+  static size_t size()
   {
-    return sizeof(this);
+    return sizeof(self);
   }
 
   void clear()

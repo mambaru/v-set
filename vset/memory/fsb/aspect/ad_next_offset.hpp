@@ -29,11 +29,9 @@ struct ad_next_offset
 
     for (size_t i = 0 ; i < count ; ++i)
     {
-      //if ( value_type* current = chn->next_value( reinterpret_cast<value_type*>(data + offset) ) )
       if ( value_type* current = chn->next_value( t.get_aspect().template get<_ptr_by_offset_>()(t, offset) ) )
       {
         offset = t.get_aspect().template get<_offset_by_ptr_>()(t, current);
-        //offset = static_cast<size_t>( reinterpret_cast<data_type>(current) - data );
       }
       else
       {

@@ -26,7 +26,7 @@ void test_char_init(T& t, Alloc& allocator)
 
   for (int i=0; i < MAX_TEST; ++i)
   {
-    value_type* ch = allocator.allocate(1);
+    value_type* ch = allocator.allocate(1).get_address();
     t << is_true<assert>( ch != 0 ) << "i=" << i << " " << FAS_TESTING_FILE_LINE;
     t << stop;
     *ch = '0' + i%10;
@@ -36,9 +36,24 @@ void test_char_init(T& t, Alloc& allocator)
   pointer end = allocator.end();
 
   int i=0;
-  for ( ; beg != end; ++beg, ++i)
+  for ( ; beg != end; ++i)
   {
+    //std::cout << "---------------------------" << std::endl;
     t << equal< assert, value_type > ( *beg, '0' + i%10 ) << char(*beg) << "!=" << char('0' + i%10) << " " << FAS_TESTING_FILE_LINE;
+    size_t off1 = beg.get_offset();
+    value_type* add1 = beg.get_address();
+    t << equal< assert, value_type > ( *add1, '0' + i%10 ) << FAS_FL;
+    t << equal< assert, value_type* > ( &*beg, &*add1 ) << FAS_FL;
+    beg.set_offset(off1);
+    t << equal< assert, size_t > ( off1, beg.get_offset() ) << FAS_FL;
+    t << equal< assert, value_type* > ( add1, beg.get_address() ) << FAS_FL;
+    size_t off2 = beg.set_address(add1);
+    t << equal< assert, size_t > ( off1, off2 ) << FAS_FL;
+    t << equal< assert, value_type* > ( add1, beg.get_address() ) << "[" << (add1 - beg.get_address()) << "]"<< FAS_FL;
+    t << equal< assert, size_t > ( off1, beg.get_offset() ) << FAS_FL;
+    t << stop;
+    //std::cout << "next" << std::endl;
+    ++beg;
   }
 }
 
@@ -66,8 +81,9 @@ void test_char_test(T& t, const Alloc& allocator)
   ++beg1;
   --beg1;
   
-  t << equal< assert > ( beg, beg1 ) << FAS_TESTING_FILE_LINE;
   t << equal< assert > ( *beg, *beg1 ) << FAS_TESTING_FILE_LINE;
+  t << equal< assert > ( beg, beg1 ) << FAS_TESTING_FILE_LINE;
+  
   
   i = MAX_TEST - 1;
   beg = allocator.begin();

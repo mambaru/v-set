@@ -29,60 +29,72 @@ public:
   {
   }
 
-  offset_pointer(offset_provider provider, size_t offset = static_cast<size_t>(-1) )
+  explicit offset_pointer(offset_provider provider, size_t offset = static_cast<size_t>(-1) )
     : _provider(provider)
     , _offset(offset)
   {
   }
 
-  operator T* ()
+  
+  operator value_type* ()
   {
     return this->get_address();
   }
   
-  operator const T* () const
+  operator const value_type* () const
   {
     return this->get_address();
   }
-
-  T& operator*()
+  
+  
+  value_type& operator*()
   {
     return *(this->get_address());
   }
   
-  const T& operator*() const
+  const value_type& operator*() const
   {
     return *(this->get_address());
   }
   
-  T* operator->()
+  value_type* operator->()
   {
     return this->get_address();
   }
 
-  const T* operator->() const
+  const value_type* operator->() const
   {
     return this->get_address();
   }
+  
 
-  T* get_address()
+  value_type& get_ref()
+  {
+    return *(this->get_address());
+  }
+  
+  const value_type& get_ref() const
+  {
+    return *(this->get_address());
+  }
+  value_type* get_address()
   {
     if ( _offset == static_cast<size_t>(-1) )
       return 0;
     return _provider.get(_offset);
   }
   
-  const T* get_address() const
+  const value_type* get_address() const
   {
     if ( _offset == static_cast<size_t>(-1) )
       return 0;
     return _provider.get(_offset);
   }
 
-  self& set_address(T* t)
+  size_t set_address(value_type* t)
   {
     _offset = _provider.offset(t);
-    return *this;
+    return _offset;
   }
 
   size_t get_offset() const
@@ -176,12 +188,14 @@ public:
 
   reference operator[] ( difference_type n )
   {
-    return *(_provider.get( _offset + sizeof(T)*n ));
+    return *(_provider.get( _provider.next( _offset, static_cast<size_t>(n) ) ));
+    /*return *(_provider.get( _offset + sizeof(value_type)*n ));*/
   }
 
   const reference operator[] ( difference_type n ) const
   {
-    return *(_provider.get( _offset + sizeof(T)*n ));
+    return *(_provider.get( _provider.next( _offset, static_cast<size_t>(n) ) ));
+    /*return *(_provider.get( _offset + sizeof(value_type)*n ));*/
   }
 
 private:
