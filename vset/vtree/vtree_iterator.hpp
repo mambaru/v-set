@@ -43,23 +43,27 @@ public:
 
   }
 
+  // cctor
+  vtree_iterator(const self& slf)
+    : _itr(slf._itr )
+    , _pos(slf._pos )
+  {
+  }
+
   vtree_iterator(source_iterator itr, difference_type pos)
     : _itr(itr)
     , _pos(pos)
   {
   }
 
-  vtree_iterator(const self& slf)
-    : _itr(slf._itr )
-    , _pos(slf._pos )
-  {
-  }
   
   template<typename TI, typename VT>
-  vtree_iterator(const vtree_iterator<TI, VT>& slf)
-    : _itr(slf.get_source_iterator() )
-    , _pos(slf.get_position() )
+  vtree_iterator(vtree_iterator<TI, VT> slf)
+    : _itr( slf.get_source_iterator() )
+    , _pos( slf.get_position() )
   {
+    /*auto tmp = slf.get_source_iterator();
+    _itr = tmp;*/
   }
 
   reference operator*() const
@@ -191,12 +195,12 @@ public:
   template<typename TI, typename VT>
   friend typename vtree_iterator<TI, VT>::difference_type operator - ( vtree_iterator<TI, VT> r1, vtree_iterator<TI, VT> r2 );
 
-  source_iterator get_source_iterator() const
+  source_iterator get_source_iterator() 
   {
     return this->_itr;
   }
 
-  difference_type get_position() const
+  difference_type get_position()
   {
     return this->_pos;
   }

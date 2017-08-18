@@ -30,7 +30,8 @@ UNIT(vtree_create_filesync, "")
   }
 
   
-  int_vtree::iterator itr = tree.begin();
+  int_vtree::iterator itr;
+  itr = tree.begin();
   for (int i = 0; itr != tree.end(); ++itr, ++i)
   {
     t << equal<expect, char>(*itr, 'A' + i % 10);

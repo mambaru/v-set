@@ -291,7 +291,6 @@ template<typename T, typename Container, typename F>
 void test_erase1(T& /*t*/, const Container& cnt, const F& init, bool onlyCheck)
 {
   output_buffer << "void test_erase1(const Container& cnt, const F& init, bool onlyCheck) " << init.count << std::endl;
-  //std::stringstream ss;
   if ( onlyCheck )
   {
     test_stack.push("test_insert1 onlyCheck");
@@ -392,6 +391,7 @@ void test_erase(T& t)
   test_stack.push("test_erase");
 
   test_erase1( t, Container("test_erase.bin", true), init_sequence(1, 1, 1), false );
+  
   test_erase1(t, Container("test_erase.bin", false), init_sequence(1, 1, 1), true );
 
   test_erase1( t,  Container("test_erase.bin", true), init_sequence(10, 1, 20), false );
@@ -406,7 +406,7 @@ void test_erase(T& t)
   init_sequence init(10000, 0, 100000);
   test_erase1( t, Container("test_erase.bin", true), init, false );
   test_erase1(t, Container("test_erase.bin", false), init, true );
-
+  
   test_stack.pop();
 }
 
@@ -444,11 +444,13 @@ void test_all_persist(T& t)
   test_stack.push("test_all_persist");
 
   test_persist<3>(t);
+  /*
   test_persist<4>(t);
   test_persist<5>(t);
   test_persist<7>(t);
-  /*test_persist<13>(t);
-  test_persist<64>(t);
+  test_persist<13>(t);
+  */
+  /*test_persist<64>(t);
   test_persist<256>(t);
   test_persist<500>(t);
   test_persist<1000>(t);

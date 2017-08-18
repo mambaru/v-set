@@ -212,12 +212,12 @@ public:
 
   iterator  begin()
   {
-    return iterator( _container.begin(), 0);
+    return iterator( _container.begin(), typename iterator::difference_type(0));
   }
 
   iterator end()
   {
-    return iterator( _container.end(), 0 );
+    return iterator( _container.end(), typename  iterator::difference_type(0) );
   }
 
   const_iterator  begin() const

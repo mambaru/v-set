@@ -26,22 +26,22 @@ struct ad_erase_iterator
 
   template<typename T>
   typename T::iterator
-  operator()(T& t, typename T::const_iterator itr, bool make_defrag)
+  operator()(T& t, typename T::const_iterator itr, bool make_defrag) const noexcept 
   {
-    if ( itr == t.end() )
-    {
-      throw std::out_of_range("ad_erase_iterator itr == t.end()");
-    }
-
     typedef typename T::iterator iterator;
     typedef typename iterator::difference_type difference_type;
     typedef typename T::container_type container_type;
     typedef typename container_type::iterator container_iterator;
 
+    if ( itr == t.end() )
+      return iterator(t.get_container().end(), 0 );
+
     difference_type    offset   = itr.get_position();
     container_iterator cont_itr = t.get_container().erase( itr.get_source_iterator(), itr.get_source_iterator() );
-
-    cont_itr->second->erase(
+    if ( cont_itr == t.get_container().end() )
+      return iterator( cont_itr, 0 );
+    
+    cont_itr->second->erase( 
       cont_itr->second->cbegin() + offset,
       t.get_aspect().template get<_compare_>()
     );
