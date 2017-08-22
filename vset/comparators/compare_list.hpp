@@ -31,6 +31,12 @@ struct compare_list
     typedef typename fas::head<L>::type head;
     typedef typename fas::tail<L>::type tail;
 
+    return head()(l, r) 
+      ? true
+      : head()(r, l)
+        ? false
+        : _(tail(), l, r);
+        /*
     if ( head()(l, r) )
     {
       return true;
@@ -42,6 +48,7 @@ struct compare_list
     }
 
     return _(tail(), l, r);
+    */
   }
 
   template< typename D>

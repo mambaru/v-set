@@ -139,12 +139,15 @@ bool init(data_buffer& buffer, index123_type& index123)
   return true;
 }
 
+static const volatile int negate_optfix = -1;
 bool erase_one(data_buffer& buffer, index123_type& index123)
 {
   std::ptrdiff_t buffer_size = std::distance(buffer.begin(), buffer.end());
   data_pointer ptr = buffer.begin() /* + buffer_size > 0 ? std::rand()%buffer_size : 0*/;
   if ( buffer_size > 0 )
   {
+    ptr -= negate_optfix;    
+    ptr += negate_optfix;
     ptr += std::rand()%buffer_size;
   }
   
