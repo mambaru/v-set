@@ -1,7 +1,7 @@
 #include "multiset_test_impl.hpp"
 
 #include <vset/allocators/mmap_allocator.hpp>
-#include <vset/allocators/buffer_allocator.hpp>
+#include <vset/allocators/inmem_allocator.hpp>
 #include <vset/multiset.hpp>
 #include <vset/memory/manager.hpp>
 #include <vset/memory/fsb/aspect.hpp>
@@ -17,7 +17,7 @@ struct data
   int data3;
 };
 
-typedef vset::memory::strategy::fsb_mmap<data> mmap_data_aspect;
+typedef vset::memory::strategy::fsb_mmap<data, ::vset::memory::fsb::aspect_offset > mmap_data_aspect;
 typedef vset::memory::manager<mmap_data_aspect> data_buffer;
 typedef data_buffer::const_pointer data_const_pointer;
 typedef data_buffer::pointer data_pointer;
@@ -47,7 +47,7 @@ struct cmp123
   }
 };
 
-typedef vset::multiset< offset_t, cmp123, vset::buffer_allocator<9> > index123_type;
+typedef vset::multiset< offset_t, cmp123, vset::inmem_allocator<9> > index123_type;
 
 data generate()
 {

@@ -26,7 +26,7 @@ struct ad_erase_iterator
 
   template<typename T>
   typename T::iterator
-  operator()(T& t, typename T::const_iterator itr, bool make_defrag) const noexcept 
+  operator()(T& t, typename T::const_iterator itr, bool make_defrag) const 
   {
     typedef typename T::iterator iterator;
     typedef typename iterator::difference_type difference_type;

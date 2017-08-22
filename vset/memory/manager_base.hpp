@@ -35,8 +35,6 @@ protected:
 
   typedef size_t size_type;
 
-  manager_base(){}
-
   template<typename T>
   pointer _begin(T& t)
   {

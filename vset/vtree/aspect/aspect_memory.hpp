@@ -13,23 +13,7 @@
 #include <fas/aop.hpp>
 #include <fas/mp.hpp>
 
-
 namespace vset{ namespace vtree{
-
-  /*
-struct _create_allocator_;
-
-struct ad_create_allocator
-{
-  template<typename T>
-  typename T::allocator_type operator()(T& t) const
-  {
-    typedef memory::provider< T > provider_type;
-    typedef memory::allocator< provider_type >  provider_type;
-    return allocator_type( provider_type(&) );
-  }
-};
-*/
 
 template<typename Array, template<typename> class MemmoryStreategy >
 struct aspect_memory: fas::aspect< typename fas::type_list_n<

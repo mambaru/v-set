@@ -31,8 +31,6 @@ public:
   typedef size_t size_type;
   typedef std::ptrdiff_t difference_type;
 
-  manager(){}
-
   pointer begin()
   {
     return super::_begin(*this);

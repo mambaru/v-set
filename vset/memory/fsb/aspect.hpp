@@ -18,6 +18,7 @@ namespace vset { namespace memory{ namespace fsb{
 
 template<
   typename T,
+  typename OffsetAspect,
   typename BufferAspect,
   template<typename> class BufferProvider
 >
@@ -25,6 +26,7 @@ struct aspect: fas::merge_aspect<
   aspect_value<T>,
   aspect_manager<BufferProvider>,
   aspect_pointer,
+  OffsetAspect,
   BufferAspect
 >::type {};
 

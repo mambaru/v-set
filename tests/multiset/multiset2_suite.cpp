@@ -7,18 +7,18 @@
 #include <vset/multiset.hpp>
 #include <vset/allocators/allocator.hpp>
 #include <vset/allocators/mmap_allocator.hpp>
-#include <vset/allocators/buffer_allocator.hpp>
+#include <vset/allocators/inmem_allocator.hpp>
 #include <fas/testing.hpp>
+#include <set>
 
 UNIT(multiset_alloc, "")
 {
   using namespace fas::testing;
   using namespace vset;
 
-  typedef multiset<int, std::greater<int>, buffer_allocator<512> > multiset_type;
+  typedef multiset<int, std::greater<int>, inmem_allocator<512> > multiset_type;
   multiset_type int_set;
   int_set.get_allocator().memory().buffer().reserve(10000000);
-
   int_set.insert(1);
   int_set.insert(1);
   int_set.insert(1);
@@ -43,19 +43,19 @@ UNIT(multiset_alloc, "")
 
   t << equal<expect, size_t>( int_set.size(), 2) << FAS_TESTING_FILE_LINE;
 
-  bool flag = false;
+  bool flag = true;
   try
   {
     int_set.erase(int_set.end());
   }
-  catch(const std::out_of_range&)
+  catch(...)
   {
-    flag = true;
+    flag = false;
   }
 
   t << is_true<expect>( flag ) << FAS_TESTING_FILE_LINE;
 
-  t << nothing;
+  t << message("fin");
 }
 
 UNIT(multiset2, "")

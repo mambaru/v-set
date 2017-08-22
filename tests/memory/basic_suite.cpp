@@ -145,7 +145,7 @@ void test_char_test(T& t, const Alloc& allocator)
 UNIT(test_unit, "")
 {
   using namespace fas::testing;
-  typedef vset::memory::manager< vset::memory::strategy::fsb_mmap<char> > allocator_type;
+  typedef vset::memory::manager< vset::memory::strategy::fsb_mmap<char, ::vset::memory::fsb::aspect_offset > > allocator_type;
   
   allocator_type allocator;
   allocator.buffer().open("allocator.bin");
@@ -177,7 +177,7 @@ UNIT(test_allocator, "")
   using namespace fas::testing;
   using namespace vset;
 
-  typedef memory::manager< vset::memory::strategy::fsb_mmap<char> > manager;
+  typedef memory::manager< vset::memory::strategy::fsb_mmap<char, ::vset::memory::fsb::aspect_offset > > manager;
   typedef memory::provider< manager > provider;
   typedef memory::allocator< provider > allocator;
 

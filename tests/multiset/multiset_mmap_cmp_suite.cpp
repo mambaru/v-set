@@ -32,21 +32,21 @@ typedef vset::compare_list< fas::type_list_n<
     vset::compare_member<item, int, &item::item2, std::greater<int> >
   >::type
 > item_cmp;
+struct item_cmp_t: item_cmp{};
 
 #define TEST_COUNT 50
+
+typedef size_t offset_t;
+typedef vset::memory::manager< ::vset::memory::strategy::fsb_inmem<item, ::vset::memory::fsb::aspect_offset> > int_data;
+struct int_data_t: int_data{};
+typedef vset::offset_compare< offset_t, int_data_t, item_cmp_t > offset_greater;
+typedef vset::multiset< offset_t, offset_greater, vset::allocator<2> > int_index;
 
 UNIT(multiset_mmap_lu, "")
 {
   using namespace fas::testing;
   t << nothing;
-  
-  typedef size_t offset_t;
-  
-  typedef vset::memory::manager< ::vset::memory::strategy::fsb_inmem<item> > int_data;
-  typedef vset::offset_compare< offset_t, int_data, item_cmp > offset_greater;
-  typedef vset::multiset< offset_t, offset_greater, vset::allocator<2> > int_index;
-  
-  
+
   int_data data;
   int_index index( offset_greater( data.end() ) );
   int_data::pointer val = data.allocate(1);

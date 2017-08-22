@@ -13,6 +13,7 @@
 #include <vset/vtree/aspect/ad_restore.hpp>
 #include <vset/memory/strategy.hpp>
 #include <vset/sorted_array.hpp>
+#include <fas/mp.hpp>
 
 namespace vset{ namespace vtree{
 
@@ -35,29 +36,38 @@ struct creator // TODO: base type_advice и анологично для пров
 namespace strategy
 {
 
-template<typename V, typename Compare = std::less<V>, size_t N = 1024 >
+template<typename V, typename Compare = std::less<V>, size_t N = 1024, typename OffsetAspect = ::vset::memory::fsb::aspect_offset >
 struct vtree_fsb_mmap: fas::merge_aspect<
   aspect_tree<V, Compare>,
-  aspect_memory< sorted_array< V, N, Compare >,  memory::strategy::fsb_mmap>,
+  aspect_memory< 
+    sorted_array< V, N, Compare >,  
+    ::fas::lambda< memory::strategy::fsb_mmap<fas::_1, OffsetAspect > >::template  apply
+  >,
   fas::advice< _restore_, ad_restore >,
   fas::group< buffer::persistent::_after_open_, _restore_ >,
   aspect_basic
 >::type {};
 
-template<typename V, typename Compare = std::less<V>, size_t N = 1024 >
+template<typename V, typename Compare = std::less<V>, size_t N = 1024, typename OffsetAspect = ::vset::memory::fsb::aspect_offset >
 struct vtree_fsb_filesync: fas::merge_aspect<
   aspect_tree<V, Compare>,
-  aspect_memory< sorted_array< V, N, Compare >, memory::strategy::fsb_filesync>,
+  aspect_memory< 
+    sorted_array< V, N, Compare >, 
+    fas::lambda< memory::strategy::fsb_filesync<fas::_1, OffsetAspect > >::template apply
+  >,
   fas::advice< _restore_, ad_restore >,
   fas::group< buffer::persistent::_after_open_, _restore_ >,
   aspect_basic
 >::type {};
 
 
-template<typename V, typename Compare = std::less<V>, size_t N = 1024 >
+template<typename V, typename Compare = std::less<V>, size_t N = 1024, typename OffsetAspect = ::vset::memory::fsb::aspect_offset >
 struct vtree_fsb_inmem: fas::merge_aspect<
   aspect_tree<V, Compare>,
-  aspect_memory< sorted_array< V, N, Compare >, memory::strategy::fsb_inmem>,
+  aspect_memory< 
+    sorted_array< V, N, Compare >, 
+    fas::lambda< memory::strategy::fsb_inmem<fas::_1, OffsetAspect > >::template apply
+  >,
   aspect_basic
 >::type {};
 

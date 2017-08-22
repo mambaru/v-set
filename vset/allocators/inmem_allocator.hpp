@@ -9,18 +9,19 @@
 
 #include <fas/typemanip/empty_type.hpp>
 #include <vset/vtree/strategy.hpp>
+#include <fas/aop/aspect.hpp>
 
 namespace vset{
 
-template<size_t N>
-struct buffer_allocator
+template<size_t N, typename A = fas::aspect<> >
+struct inmem_allocator
 {
   typedef fas::empty_type aspect_maker;
 
   template<typename V, typename C>
   struct apply
   {
-    typedef vtree::strategy::vtree_fsb_inmem<V, C, N> type;
+    typedef typename fas::merge_aspect< A, vtree::strategy::vtree_fsb_inmem<V, C, N> >::type type;
   };
 };
 
