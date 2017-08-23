@@ -25,6 +25,8 @@ struct item
 {
   int item1;
   int item2;
+  item(): item1(0), item2(){}
+  item(int i1, int i2): item1(i1), item2(i2){}
 };
 
 typedef vset::compare_list< fas::type_list_n<
@@ -54,7 +56,7 @@ UNIT(multiset_mmap_lu, "")
     for (int j = 0; j < TEST_COUNT; ++j)
   {
     int_data::pointer ins = data.allocate(1);
-    *ins = {i, -j};
+    *ins = item(i, -j);
     index.insert( ins.get_offset() );
   }
 
@@ -62,7 +64,7 @@ UNIT(multiset_mmap_lu, "")
   for (int i = 0; i < TEST_COUNT; ++i)
     for (int j = 0; j < TEST_COUNT; ++j)
   {
-    *val = {i, -j};
+    *val = item(i, -j);
     
     int_index::iterator lower = index.lower_bound( val.get_offset() );
     int_index::iterator upper = index.upper_bound( val.get_offset() );

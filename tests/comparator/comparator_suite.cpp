@@ -124,7 +124,7 @@ UNIT(comparator_set, "")
   std::set<data, cmp_data2> set2;
   set2.insert( create_data(1,2,3) );
   std::set<data*, vset::pointer_compare<cmp_data2> > set3;
-  set3.insert(new data{ 1,2,3 } );
+  set3.insert(new data( create_data(1,2,3) ) );
   std::set<int*, vset::pointer_compare<std::less<int> > > set4;
   int d[]={1,2,3};
   set4.insert(d);

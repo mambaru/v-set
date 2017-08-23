@@ -7,6 +7,7 @@
 #include <fas/testing.hpp>
 #include <vset/memory/fsb_mmap.hpp>
 #include <vset/memory/fsb_filesync.hpp>
+#include <vset/memory/fsb_inmem.hpp>
 
 UNIT(fsb_mmap, "")
 {

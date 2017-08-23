@@ -16,39 +16,63 @@ UNIT(vtree_compare, "")
   typedef vtree::vtree< vtree::strategy::vtree_fsb_inmem<int, std::less<int>, 3> > int_vtree;
 
   {
-    int_vtree tree1({2,2,2}), tree2({2,2,2});
+    int_vtree tree1, tree2;
+    for (int i = 1; i < 4; ++i)
+    {
+      tree1.insert(2);
+      tree2.insert(2);
+    }
     t << is_true<expect>(tree1 == tree2);
     t << is_true<expect>(tree2 == tree1);
   }
 
   {
-    int_vtree tree1({2,2,2}), tree2({2,2,2,2});
+    int_vtree tree1, tree2;
+    for (int i = 1; i < 4; ++i)
+    {
+      tree1.insert(2);
+      tree2.insert(2);
+    }
+    tree2.insert(2);
     t << is_false<expect>(tree1 == tree2);
     t << is_false<expect>(tree2 == tree1);
   }
 
   {
-    int_vtree tree1({2,2,2}), tree2({2,1,2});
+    int_vtree tree1, tree2;
+    tree1.insert(2); tree2.insert(2);
+    tree1.insert(2); tree2.insert(1);
+    tree1.insert(2); tree2.insert(2);
     t << is_false<expect>(tree1 == tree2);
   }
 
   {
-    int_vtree tree1({2,2,2}), tree2({2,2,2});
+    int_vtree tree1, tree2;
+    tree1.insert(2); tree2.insert(2);
+    tree1.insert(2); tree2.insert(2);
+    tree1.insert(2); tree2.insert(2);
     t << is_false<expect>(tree1 < tree2);
     t << is_false<expect>(tree2 < tree1);
   }
 
   {
-    int_vtree tree1({2,2,2,3}), tree2({2,2,2});
+    int_vtree tree1, tree2;
+    tree1.insert(2); tree2.insert(2);
+    tree1.insert(2); tree2.insert(1);
+    tree1.insert(2); tree2.insert(2);
+    tree1.insert(3);
+
     t << is_false<expect>(tree1 < tree2);
   }
 
   {
-    int_vtree tree1({2,2,2}), tree2({2,2,55});
+    //int_vtree tree1({2,2,2}), tree2({2,2,55});
+    int_vtree tree1, tree2;
+    tree1.insert(2); tree2.insert(2);
+    tree1.insert(2); tree2.insert(2);
+    tree1.insert(2); tree2.insert(55);
     t << is_true<expect>(tree1 < tree2);
   }
-
-  t << nothing;
 }
 
 BEGIN_SUITE(vtree_compare_suite, "")

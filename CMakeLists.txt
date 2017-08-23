@@ -7,8 +7,9 @@ project(v-set CXX)
 
 if ( BUILD_TESTING )
 
+  set(CMAKE_CXX_STANDARD_REQUIRED ON)
   if(UNIX)
-    set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -W -Wall -Werror -pedantic -fno-rtti -std=c++11")
+    set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -W -Wall -Werror -pedantic -fno-rtti")
     set(CMAKE_CXX_FLAGS_RELEASE "-O3 -DNDEBUG ")
     set(CMAKE_CXX_FLAGS_RELWITHDEBINFO  "-O2 -g -DNDEBUG")
     set(CMAKE_CXX_FLAGS_DEBUG  "-O0 -g")
@@ -18,7 +19,7 @@ if ( BUILD_TESTING )
                          -Wformat=2 -Winit-self -Wlogical-op -Wmissing-declarations \
                          -Wmissing-include-dirs -Wnoexcept -Wold-style-cast -Woverloaded-virtual \
                          -Wredundant-decls -Wshadow -Wsign-conversion -Wsign-promo -Wstrict-null-sentinel \
-                          -Wswitch-default -Wundef -Wstrict-overflow=1")
+                         -Wswitch-default -Wundef -Wstrict-overflow=1")
                         #-Wstrict-overflow=5
                          #-Wno-stringop-overflow
     endif(PARANOID_WARNING)

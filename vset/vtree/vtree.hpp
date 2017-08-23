@@ -91,6 +91,9 @@ public:
   allocator_type  _allocator;
   container_type  _container;
 
+  //если есть _open_file_ копирование недоступно
+  struct copy_ctor_disabled_for_mapped_files;
+
 public:
 
   vtree()
@@ -129,8 +132,6 @@ public:
     : _allocator( this->get_aspect().template get<_allocator_>()(*this) )
     , _container()
   {
-    //если есть _open_file_ копирование недоступно
-    struct copy_ctor_disabled_for_mapped_files;
     //typename fas::static_error< copy_ctor_disabled_for_mapped_files, super::aspect::template has_advice< ::vset::buffer::persistent::_open_file_ >::value == 0 >::type error;
     
     typedef typename fas::static_error< 

@@ -8,20 +8,16 @@
 #include <vset/vtree/vtree.hpp>
 #include <vset/vtree/strategy.hpp>
 
-UNIT(vtree_copy_ctor, "")
+namespace
 {
-  using namespace fas::testing;
   using namespace vset;
-
-  //copy constructor is disabled
-  /*typedef vtree::vtree< vtree::strategy::vtree_fsb_mmap<char, std::less<char>, 3> > ctor_int_vtree;
-  ctor_int_vtree ctor_tree;
-  ctor_int_vtree ctor_tree1(ctor_tree);*/
-
+  
   struct test_type
   {
     char key;
     char value;
+    test_type(): key(0), value(0) {}
+    test_type(char k, char v): key(k), value(v) {}
 
     bool operator==(const test_type &other) const
     {
@@ -36,18 +32,34 @@ UNIT(vtree_copy_ctor, "")
       return l.key < r.key;
     }
   };
-
+  
   typedef vtree::vtree< vtree::strategy::vtree_fsb_inmem<test_type, cmp_test_type, 3> > int_vtree;
+}
+  
+UNIT(vtree_copy_ctor, "")
+{
+  using namespace fas::testing;
+  using namespace vset;
+
+  //copy constructor is disabled
+  /*typedef vtree::vtree< vtree::strategy::vtree_fsb_mmap<char, std::less<char>, 3> > ctor_int_vtree;
+  ctor_int_vtree ctor_tree;
+  ctor_int_vtree ctor_tree1(ctor_tree);*/
+
 
   //copy ctor + initializer list ctor
-  int_vtree tree({{1,2},{3,4},{5,6},{7,8}});
+  int_vtree tree;
+  tree.insert(test_type(1,2));
+  tree.insert(test_type(3,4));
+  tree.insert(test_type(5,6));
+  tree.insert(test_type(7,8));
 
   int_vtree tree1(tree);
-  tree1.erase(test_type({3,0}));
-  tree1.insert(test_type({3,8}));
+  tree1.erase(test_type(3,0));
+  tree1.insert(test_type(3,8));
 
-  auto itr1 = tree1.begin();
-  for(auto itr = tree.begin() ;itr != tree.end(); ++itr, ++itr1 )
+  typename int_vtree::iterator itr1 = tree1.begin();
+  for(typename int_vtree::iterator itr = tree.begin() ;itr != tree.end(); ++itr, ++itr1 )
   {
     if( itr->key == 3 )
     {
@@ -61,10 +73,15 @@ UNIT(vtree_copy_ctor, "")
   }
 
   //move ctor
+#ifdef __GXX_EXPERIMENTAL_CXX0X__
   int_vtree tree2(std::move(tree1));
+#else
+  int_vtree tree2(tree1);
+  tree1.clear();
+#endif
 
-  auto itr2 = tree2.begin();
-  for(auto itr = tree.begin(); itr != tree.end(); ++itr, ++itr2 )
+  typename int_vtree::iterator itr2 = tree2.begin();
+  for(typename int_vtree::iterator itr = tree.begin(); itr != tree.end(); ++itr, ++itr2 )
   {
     if( itr->key == 3 )
     {
