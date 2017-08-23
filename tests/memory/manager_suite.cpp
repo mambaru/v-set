@@ -30,6 +30,16 @@ UNIT(fsb_filesync, "")
   t << nothing;
 }
 
+UNIT(fsb_inmem, "")
+{
+  using namespace fas::testing;
+  using namespace vset;
+  memory::fsb_inmem<int> fsb_inmem;
+  fsb_inmem.allocate(1);
+  t << nothing;
+}
+
+
 
 BEGIN_SUITE(manager_suite, "")
   ADD_UNIT(fsb_mmap)
