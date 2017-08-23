@@ -8,5 +8,6 @@
 
 BEGIN_TEST
   RUN_SUITE(basic_suite)
+  RUN_SUITE(manager_suite)
 END_TEST
 

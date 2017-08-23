@@ -17,10 +17,11 @@
 
 namespace vset { namespace memory{
 
+typedef fsb::aspect_offset    fsb_offset;
+typedef fsb::aspect_nth       fsb_nth;
+
 namespace strategy
 {
-  /*typedef fsb::aspect_offset    fsb_offset;
-  typedef fsb::aspect_nth  fsb_nth;*/
 
   template<typename T, typename OffsetAspect>
   struct fsb_mmap
