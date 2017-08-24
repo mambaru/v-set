@@ -4,7 +4,7 @@
 #include <vset/comparators/offset_compare.hpp>
 #include <vset/comparators/pointer_compare.hpp>
 
-#include <vset/memory/manager.hpp>
+#include <vset/memory/fsb_mmap.hpp>
 #include <vset/allocators/mmap_allocator.hpp>
 #include <vset/allocators/allocator.hpp>
 #include <vset/multiset.hpp>
@@ -64,7 +64,7 @@ struct employee_key
 };
 
 //persistent storage
-typedef ::vset::memory::manager< ::vset::memory::strategy::fsb_mmap<employee> > employees_storage;
+typedef ::vset::memory::fsb_mmap<employee> employees_storage;
 
 //employee comparator
 typedef ::vset::compare_list< fas::type_list_n<

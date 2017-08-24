@@ -30,7 +30,8 @@ if ( BUILD_TESTING )
 
   enable_testing()
   add_subdirectory(tests)
-  #add_subdirectory(examples)
-  #add_subdirectory(benchmark)
+  add_subdirectory(examples)
+  add_subdirectory(benchmark)
+  add_subdirectory(tutorial)
   
 endif()

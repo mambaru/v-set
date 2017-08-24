@@ -4,7 +4,7 @@
 #include <vset/comparators/offset_compare.hpp>
 #include <vset/comparators/pointer_compare.hpp>
 
-#include <vset/memory/manager.hpp>
+#include <vset/memory/fsb_mmap.hpp>
 #include <vset/allocators/mmap_allocator.hpp>
 #include <vset/multiset.hpp>
 
@@ -54,7 +54,7 @@ struct compare2:
 
 typedef unsigned int offset_t;
 
-struct data_storage: vset::memory::manager< vset::memory::strategy::fsb_mmap<data> > {};
+struct data_storage: vset::memory::fsb_mmap<data> {};
 
 typedef vset::offset_compare< offset_t, data_storage, compare1> offset_compare1_type;
 struct offset_compare1:

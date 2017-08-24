@@ -1,12 +1,12 @@
 #include <vset/multiset.hpp>
-#include <vset/allocators/buffer_allocator.hpp>
+#include <vset/allocators/inmem_allocator.hpp>
 #include <fas/xtime.hpp>
 #include <iostream>
 
 #include "config.hpp"
 using namespace vset;
 
-typedef vset::multiset< int, std::less<int>, buffer_allocator<CHUNK_SIZE> > storage_type;
+typedef vset::multiset< int, std::less<int>, inmem_allocator<CHUNK_SIZE> > storage_type;
 
 int main()
 {

@@ -16,22 +16,22 @@
 #
 #endif(UNIX)
 
-add_executable(multiset_insert EXCLUDE_FROM_ALL multiset_insert.cpp)
-add_executable(vset_insert EXCLUDE_FROM_ALL vset_insert.cpp)
-add_executable(vset_insert2 EXCLUDE_FROM_ALL vset_insert2.cpp)
+add_executable(multiset_insert  multiset_insert.cpp)
+add_executable(vset_insert  vset_insert.cpp)
+add_executable(vset_insert2  vset_insert2.cpp)
 # not support reverse_iterator::base
-#add_executable(vset_insert3 EXCLUDE_FROM_ALL vset_insert3.cpp)
-add_executable(vmultiset EXCLUDE_FROM_ALL vmultiset.cpp)
-add_executable(vmultiset2 EXCLUDE_FROM_ALL vmultiset2.cpp)
-add_executable(vmultiset3 EXCLUDE_FROM_ALL vmultiset3.cpp)
-add_executable(compare EXCLUDE_FROM_ALL compare.cpp)
+#add_executable(vset_insert3  vset_insert3.cpp)
+add_executable(vmultiset  vmultiset.cpp)
+add_executable(vmultiset2  vmultiset2.cpp)
+add_executable(vmultiset3  vmultiset3.cpp)
+add_executable(compare  compare.cpp)
 
 #include(ConfigureLibrary)
 #CONFIGURE_LIBRARY(stx/btree_multiset.h "/usr/include /usr/local/include" stx-btree "")
 
 if(HAVE_INCLUDE_stx-btree)
-  add_executable(stx_insert EXCLUDE_FROM_ALL stx_insert.cpp)
-  add_executable(stx_insert2 EXCLUDE_FROM_ALL stx_insert2.cpp)
+  add_executable(stx_insert  stx_insert.cpp)
+  add_executable(stx_insert2  stx_insert2.cpp)
   SET( 
     stx_sources 
     stx_insert

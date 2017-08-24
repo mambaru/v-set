@@ -50,7 +50,7 @@ public:
   {
     return super::_end(*this);
   }
-
+  
   pointer allocate(size_t num, void *  hint = 0)
   {
     return super::_allocate(*this, num, hint);
@@ -64,6 +64,11 @@ public:
   size_type count() const
   {
     return super::_count(*this);
+  }
+  
+  bool empty() const
+  {
+    return this->begin() == this->end();
   }
 
   size_type capacity() const

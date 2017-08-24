@@ -41,7 +41,7 @@ private:
     typedef typename T::aspect::template advice_cast<_value_type_>::type value_type;
     typedef typename T::aspect::template advice_cast<_buffer_data_type_>::type data_type;
 
-    data_type data = t.get_aspect().template get<_buffer_data_>()(t);
+    data_type data = const_cast<data_type>( t.get_aspect().template get<_buffer_data_>()(t) );
 
     chain_type* chn = reinterpret_cast<chain_type*>(data);
 

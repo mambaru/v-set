@@ -8,6 +8,7 @@
 #define COMPARATORS_COMPARE_LIST_HPP
 
 #include <fas/type_list/type_list.hpp>
+#include <fas/type_list/type_list_n.hpp>
 #include <fas/type_list/empty_list.hpp>
 #include <fas/type_list/head.hpp>
 #include <fas/type_list/tail.hpp>
@@ -15,9 +16,28 @@
 #include <fas/type_list/push_back.hpp>
 
 namespace vset{
+
+template<typename CompareList>
+struct compare_list_impl;
+template<typename CompareList>
+struct compare_list2_impl;
+
+
+#ifdef __GXX_EXPERIMENTAL_CXX0X__
+template<typename... Args>
+struct compare_list: compare_list_impl< typename fas::type_list_n<Args...>::type > {};
+template<typename... Args>
+struct compare_list2: compare_list2_impl< typename fas::type_list_n<Args...>::type > {};
+#else
+template<typename CompareList>
+struct compare_list: compare_list_impl< CompareList > {};
+template<typename CompareList>
+struct compare_list2: compare_list2_impl< CompareList > {};
+
+#endif
   
 template<typename CompareList>
-struct compare_list
+struct compare_list_impl
 {
   template<typename D>
   bool operator()(const D& l, const D& r) const
@@ -36,19 +56,6 @@ struct compare_list
       : head()(r, l)
         ? false
         : _(tail(), l, r);
-        /*
-    if ( head()(l, r) )
-    {
-      return true;
-    }
-
-    if ( head()(r, l) )
-    {
-      return false;
-    }
-
-    return _(tail(), l, r);
-    */
   }
 
   template< typename D>
@@ -59,7 +66,7 @@ struct compare_list
 };
 
 template<typename CompareList>
-struct compare_list2
+struct compare_list2_impl
 {
   template<typename D>
   bool operator()(const D& l, const D& r) const

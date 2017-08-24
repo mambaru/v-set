@@ -1,5 +1,5 @@
 
-add_executable(index_storage EXCLUDE_FROM_ALL storage.cpp)
+add_executable(index_storage  storage.cpp)
 
 add_custom_target(
     index_storage_example DEPENDS    
@@ -8,7 +8,7 @@ add_custom_target(
 
 if ( NOT ${gcc_version_number} LESS 4006 )
   
-  add_executable(index_storage11 EXCLUDE_FROM_ALL storage11.cpp)
+  add_executable(index_storage11 storage11.cpp)
 
   add_custom_target(
     index_storage_example11 DEPENDS    
