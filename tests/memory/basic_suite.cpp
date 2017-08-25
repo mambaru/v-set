@@ -48,7 +48,8 @@ UNIT(test_offset, "")
     size_t ptr = off2ptr(i);
     size_t off = ptr2off(ptr);
     //t << message("i=") << i << " off=" << off << " ptr=" << ptr << " > " << (ptr - CHAIN_HEAD) / CHANK_SIZE ;
-    t << equal<assert>(i, off+1 ) << " ptr=" << ptr <<  FAS_FL;
+    t << equal<crash>(i, off) << " ptr=" << ptr <<  FAS_FL;
+    t << stop;
     //return;
   }
 }
