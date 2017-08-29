@@ -9,6 +9,7 @@
 
 #include <fas/typemanip/empty_type.hpp>
 #include <vset/vtree/strategy.hpp>
+#include <vset/allocators/offset.hpp>
 #include <fas/aop/aspect.hpp>
 
 namespace vset{
