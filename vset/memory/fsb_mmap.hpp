@@ -15,7 +15,7 @@ namespace vset { namespace memory{
 
 template<typename T, typename OffsetAspect = fsb_offset, typename A = fas::aspect<> >
 struct fsb_mmap
-  : manager< typename fas::merge_aspect< A, strategy::fsb_mmap<T, fsb_offset> >::type >
+  : manager< typename fas::merge_aspect< A, strategy::fsb_mmap<T, OffsetAspect> >::type >
 {};
 
 }}
