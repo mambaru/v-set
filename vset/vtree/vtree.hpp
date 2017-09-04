@@ -120,14 +120,16 @@ public:
 
   template<typename InputIterator>
   vtree(InputIterator b, InputIterator e, const value_compare& comp, const allocator_type&  alloc = allocator_type() )
-    : _allocator( this->get_aspect().template get<_allocator_>()(*this) )
+    : _allocator(alloc)
     , _container( container_comparator(comp) ) 
   {
     this->get_aspect().template get<_compare_>() = comp;
-    //_allocator = this->get_aspect().template get<_allocator_>()(*this);
+    _allocator = this->get_aspect().template get<_allocator_>()(*this);
     this->insert(b, e);
   }
 
+  
+  /*
   vtree(const vtree& __x)
     : _allocator( this->get_aspect().template get<_allocator_>()(*this) )
     , _container()
@@ -139,10 +141,21 @@ public:
       super::aspect::template has_advice< ::vset::buffer::persistent::_open_file_ >::value == 0 
     >::type error;
     this->dummy( error() );
-    this->insert(__x.begin(), __x.end());
+    static_cast<super&>(*this) = static_cast<super&>(__x);
+    //!!!! this->insert(__x.begin(), __x.end());
   }
+  */
+  
 
 #ifdef __GXX_EXPERIMENTAL_CXX0X__
+
+  vtree&& clone(const value_compare& comp, const allocator_type&  alloc = allocator_type()) const
+  {
+    return std::move(vtree( this->begin(), this->end(), comp, alloc));
+  }
+
+
+  vtree(const vtree&) = delete;
 
   vtree(vtree&& __x)
   //noexcept(std::is_nothrow_copy_constructible<allocator_type>::value)
