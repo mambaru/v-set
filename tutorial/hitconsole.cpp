@@ -46,6 +46,33 @@ public:
     _by_ts.insert( h.get_offset() );
   }
   
+  template<typename Itr>
+  const hit& get(Itr itr) const
+  {
+    auto ptr = _storage.end();
+    ptr.set_offset(*itr);
+    return *ptr;
+  }
+
+  
+  size_t get_hits( std::vector<hit>& hits, uint32_t id, size_t offset, size_t limit) const
+  {
+    hits.clear();
+    hits.reserve(limit);
+    _var->dst_id = id;
+    _var->ts = ~0;
+    auto lower = _by_dst.lower_bound(_var.get_offset());
+    _var->ts = 0;
+    auto upper = _by_dst.upper_bound(_var.get_offset());
+    auto dist = std::distance(lower, upper);
+    for(;lower!=upper && offset!=0; ++lower, --offset);
+    for(;lower!=upper && limit!=0; ++lower, --limit)
+    {
+      hits.push_back( this->get(lower) );
+    }
+    return static_cast<size_t>(dist);
+  }
+  
   std::array<size_t, 4> sizes() const
   {
     return {
@@ -56,7 +83,7 @@ public:
     };
   }
 private:
-  storage_type::pointer _var;
+  mutable storage_type::pointer _var;
   storage_type _storage;
   vset::multiset<offset_t, cmp_by_src_offs > _by_src;
   vset::multiset<offset_t, cmp_by_dst_offs > _by_dst;

@@ -77,6 +77,12 @@ public:
   {
     return *(this->get_address());
   }
+
+  const value_type& get_cref() const
+  {
+    return *(this->get_address());
+  }
+
   value_type* get_address()
   {
     if ( _offset == static_cast<size_t>(-1) )

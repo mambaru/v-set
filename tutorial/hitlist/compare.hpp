@@ -4,16 +4,6 @@
 #include <vset/comparators/compare_list.hpp>
 #include <vset/comparators/compare_member.hpp>
 
-
-/*
-struct hit
-{
-  uint32_t src_id = 0;
-  uint32_t dst_id = 0;
-  time_t dst_id = 0;
-}
-*/
-
 struct cmp_by_src:
   vset::compare_list<
     vset::compare_member< hit, uint32_t, &hit::src_id, std::less<uint32_t> >,

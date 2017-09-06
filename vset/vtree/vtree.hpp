@@ -129,8 +129,7 @@ public:
   }
 
   
-  /*
-  vtree(const vtree& __x)
+  vtree(const self& __x)
     : _allocator( this->get_aspect().template get<_allocator_>()(*this) )
     , _container()
   {
@@ -141,10 +140,9 @@ public:
       super::aspect::template has_advice< ::vset::buffer::persistent::_open_file_ >::value == 0 
     >::type error;
     this->dummy( error() );
-    static_cast<super&>(*this) = static_cast<super&>(__x);
-    //!!!! this->insert(__x.begin(), __x.end());
+    ///static_cast<super&>(*this) = static_cast<const super&>(__x);
+    this->insert(__x.begin(), __x.end());
   }
-  */
   
 
 #ifdef __GXX_EXPERIMENTAL_CXX0X__
@@ -155,7 +153,7 @@ public:
   }
 
 
-  vtree(const vtree&) = delete;
+ // vtree(const vtree&) = delete;
 
   vtree(vtree&& __x)
   //noexcept(std::is_nothrow_copy_constructible<allocator_type>::value)
