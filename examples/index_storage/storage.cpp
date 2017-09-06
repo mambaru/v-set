@@ -75,6 +75,7 @@ typedef ::vset::compare_list< fas::type_list_n<
 //inmemory index
 typedef ::vset::multiset< employee_key, employee_cmp, ::vset::allocator<1024> > employee_index;
 
+void insert_employee(employees_storage &storage, employee_index& index, const employee& emp);
 void insert_employee(employees_storage &storage, employee_index& index, const employee& emp)
 {
   employees_storage::pointer ptr = storage.allocate(1);
@@ -129,13 +130,13 @@ int main()
               << ". Storage offset: " << itr->offset << std::endl;
   }
   
-  employee_index::iterator emp_ptr = index.find( employee_key(2, 3, 0ULL) );
+  employee_index::iterator emp_ptr = index.find( employee_key(2, 3, 0u) );
 
   if( emp_ptr != index.end() )
   {
-    employees_storage::pointer ptr = storage.begin();
-    ptr.set_offset(emp_ptr->offset);
-    std::cout << "Found employee from company 1 and division 3 - id " << ptr->employee_id << std::endl;
+    employees_storage::pointer ptr1 = storage.begin();
+    ptr1.set_offset(emp_ptr->offset);
+    std::cout << "Found employee from company 1 and division 3 - id " << ptr1->employee_id << std::endl;
   }
   else
   {

@@ -10,12 +10,13 @@ namespace vset{
 template<typename V, typename C = std::less<V>, typename A = std::allocator<V> >
 class multiset;
   
+/*
 template<typename V, typename C>
 class multiset<V, C, std::allocator<V> >
   : public vtree::vtree< vtree::strategy::vtree_std_alloc<V, C, 512> >
 {
-  
 };
+*/
 
 namespace aspect_maker
 {
@@ -36,6 +37,14 @@ namespace aspect_maker
     typedef vtree::vtree< typename make<V, C, A>::aspect  > type;
   };
 
+  template<typename V, typename C, typename A>
+  struct multiset_impl<V, C, A, false>
+  {
+    typedef vtree::vtree< vtree::strategy::vtree_std_alloc<V, C, 512> > type;
+    //typedef vtree::vtree< typename make<V, C, A>::aspect  > type;
+  };
+
+  
   template<typename V, typename C, typename A>
   struct multiset
   {
