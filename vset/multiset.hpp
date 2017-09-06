@@ -94,15 +94,19 @@ public:
   {
   }
 
+  /*
   multiset(const multiset& other)
     : super( other )
   {
   }
+  */
 
 #ifdef __GXX_EXPERIMENTAL_CXX0X__
 
+  multiset(const multiset&) = delete;
+  
   multiset(multiset&& other)
-    : super( other )
+    : super( std::move(other) )
   {
   }
 
@@ -123,13 +127,13 @@ public:
 
   multiset& operator=(multiset&& other)
   {
-    super::operator = (other);
+    super::operator = (std::move(other) );
     return *this;
   }
 
   multiset& operator=( std::initializer_list<value_type> il)
   {
-    super::operator = (il);
+    super::operator = (std::move(il) );
     return *this;
   }
 #endif

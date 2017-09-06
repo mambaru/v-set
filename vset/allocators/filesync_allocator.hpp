@@ -7,13 +7,14 @@
 #ifndef VSET_ALLOCATORS_FILESYNC_ALLOCATOR_HPP
 #define VSET_ALLOCATORS_FILESYNC_ALLOCATOR_HPP
 
+#include <vset/allocators/offset.hpp>
 #include <fas/typemanip/empty_type.hpp>
 #include <vset/vtree/strategy.hpp>
 #include <fas/aop/aspect.hpp>
 
 namespace vset{
 
-template<size_t N, typename A = fas::aspect<> >
+template<size_t N, typename O = fsb_offset, typename A = fas::aspect<> >
 struct filesync_allocator
 {
   typedef fas::empty_type aspect_maker;
@@ -21,7 +22,7 @@ struct filesync_allocator
   template<typename V, typename C>
   struct apply
   {
-    typedef typename fas::merge_aspect< A, vtree::strategy::vtree_fsb_filesync<V, C, N> >::type type;
+    typedef typename fas::merge_aspect< A, vtree::strategy::vtree_fsb_filesync<V, C, N, O> >::type type;
   };
 };
 
