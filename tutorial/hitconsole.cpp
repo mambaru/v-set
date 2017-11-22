@@ -49,5 +49,7 @@ private:
 
 int main(int, char*[])
 {
+  hitlist hl;
+  hl.set_hit(0,0,0);
   return 1;
 }

@@ -11,14 +11,10 @@
 template <int _innerslots, int _leafslots>
 struct btree_traits_speed
 {
-    //cppcheck-suppress unusedStructMember
-    static const bool selfverify = false;
-    //cppcheck-suppress unusedStructMember
-    static const bool debug = false;
-    //cppcheck-suppress unusedStructMember
-    static const int leafslots = _innerslots;
-    //cppcheck-suppress unusedStructMember
-    static const int innerslots = _leafslots;
+  static const bool selfverify = false;
+  static const bool debug = false;
+  static const int leafslots = _innerslots;
+  static const int innerslots = _leafslots;
 };
 
 typedef stx::btree_multiset<int, std::less<int>, struct btree_traits_speed<CHUNK_SIZE, CHUNK_SIZE> > storage_type;

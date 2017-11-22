@@ -16,12 +16,11 @@ if ( BUILD_TESTING )
     if (PARANOID_WARNING)
       set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -Wcast-align \
                          -Wcast-qual -Wctor-dtor-privacy -Wdisabled-optimization\
-                         -Wformat=2 -Winit-self -Wlogical-op -Wmissing-declarations \
-                         -Wmissing-include-dirs -Wnoexcept -Wold-style-cast -Woverloaded-virtual \
-                         -Wredundant-decls -Wshadow -Wsign-conversion -Wsign-promo -Wstrict-null-sentinel \
+                         -Wformat=2 -Winit-self  -Wmissing-declarations \
+                         -Wmissing-include-dirs -Wold-style-cast -Woverloaded-virtual \
+                         -Wredundant-decls -Wshadow -Wsign-conversion -Wsign-promo \
                          -Wswitch-default -Wundef -Wstrict-overflow=1")
-                        #-Wstrict-overflow=5
-                         #-Wno-stringop-overflow
+      #-Wno-stringop-overflow -Wstrict-overflow=5 -Wlogical-op  -Wnoexcept -Wstrict-null-sentinel
     endif(PARANOID_WARNING)
   endif (UNIX)
 
@@ -32,6 +31,8 @@ if ( BUILD_TESTING )
   add_subdirectory(tests)
   add_subdirectory(examples)
   add_subdirectory(benchmark)
-  add_subdirectory(tutorial)
+  if ( CMAKE_CXX_STANDARD GREATER 98)
+    add_subdirectory(tutorial)
+  endif()
   
 endif()

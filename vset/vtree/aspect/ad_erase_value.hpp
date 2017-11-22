@@ -19,8 +19,9 @@ struct ad_erase_value
   typename T::size_type operator()(T& t, const typename T::key_type& value)
   {
     typedef typename T::size_type size_type;
-    typename T::const_iterator lower = t.get_aspect().template get<_lower_bound_>()(t, value);
-    typename T::const_iterator upper = t.get_aspect().template get<_upper_bound_>()(t, value);
+    typedef typename T::const_iterator iterator_type;
+    iterator_type lower( t.get_aspect().template get<_lower_bound_>()(t, value) );
+    iterator_type upper( t.get_aspect().template get<_upper_bound_>()(t, value) );
     size_type result = static_cast<size_type>( std::distance(lower, upper) );
  
     t.get_aspect().template get<_erase_range_>()( t, lower, upper );

@@ -119,7 +119,7 @@ public:
   }
 
   template<typename InputIterator>
-  vtree(InputIterator b, InputIterator e, const value_compare& comp, const allocator_type&  alloc = allocator_type() )
+  vtree(InputIterator b, InputIterator e, const value_compare& comp, const allocator_type&  = allocator_type() )
     : _allocator( this->get_aspect().template get<_allocator_>()(*this) )
     , _container( container_comparator(comp) ) 
   {

@@ -85,7 +85,7 @@ void test_char_init(T& t, Alloc& allocator)
     size_t off1 = beg.get_offset();
     value_type* add1 = beg.get_address();
     t << equal< assert, value_type > ( *add1, '0' + i%10 ) << FAS_FL;
-    t << equal< assert, value_type* > ( &*beg, &*add1 ) << FAS_FL;
+    t << equal< assert, value_type* > ( &(*beg), &(*add1) ) << FAS_FL;
     beg.set_offset(off1);
     t << equal< assert, size_t > ( off1, beg.get_offset() ) << FAS_FL;
     t << equal< assert, value_type* > ( add1, beg.get_address() ) << FAS_FL;

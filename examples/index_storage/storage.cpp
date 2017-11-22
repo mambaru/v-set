@@ -129,13 +129,13 @@ int main()
               << ". Storage offset: " << itr->offset << std::endl;
   }
   
-  employee_index::iterator emp_ptr = index.find( employee_key(2, 3, 0ULL) );
+  employee_index::iterator emp_ptr = index.find( employee_key(2, 3, 0UL) );
 
   if( emp_ptr != index.end() )
   {
-    employees_storage::pointer ptr = storage.begin();
-    ptr.set_offset(emp_ptr->offset);
-    std::cout << "Found employee from company 1 and division 3 - id " << ptr->employee_id << std::endl;
+    employees_storage::pointer ptr1 = storage.begin();
+    ptr1.set_offset(emp_ptr->offset);
+    std::cout << "Found employee from company 1 and division 3 - id " << ptr1->employee_id << std::endl;
   }
   else
   {
