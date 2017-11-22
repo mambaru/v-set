@@ -86,19 +86,16 @@ struct ad_erase_iterator
   template<typename T>
   typename T::iterator operator()(T& t, typename T::iterator itr, bool make_defrag)
   {
-    if ( itr == t.end() )
-    {
-      throw std::out_of_range("ad_erase_iterator itr == t.end()");
-    }
-
     typedef typename T::iterator iterator;
     typedef typename iterator::difference_type difference_type;
     typedef typename T::container_type container_type;
     typedef typename container_type::iterator container_iterator;
 
+    if ( itr == t.end() )
+      return iterator(t.get_container().end(), 0 );
+
     container_iterator cont_itr = itr.get_source_iterator();
     difference_type    offset   = itr.get_position();
-    
 
     cont_itr->second->erase(
       cont_itr->second->begin() + itr.get_position(),

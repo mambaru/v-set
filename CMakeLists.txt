@@ -21,9 +21,9 @@ if ( BUILD_TESTING )
                          -Wredundant-decls -Wshadow -Wsign-conversion -Wsign-promo \
                          -Wswitch-default -Wundef -Wstrict-overflow=1")
       #-Wno-stringop-overflow -Wstrict-overflow=5 -Wlogical-op  -Wnoexcept -Wstrict-null-sentinel
-      if ( CMAKE_CXX_STANDARD EQUAL 98)
+      #if ( CMAKE_CXX_STANDARD EQUAL 98 )
         set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -Wstrict-overflow=5 -Wno-stringop-overflow")
-      endif()
+      #endif()
 
     endif(PARANOID_WARNING)
   endif (UNIX)
