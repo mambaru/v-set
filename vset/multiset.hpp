@@ -10,12 +10,13 @@ namespace vset{
 template<typename V, typename C = std::less<V>, typename A = std::allocator<V> >
 class multiset;
   
+/*
 template<typename V, typename C>
 class multiset<V, C, std::allocator<V> >
   : public vtree::vtree< vtree::strategy::vtree_std_alloc<V, C, 512> >
 {
-  
 };
+*/
 
 namespace aspect_maker
 {
@@ -36,6 +37,14 @@ namespace aspect_maker
     typedef vtree::vtree< typename make<V, C, A>::aspect  > type;
   };
 
+  template<typename V, typename C, typename A>
+  struct multiset_impl<V, C, A, false>
+  {
+    typedef vtree::vtree< vtree::strategy::vtree_std_alloc<V, C, 512> > type;
+    //typedef vtree::vtree< typename make<V, C, A>::aspect  > type;
+  };
+
+  
   template<typename V, typename C, typename A>
   struct multiset
   {
@@ -85,15 +94,19 @@ public:
   {
   }
 
+  /*
   multiset(const multiset& other)
     : super( other )
   {
   }
+  */
 
 #ifdef __GXX_EXPERIMENTAL_CXX0X__
 
+  multiset(const multiset&) = delete;
+  
   multiset(multiset&& other)
-    : super( other )
+    : super( std::move(other) )
   {
   }
 
@@ -114,13 +127,13 @@ public:
 
   multiset& operator=(multiset&& other)
   {
-    super::operator = (other);
+    super::operator = (std::move(other) );
     return *this;
   }
 
   multiset& operator=( std::initializer_list<value_type> il)
   {
-    super::operator = (il);
+    super::operator = (std::move(il) );
     return *this;
   }
 #endif

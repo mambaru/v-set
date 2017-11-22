@@ -9,8 +9,14 @@ typedef size_t offset_t;
 class hitlist
 {
   typedef vset::memory::fsb_inmem<hit> storage_type;
+  typedef vset::offset_compare<offset_t, storage_type, cmp_by_src> cmp_by_src_offs;
+  typedef vset::offset_compare<offset_t, storage_type, cmp_by_dst> cmp_by_dst_offs;
+  typedef vset::offset_compare<offset_t, storage_type, cmp_by_ts> cmp_by_ts_offs;
 public:
   hitlist()
+    : _by_src( cmp_by_src_offs( _storage.end() ) )
+    , _by_dst( cmp_by_dst_offs( _storage.end() ) )
+    , _by_ts ( cmp_by_ts_offs( _storage.end() ) )
   {
   }
   
@@ -39,17 +45,61 @@ public:
     _by_dst.insert( h.get_offset() );
     _by_ts.insert( h.get_offset() );
   }
+  
+  template<typename Itr>
+  const hit& get(Itr itr) const
+  {
+    auto ptr = _storage.end();
+    ptr.set_offset(*itr);
+    return *ptr;
+  }
+
+  
+  size_t get_hits( std::vector<hit>& hits, uint32_t id, size_t offset, size_t limit) const
+  {
+    hits.clear();
+    hits.reserve(limit);
+    _var->dst_id = id;
+    _var->ts = ~0;
+    auto lower = _by_dst.lower_bound(_var.get_offset());
+    _var->ts = 0;
+    auto upper = _by_dst.upper_bound(_var.get_offset());
+    auto dist = std::distance(lower, upper);
+    for(;lower!=upper && offset!=0; ++lower, --offset);
+    for(;lower!=upper && limit!=0; ++lower, --limit)
+    {
+      hits.push_back( this->get(lower) );
+    }
+    return static_cast<size_t>(dist);
+  }
+  
+  std::array<size_t, 4> sizes() const
+  {
+    return {
+      _storage.count(),
+      _by_src.size(),
+      _by_dst.size(),
+      _by_ts.size()
+    };
+  }
 private:
-  storage_type::pointer _var;
+  mutable storage_type::pointer _var;
   storage_type _storage;
-  vset::multiset<offset_t, vset::offset_compare<offset_t, storage_type, cmp_by_src> > _by_src;
-  vset::multiset<offset_t, vset::offset_compare<offset_t, storage_type, cmp_by_dst> > _by_dst;
-  vset::multiset<offset_t, vset::offset_compare<offset_t, storage_type, cmp_by_ts> >  _by_ts;
+  vset::multiset<offset_t, cmp_by_src_offs > _by_src;
+  vset::multiset<offset_t, cmp_by_dst_offs > _by_dst;
+  vset::multiset<offset_t, cmp_by_ts_offs >  _by_ts;
 };
 
 int main(int, char*[])
 {
   hitlist hl;
-  hl.set_hit(0,0,0);
+  for (uint32_t i=0; i < 1000; ++i)
+    hl.set_hit(i,i, time_t(i) );
+  
+  auto ss = hl.sizes();
+  std::cout << std::get<0>(ss) << std::endl;
+  std::cout << std::get<1>(ss) << std::endl;
+  std::cout << std::get<2>(ss) << std::endl;
+  std::cout << std::get<3>(ss) << std::endl;
   return 1;
 }

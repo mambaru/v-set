@@ -23,11 +23,11 @@ template<
   template<typename> class BufferProvider
 >
 struct aspect: fas::merge_aspect<
+  OffsetAspect,
+  BufferAspect,
   aspect_value<T>,
   aspect_manager<BufferProvider>,
-  aspect_pointer,
-  OffsetAspect,
-  BufferAspect
+  aspect_pointer
 >::type {};
 
 }}}

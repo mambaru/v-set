@@ -75,6 +75,7 @@ typedef ::vset::compare_list< fas::type_list_n<
 //inmemory index
 typedef ::vset::multiset< employee_key, employee_cmp, ::vset::allocator<1024> > employee_index;
 
+void insert_employee(employees_storage &storage, employee_index& index, const employee& emp);
 void insert_employee(employees_storage &storage, employee_index& index, const employee& emp)
 {
   employees_storage::pointer ptr = storage.allocate(1);

@@ -45,7 +45,8 @@ struct ad_erase_range
   template<typename T>
   void operator()(T& t, typename T::iterator beg, typename T::iterator end)
   {
-    std::ptrdiff_t dist = std::distance(beg, end);
+    typedef typename T::difference_type difference_type;
+    difference_type dist = std::distance(beg, end);
     for ( ;dist!=0; --dist)
     {
       beg = t.get_aspect().template get<_erase_iterator_>()(t, beg, false);
