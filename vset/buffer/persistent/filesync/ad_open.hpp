@@ -17,9 +17,6 @@ namespace vset { namespace buffer { namespace persistent{ namespace filesync{
 
 struct ad_open
 {
-  ad_open()
-    : _buffer_size(0) {}
-  
   template<typename T>
   void operator()( T& t)
   {
@@ -62,8 +59,6 @@ struct ad_open
     t.get_aspect().template get<_size_value_>() = head->size();
     t.get_aspect().template get<_capacity_value_>() = head->capacity();
   }
-private:
-  size_t _buffer_size;
 };
 
 }}}}

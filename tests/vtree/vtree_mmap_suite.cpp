@@ -164,15 +164,17 @@ public:
     return _vset;
   }
 
-private:
   persist_container(const persist_container& );
+private:
+  
   set_type* _vset;
 };
 
 template<size_t ArraySize>
 class non_persist_container
 {
-  non_persist_container(const non_persist_container&){};
+  non_persist_container(const non_persist_container&);
+  non_persist_container& operator=(const non_persist_container&);
 public:
 
   typedef vset::vtree::vtree< vset::vtree::strategy::vtree_fsb_mmap<int, std::less<int>, ArraySize> > set_type;

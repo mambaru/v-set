@@ -130,7 +130,7 @@ int main()
               << ". Storage offset: " << itr->offset << std::endl;
   }
   
-  employee_index::iterator emp_ptr = index.find( employee_key(2, 3, 0u) );
+  employee_index::iterator emp_ptr = index.find( employee_key(2, 3, 0UL) );
 
   if( emp_ptr != index.end() )
   {

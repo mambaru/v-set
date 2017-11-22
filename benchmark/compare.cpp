@@ -20,7 +20,7 @@ struct data
   int data6;
 };
 
-inline bool operator == (data l, data r)
+inline bool operator == (const data& l, const data& r)
 {
   return l.data1==r.data1 && l.data2==r.data2 && l.data3==r.data3;
 }
