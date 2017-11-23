@@ -1,4 +1,4 @@
-wjson:
+vset:
   only:
     - master
     - devel
