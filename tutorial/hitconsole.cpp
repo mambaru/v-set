@@ -101,7 +101,9 @@ int main(int, char*[])
   std::cout << std::get<1>(ss) << std::endl;
   std::cout << std::get<2>(ss) << std::endl;
   std::cout << std::get<3>(ss) << std::endl;
+
   std::vector<hit> hits;
   hl.get_hits(hits,0,0,0);
+  std::cout << sizeof(std::_Rb_tree_node_base) << std::endl;
   return 1;
 }

@@ -487,13 +487,14 @@ private:
 template<typename A>
 inline bool operator==(const vtree<A>& __x, const vtree<A>& __y)
 {
-  return __x.size() == __y.size() && std::equal(__x.begin(), __x.end(), __y.begin());
+  return !(__x < __y) && !(__y < __x);
+  //return __x.size() == __y.size() && std::equal(__x.begin(), __x.end(), __y.begin());
 }
 
 template<typename A>
 inline bool operator< (const vtree<A>& __x, const vtree<A>& __y)
 {
-  return std::lexicographical_compare(__x.begin(), __x.end(), __y.begin(), __y.end());
+  return std::lexicographical_compare(__x.begin(), __x.end(), __y.begin(), __y.end(), __x.key_comp() );
 }
 
 template<typename A>
