@@ -5,6 +5,7 @@
 #include <fas/xtime.hpp>
 #include <fas/typemanip.hpp>
 #include <fas/functional.hpp>
+#include <functional>
 #include <iostream>
 #include <set>
 
@@ -45,12 +46,13 @@ struct cmp_data3
   bool operator()(const data& l, const data& r) const
   {
     //std::cout << l.data1 << std::endl;
-    return l.data1 < r.data1 ||
-    ( ! ( r.data1 < l.data1 ) && l.data2 > r.data2 ) ||
-    ( ! ( r.data1 < l.data1 ) && !( r.data2 > l.data2 ) && l.data3 < r.data3 ) ||
-    ( ! ( r.data1 < l.data1 ) && !( r.data2 > l.data2 ) && !( r.data3 < l.data3 ) && l.data4 < r.data4 ) ||
-    ( ! ( r.data1 < l.data1 ) && !( r.data2 > l.data2 ) && !( r.data3 < l.data3 ) && !( r.data4 < l.data4 ) && l.data5 < r.data5 ) ||
-    ( ! ( r.data1 < l.data1 ) && !( r.data2 > l.data2 ) && !( r.data3 < l.data3 ) && !( r.data4 < l.data4 ) && !( r.data5 < l.data5 ) && l.data6 < r.data6 )
+    return l.data1 < r.data1 
+      || ( ! ( r.data1 < l.data1 ) && l.data2 > r.data2 ) 
+      || ( ! ( r.data1 < l.data1 ) && !( r.data2 > l.data2 ) && l.data3 < r.data3 ) 
+      || ( ! ( r.data1 < l.data1 ) && !( r.data2 > l.data2 ) && !( r.data3 < l.data3 ) && l.data4 < r.data4 ) 
+      || ( ! ( r.data1 < l.data1 ) && !( r.data2 > l.data2 ) && !( r.data3 < l.data3 ) && !( r.data4 < l.data4 ) && l.data5 < r.data5 ) 
+      || ( ! ( r.data1 < l.data1 ) && !( r.data2 > l.data2 ) && !( r.data3 < l.data3 ) 
+               && !( r.data4 < l.data4 ) && !( r.data5 < l.data5 ) && l.data6 < r.data6 )
     ;
   }
 };
@@ -81,13 +83,36 @@ struct cmp_data4
   }
 };
 
-#define RANGE 10
+inline bool cmp_data5(const data& l, const data& r)
+{
+    if ( l.data1 < r.data1 ) return true;
+    if ( l.data1 > r.data1 ) return false;
+    
+    if ( l.data2 > r.data2 ) return true;
+    if ( l.data2 < r.data2 ) return false;
+    
+    if ( l.data3 < r.data3 ) return true;
+    if ( l.data3 > r.data3 ) return false;
+    
+    if ( l.data4 < r.data4 ) return true;
+    if ( l.data4 > r.data4 ) return false;
+    
+    if ( l.data5 < r.data5 ) return true;
+    if ( l.data5 > r.data5 ) return false;    
+    
+    if ( l.data6 < r.data6 ) return true;
+    if ( l.data6 > r.data6 ) return false;
+    
+    return false;
+};
+
+#define RANGE 1000000
 #ifdef NDEBUG
-  #define MAX_TEST 5
+  #define MAX_TEST 10
   #define MAX_DATA 10000000
 #else
-  #define MAX_TEST 1
-  #define MAX_DATA 1000
+  #define MAX_TEST 5
+  #define MAX_DATA 10000
 #endif
 
 struct f_generate
@@ -105,6 +130,19 @@ struct f_generate
   }
 };
 
+void show(const std::string& text, fas::nanospan span)
+{
+  std::cout << text << " " << span << std::endl;
+}
+
+const char* desc[]={
+  "template 'multi if' compare ",
+  "template 'one if' compare   ",
+  "one 'if' compare            ",
+  "multi 'if' compare          ",
+  "multi 'if' compare fun      ",
+  "tuple default compare       "
+};
 int main()
 {
   std::srand(time(0));
@@ -124,67 +162,76 @@ int main()
   std::set<fas::nanospan> time3;
   std::set<fas::nanospan> time4;
   std::set<fas::nanospan> time5;
+  std::set<fas::nanospan> time6;
   for (int i = 0; i < MAX_TEST; ++i)
   {
     std::cout << "---------------------------" << std::endl;
-    std::vector<data> d1, d2, d3, d4;
+    std::vector<data> d1, d2, d3, d4, d5;
     std::vector<data_tuple> dt1;
     d1 = d;
     d2 = d;
     d3 = d;
     d4 = d;
+    d5 = d;
     dt1 = dt;
     
-    fas::nanospan start = fas::nanotime();
-    std::sort(d1.begin(), d1.end(), cmp_data1());
-    fas::nanospan finish = fas::nanotime();
-    std::cout << finish - start << std::endl;
-    time1.insert(finish - start);
 
-    start = fas::nanotime();
-    std::sort(dt1.begin(), dt1.end());
-    finish = fas::nanotime();
-    std::cout << finish - start << std::endl;
-    time5.insert(finish - start);
+    //std::function<bool (const data&, const data&)> tmp1 = cmp_data1();
+    fas::nanospan start = fas::nanotime();
+    //std::sort(d1.begin(), d1.end(), cmp_data1());
+    std::sort(d1.begin(), d1.end(), [](const data& a, const data& b){
+      return cmp_data1()(a, b);
+    });
+    fas::nanospan finish = fas::nanotime();
+    show(desc[0],  finish - start );
+    time1.insert(finish - start);
 
     start = fas::nanotime();
     std::sort(d2.begin(), d2.end(), cmp_data2());
     finish = fas::nanotime();
-    std::cout << finish - start << std::endl;
+    show(desc[1],  finish - start );
     time2.insert(finish - start);
 
     start = fas::nanotime();
     std::sort(d3.begin(), d3.end(), cmp_data3());
     finish = fas::nanotime();
-    std::cout << finish - start << std::endl;
+    show(desc[2],  finish - start );
     time3.insert(finish - start);
 
     start = fas::nanotime();
     std::sort(d4.begin(), d4.end(), cmp_data4());
     finish = fas::nanotime();
-    std::cout << finish - start << std::endl;
+    show(desc[3],  finish - start );
     time4.insert(finish - start);
 
-    if ( !(d1==d2) )
-    {
-      abort();
-    }
+    start = fas::nanotime();
+    std::sort(d5.begin(), d5.end(), cmp_data5);
+    finish = fas::nanotime();
+    show(desc[4],  finish - start );
+    time5.insert(finish - start);
 
-    if ( !(d1==d3) )
-    {
-      abort();
-    }
+    start = fas::nanotime();
+    std::sort(dt1.begin(), dt1.end());
+    finish = fas::nanotime();
+    show(desc[5],  finish - start );
+    time6.insert(finish - start);
+
+    std::cout << "========================" << std::endl;
+    if ( !(d1==d2) )  abort();
+    if ( !(d1==d3) )  abort();
+    if ( !(d1==d4) )  abort();
+    if ( !(d1==d5) )  abort();
   }
 
   std::cout << "---------------------------" << std::endl;
   std::cout << "---------------------------" << std::endl;
   std::cout << "---------------------------" << std::endl;
 
-  std::cout << *(time1.begin()) << std::endl;
-  std::cout << *(time2.begin()) << std::endl;
-  std::cout << *(time3.begin()) << std::endl;
-  std::cout << *(time4.begin()) << std::endl;
-  std::cout << *(time5.begin()) << std::endl;
-
+  show(desc[0], *(time1.begin()) );
+  show(desc[1], *(time2.begin()) );
+  show(desc[2], *(time3.begin()) );
+  show(desc[3], *(time4.begin()) );
+  show(desc[4], *(time5.begin()) );
+  show(desc[5], *(time6.begin()) );
   return 0;
 }
