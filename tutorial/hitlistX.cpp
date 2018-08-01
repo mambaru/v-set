@@ -1,6 +1,4 @@
-
-/*
-#include <iostream>
+#include "hitlist.hpp"
 #include <hitlist/compare.hpp>
 #include <vset/memory/fsb_inmem.hpp>
 #include <vset/multiset.hpp>
@@ -8,14 +6,14 @@
 
 typedef size_t offset_t;
 
-class hitlist
+class hitlist::impl
 {
   typedef vset::memory::fsb_inmem<hit> storage_type;
   typedef vset::offset_compare<offset_t, storage_type, cmp_by_src> cmp_by_src_offs;
   typedef vset::offset_compare<offset_t, storage_type, cmp_by_dst> cmp_by_dst_offs;
   typedef vset::offset_compare<offset_t, storage_type, cmp_by_ts> cmp_by_ts_offs;
 public:
-  hitlist()
+  impl()
     : _by_src( cmp_by_src_offs( _storage.end() ) )
     , _by_dst( cmp_by_dst_offs( _storage.end() ) )
     , _by_ts ( cmp_by_ts_offs( _storage.end() ) )
@@ -75,15 +73,16 @@ public:
     return static_cast<size_t>(dist);
   }
   
-  std::array<size_t, 4> sizes() const
+  size_t size() const
   {
-    return {
-      _storage.count(),
-      _by_src.size(),
-      _by_dst.size(),
-      _by_ts.size()
-    };
+    return 0;
   }
+
+  size_t capacity() const
+  {
+    return 0;
+  }
+  
 private:
   mutable storage_type::pointer _var;
   storage_type _storage;
@@ -91,23 +90,5 @@ private:
   vset::multiset<offset_t, cmp_by_dst_offs > _by_dst;
   vset::multiset<offset_t, cmp_by_ts_offs >  _by_ts;
 };
-*/
 
-#include "hitlist.hpp"
-#include <utility>
-#include <iostream>
-
-int main(int, char*[])
-{
-  hitlist hl;
-  for (uint32_t i=0; i < 1000; ++i)
-    hl.set_hit(i,i, time_t(i) );
-  
-  auto ss = hl.size();
-  std::cout << ss << std::endl;
-  
-  std::vector<hit> hits;
-  hl.get_hits(hits,0,0,0);
-  //std::cout << sizeof(std::_Rb_tree_node_base) << std::endl;
-  return 1;
-}
+#include "hitlist_impl.hpp"

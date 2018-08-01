@@ -37,12 +37,16 @@ namespace aspect_maker
   };
 
   
+  /** 
+  * @internal секрет
+  */
   template<typename V, typename C, typename A>
   struct multiset
   {
     typedef typename multiset_impl<V, C, A, aspect_maker::is_aspect_maker<A>::value >::type type;
   };
 }
+/** @endinternal */
 
 /**
    @brief vset::multiset это ассоциативный контейнер, который содержит упорядоченный набор объектов типа V (допускаются ключи с одинаковыми значениями).
@@ -51,7 +55,8 @@ namespace aspect_maker
    @tparam V - тип хранимых значений 
    @tparam C - функции сравнения ключей
    @tparam A - аллокатор
-   @details
+   @inherit 
+   @details details
 */
 template<typename V, typename C, typename A >
 class multiset

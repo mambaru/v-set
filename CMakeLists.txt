@@ -8,6 +8,7 @@ if ( BUILD_TESTING )
   enable_testing()
   add_subdirectory(tests)
   add_subdirectory(examples)
+  add_subdirectory(tutorial)
 endif()
 
 set(CPACK_PACKAGE_NAME "v-set")
