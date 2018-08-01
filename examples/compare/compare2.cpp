@@ -90,18 +90,18 @@ int main()
   
   data_storage::pointer ptr = stg.allocate(1);
   *ptr = data(1,2,3);
-  idx1.insert( ptr.get_offset() );
-  idx2.insert( ptr.get_offset() );
+  idx1.insert( static_cast<offset_t>( ptr.get_offset() ) );
+  idx2.insert( static_cast<offset_t>( ptr.get_offset() ) );
 
   ptr = stg.allocate(1);
   *ptr = data(1,3,4);
-  idx1.insert( ptr.get_offset() );
-  idx2.insert( ptr.get_offset() );
+  idx1.insert( static_cast<offset_t>( ptr.get_offset() ) );
+  idx2.insert( static_cast<offset_t>( ptr.get_offset() ) );
   
   ptr = stg.allocate(1);
   *ptr = data(1,3,5);
-  idx1.insert( ptr.get_offset() );
-  idx2.insert( ptr.get_offset() );
+  idx1.insert( static_cast<offset_t>( ptr.get_offset() ) );
+  idx2.insert( static_cast<offset_t>( ptr.get_offset() ) );
 
   ptr = stg.end();
   

@@ -33,6 +33,7 @@ UNIT(multiset_mmap, "")
   multiset_type::iterator itr = int_set.find(2);
 
   int_set.erase(itr);
+  itr+=-1;
 
   t << equal<expect, size_t>( int_set.size(), 5) << FAS_TESTING_FILE_LINE;
 

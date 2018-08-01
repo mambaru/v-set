@@ -10,14 +10,6 @@ namespace vset{
 template<typename V, typename C = std::less<V>, typename A = std::allocator<V> >
 class multiset;
   
-/*
-template<typename V, typename C>
-class multiset<V, C, std::allocator<V> >
-  : public vtree::vtree< vtree::strategy::vtree_std_alloc<V, C, 512> >
-{
-};
-*/
-
 namespace aspect_maker
 {
   FAS_HAS_TYPENAME(is_aspect_maker, aspect_maker)
@@ -52,6 +44,15 @@ namespace aspect_maker
   };
 }
 
+/**
+   @brief vset::multiset это ассоциативный контейнер, который содержит упорядоченный набор объектов типа V (допускаются ключи с одинаковыми значениями).
+          Сортировка производится с помощью функции сравнения ключей Compare. Операции поиска, вставки и удаления имеют отличную от `std::multiset` 
+          логорифмичскую сложность и определяется стратегией хранения, которая внедряется через аллокатор.
+   @tparam V - тип хранимых значений 
+   @tparam C - функции сравнения ключей
+   @tparam A - аллокатор
+   @details
+*/
 template<typename V, typename C, typename A >
 class multiset
   : public aspect_maker::multiset<V, C, A >::type
@@ -75,16 +76,30 @@ public:
   typedef typename super::difference_type difference_type;
   typedef typename super::size_type size_type;
   
+  /**
+   * @brief Конструктор по умолчанию. Создаёт пустой контейнер.
+   */
   multiset(): super() {}
 
+  /**
+   * @brief Конструктор создаёт пустой контейнер. 
+   * @param comp функции сравнения ключей
+   * @param alloc функции сравнения ключей
+   */
   explicit multiset(const key_compare& comp, const allocator_type& alloc = allocator_type() )
     : super(comp, alloc)
   {
   }
 
+  /**
+   * @brief Создаёт контейнер с содержимым из диапазона [first, last).
+   * @param first итератор начала диапазона
+   * @param last итератор конеца диапазона
+   */
+
   template<typename InputIterator>
-  multiset(InputIterator beg, InputIterator end)
-    : super( beg,  end)
+  multiset(InputIterator first, InputIterator last)
+    : super( first,  last)
   {
   }
 
@@ -94,12 +109,12 @@ public:
   {
   }
 
-  /*
-  multiset(const multiset& other)
+/*  multiset(const multiset& other)
     : super( other )
   {
   }
-  */
+*/
+  
 
 #ifdef __GXX_EXPERIMENTAL_CXX0X__
 

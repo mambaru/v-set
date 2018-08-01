@@ -1,42 +1,38 @@
-cmake_minimum_required(VERSION 2.6)
+cmake_minimum_required(VERSION 3.1)
+project(v-set)
 
-project(v-set CXX)
-
-#set(CMAKE_MODULE_PATH "${CMAKE_CURRENT_SOURCE_DIR}/cmake")
-#include(VSet)
+set(CMAKE_MODULE_PATH "${CMAKE_CURRENT_SOURCE_DIR}/cmake")
+include(mambaru)
 
 if ( BUILD_TESTING )
-
-  set(CMAKE_CXX_STANDARD_REQUIRED ON)
-  if(UNIX)
-    set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -W -Wall -Werror -pedantic -fno-rtti")
-    set(CMAKE_CXX_FLAGS_RELEASE "-O3 -DNDEBUG ")
-    set(CMAKE_CXX_FLAGS_RELWITHDEBINFO  "-O2 -g -DNDEBUG")
-    set(CMAKE_CXX_FLAGS_DEBUG  "-O0 -g")
-    if (PARANOID_WARNING)
-      set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -Wcast-align \
-                         -Wcast-qual -Wctor-dtor-privacy -Wdisabled-optimization\
-                         -Wformat=2 -Winit-self  -Wmissing-declarations \
-                         -Wmissing-include-dirs -Wold-style-cast -Woverloaded-virtual \
-                         -Wredundant-decls -Wshadow -Wsign-conversion -Wsign-promo \
-                         -Wswitch-default -Wundef -Wstrict-overflow=1")
-      #-Wno-stringop-overflow -Wstrict-overflow=5 -Wlogical-op  -Wnoexcept -Wstrict-null-sentinel
-      if ( NOT "${CMAKE_CXX_COMPILER}" MATCHES "clang" )
-        set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -Wstrict-overflow=5 -Wno-stringop-overflow")
-      endif()
-
-    endif(PARANOID_WARNING)
-  endif (UNIX)
-
-  include_directories(${CMAKE_CURRENT_SOURCE_DIR})
-  include_directories(${CMAKE_SOURCE_DIR}/../faslib)
-
   enable_testing()
   add_subdirectory(tests)
   add_subdirectory(examples)
-  add_subdirectory(benchmark)
-  if ( CMAKE_CXX_STANDARD GREATER 98)
-    add_subdirectory(tutorial)
-  endif()
-  
 endif()
+
+set(CPACK_PACKAGE_NAME "v-set")
+set(CPACK_PACKAGE_VERSION_MAJOR "0")
+set(CPACK_PACKAGE_VERSION_MINOR "7")
+set(CPACK_PACKAGE_VERSION_PATCH "0")
+set(CPACK_RESOURCE_FILE_LICENSE "${CMAKE_CURRENT_SOURCE_DIR}/LICENSE")
+set(CPACK_RESOURCE_FILE_README "${CMAKE_CURRENT_SOURCE_DIR}/Readme.md")
+set(CPACK_PACKAGE_CONTACT "migashko@gmail.com")
+
+install(DIRECTORY v-set DESTINATION include
+  PATTERN "*.cmake" EXCLUDE
+  PATTERN "*~" EXCLUDE
+  PATTERN ".*" EXCLUDE
+  PATTERN "Makefile" EXCLUDE
+  PATTERN "CMakeFiles" EXCLUDE
+)
+
+install(DIRECTORY . DESTINATION share/v-set
+  PATTERN "v-set" EXCLUDE
+  PATTERN "*.cmake" EXCLUDE
+  PATTERN "*~*" EXCLUDE
+  PATTERN "*kdev*" EXCLUDE
+  PATTERN ".git*" EXCLUDE
+  PATTERN "Readme.md" EXCLUDE
+)
+
+include(CPack)
