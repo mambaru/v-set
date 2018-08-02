@@ -24,9 +24,9 @@ void hitlist::get_hits( std::vector<hit>& hits, uint32_t id, size_t offset, size
   _impl->get_hits(hits, id, offset, limit);
 }
 
-size_t hitlist::remove_outdated(time_t ts)
+void hitlist::remove_outdated(time_t ts)
 {
-  return _impl->remove_outdated(ts);
+  _impl->remove_outdated(ts);
 }
   
 size_t hitlist::size() const
@@ -41,13 +41,24 @@ size_t hitlist::capacity() const
 
 bool hitlist::delete_user(uint32_t id)
 {
-  return _impl->remove_outdated(id);
+  return _impl->delete_user(id);
 }
 
-total hitlist::get_total(uint32_t id) const
+size_t hitlist::src_count(uint32_t id) const
 {
-  return _impl->get_total(id);
+  return _impl->src_count(id);
 }
+
+size_t hitlist::dst_count(uint32_t id) const
+{
+  return _impl->dst_count(id);
+}
+  
+size_t hitlist::outdated_count(uint32_t ts) const
+{
+  return _impl->outdated_count(ts);
+}
+
 
 std::string hitlist::desc() const
 {

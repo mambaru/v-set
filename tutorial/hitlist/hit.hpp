@@ -19,8 +19,10 @@ struct hit
   }
 };
 
+/*
 struct total
 {
-  size_t src_hits = 0;
-  size_t dst_hits = 0;
+  std::ptrdiff_t src_hits = 0;
+  std::ptrdiff_t dst_hits = 0;
 };
+*/

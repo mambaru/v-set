@@ -22,9 +22,16 @@ public:
   
   bool delete_user(uint32_t id);
   
-  size_t remove_outdated(time_t ts);
+  void remove_outdated(time_t ts);
   
-  total get_total(uint32_t) const;
+  // сколько просмотрел пользователь с идентификатором id
+  size_t src_count(uint32_t id) const;
+  
+  // сколько было просмотров у пользователя с идентификатором id
+  size_t dst_count(uint32_t id) const;
+  
+  // сколько просмотров было позже ts
+  size_t outdated_count(uint32_t ts) const;
   
   size_t size() const;
   

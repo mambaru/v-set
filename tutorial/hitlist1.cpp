@@ -80,7 +80,7 @@ public:
   
   size_t size() const
   {
-    return 0;
+    return _by_src.size();
   }
 
   size_t capacity() const
@@ -88,16 +88,43 @@ public:
     return 0;
   }
   
-  size_t remove_outdated(time_t )
+  void remove_outdated(time_t ts)
   {
-    return 0;
+    hit h = hit::make(0, 0, ts);
+    auto lower = _by_ts.lower_bound( h );
+    _by_src.erase(lower, _by_ts.end() );
+    _by_dst.erase(lower, _by_ts.end() );
+    _by_ts.erase( lower, _by_ts.end() );
   }
   
-  total get_total(uint32_t ) const
+  
+  // сколько просмотрел пользователь с идентификатором id
+  size_t src_count(uint32_t id) const
   {
-    return total();
+    hit h = hit::make(id, 0, 0);
+    auto lower = _by_src.lower_bound(h);
+    h.dst_id = static_cast<uint32_t>(~0);
+    auto upper = _by_src.lower_bound(h);
+    return static_cast<size_t>(std::distance(lower, upper));
   }
-
+  
+  // сколько было просмотров у пользователя с идентификатором id
+  size_t dst_count(uint32_t id) const
+  {
+    hit h = hit::make(0, id, static_cast<time_t>(~0));
+    auto lower = _by_dst.lower_bound(h);
+    h.ts = 0;
+    auto upper = _by_dst.lower_bound(h);
+    return static_cast<size_t>( std::distance(lower, upper) );
+  }
+  
+  // сколько просмотров было позже ts
+  size_t outdated_count(uint32_t ts) const
+  {
+    hit h = hit::make(0, 0, ts);
+    auto lower = _by_ts.lower_bound( h );
+    return static_cast<size_t>( std::distance(lower, _by_ts.end() ) );
+  }
   
 private:
   
