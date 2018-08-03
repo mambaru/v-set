@@ -1,6 +1,7 @@
 #include "hitlist.hpp"
 #include <hitlist/compare.hpp>
 #include <set>
+#include <iostream>
 
 class hitlist::impl
 {
@@ -8,9 +9,7 @@ class hitlist::impl
   typedef std::multiset<hit, cmp_by_dst> by_dst_t;
   typedef std::multiset<hit, cmp_by_ts>  by_ts_t;
 public:
-  impl()
-  {
-  }
+  impl() { }
   
   void open()
   {
@@ -20,7 +19,7 @@ public:
   void set_hit(uint32_t src, uint32_t dst, time_t ts) 
   {
     hit h = hit::make(src, dst, ts);
-    
+
     auto itr = _by_src.find( h );
     if ( itr != _by_src.end() )
     {
@@ -29,9 +28,9 @@ public:
       _by_src.erase(itr);
     }
     
-    _by_src.insert( h );
+    _by_src.insert( itr, h );
     _by_dst.insert( h );
-    _by_ts.insert( h );
+    _by_ts.insert(  h );
   }
   
   bool delete_user(uint32_t id)
@@ -40,12 +39,19 @@ public:
     auto lower = _by_src.lower_bound( h );
     h.dst_id = static_cast<uint32_t>(~0);
     auto upper = _by_src.upper_bound( h );
-    if ( lower!=upper )
+    for (;lower!=upper; ++lower)
+    {
+      _by_dst.erase(*lower);
+      _by_ts.erase(*lower);
+      _by_src.erase(lower);
+      
+    }
+    /*if ( lower!=upper )
     {
       _by_dst.erase(lower, upper);
       _by_ts.erase(lower, upper);
       _by_src.erase(lower, upper);
-    }
+    }*/
     
     return true;
   }
@@ -58,7 +64,7 @@ public:
 
   std::string desc() const
   {
-    return "";
+    return "std::multiset<hit>";
   }
   
   void get_hits( std::vector<hit>& hits, uint32_t id, size_t offset, size_t limit) const
@@ -85,7 +91,17 @@ public:
 
   size_t capacity() const
   {
-    return 0;
+    /*
+    _Rb_tree_color      _M_color;
+    _Base_ptr           _M_parent;
+    _Base_ptr           _M_left;
+    _Base_ptr           _M_right;
+    _Val _M_value_field
+    */
+
+    //return sizeof(std::_Rb_tree_node<hit>);
+    return (32 + sizeof(hit)) * _by_src.size() * 3;
+    
   }
   
   void remove_outdated(time_t ts)
