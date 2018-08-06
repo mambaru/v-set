@@ -192,6 +192,7 @@ void get_hits( arg_list& args)
   std::cout << "get_hits all users one by one" << std::endl;
   auto beg = start();
   size_t count = 0;
+
   std::vector<hit>  hits;
   hits.reserve(limit);
   for ( const uint32_t& id: dst_ids )
@@ -236,22 +237,45 @@ void src_count( arg_list& args)
     {
       count+=storage.src_count(idx);
       ++calls;
-      //std::cout << count << std::endl;
     }
   }
   auto span = finish(beg);
   auto rate = to_rate(span, calls);
   std::cout << "\tdone! calls=" << calls << " total counts=" << count << " time=" << span << "mks rate=" << rate << std::endl;
-
 }
 
-void dst_count( arg_list& )
+void dst_count( arg_list& args)
 {
   if ( dst_ids.empty() )
   {
     arg_list al;
     initialize(al);
   }
+  
+  size_t count = 0ul;
+  size_t calls = 0ul;
+  auto id = extract_param<uint32_t>(args);
+  if ( id == 0 )
+    std::cout << "dst_count all users one by one" << std::endl;
+  else
+    std::cout << "dst_count for user = " << id << std::endl;
+  auto beg = start();
+  if (id!=0)
+  {
+    count = storage.dst_count(id);
+    calls=1;
+  }
+  else
+  {
+    for ( const uint32_t& idx: dst_ids )
+    {
+      count+=storage.dst_count(idx);
+      ++calls;
+    }
+  }
+  auto span = finish(beg);
+  auto rate = to_rate(span, calls);
+  std::cout << "\tdone! calls=" << calls << " total counts=" << count << " time=" << span << "mks rate=" << rate << std::endl;
 }
 
 void outdated_count( arg_list& )

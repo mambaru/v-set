@@ -39,7 +39,7 @@ size_t hitlist::capacity() const
   return _impl->capacity();
 }
 
-bool hitlist::delete_user(uint32_t id)
+size_t hitlist::delete_user(uint32_t id)
 {
   return _impl->delete_user(id);
 }
