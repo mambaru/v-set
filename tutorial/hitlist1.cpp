@@ -2,6 +2,7 @@
 #include <hitlist/compare.hpp>
 #include <set>
 #include <iostream>
+#include <limits>
 
 class hitlist::impl
 {
@@ -11,9 +12,10 @@ class hitlist::impl
 public:
   impl() { }
   
-  void open()
+  bool open()
   {
     // TODO:
+    return false;
   }
   
   void set_hit(uint32_t src, uint32_t dst, time_t ts) 
@@ -35,6 +37,8 @@ public:
   
   bool delete_user(uint32_t id)
   {
+    return delete_user_src_hits_(id) || delete_user_dst_hits_(id);
+    /*
     hit h = hit::make(id, 0, static_cast<time_t>(~0));
     auto lower = _by_src.lower_bound( h );
     h.dst_id = static_cast<uint32_t>(~0);
@@ -44,8 +48,7 @@ public:
       _by_dst.erase(*lower);
       _by_ts.erase(*lower);
       _by_src.erase(lower);
-      
-    }
+    }*/
     /*if ( lower!=upper )
     {
       _by_dst.erase(lower, upper);
@@ -73,8 +76,10 @@ public:
     hits.reserve(limit);
     hit h;
     h.dst_id = id;
-    h.ts = ~0;
+    h.ts = std::numeric_limits<time_t>::max();
     auto lower = _by_dst.lower_bound(h);
+/*    if ( lower == _by_dst.end() )
+      return;*/
     h.ts = 0;
     auto upper = _by_dst.upper_bound(h);
     for(;lower!=upper && offset!=0; ++lower, --offset);
@@ -146,32 +151,49 @@ private:
   
   bool delete_user_src_hits_(uint32_t id)
   {
-    hit h = hit::make(id, 0, static_cast<time_t>(~0));
+    hit h = hit::make(id, 0, std::numeric_limits<time_t>::max());
     auto lower = _by_src.lower_bound( h );
-    h.dst_id = static_cast<uint32_t>(~0);
+    h.dst_id = std::numeric_limits<uint32_t>::max();
     auto upper = _by_src.upper_bound( h );
     if ( lower==upper )
       return false;
     
-    _by_dst.erase(lower, upper);
+    for (;lower!=upper; ++lower)
+    {
+      _by_dst.erase(*lower);
+      _by_ts.erase(*lower);
+      _by_src.erase(lower);
+    }
+    /*_by_dst.erase(lower, upper);
     _by_ts.erase(lower, upper);
     _by_src.erase(lower, upper);
+    */
     
     return true;
   }
 
   bool delete_user_dst_hits_(uint32_t id)
   {
-    hit h = hit::make(0, id, static_cast<time_t>(~0));
+    hit h = hit::make(0, id, std::numeric_limits<time_t>::max());
     auto lower = _by_dst.lower_bound( h );
-    h.src_id = static_cast<uint32_t>(~0);
+    h.src_id = std::numeric_limits<uint32_t>::max();
     auto upper = _by_dst.upper_bound( h );
     if ( lower==upper )
       return false;
     
+    for (;lower!=upper; ++lower)
+    {
+      _by_src.erase(*lower);
+      _by_ts.erase(*lower);
+      _by_dst.erase(lower);
+    
+    }
+
+    /*
     _by_ts.erase(lower, upper);
     _by_src.erase(lower, upper);
     _by_dst.erase(lower, upper);
+    */
     
     return true;
   }

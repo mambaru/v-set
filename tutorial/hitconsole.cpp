@@ -10,7 +10,8 @@
 
 hitlist storage;
 std::deque<hit> hit_deque;
-std::set<uint32_t> ids;
+std::set<uint32_t> src_ids;
+std::set<uint32_t> dst_ids;
 
 typedef std::list<std::string> arg_list;
 
@@ -37,12 +38,14 @@ std::chrono::high_resolution_clock::time_point start()
 time_t finish(const std::chrono::high_resolution_clock::time_point& beg)
 {
   auto end = std::chrono::high_resolution_clock::now();  
-  return std::chrono::duration_cast<std::chrono::microseconds>(end-beg).count();
+  return std::chrono::duration_cast<std::chrono::nanoseconds>(end-beg).count();
 }
 
 size_t to_rate(time_t span, size_t count)
 {
-  return count * 1000000 / static_cast<size_t>(span);
+  if ( span == 0 )
+    return static_cast<size_t>(~0);
+  return count * 1000000000 / static_cast<size_t>(span);
 }
 
 void help()
@@ -83,6 +86,17 @@ void load(arg_list&)
   int users = 0;
   int interval =0;
   std::ifstream ifs(generate_file);  
+  if ( !ifs )
+  {
+    ifs.close();
+    arg_list al;
+    al.push_back("1000000");
+    al.push_back("10000");
+    al.push_back("10000");
+    generate(al);
+    ifs.open(generate_file);
+  }
+
   ifs >> hits_total >> users >> interval ;
   if ( enabled_trace )
     std::cout << hits_total << " " << users << " " << interval << std::endl;
@@ -100,8 +114,8 @@ void load(arg_list&)
     if ( ifs )
     {
       hit_deque.push_back(h);
-      ids.insert(h.src_id);
-      ids.insert(h.dst_id);
+      src_ids.insert(h.src_id);
+      dst_ids.insert(h.dst_id);
     }
     
     if ( enabled_trace )
@@ -132,22 +146,124 @@ void initialize( arg_list& )
 
 void remove( arg_list& )
 {
-  if ( hit_deque.empty() )
+  if ( src_ids.empty() )
+  {
+    arg_list al;
+    initialize(al);
+  }
+
+  {
+    std::cout << "delete src users one by one" << std::endl;
+    auto beg = start();
+    size_t count = 0;
+    for ( const uint32_t& id: src_ids )
+      if ( storage.delete_user(id) )
+        count++;
+    auto span = finish(beg);
+    auto rate = to_rate(span, src_ids.size());
+    std::cout << "\tdone for src! calls=" << src_ids.size() 
+              << " deleted users=" << count << " time=" << span << "mks rate=" << rate << std::endl;
+  }
+  
+  {
+    std::cout << "delete dst users one by one" << std::endl;
+    auto beg = start();
+    size_t count = 0;
+    for ( const uint32_t& id: dst_ids )
+      if ( storage.delete_user(id) )
+        count++;
+    auto span = finish(beg);
+    auto rate = to_rate(span, dst_ids.size());
+    std::cout << "\tdone for dst! calls=" << dst_ids.size() 
+              << " deleted users=" << count << " time=" << span << "mks rate=" << rate << std::endl;
+  }
+}
+
+void get_hits( arg_list& args)
+{
+  if ( dst_ids.empty() )
   {
     arg_list al;
     initialize(al);
   }
   
-  std::cout << "delete all users one by one" << std::endl;
+  size_t limit = extract_param<size_t>(args);
+  
+  std::cout << "get_hits all users one by one" << std::endl;
   auto beg = start();
   size_t count = 0;
-  for ( const uint32_t& id: ids )
-    if ( storage.delete_user(id) )
-      count++;
+  std::vector<hit>  hits;
+  hits.reserve(limit);
+  for ( const uint32_t& id: dst_ids )
+  {
+    storage.get_hits(hits, id, 0ul, limit);
+    if ( !hits.empty() )
+      ++count;
+    if (enabled_trace)
+      std::cout << "id=" << id << " size=" <<  hits.size() << std::endl;
+    hits.clear();
+  }
+      
   auto span = finish(beg);
-  auto rate = to_rate(span, ids.size());
-  std::cout << "\ndeleted! calls=" << ids.size() << " deleted users=" << count << " time=" << span << "mks rate=" << rate << std::endl;
+  auto rate = to_rate(span, dst_ids.size());
+  std::cout << "\tdone! calls=" << dst_ids.size() << " deleted users=" << count << " time=" << span << "mks rate=" << rate << std::endl;
 }
+
+void src_count( arg_list& args)
+{
+  if ( dst_ids.empty() )
+  {
+    arg_list al;
+    initialize(al);
+  }
+  
+  size_t count = 0ul;
+  size_t calls = 0ul;
+  auto id = extract_param<uint32_t>(args);
+  if ( id == 0 )
+    std::cout << "src_count all users one by one" << std::endl;
+  else
+    std::cout << "src_count for user = " << id << std::endl;
+  auto beg = start();
+  if (id!=0)
+  {
+    count = storage.src_count(id);
+    calls=1;
+  }
+  else
+  {
+    for ( const uint32_t& idx: src_ids )
+    {
+      count+=storage.src_count(idx);
+      ++calls;
+      //std::cout << count << std::endl;
+    }
+  }
+  auto span = finish(beg);
+  auto rate = to_rate(span, calls);
+  std::cout << "\tdone! calls=" << calls << " total counts=" << count << " time=" << span << "mks rate=" << rate << std::endl;
+
+}
+
+void dst_count( arg_list& )
+{
+  if ( dst_ids.empty() )
+  {
+    arg_list al;
+    initialize(al);
+  }
+}
+
+void outdated_count( arg_list& )
+{
+  if ( dst_ids.empty() )
+  {
+    arg_list al;
+    initialize(al);
+  }
+}
+
+
 
 void size( arg_list& )
 {
@@ -200,6 +316,24 @@ int main(int argc, char* argv[])
     {
       remove(argl);
     }
+    else if (name == "get_hits")
+    {
+      get_hits(argl);
+    }
+    else if (name == "src_count")
+    {
+      src_count(argl);
+    }
+    else if (name == "dst_count")
+    {
+      dst_count(argl);
+    }
+    else if (name == "outdated_count")
+    {
+      outdated_count(argl);
+    }
+     
+ 
     
   }
   return 1;
