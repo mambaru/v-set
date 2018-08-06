@@ -20,7 +20,7 @@ public:
   
   void get_hits( std::vector<hit>& hits, uint32_t id, size_t offset, size_t limit) const;
   
-  bool delete_user(uint32_t id);
+  size_t delete_user(uint32_t id);
   
   void remove_outdated(time_t ts);
   

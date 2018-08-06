@@ -141,12 +141,16 @@ void remove( arg_list& )
   std::cout << "delete all users one by one" << std::endl;
   auto beg = start();
   size_t count = 0;
+  size_t total = 0;
   for ( const uint32_t& id: ids )
-    if ( storage.delete_user(id) )
+    if ( size_t dels = storage.delete_user(id) )
+    {
       count++;
+      total+=dels;
+    }
   auto span = finish(beg);
   auto rate = to_rate(span, ids.size());
-  std::cout << "\ndeleted! calls=" << ids.size() << " deleted users=" << count << " time=" << span << "mks rate=" << rate << std::endl;
+  std::cout << "\ndeleted! calls=" << ids.size() << " deleted users=" << count << " time=" << span << "mks rate=" << rate << " remove hits=" << total << std::endl;
 }
 
 void size( arg_list& )
