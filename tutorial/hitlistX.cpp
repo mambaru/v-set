@@ -1,94 +1,126 @@
 #include "hitlist.hpp"
+#include "hitlist_t.hpp"
 #include <hitlist/compare.hpp>
-#include <vset/memory/fsb_inmem.hpp>
-#include <vset/multiset.hpp>
+#include <set>
+#include <iostream>
+#include <limits>
+#include <vset/allocators/mmap_allocator.hpp>
+#include <vset/memory/fsb_mmap.hpp>
 #include <vset/comparators/offset_compare.hpp>
+#include <vset/multiset.hpp>
 
-typedef size_t offset_t;
 
 class hitlist::impl
 {
-  typedef vset::memory::fsb_inmem<hit> storage_type;
-  typedef vset::offset_compare<offset_t, storage_type, cmp_by_src> cmp_by_src_offs;
-  typedef vset::offset_compare<offset_t, storage_type, cmp_by_dst> cmp_by_dst_offs;
-  typedef vset::offset_compare<offset_t, storage_type, cmp_by_ts> cmp_by_ts_offs;
+  const std::string name="hitlistX";
+  typedef uint32_t offset_t;
+  
+  typedef vset::memory::fsb_mmap<hit, vset::fsb_nth> storage_type;
+  typedef storage_type::pointer pointer_type;
+  typedef storage_type::const_pointer const_pointer_type;
+  typedef vset::offset_compare<offset_t, storage_type, hit_src_cmp> cmp_by_src_offs;
+  typedef vset::offset_compare<offset_t, storage_type, hit_dst_cmp> cmp_by_dst_offs;
+  typedef vset::offset_compare<offset_t, storage_type, hit_ts_cmp>  cmp_by_ts_offs;
+  typedef vset::mmap_allocator<512> allocator_type;
+  typedef vset::multiset<offset_t, cmp_by_src_offs, allocator_type > by_src_t;
+  typedef vset::multiset<offset_t, cmp_by_dst_offs, allocator_type > by_dst_t;
+  typedef vset::multiset<offset_t, cmp_by_ts_offs, allocator_type >  by_ts_t;
+
+  struct params
+  {
+    typedef ::hitlist::impl::storage_type storage_type;
+    typedef by_src_t src_index;
+    typedef by_dst_t dst_index;
+    typedef by_ts_t  ts_index;
+    
+    static offset_t get_index(pointer_type p) 
+    {
+      return static_cast<offset_t>(p.get_offset());
+    }
+    
+    static pointer_type get_pointer(offset_t offs, storage_type& stg) 
+    {
+      pointer_type p = stg.end();
+      p.set_offset(offs);
+      return p;
+    }
+    
+    /*
+    static hit& get_ref(pointer_type h) 
+    {
+      return *h;
+    }
+    
+    static const hit& get_ref(const_pointer_type h) 
+    {
+      return *h;
+    }
+    */
+  };
+  
 public:
+  
   impl()
-    : _by_src( cmp_by_src_offs( _storage.end() ) )
-    , _by_dst( cmp_by_dst_offs( _storage.end() ) )
-    , _by_ts ( cmp_by_ts_offs( _storage.end() ) )
-  {
+    : _storage()
+    , _by_src( cmp_by_src_offs(_storage.end()))
+    , _by_dst( cmp_by_dst_offs(_storage.end()))
+    , _by_ts( cmp_by_ts_offs(_storage.end()))
+    , _hitlist(_storage, _by_src, _by_dst, _by_ts, _hit1, _hit2)
+  { 
   }
   
-  void open()
+  bool open(size_t reserve1, size_t reserve2) 
   {
+    std::string filename = name+".stg";
+    _storage.buffer().open( filename.c_str() );
+    bool is_empty = false;
     if ( _storage.empty() )
-      _var = _storage.allocate(1);
+    {
+      _hit1=_storage.allocate(1);
+      _hit2=_storage.allocate(1);
+      _storage.buffer().reserve( reserve1 );
+      is_empty = true;
+    }
     else
-      _var = _storage.begin();
-  }
-  
-  void set_hit(uint32_t src, uint32_t dst, time_t ts) 
-  {
-    auto h = _storage.allocate(1);
-    *h = {src, dst, ts};
-    
-    auto itr = _by_src.find( h.get_offset() );
-    if ( itr != _by_src.end() )
     {
-      _by_dst.erase(*itr);
-      _by_ts.erase(*itr);
-      _by_src.erase(itr);
+      _hit1=_storage.begin();
+      _hit2=_storage.begin()+1;
     }
-    
-    _by_src.insert( h.get_offset() );
-    _by_dst.insert( h.get_offset() );
-    _by_ts.insert( h.get_offset() );
-  }
-  
-  template<typename Itr>
-  const hit& get(Itr itr) const
-  {
-    auto ptr = _storage.end();
-    ptr.set_offset(*itr);
-    return *ptr;
+    filename = name+".idxs";
+    _by_src.get_allocator().memory().buffer().open(filename.c_str());
+    if ( is_empty) _by_src.get_allocator().memory().buffer().reserve(reserve2);
+    filename = name+".idxd";
+    _by_dst.get_allocator().memory().buffer().open(filename.c_str());
+    if ( is_empty) _by_dst.get_allocator().memory().buffer().reserve(reserve2);
+    filename = name+".idxt";
+    _by_ts.get_allocator().memory().buffer().open(filename.c_str());
+    if ( is_empty) _by_ts.get_allocator().memory().buffer().reserve(reserve2);
+    std::cout << "storage size: " << _storage.count()  << " index(" << _by_src.size()  << ", "<< _by_dst.size() << "," << _by_ts.size() << ")" << std::endl;
+    return true;
   }
 
-  
-  size_t get_hits( std::vector<hit>& hits, uint32_t id, size_t offset, size_t limit) const
+  std::string desc() const
   {
-    hits.clear();
-    hits.reserve(limit);
-    _var->dst_id = id;
-    _var->ts = ~0;
-    auto lower = _by_dst.lower_bound(_var.get_offset());
-    _var->ts = 0;
-    auto upper = _by_dst.upper_bound(_var.get_offset());
-    auto dist = std::distance(lower, upper);
-    for(;lower!=upper && offset!=0; ++lower, --offset);
-    for(;lower!=upper && limit!=0; ++lower, --limit)
-    {
-      hits.push_back( this->get(lower) );
-    }
-    return static_cast<size_t>(dist);
+    return "std::multiset<hit>";
   }
   
-  size_t size() const
-  {
-    return 0;
-  }
-
   size_t capacity() const
   {
     return 0;
   }
+
   
+#include "hitlist_methods.inl"
+
 private:
-  mutable storage_type::pointer _var;
   storage_type _storage;
-  vset::multiset<offset_t, cmp_by_src_offs > _by_src;
-  vset::multiset<offset_t, cmp_by_dst_offs > _by_dst;
-  vset::multiset<offset_t, cmp_by_ts_offs >  _by_ts;
+  by_src_t _by_src;
+  by_dst_t _by_dst;
+  by_ts_t  _by_ts;
+  hitlist_t<params> _hitlist;
+  
+  mutable pointer_type _hit1;
+  mutable pointer_type _hit2;
 };
 
-#include "hitlist_impl.hpp"
+#include "hitlist_impl.inl"

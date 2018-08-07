@@ -6,9 +6,13 @@ include(mambaru)
 
 if ( BUILD_TESTING )
   enable_testing()
+  if(CMAKE_CXX_COMPILER_VERSION VERSION_GREATER 7.3)
+    set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -Wstringop-overflow=0")
+  endif()
   add_subdirectory(tests)
   add_subdirectory(examples)
   add_subdirectory(tutorial)
+  add_subdirectory(benchmark)
 endif()
 
 set(CPACK_PACKAGE_NAME "v-set")

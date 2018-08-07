@@ -21,10 +21,10 @@ bool enabled_trace = false;
 const std::string generate_file = "./generate.txt";
 
 template<typename T>
-T extract_param( arg_list& args )
+T extract_param( arg_list& args, T defval = T() )
 {
   if ( args.empty() )
-    return T();
+    return defval;
   T value = static_cast<T>( std::atol(args.front().c_str() ) );
   args.pop_front();
   return static_cast<T>(value);
@@ -38,28 +38,57 @@ std::chrono::high_resolution_clock::time_point start()
 time_t finish(const std::chrono::high_resolution_clock::time_point& beg)
 {
   auto end = std::chrono::high_resolution_clock::now();  
-  return std::chrono::duration_cast<std::chrono::nanoseconds>(end-beg).count();
+  return std::chrono::duration_cast<std::chrono::microseconds>(end-beg).count();
 }
 
 size_t to_rate(time_t span, size_t count)
 {
   if ( span == 0 )
     return static_cast<size_t>(~0);
-  return count * 1000000000 / static_cast<size_t>(span);
+  return count * 1000000 / static_cast<size_t>(span);
 }
+
+
+}
+
+void help();
+void generate( arg_list&);
+void load(arg_list&);
+void open(arg_list&);
+void initialize( arg_list& );
+void prepare();
+
+void remove( arg_list& );
+void get_hits( arg_list&);
+void src_count( arg_list&);
+void dst_count( arg_list&);
+void outdated_count( arg_list& );
+void size( arg_list& );
+void capacity( arg_list& );
 
 void help()
 {
-  
+  std::cout << storage.desc() << std::endl;
+  std::cout << "\tgenerate" << std::endl;
+  std::cout << "\tload"<< std::endl;
+  std::cout << "\topen"<< std::endl;
+  std::cout << "\tinitialize"<< std::endl;
+  std::cout << "\tsize"<< std::endl;
+  std::cout << "\tcapacity"<< std::endl;
+  std::cout << "\tdelete"<< std::endl;
+  std::cout << "\tget_hits"<< std::endl;
+  std::cout << "\tsrc_count"<< std::endl;
+  std::cout << "\tdst_count"<< std::endl;
+  std::cout << "\toutdated_count"<< std::endl;
 }
 
 void generate( arg_list& arg)
 {
   std::cout << "generate" << std::endl;
-  int hits_total = extract_param<int>(arg);
-  int users = extract_param<int>(arg);
-  int interval = extract_param<int>(arg);
-  std::set<hit, cmp_by_src> hits;
+  int hits_total = extract_param<int>(arg, 1000000);
+  int users = extract_param<int>(arg, 10000);
+  int interval = extract_param<int>(arg, 10000);
+  std::set<hit, hit_src_cmp> hits;
   
   while( hits.size() <  static_cast<size_t>(hits_total) )
   {
@@ -87,15 +116,7 @@ void load(arg_list&)
   int interval =0;
   std::ifstream ifs(generate_file);  
   if ( !ifs )
-  {
-    ifs.close();
-    arg_list al;
-    al.push_back("1000000");
-    al.push_back("10000");
-    al.push_back("10000");
-    generate(al);
-    ifs.open(generate_file);
-  }
+    return;
 
   ifs >> hits_total >> users >> interval ;
   if ( enabled_trace )
@@ -124,17 +145,29 @@ void load(arg_list&)
   auto span = finish(beg);
   auto rate = to_rate(span, hit_deque.size());
   std::cout << "\tloaded! size=" << hit_deque.size() << " time=" << span << "mks rate=" << rate << std::endl;
+}
 
+void open(arg_list&)
+{
+  auto beg = start();
+  bool opened = storage.open(20000000, 20000000);
+  auto span = finish(beg);
+  auto rate = to_rate(span, 1);
+  if ( opened )
+  {
+    std::cout << "\topened! size=" << storage.size() << " time=" << span << "mks rate=" << rate << std::endl;
+    std::cout << "\tinitialize..." << std::endl;
+    storage.for_each([&](hit h){
+      hit_deque.push_back(h);
+      src_ids.insert(h.src_id);
+      dst_ids.insert(h.dst_id);
+    });
+    std::cout << "\tinitialize... done. size=" << hit_deque.size() << std::endl;
+  }
 }
 
 void initialize( arg_list& )
 {
-  if ( hit_deque.empty() )
-  {
-    arg_list al;
-    load(al);
-  }
-  
   std::cout << "initialize..." << std::endl;
   auto beg = start();
   for (const hit& h : hit_deque)
@@ -144,21 +177,32 @@ void initialize( arg_list& )
   std::cout << "\tinitialize! time=" << span << "mks rate=" << rate << std::endl;
 }
 
+void prepare()
+{
+  arg_list al;
+  open(al);
+  if ( hit_deque.size()!=0 )
+    return;
+  
+  load(al);
+  if ( hit_deque.size()==0 )
+  {
+    generate(al);
+    load(al);
+  }
+  initialize(al);
+}
+
+
 void remove( arg_list& )
 {
-  if ( src_ids.empty() )
-  {
-    arg_list al;
-    initialize(al);
-  }
-
+  prepare();
   {
     std::cout << "delete src users one by one" << std::endl;
     auto beg = start();
     size_t count = 0;
     for ( const uint32_t& id: src_ids )
-      if ( storage.delete_user(id) )
-        count++;
+      count += storage.delete_user(id);
     auto span = finish(beg);
     auto rate = to_rate(span, src_ids.size());
     std::cout << "\tdone for src! calls=" << src_ids.size() 
@@ -170,8 +214,7 @@ void remove( arg_list& )
     auto beg = start();
     size_t count = 0;
     for ( const uint32_t& id: dst_ids )
-      if ( storage.delete_user(id) )
-        count++;
+      count += storage.delete_user(id);
     auto span = finish(beg);
     auto rate = to_rate(span, dst_ids.size());
     std::cout << "\tdone for dst! calls=" << dst_ids.size() 
@@ -181,25 +224,25 @@ void remove( arg_list& )
 
 void get_hits( arg_list& args)
 {
-  if ( dst_ids.empty() )
-  {
-    arg_list al;
-    initialize(al);
-  }
+  prepare();
   
   size_t limit = extract_param<size_t>(args);
+  if ( limit==0 ) limit = 10;
   
   std::cout << "get_hits all users one by one" << std::endl;
   auto beg = start();
   size_t count = 0;
+  size_t total = 0;
 
   std::vector<hit>  hits;
   hits.reserve(limit);
   for ( const uint32_t& id: dst_ids )
   {
+    hits.clear();
     storage.get_hits(hits, id, 0ul, limit);
     if ( !hits.empty() )
       ++count;
+    total += hits.size();
     if (enabled_trace)
       std::cout << "id=" << id << " size=" <<  hits.size() << std::endl;
     hits.clear();
@@ -207,16 +250,12 @@ void get_hits( arg_list& args)
       
   auto span = finish(beg);
   auto rate = to_rate(span, dst_ids.size());
-  std::cout << "\tdone! calls=" << dst_ids.size() << " deleted users=" << count << " time=" << span << "mks rate=" << rate << std::endl;
+  std::cout << "\tdone! calls=" << dst_ids.size() << " get_hits=" << count << " total hits=" << total << " time=" << span << "mks rate=" << rate << std::endl;
 }
 
 void src_count( arg_list& args)
 {
-  if ( dst_ids.empty() )
-  {
-    arg_list al;
-    initialize(al);
-  }
+  prepare();
   
   size_t count = 0ul;
   size_t calls = 0ul;
@@ -246,11 +285,7 @@ void src_count( arg_list& args)
 
 void dst_count( arg_list& args)
 {
-  if ( dst_ids.empty() )
-  {
-    arg_list al;
-    initialize(al);
-  }
+  prepare();
   
   size_t count = 0ul;
   size_t calls = 0ul;
@@ -269,6 +304,9 @@ void dst_count( arg_list& args)
   {
     for ( const uint32_t& idx: dst_ids )
     {
+      if ( enabled_trace )
+        std::cout << "id=" << idx << std::endl;
+
       count+=storage.dst_count(idx);
       ++calls;
     }
@@ -278,31 +316,42 @@ void dst_count( arg_list& args)
   std::cout << "\tdone! calls=" << calls << " total counts=" << count << " time=" << span << "mks rate=" << rate << std::endl;
 }
 
-void outdated_count( arg_list& )
+void outdated_count( arg_list& args)
 {
-  if ( dst_ids.empty() )
-  {
-    arg_list al;
-    initialize(al);
-  }
+  prepare();
+  auto ts = extract_param<time_t>(args); 
+  
+  size_t count = 0ul;
+  size_t calls = 0ul;
+  std::cout << "outdated_count for time = " << ts << std::endl;
+  auto beg = start();
+  count = storage.outdated_count(ts);
+  ++calls;
+  auto span = finish(beg);
+  auto rate = to_rate(span, calls);
+  std::cout << "\tdone! calls=" << calls << " total counts=" << count << " time=" << span << "mks rate=" << rate << std::endl;
 }
 
 
 
 void size( arg_list& )
 {
+  prepare();
   std::cout << "size=" <<  storage.size() << std::endl;
 }
 
 void capacity( arg_list& )
 {
+  prepare();
   std::cout << "capacity=" <<  storage.capacity() << std::endl;
 }
 
-}
+
 int main(int argc, char* argv[])
 {
   arg_list argl(argv + 1, argv + argc);
+  if (argl.empty())
+    argl.push_back("help");
   while ( !argl.empty() )
   {
     std::string name = argl.front();
@@ -323,6 +372,10 @@ int main(int argc, char* argv[])
     else if (name == "load")
     {
       load(argl);
+    }
+    else if (name == "open")
+    {
+      open(argl);
     }
     else if (name == "initialize")
     {
@@ -356,9 +409,6 @@ int main(int argc, char* argv[])
     {
       outdated_count(argl);
     }
-     
- 
-    
   }
   return 1;
 }

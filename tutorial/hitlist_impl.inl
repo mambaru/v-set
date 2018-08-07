@@ -9,9 +9,9 @@ hitlist::~hitlist()
   delete _impl;
 }
 
-void hitlist::open()
+bool hitlist::open(size_t reserve1, size_t reserve2)
 {
-  _impl->open();
+  return _impl->open(reserve1, reserve2);
 }
   
 void hitlist::set_hit(uint32_t src, uint32_t dst, time_t ts) 
@@ -24,9 +24,9 @@ void hitlist::get_hits( std::vector<hit>& hits, uint32_t id, size_t offset, size
   _impl->get_hits(hits, id, offset, limit);
 }
 
-void hitlist::remove_outdated(time_t ts)
+size_t hitlist::remove_outdated(time_t ts)
 {
-  _impl->remove_outdated(ts);
+  return _impl->remove_outdated(ts);
 }
   
 size_t hitlist::size() const
@@ -54,11 +54,15 @@ size_t hitlist::dst_count(uint32_t id) const
   return _impl->dst_count(id);
 }
   
-size_t hitlist::outdated_count(uint32_t ts) const
+size_t hitlist::outdated_count(time_t ts) const
 {
   return _impl->outdated_count(ts);
 }
 
+void hitlist::for_each(std::function<void(hit h)> handler)
+{
+  _impl->for_each(handler);
+}
 
 std::string hitlist::desc() const
 {

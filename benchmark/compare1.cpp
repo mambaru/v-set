@@ -10,22 +10,7 @@
 #include <set>
 
 #include "config.hpp"
-
-struct data
-{
-  int data1;
-  int data2;
-  int data3;
-  int data4;
-  int data5;
-  int data6;
-};
-
-inline bool operator == (const data& l, const data& r)
-{
-  return l.data1==r.data1 && l.data2==r.data2 && l.data3==r.data3
-        && l.data4==r.data4 && l.data5==r.data5 && l.data6==r.data6;
-}
+#include "data.hpp"
 
 
 typedef fas::type_list_n<
@@ -104,9 +89,9 @@ inline bool cmp_data5(const data& l, const data& r)
     if ( l.data6 > r.data6 ) return false;
     
     return false;
-};
+}
 
-#define RANGE 1000000
+#define RANGE 100
 #ifdef NDEBUG
   #define MAX_TEST 10
   #define MAX_DATA 10000000
@@ -165,7 +150,7 @@ int main()
   std::set<fas::nanospan> time6;
   for (int i = 0; i < MAX_TEST; ++i)
   {
-    std::cout << "---------------------------" << std::endl;
+    std::cout << "-----------" << i  << "(" << MAX_TEST << ")------------" << std::endl;
     std::vector<data> d1, d2, d3, d4, d5;
     std::vector<data_tuple> dt1;
     d1 = d;
@@ -178,10 +163,10 @@ int main()
 
     //std::function<bool (const data&, const data&)> tmp1 = cmp_data1();
     fas::nanospan start = fas::nanotime();
-    //std::sort(d1.begin(), d1.end(), cmp_data1());
-    std::sort(d1.begin(), d1.end(), [](const data& a, const data& b){
+    std::sort(d1.begin(), d1.end(), cmp_data1());
+    /*std::sort(d1.begin(), d1.end(), [](const data& a, const data& b){
       return cmp_data1()(a, b);
-    });
+    });*/
     fas::nanospan finish = fas::nanotime();
     show(desc[0],  finish - start );
     time1.insert(finish - start);
