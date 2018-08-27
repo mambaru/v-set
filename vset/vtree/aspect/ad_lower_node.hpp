@@ -21,7 +21,7 @@ struct ad_lower_node
     typedef typename container_type::iterator iterator;
 
     container_type& container = t.get_container();
-    iterator itr /*= container.lower_bound( std::make_pair(value, value ) )*/;
+    iterator itr = container.lower_bound( std::make_pair(value, value ) );
 
     if ( itr == container.end() && !container.empty() )
     {
