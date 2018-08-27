@@ -783,6 +783,7 @@ WARN_LOGFILE           =
 
 INPUT                  = Readme.md \
                          vset/vtree/vtree.hpp \
+                         vset/memory \
                          vset/comparators \
                          vset 
 

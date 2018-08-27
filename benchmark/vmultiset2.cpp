@@ -39,13 +39,13 @@ int main()
         minspan = tmp;
       }
 
-      if ( SHOW_PROCESS )
-      {
+#ifdef SHOW_PROCESS
         std::cout << "find time (" << i << "):" << (finish - start).to_double() << std::endl;
         std::cout << "find rate (" << i << "):" <<fas::rate(finish - start)*MAX_COUNT << std::endl;
         std::cout << "find time (" << MIN_COUNT << "):" << (tmp).to_double() << std::endl;
         std::cout << "find rate (" << MIN_COUNT << "):" <<fas::rate(tmp)*MAX_COUNT << std::endl;
-      }
+#endif
+      
       start2 = fas::process_nanotime();
     }
       

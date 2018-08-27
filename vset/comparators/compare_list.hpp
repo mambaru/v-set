@@ -28,7 +28,7 @@ struct compare_list2_impl;
 
 /**
  * @brief Создает композитный компаратор на основе списка компараторов
- * @tparam Args... (c++11) список компараторов, например vset::compare_member
+ * @tparam Args... список компараторов, например vset::compare_member
  * @details может использоваться для определения компаратора сложных структур.
  */
 template<typename... Args>
@@ -36,7 +36,7 @@ struct compare_list: compare_list_impl< typename fas::type_list_n<Args...>::type
 
 /**
  * @brief Создает композитный компаратор на основе списка компараторов 
- * @tparam Args... (c++11) список компараторов, например vset::compare_member 
+ * @tparam Args... список компараторов, например vset::compare_member 
  * @details может использоваться для определения компаратора сложных структур.
  */
 template<typename... Args>
@@ -46,7 +46,7 @@ struct compare_list2: compare_list2_impl< typename fas::type_list_n<Args...>::ty
 
 /**
  * @brief Создает композитный компаратор на основе списка компараторов 
- * @tparam CompareList (c++03) список компараторов (fas::type_list), например из vset::compare_member
+ * @tparam CompareList список компараторов (fas::type_list), например из vset::compare_member
  * @details может использоваться для определения компаратора сложных структур.
  */
 template<typename CompareList>
@@ -54,7 +54,7 @@ struct compare_list: compare_list_impl< CompareList > {};
 
 /**
  * @brief Создает композитный компаратор на основе списка компараторов 
- * @tparam CompareList (c++03) список компараторов (fas::type_list), например из vset::compare_member
+ * @tparam CompareList список компараторов (fas::type_list), например из vset::compare_member
  * @details может использоваться для определения компаратора сложных структур.
  */
 template<typename CompareList>

@@ -11,6 +11,9 @@
 
 namespace vset { namespace memory{
 
+/**
+ * @brief Указатель для перемещения в буфере менеджера памяти vset::memory::manager
+ */
 template<typename T, typename M>
 class offset_pointer
 {

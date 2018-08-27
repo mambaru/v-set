@@ -31,7 +31,7 @@ struct ad_insert_value
 
     if ( itr == container.end() )
     {
-      // Сюда попадем если ниодного нода еще не созданно
+      // Сюда попадем если ни одного нода еще не созданно
       itr = t.get_aspect().template get<_create_node_>()(t, value);
     }
     else

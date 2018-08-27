@@ -6,7 +6,12 @@
 #include <vset/memory/manager.hpp>
 #include <vset/memory/fsb/aspect.hpp>
 
+#ifdef NDEBUG
 #define TEST_COUNT 10000
+#else
+#define TEST_COUNT 5
+#endif
+
 
 namespace {
 

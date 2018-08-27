@@ -13,22 +13,37 @@
 
 namespace vset { namespace memory{
 
-template<typename A >
+/**
+ * @brief Интерфейс менеждера памяти
+ * @tparam S стратегия 
+ * @tparam A аспект
+ * @details доступные стратегии:
+ *    * vset::memory::strategy::fsb_mmap
+ *    * vset::memory::strategy::fsb_inmem
+ *    * vset::memory::strategy::fsb_filesync
+ */
+template<typename S, typename A = fas::aspect<> >
 class manager
-  : public manager_base<A>
+  : public manager_base< typename fas::merge_aspect<A, S>::type >
 {
-  typedef manager_base<A> super;
+  typedef manager_base< typename fas::merge_aspect<A, S>::type > super;
 public:
-  typedef manager<A> self;
+  typedef manager<S, A> self;
+  /** Тип размещаемого объекта */
   typedef typename super::value_type    value_type;
+  /** Буфер, где рамещаются объекты value_type*/
   typedef typename super::buffer_type   buffer_type;
+  /** Указатель vset::memory::offset_pointer */
   typedef typename super::pointer       pointer;
+  /** Константный vset::memory::offset_pointer */
   typedef typename super::const_pointer const_pointer;
   
   typedef value_type& reference;
   typedef const value_type& const_reference;
 
+  /** Беззнаковый целочисленный тип (size_t) */
   typedef size_t size_type;
+  /** Знаковый целочисленный тип (std::ptrdiff_t) */
   typedef std::ptrdiff_t difference_type;
 
   pointer begin()
