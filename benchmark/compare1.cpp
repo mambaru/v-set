@@ -115,6 +115,7 @@ struct f_generate
   }
 };
 
+void show(const std::string& text, fas::nanospan span);
 void show(const std::string& text, fas::nanospan span)
 {
   std::cout << text << " " << span << std::endl;
@@ -130,7 +131,7 @@ const char* desc[]={
 };
 int main()
 {
-  std::srand(time(0));
+  std::srand(42);
   std::vector<data> d;
   d.resize(MAX_DATA);
   std::generate(d.begin(), d.end(), f_generate());

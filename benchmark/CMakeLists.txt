@@ -10,6 +10,16 @@ add_executable(vmultiset3  vmultiset3.cpp)
 add_executable(compare1_bench  compare1.cpp)
 add_executable(compare2_bench  compare2.cpp cmp3fe.cpp)
 
+
+target_link_libraries(multiset_insert rt)
+target_link_libraries(vset_insert rt)
+target_link_libraries(vset_insert2 rt)
+target_link_libraries(vmultiset rt)
+target_link_libraries(vmultiset2 rt)
+target_link_libraries(vmultiset3 rt)
+target_link_libraries(compare1_bench rt)
+target_link_libraries(compare2_bench rt)
+
 #include(ConfigureLibrary)
 #CONFIGURE_LIBRARY(stx/btree_multiset.h "/usr/include /usr/local/include" stx-btree "")
 

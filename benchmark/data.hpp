@@ -1,3 +1,5 @@
+#pragma once
+
 struct data
 {
   int data1;
