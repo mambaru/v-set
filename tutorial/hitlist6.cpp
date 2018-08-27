@@ -44,6 +44,8 @@ public:
   {
   }
   
+  impl(const impl&) = delete;
+  
   bool open(size_t reserve1, size_t)
   {
     std::string filename = name+".stg";

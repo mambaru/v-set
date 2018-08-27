@@ -321,11 +321,10 @@ void outdated_count( arg_list& args)
   prepare();
   auto ts = extract_param<time_t>(args); 
   
-  size_t count = 0ul;
   size_t calls = 0ul;
   std::cout << "outdated_count for time = " << ts << std::endl;
   auto beg = start();
-  count = storage.outdated_count(ts);
+  size_t count = storage.outdated_count(ts);
   ++calls;
   auto span = finish(beg);
   auto rate = to_rate(span, calls);

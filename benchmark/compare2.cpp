@@ -1,3 +1,7 @@
+#include "config.hpp"
+#include "data.hpp"
+#include "compare.hpp"
+
 #include <vset/multiset.hpp>
 #include <vset/allocators/mmap_allocator.hpp>
 #include <vset/comparators/compare.hpp>
@@ -11,8 +15,6 @@
 #include <set>
 #include <list>
 
-#include "config.hpp"
-#include "data.hpp"
 
 #define RANGE 3
 #ifdef NDEBUG
@@ -22,111 +24,6 @@
   #define MAX_TEST 1
   #define MAX_DATA 10000
 #endif
-
-
-struct cmp1
-{
-  bool operator()(const data& l, const data& r) const
-  {
-    if ( l.data1 < r.data1 ) return true;
-    if ( l.data1 > r.data1 ) return false;
-    
-    if ( l.data2 < r.data2 ) return true;
-    if ( l.data2 > r.data2 ) return false;
-    
-    if ( l.data3 > r.data3 ) return true;
-    if ( l.data3 < r.data3 ) return false;
-    
-    if ( l.data4 < r.data4 ) return true;
-    if ( l.data4 > r.data4 ) return false;
-    
-    if ( l.data5 < r.data5 ) return true;
-    if ( l.data5 > r.data5 ) return false;    
-    
-    if ( l.data6 < r.data6 ) return true;
-    return false;
-  }
-};
-
-struct cmp2
-{
-  bool operator()(const data& l, const data& r) const
-  {
-    return l.data1 < r.data1 
-      || ( ! ( r.data1 < l.data1 ) && l.data2 < r.data2 ) 
-      || ( ! ( r.data1 < l.data1 ) && !( r.data2 < l.data2 ) && l.data3 > r.data3 ) 
-      || ( ! ( r.data1 < l.data1 ) && !( r.data2 < l.data2 ) && !( r.data3 > l.data3 ) && l.data4 < r.data4 ) 
-      || ( ! ( r.data1 < l.data1 ) && !( r.data2 < l.data2 ) && !( r.data3 > l.data3 ) && !( r.data4 < l.data4 ) && l.data5 < r.data5 ) 
-      || ( ! ( r.data1 < l.data1 ) && !( r.data2 < l.data2 ) && !( r.data3 > l.data3 ) 
-               && !( r.data4 < l.data4 ) && !( r.data5 < l.data5 ) && l.data6 < r.data6 );
-  }
-};
-
-
-
-struct cmp3
-{
-  bool operator()(const data& l, const data& r) const
-  {
-    return   l.data1 < r.data1 ? true : l.data1 > r.data1 ? false
-           : l.data2 < r.data2 ? true : l.data2 > r.data2 ? false 
-           : l.data3 > r.data3 ? true : l.data3 < r.data3 ? false 
-           : l.data4 < r.data4 ? true : l.data4 > r.data4 ? false 
-           : l.data5 < r.data5 ? true : l.data5 > r.data5 ? false 
-           : l.data6 < r.data6 ? true : false;
-  }
-};
-
-
-typedef fas::type_list_n<
-  vset::compare_member<data, int, &data::data1, std::less<int> >,
-  vset::compare_member<data, int, &data::data2, std::less<int> >,
-  vset::compare_member<data, int, &data::data3, std::greater<int> >,
-  vset::compare_member<data, int, &data::data4, std::less<int> >,
-  vset::compare_member<data, int, &data::data5, std::less<int> >,
-  vset::compare_member<data, int, &data::data6, std::less<int> >
->::type compare_list;
-
-struct cmp2t: vset::compare_list2<compare_list> {};
-struct cmp3t: vset::compare_list<compare_list> {};
-
-//typedef vset::compare_list2<compare_list> cmp2t;
-//typedef vset::compare_list<compare_list> cmp3t;
-
-/*
-typedef vset::compare_list2<  
-  vset::compare_member<data, int, &data::data1, std::less<int> >,
-  vset::compare_member<data, int, &data::data2, std::less<int> >,
-  vset::compare_member<data, int, &data::data3, std::greater<int> >,
-  vset::compare_member<data, int, &data::data4, std::less<int> >,
-  vset::compare_member<data, int, &data::data5, std::less<int> >,
-  vset::compare_member<data, int, &data::data6, std::less<int> >
-> cmp2t;
-
-typedef vset::compare_list<  
-  vset::compare_member<data, int, &data::data1, std::less<int> >,
-  vset::compare_member<data, int, &data::data2, std::less<int> >,
-  vset::compare_member<data, int, &data::data3, std::greater<int> >,
-  vset::compare_member<data, int, &data::data4, std::less<int> >,
-  vset::compare_member<data, int, &data::data5, std::less<int> >,
-  vset::compare_member<data, int, &data::data6, std::less<int> >
-> cmp3t;
-*/
-
-
-//__attribute__ ((noinline))
- inline bool cmp3f(const data& l, const data& r);
-
- //__attribute__ ((noinline))
- inline bool cmp3f(const data& l, const data& r) 
-{
-  return cmp3()(l, r);
-}
-
-extern "C"
-{
-  bool cmp3fe(const data& l, const data& r);
-}
 
 struct f_generate
 {
@@ -143,6 +40,7 @@ struct f_generate
   }
 };
 
+void show(const std::string& text, fas::nanospan span);
 void show(const std::string& text, fas::nanospan span)
 {
   std::cout << text << " " << span << std::endl;
@@ -151,7 +49,7 @@ void show(const std::string& text, fas::nanospan span)
 struct ibench
 {
   virtual ~ibench() {}
-  virtual void run(bool show) = 0;
+  virtual void run(bool show_flag) = 0;
   virtual void run_lambda() {};
   virtual void show() = 0;
   virtual bool equal(ibench*) = 0;
@@ -161,7 +59,7 @@ struct ibench_data: ibench
 {
   virtual ~ibench_data() {}
   virtual std::vector<data> get_data() = 0;
-  virtual void show_result() = 0;
+  //virtual void show_result() = 0;
 };
 
 template<typename V, typename C, typename I>
@@ -172,14 +70,14 @@ public:
     : _orig(orig), _compare(cmp), _desc(desc)
   {}
   
-  virtual void run(bool show)
+  virtual void run(bool show_flag)
   {
     _res.assign(_orig.begin(), _orig.end());
     fas::nanospan start = fas::nanotime();
     std::sort(_res.begin(), _res.end(), _compare);
     fas::nanospan finish = fas::nanotime();
     fas::nanospan span = finish - start;
-    if (show) show_(span);
+    if (show_flag) show_(span);
     _times.insert(span);
   }
   
@@ -226,12 +124,13 @@ public:
     : bench_base<data, C, ibench_data>(orig, cmp, desc)
   {}
   
+  /*
   virtual void show_result()
   {
     for (auto i: super::_res) 
       std::cout << i.data1 << " " << i.data2 << " "<< i.data3 << " "<< i.data4 << " "<< i.data5 << " "<< i.data6 << " " << std::endl;
-  }
-  
+  }*/
+    
   virtual bool equal(ibench* ab) 
   {
     if ( auto b = dynamic_cast<ibench_data*>(ab) )
@@ -333,7 +232,6 @@ int main()
       (*itr)->run_lambda();
       (*itr)->run(false);
     }
-    //benches.back()->show_result();
   }
 
   

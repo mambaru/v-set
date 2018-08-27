@@ -12,7 +12,7 @@ class hitlist::impl
     typedef hit value_type;
     struct pointer
     {
-      pointer(hit& h): _h(h) {}
+      explicit pointer(hit& h): _h(h) {}
       hit& operator*() { return _h;}
       const hit& operator*() const { return _h;}
     private:
@@ -61,8 +61,6 @@ public:
   
   ~impl()
   {
-    /*delete _p1; 
-    delete _p2; */
   }
   
   bool open(size_t, size_t)

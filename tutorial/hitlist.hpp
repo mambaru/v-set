@@ -11,6 +11,7 @@ class hitlist
   class impl;
 public:
   hitlist();
+  hitlist(const hitlist&) = delete;
   virtual ~hitlist();
   
   bool open(size_t reserve1, size_t reserve2);

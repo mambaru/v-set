@@ -31,6 +31,8 @@ public:
   {
   }
   
+  hitlist_t(const hitlist_t<T>&) = delete;
+  
   void set_hit(uint32_t src, uint32_t dst, time_t ts) 
   {
     pointer phit = _storage.allocate(1);

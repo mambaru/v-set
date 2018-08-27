@@ -16,4 +16,5 @@ CMakeFiles
 CMakeCache.txt
 *.kate-swp
 docs
+cppcheck.cppcheck
 

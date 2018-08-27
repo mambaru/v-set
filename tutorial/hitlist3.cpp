@@ -47,6 +47,8 @@ public:
     , _hitlist(_storage, _by_src, _by_dst, _by_ts, _ph1, _ph2 )
   { }
   
+  impl(const impl&) = delete;
+  
   bool open(size_t, size_t)
   {
     return false;

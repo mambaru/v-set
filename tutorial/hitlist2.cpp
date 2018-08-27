@@ -41,14 +41,18 @@ class hitlist::impl
   typedef params::src_index by_src_t;
   typedef params::dst_index by_dst_t;
   typedef params::ts_index  by_ts_t;
-  
+ 
+  explicit impl(const impl&) = delete;
+  impl& operator=(const impl&) = delete;
+
 public:
   
   impl()
     : _p1(new value_type()), _p2(new value_type())
     , _hitlist(_storage, _by_src, _by_dst, _by_ts, _p1, _p2 )
   { }
-
+  
+ 
   ~impl()
   {
     delete _p1; 
