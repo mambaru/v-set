@@ -15,4 +15,17 @@ unusedStructMember:./benchmark/vset_insert3.cpp:20
 redundantPointerOp:./tests/memory/basic_suite.cpp:88
 accessMoved:./tests/vtree/vtree_ctor_suite.cpp:97
 
+functionStatic:./tutorial/hitlist1.cpp
+functionStatic:./tutorial/hitlist2.cpp
+functionStatic:./tutorial/hitlist3.cpp
+functionStatic:./tutorial/hitlist4.cpp
+functionStatic:./tutorial/hitlist5.cpp
+functionStatic:./tutorial/hitlist6.cpp
+functionStatic:./tutorial/hitlist7.cpp
+functionStatic:./tutorial/hitlistX.cpp
+functionStatic:./tutorial/hitlist_t.hpp
+
+
+noCopyConstructor:./tutorial/hitlist2.cpp
+noCopyConstructor:./tutorial/hitlist4.cpp
 

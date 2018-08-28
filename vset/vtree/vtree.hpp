@@ -20,13 +20,7 @@
 
 namespace vset{ namespace vtree{
 
-struct not_impl: std::domain_error
-{
-  not_impl(): std::domain_error("not_impl") {}
-  explicit not_impl(const char* txt): std::domain_error(txt) {}
-};
-
-
+/// @cond ignore
 template<typename K, typename C>
 struct compare_pair
 {
@@ -35,20 +29,27 @@ struct compare_pair
   compare_pair()
     : _comp()
   {}
-  
+    
   explicit compare_pair(C comp)
     : _comp(comp)
   {
   }
-  
+    
   bool operator()(const K& first, const K& second) const
   {
     return _comp(first.first, second.first)
-           || ( !_comp(second.first, first.first)
+          || ( !_comp(second.first, first.first)
                 && _comp(first.second, second.second) );
   }
 };
 
+/// @endcond
+
+
+/**
+   @brief Базовый класс для vset::multiset реализующий основные его методы.
+   @tparam A - аспект
+*/
 template< typename A >
 class vtree:
   public fas::aspect_class<A>
@@ -56,42 +57,66 @@ class vtree:
   typedef vtree<A> self;
   typedef fas::aspect_class<A> super;
   typedef typename super::aspect::template advice_cast<_allocator_>::type         allocator_builder;
-  
-public:
-  typedef typename super::aspect::template advice_cast<_key_compare_>::type       key_compare;
-  typedef typename super::aspect::template advice_cast<_value_compare_>::type     value_compare;
-  typedef typename super::aspect::template advice_cast<_value_type_>::type        value_type;
-  typedef typename super::aspect::template advice_cast<_key_type_>::type          key_type;
 
-  typedef typename allocator_builder::template apply<self>::type                  allocator_type;
-  typedef typename allocator_type::size_type                                      size_type;
-  typedef typename allocator_type::difference_type                                difference_type;
+  typedef typename super::aspect::template advice_cast<_key_compare_>::type       key_compare_tag;
+  typedef typename super::aspect::template advice_cast<_value_compare_>::type     value_compare_tag;
+  typedef typename super::aspect::template advice_cast<_value_type_>::type        value_type_tag;
+  typedef typename super::aspect::template advice_cast<_key_type_>::type          key_type_tag;
 
-  typedef std::pair<key_type, key_type>                                           container_key;
-  typedef compare_pair<container_key, key_compare>                                container_comparator;
-  
+  typedef typename allocator_builder::template apply<self>::type                  allocator_type_tag;
+  typedef typename allocator_type_tag::size_type                                      size_type_tag;
+  typedef typename allocator_type_tag::difference_type                                difference_type_tag;
+
+  typedef std::pair<key_type_tag, key_type_tag>                                           container_key_tag;
+  typedef compare_pair<container_key_tag, key_compare_tag>                        container_comparator_tag;
+
   typedef typename super::aspect
     ::template advice_cast<_container_>::type
     ::template apply<
-       container_key,
-       typename allocator_type::pointer, 
-       container_comparator 
-    >::type                                                                         container_type;
+       container_key_tag,
+       typename allocator_type_tag::pointer, 
+       container_comparator_tag
+    >::type                                                                         container_type_tag;
+    
+  typedef vtree_iterator<typename container_type_tag::iterator, value_type_tag>             iterator_tag;
+  typedef vtree_iterator<typename container_type_tag::const_iterator, const value_type_tag> const_iterator_tag;
+  typedef std::reverse_iterator<iterator_tag>                                           reverse_iterator_tag;
+  typedef std::reverse_iterator<const_iterator_tag>                                     const_reverse_iterator_tag;
 
-  typedef vtree_iterator<typename container_type::iterator, value_type>             iterator;
-  typedef vtree_iterator<typename container_type::const_iterator, const value_type> const_iterator;
-  typedef std::reverse_iterator<iterator>                                           reverse_iterator;
-  typedef std::reverse_iterator<const_iterator>                                     const_reverse_iterator;
+  typedef typename std::iterator_traits<iterator_tag>::pointer                          pointer_tag;
+  typedef typename std::iterator_traits<iterator_tag>::reference                        reference_tag;
+  typedef typename std::iterator_traits<const_iterator_tag>::pointer                    const_pointer_tag;
+  typedef typename std::iterator_traits<const_iterator_tag>::reference                  const_reference_tag;
+public:
 
-  typedef typename std::iterator_traits<iterator>::pointer                          pointer;
-  typedef typename std::iterator_traits<iterator>::reference                        reference;
-  typedef typename std::iterator_traits<const_iterator>::pointer                    const_pointer;
-  typedef typename std::iterator_traits<const_iterator>::reference                  const_reference;
+  typedef key_compare_tag key_compare;
+  typedef value_compare_tag value_compare;
+  typedef value_type_tag value_type;
+  typedef key_type_tag key_type;
+
+  typedef allocator_type_tag allocator_type;
+  typedef size_type_tag size_type;
+  typedef difference_type_tag difference_type;
+
+  typedef container_key_tag container_key;
+  typedef container_comparator_tag container_comparator;
+  typedef container_type_tag container_type;
+    
+  typedef iterator_tag iterator;
+  typedef const_iterator_tag const_iterator;
+  typedef reverse_iterator_tag reverse_iterator;
+  typedef const_reverse_iterator_tag const_reverse_iterator;
+
+  typedef pointer_tag pointer;
+  typedef reference_tag reference;
+  typedef const_pointer_tag const_pointer;
+  typedef const_reference_tag const_reference;
+  
   
   allocator_type  _allocator;
   container_type  _container;
 
-  //если есть _open_file_ копирование недоступно
+  // если есть _open_file_ копирование недоступно
   struct copy_ctor_disabled_for_mapped_files;
 
 public:
@@ -127,20 +152,16 @@ public:
     _allocator = this->get_aspect().template get<_allocator_>()(*this);
     this->insert(b, e);
   }
-
   
   vtree(const self& __x)
     : _allocator( this->get_aspect().template get<_allocator_>()(*this) )
     , _container()
   {
-    //typename fas::static_error< copy_ctor_disabled_for_mapped_files, super::aspect::template has_advice< ::vset::buffer::persistent::_open_file_ >::value == 0 >::type error;
-    
     typedef typename fas::static_error< 
       copy_ctor_disabled_for_mapped_files, 
       super::aspect::template has_advice< ::vset::buffer::persistent::_open_file_ >::value == 0 
     >::type error;
     this->dummy( error() );
-    ///static_cast<super&>(*this) = static_cast<const super&>(__x);
     this->insert(__x.begin(), __x.end());
   }
   
@@ -153,10 +174,7 @@ public:
   }
 
 
- // vtree(const vtree&) = delete;
-
   vtree(vtree&& __x)
-  //noexcept(std::is_nothrow_copy_constructible<allocator_type>::value)
   {
     vtree tmp;
     this->swap(__x);
@@ -222,41 +240,77 @@ public:
     return _container;
   }
 
+  /** 
+   * @brief Возвращает итератор на первый элемент контейнера. 
+   * @return итератор на первый элемент
+   */
   iterator  begin()
   {
     return iterator( _container.begin(), typename iterator::difference_type(0));
   }
 
+  /** 
+   * @brief Возвращает итератор на элемент, следующий за последним элементом контейнера
+   * @return итератор на элемент, следующий за последним элементом контейнера
+   * @details Этот элемент выступает в качестве заполнителя; попытке доступа к нему приводит к неопределенному поведению
+   */  
   iterator end()
   {
     return iterator( _container.end(), typename  iterator::difference_type(0) );
   }
 
+  /** 
+   * @brief Возвращает константный итератор на первый элемент контейнера. 
+   * @return Константный итератор на первый элемент
+   */
   const_iterator  begin() const
   {
     return const_iterator( _container.begin(), 0);
   }
 
+  /** 
+   * @brief Возвращает константный итератор на элемент, следующий за последним элементом контейнера
+   * @return константный  итератор на элемент, следующий за последним элементом контейнера
+   * @details Этот элемент выступает в качестве заполнителя; попытке доступа к нему приводит к неопределенному поведению
+   */  
   const_iterator end() const
   {
     return const_iterator( _container.end(), 0 );
   }
 
+  /** 
+   * @brief Возвращает обратный итератор на последний элемент контейнера. 
+   * @return обратный итератор на последний элемент
+   */
   reverse_iterator rbegin()
   {
     return reverse_iterator( this->end() );
   }
 
+  /** 
+   * @brief Возвращает обратный итератор на элемент, перед первым элементом контейнера
+   * @return обратный  итератор на элемент, перед первым элементом контейнера
+   * @details Этот элемент выступает в качестве заполнителя; попытке доступа к нему приводит к неопределенному поведению
+   */  
   reverse_iterator rend()
   {
     return reverse_iterator( this->begin() );
   }
 
+  /** 
+   * @brief Возвращает константный обратный итератор на последний элемент контейнера. 
+   * @return Константный обратный итератор на последний элемент
+   */
   const_reverse_iterator rbegin() const
   {
     return const_reverse_iterator( this->end() );
   }
 
+  /** 
+   * @brief Возвращает константный обратный итератор на элемент, следующий перед первым элементом контейнера
+   * @return константный  итератор обратный на элемент, следующий за последним элементом контейнера
+   * @details Этот элемент выступает в качестве заполнителя; попытке доступа к нему приводит к неопределенному поведению
+   */  
   const_reverse_iterator rend() const
   {
     return const_reverse_iterator( this->begin() );
@@ -264,21 +318,40 @@ public:
 
 #ifdef __GXX_EXPERIMENTAL_CXX0X__
 
+  /** 
+   * @brief Возвращает константный итератор на первый элемент контейнера (c++11). 
+   * @return Константный итератор на первый элемент
+   */
   const_iterator  cbegin() const
   {
     return const_iterator( _container.cbegin(), 0);
   }
 
+  /** 
+   * @brief Возвращает константный итератор на элемент, следующий за последним элементом контейнера (c++11)
+   * @return константный  итератор на элемент, следующий за последним элементом контейнера
+   * @details Этот элемент выступает в качестве заполнителя; попытке доступа к нему приводит к неопределенному поведению
+   */  
   const_iterator cend() const
   {
     return const_iterator( _container.cend(), 0 );
   }
 
+  /** 
+   * @brief Возвращает константный обратный итератор на последний элемент контейнера (c++11). 
+   * @return Константный обратный итератор на последний элемент
+   */
   const_reverse_iterator crbegin() const
   {
     return const_reverse_iterator( this->begin() );
   }
 
+
+  /** 
+   * @brief Возвращает константный обратный итератор на элемент, следующий перед первым элементом контейнера (c++11)
+   * @return константный  итератор обратный на элемент, следующий перед первым элементом контейнера
+   * @details Этот элемент выступает в качестве заполнителя; попытке доступа к нему приводит к неопределенному поведению
+   */  
   reverse_iterator crend() const
   {
     return const_reverse_iterator( this->end() );
@@ -286,33 +359,63 @@ public:
 
 #endif
 
+  /**
+   * @brief Проверка на отсутствие элементов в контейнере 
+   * @return true если контейнер пуст, false - в противном случае 
+   */
   bool empty() const
   {
     return _container.empty();
   }
 
+  /**
+   * @brief Возвращает количество элементов в контейнере
+   * @return количество элементов в контейнере
+   */
   size_type size() const
   {
     return this->get_aspect().template get<_size_>();
   }
 
+  /**
+   * @brief Возвращает максимально допустимое количество элементов в контейнере 
+   * @return Максимальное количество элементов.
+   * @details Это значение обычно равно std::numeric_limits<size_type>::max(), и отражает теоретический предел на размер контейнера. 
+   * Ввиду ограничений на доступную оперативную память, во время исполнения это значение может быть ниже чем max_size().
+   */
   size_type max_size() const
   {
     return std::numeric_limits<size_type>::max();
   }
 
-  void swap( vtree& s )
+  /**
+   * @brief Обменивает содержимое контейнера с содержимым контейнера другого
+   * @param other — Контейнер для обмена содержимым
+   * @details  The behavior is undefined if get_allocator() != other.get_allocator() 
+   * and std::allocator_traits<allocator_type>::propagate_on_container_swap::value != true.
+   */
+  void swap( vtree& other )
   {
-    this->get_aspect().template get<_swap_container_>()(*this, s);
+    this->get_aspect().template get<_swap_container_>()(*this, other);
     _allocator = this->get_aspect().template get<_allocator_>()(*this);
-    s._allocator = this->get_aspect().template get<_allocator_>()(s);
+    other._allocator = this->get_aspect().template get<_allocator_>()(other);
   }
 
+  /**
+   * @brief Возвращает количество элементов, которые могут одновременно храниться в выделенной области памяти 
+   * @return Вместимость контейнера, под которую в сейчас выделена память
+   */
   size_t capacity() const
   {
     return this->get_aspect().template get<_capacity_>()(*this);
   }
-
+  
+  /**
+   * @brief Вставляет элемент
+   * @param value вставляемое значение
+   * @return итератор на вставленный элемент
+   * @details Сложность от O(log(size/t)) до O(log(size*4/t) + t)
+   */
   iterator insert(const value_type& value)
   {
     return this->get_aspect().template get<_insert_value_>()(*this, value);
@@ -321,6 +424,12 @@ public:
 
 #ifdef __GXX_EXPERIMENTAL_CXX0X__
 
+  /**
+   * @brief Вставляет элемент (c++11)
+   * @param value вставляемое значение
+   * @return итератор на вставленный элемент
+   * @details Сложность от O(log(size/t)) до O(log(size*4/t) + t)
+   */
   iterator insert(value_type&& value)
   {
     return this->get_aspect().template get<_insert_value_>()(*this, value );
@@ -328,45 +437,76 @@ public:
 
 #endif
 
+  /**
+   * @brief Вставляет элемент
+   * @param const_iterator игнорируеться
+   * @param value вставляемое значение
+   * @return итератор на вставленный элемент
+   * @details Сложность от O(log(size/t)) до O(log(size*4/t) + t)
+   */
   iterator insert(const_iterator, const value_type& value)
   {
     return this->get_aspect().template get<_insert_value_>()(*this, value );
   }
 
 #ifdef __GXX_EXPERIMENTAL_CXX0X__
+  /**
+   * @brief Вставляет элемент (c++11)
+   * @param const_iterator игнорируеться
+   * @param value вставляемое значение
+   * @return итератор на вставленный элемент
+   * @details Сложность от O(log(size/t)) до O(log(size*4/t) + t)
+   */
   iterator insert(const_iterator, value_type&& value)
   {
     return this->get_aspect().template get<_insert_value_>()(*this, value );
   }
 #endif
 
+  /**
+   * @brief Вставляет элементы из диапазона [first, last)
+   * @param first итератор начала диапазона
+   * @param last итератор конеца диапазона
+   */
   template<typename InputIterator>
-  void insert(InputIterator b, InputIterator e)
+  void insert(InputIterator first, InputIterator last)
   {
-    for (; b != e; ++b)
+    for (; first != last; ++first)
     {
-      this->insert(*b);
+      this->insert(*first);
     }
   }
 
 #ifdef __GXX_EXPERIMENTAL_CXX0X__
 
-  void insert( std::initializer_list<value_type> lst)
+  /**
+   * @brief Вставляет элементы из списка инициализации init (c++11)
+   * @param init — список инициализации элементов контейнера
+   */
+  void insert( std::initializer_list<value_type> init)
   {
-    this->insert(lst.begin(), lst.end());
+    this->insert(init.begin(), init.end());
   }
 
 #endif
 
 #ifdef __GXX_EXPERIMENTAL_CXX0X__
 
-  iterator erase(const_iterator itr)
+  /**
+   * @brief Удаляет элементы (c++11)
+   * @param pos итератор на элемент для удаления
+   */
+  iterator erase(const_iterator pos)
   {
-    return this->get_aspect().template get<_erase_iterator_>()(*this, itr);
+    return this->get_aspect().template get<_erase_iterator_>()(*this, pos);
   }
 
 #else
 
+  /**
+   * @brief Удаляет элементы (c++03)
+   * @param pos итератор на элемент для удаления
+   */
   void erase(iterator itr)
   {
     this->get_aspect().template get<_erase_iterator_>()(*this, itr);
@@ -374,6 +514,10 @@ public:
 
 #endif
 
+  /**
+   * @brief Удаляет элементы (c++11)
+   * @param key	Ключевое значение элементов для удаления
+   */
   size_type erase(const key_type& key)
   {
     return this->get_aspect().template get<_erase_value_>()(*this, key);
@@ -381,6 +525,12 @@ public:
 
 #ifdef __GXX_EXPERIMENTAL_CXX0X__
 
+  /**
+   * @brief Удаляет элементы (c++11) из диапазона [first, last)
+   * @param first итератор начала диапазона
+   * @param last итератор конеца диапазона
+   * @return iterator, следующего за последним удаленным элементом
+   */
   iterator erase(const_iterator first, const_iterator last)
   {
     return this->get_aspect().template get<_erase_range_>()(*this, first, last);
@@ -388,6 +538,11 @@ public:
 
 #else
 
+  /**
+   * @brief Удаляет элементы (c++03) из диапазона [first, last)
+   * @param first итератор начала диапазона
+   * @param last итератор конеца диапазона
+   */
   void erase(iterator first, iterator last)
   {
     this->get_aspect().template get<_erase_range_>()(*this, first, last);
@@ -395,11 +550,17 @@ public:
 
 #endif
 
+  /** @brief Очищает контейнер */
   void clear()
   {
     return this->get_aspect().template get<_clear_>()(*this);
   }
 
+  /** 
+   * @brief Возвращает количество элементов с ключом key.
+   * @param key Значение ключа
+   * @return Количество элементов с ключом key
+   */
   size_type count(const key_type& key) const
   {
     return static_cast<size_type>( this->upper_bound(key) - this->lower_bound(key) );
@@ -407,31 +568,61 @@ public:
 
 #ifdef __GXX_EXPERIMENTAL_CXX0X__
 
+  /** 
+   * @brief находит элемент с конкретным ключом (c++11)
+   * @param key Ключевое значение элемента для поиска
+   * @return Итератор элемент с ключом key. Если такой элемент не найден, итератора возвращается vtree::end()
+   */
   iterator find(const key_type& key)
   {
     return this->get_aspect().template get<_find_>()(*this, key);
   }
 
+  /** 
+   * @brief находит элемент с конкретным ключом (c++11)
+   * @param key Ключевое значение элемента для поиска
+   * @return Итератор элемент с ключом key. Если такой элемент не найден, итератора возвращается vtree::end()
+   */
   const_iterator find(const key_type& key ) const
   {
     return this->get_aspect().template get<_find_>()(*this, key);
   }
 
+  /** 
+   * @brief возвращает итератор на первый элемент не меньшим, чем заданное значение (c++11)
+   * @param key ключевое значение для сравнения элементов
+   * @return итератор, указывающий на первый элемент, который не меньше, чем key. Если такой элемент не найден, итератора возвращается vtree::end()
+   */
   iterator lower_bound(const key_type& key)
   {
     return this->get_aspect().template get<_lower_bound_>()(*this, key);
   }
 
+  /** 
+   * @brief возвращает итератор на первый элемент не меньшим, чем заданное значение (c++11)
+   * @param key ключевое значение для сравнения элементов
+   * @return итератор, указывающий на первый элемент, который не меньше, чем key. Если такой элемент не найден, итератора возвращается vtree::end()
+   */
   const_iterator lower_bound(const key_type& key) const
   {
     return this->get_aspect().template get<_lower_bound_>()(*this, key);
   }
 
+  /** 
+   * @brief возвращает итератор на первый элемент больше, чем заданное значение (c++11)
+   * @param key ключевое значение для сравнения элементов
+   * @return итератор, указывающий на первый элемент, который больше, чем key. Если такой элемент не найден, итератора возвращается vtree::end()
+   */
   iterator upper_bound(const key_type& key)
   {
     return this->get_aspect().template get<_upper_bound_>()(*this, key);
   }
 
+  /** 
+   * @brief возвращает итератор на первый элемент больше, чем заданное значение (c++11)
+   * @param key ключевое значение для сравнения элементов
+   * @return итератор, указывающий на первый элемент, который больше, чем key. Если такой элемент не найден, итератора возвращается vtree::end()
+   */
   const_iterator upper_bound(const key_type& key) const
   {
     return this->get_aspect().template get<_upper_bound_>()(*this, key);
@@ -439,18 +630,33 @@ public:
 
 #else
 
+  /** 
+   * @brief находит элемент с конкретным ключом (c++03)
+   * @param key Ключевое значение элемента для поиска
+   * @return Итератор элемент с ключом key. Если такой элемент не найден, итератора возвращается vtree::end()
+   */
   iterator find(const key_type& key) const
   {
     self* t = const_cast<self*>(this);
     return t->get_aspect().template get<_find_>()(*t, key);
   }
 
+  /** 
+   * @brief возвращает итератор на первый элемент не меньшим, чем заданное значение (c++03)
+   * @param key ключевое значение для сравнения элементов
+   * @return итератор, указывающий на первый элемент, который не меньше, чем key. Если такой элемент не найден, итератора возвращается vtree::end()
+   */
   iterator lower_bound(const key_type& key) const
   {
     self* t = const_cast<self*>(this);
     return t->get_aspect().template get<_lower_bound_>()(*t, key);
   }
 
+  /** 
+   * @brief возвращает итератор на первый элемент больше, чем заданное значение (c++03)
+   * @param key ключевое значение для сравнения элементов
+   * @return итератор, указывающий на первый элемент, который больше, чем key. Если такой элемент не найден, итератора возвращается vtree::end()
+   */
   iterator upper_bound(const key_type& key) const
   {
     self* t = const_cast<self*>(this);
@@ -459,11 +665,23 @@ public:
 
 #endif
 
+  /** 
+   * @brief Возвращает диапазон, содержащий все элементы с ключевыми key в контейнере
+   * @param key ключевое значение для сравнения элементов
+   * @return Пара (std::pair) итераторов, определяющих требуемый диапазон: первый указывает на первый элемент, который не меньше ключа, 
+   * а второй указывает на первый элемент, кторый больше ключа.
+   */
   std::pair<iterator, iterator> equal_range(const key_type& x)
   {
     return std::make_pair(this->lower_bound(x), this->upper_bound(x) );
   }
 
+  /** 
+   * @brief Возвращает диапазон, содержащий все элементы с ключевыми key в контейнере
+   * @param key ключевое значение для сравнения элементов
+   * @return Пара (std::pair) итераторов, определяющих требуемый диапазон: первый указывает на первый элемент, который не меньше ключа, 
+   * а второй указывает на первый элемент, кторый больше ключа.
+   */
   std::pair<const_iterator, const_iterator> equal_range(const key_type& x) const
   {
     return std::make_pair(this->lower_bound(x), this->upper_bound(x) );
@@ -487,13 +705,14 @@ private:
 template<typename A>
 inline bool operator==(const vtree<A>& __x, const vtree<A>& __y)
 {
-  return __x.size() == __y.size() && std::equal(__x.begin(), __x.end(), __y.begin());
+  return !(__x < __y) && !(__y < __x);
+  //return __x.size() == __y.size() && std::equal(__x.begin(), __x.end(), __y.begin());
 }
 
 template<typename A>
 inline bool operator< (const vtree<A>& __x, const vtree<A>& __y)
 {
-  return std::lexicographical_compare(__x.begin(), __x.end(), __y.begin(), __y.end());
+  return std::lexicographical_compare(__x.begin(), __x.end(), __y.begin(), __y.end(), __x.key_comp() );
 }
 
 template<typename A>

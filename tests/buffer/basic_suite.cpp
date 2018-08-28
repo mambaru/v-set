@@ -34,7 +34,7 @@ void first_test(T& t, B& buff)
   buff.reserve(14);
   for (int i = 0; i < 7; ++i)
   {
-    buff.data()[i] = '0' + i;
+    buff.data()[i] = static_cast<char>('0' + i);
   }
 }
 

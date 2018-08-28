@@ -19,18 +19,44 @@ namespace vset{
 
 template<typename CompareList>
 struct compare_list_impl;
+
 template<typename CompareList>
 struct compare_list2_impl;
 
 
 #ifdef __GXX_EXPERIMENTAL_CXX0X__
+
+/**
+ * @brief Создает композитный компаратор на основе списка компараторов
+ * @tparam Args... список компараторов, например vset::compare_member
+ * @details может использоваться для определения компаратора сложных структур.
+ */
 template<typename... Args>
 struct compare_list: compare_list_impl< typename fas::type_list_n<Args...>::type > {};
+
+/**
+ * @brief Создает композитный компаратор на основе списка компараторов 
+ * @tparam Args... список компараторов, например vset::compare_member 
+ * @details может использоваться для определения компаратора сложных структур.
+ */
 template<typename... Args>
 struct compare_list2: compare_list2_impl< typename fas::type_list_n<Args...>::type > {};
+
 #else
+
+/**
+ * @brief Создает композитный компаратор на основе списка компараторов 
+ * @tparam CompareList список компараторов (fas::type_list), например из vset::compare_member
+ * @details может использоваться для определения компаратора сложных структур.
+ */
 template<typename CompareList>
 struct compare_list: compare_list_impl< CompareList > {};
+
+/**
+ * @brief Создает композитный компаратор на основе списка компараторов 
+ * @tparam CompareList список компараторов (fas::type_list), например из vset::compare_member
+ * @details может использоваться для определения компаратора сложных структур.
+ */
 template<typename CompareList>
 struct compare_list2: compare_list2_impl< CompareList > {};
 

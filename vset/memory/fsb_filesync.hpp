@@ -13,9 +13,17 @@
 
 namespace vset { namespace memory{
 
-template<typename T, typename OffsetAspect = fsb_offset, typename A = fas::aspect<> >
+/**
+  * @brief менеджер памяти в непрерывном буфере, с полным дампом на диск
+  * @tparam T тип хранимых объектов
+  * @tparam OffsetAspect стратегия смещения. По умолчанию vset::memory::fsb_offset
+  * @details также доступна стратегия относительного смещения vset::memory::fsb_nth, 
+  * которая работает по смещению не в байтах относительно начала буффера как vset::memory::fsb_offset,
+  * а по количеству объектов T, что позволит проиндексировать в uint32_t гораздо больше элементов.
+  */
+template<typename T, typename OffsetStrategy = fsb_offset, typename A = fas::aspect<> >
 struct fsb_filesync
-  : manager< typename fas::merge_aspect< A, strategy::fsb_filesync<T, OffsetAspect> >::type >
+  : manager< strategy::fsb_filesync<T, OffsetStrategy>, A >
 {};
 
 }}

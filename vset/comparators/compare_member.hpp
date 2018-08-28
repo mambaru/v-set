@@ -12,9 +12,16 @@
 #include <functional>
 
 namespace vset{
-  
-template<typename V, typename VT, VT V::* m, typename C = std::less<VT> >
-struct compare_member: compare< fas::member<V, VT, m>, C > {};
+
+/**
+ * @brief Позволяет создавать компаратор отдельного поля структуры или класса
+ * @tparam S - тип структуры 
+ * @tparam M - тип поля структуры
+ * @tparam m - указатель на поле структуры
+ * @tparam C - копаратор для M (по умолчанию std::less<M> )
+ */  
+template<typename S, typename M, M S::* m, typename C = std::less<M> >
+struct compare_member: compare< fas::member<S, M, m>, C > {};
 
 }
 

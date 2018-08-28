@@ -6,7 +6,12 @@
 #include <vset/memory/manager.hpp>
 #include <vset/memory/fsb/aspect.hpp>
 
+#ifdef NDEBUG
 #define TEST_COUNT 10000
+#else
+#define TEST_COUNT 5
+#endif
+
 
 namespace {
 
@@ -62,10 +67,10 @@ bool create(data_buffer& buffer, index123_type& index123)
 {
   data_pointer ptr = buffer.allocate(1);
   *ptr = generate();
-  index123_type::iterator itr = index123.find( ptr.get_offset() );
+  index123_type::iterator itr = index123.find( static_cast<offset_t>( ptr.get_offset() ) );
   if (itr == index123.end())
   {
-    index123.insert( ptr.get_offset() );
+    index123.insert( static_cast<offset_t>( ptr.get_offset() ) );
   }
   else
   {
@@ -151,7 +156,7 @@ bool erase_one(data_buffer& buffer, index123_type& index123)
     ptr += std::rand()%buffer_size;
   }
   
-  offset_t offset = ptr.get_offset();
+  offset_t offset = static_cast<offset_t>( ptr.get_offset() );
   
   index123_type::iterator lower = index123.lower_bound(offset);
   index123_type::iterator upper = index123.upper_bound(offset);
@@ -177,7 +182,7 @@ bool erase_one(data_buffer& buffer, index123_type& index123)
 bool erase_begin(data_buffer& buffer, index123_type& index123)
 {
   data_pointer ptr = buffer.begin();
-  index123_type::iterator itr = index123.find( ptr.get_offset() );
+  index123_type::iterator itr = index123.find( static_cast<offset_t>( ptr.get_offset() ) );
   index123.erase(itr);
   buffer.deallocate(ptr, 1);
   return true;

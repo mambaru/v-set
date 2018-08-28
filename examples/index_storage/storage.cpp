@@ -80,7 +80,7 @@ void insert_employee(employees_storage &storage, employee_index& index, const em
 {
   employees_storage::pointer ptr = storage.allocate(1);
   *ptr = emp;
-  index.insert(employee_key(emp, ptr.get_offset()));
+  index.insert(employee_key(emp, static_cast<offset_t>( ptr.get_offset() ) ));
 }
 
 int main()
@@ -95,7 +95,7 @@ int main()
   //filling index by persistent data
   for ( employees_storage::pointer it = storage.begin(); it != storage.end(); ++it )
   {
-    index.insert( employee_key( *it, it.get_offset() ) );
+    index.insert( employee_key( *it, static_cast<offset_t>( it.get_offset() ) ) );
   }
 
   //output persistent data

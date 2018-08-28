@@ -26,7 +26,7 @@ UNIT(vtree_create_filesync, "")
   
   for (int i = 0; i < 5 ; ++i)
   {
-    tree.insert('A' + i % 10);
+    tree.insert( static_cast<char>( 'A' + i % 10 ) );
   }
 
   

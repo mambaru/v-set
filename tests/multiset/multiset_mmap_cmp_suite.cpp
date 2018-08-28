@@ -36,7 +36,11 @@ typedef vset::compare_list< fas::type_list_n<
 > item_cmp;
 struct item_cmp_t: item_cmp{};
 
+#ifdef NDEBUG
 #define TEST_COUNT 50
+#else
+#define TEST_COUNT 3
+#endif
 
 typedef size_t offset_t;
 typedef vset::memory::manager< ::vset::memory::strategy::fsb_inmem<item, ::vset::memory::fsb::aspect_offset> > int_data;
