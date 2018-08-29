@@ -12,12 +12,14 @@ struct btree_traits_speed
   static const bool debug = false;
   static const int leafslots = _innerslots;
   static const int innerslots = _leafslots;
+  static const size_t binsearch_threshold = 256;
 };
 
 typedef stx::btree_multimap<int, int, std::less<int>,
                             struct btree_traits_speed<128, 128> > btree_type;
 int main()
 {
+  srand(42);
   btree_type vtr;
   fas::nanospan start = fas::process_nanotime();
   for (int i = 0; i < MAX_COUNT; ++i)

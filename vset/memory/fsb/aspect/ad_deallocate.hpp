@@ -15,7 +15,7 @@ namespace vset { namespace memory{ namespace fsb{
 struct ad_deallocate
 {
   template<typename T, typename Pointer>
-  void operator()(T& t, Pointer ptr, size_t /*num*/ = 1) const
+  void operator()(T& t, Pointer ptr, size_t num = 1) const
   {
     typedef ::vset::buffer::_data_      _buffer_data_;
     typedef ::vset::buffer::_data_type_ _buffer_data_type_;
@@ -24,10 +24,14 @@ struct ad_deallocate
     typedef typename T::aspect::template advice_cast<_chain_type_>::type chain_type;
     typedef typename T::aspect::template advice_cast<_buffer_data_type_>::type data_type;
 
-    data_type data = t.get_aspect().template get<_buffer_data_>()(t);
-    chain_type* chn = reinterpret_cast<chain_type*>(data);
-    chn->free( ptr.get_address() );
-    //chn->free( reinterpret_cast<value_type*>(data + ptr.get_offset() ) );
+    for (;num!=0; --num)
+    {
+      data_type data = t.get_aspect().template get<_buffer_data_>()(t);
+      chain_type* chn = reinterpret_cast<chain_type*>(data);
+      chn->free( ptr.get_address() );
+      --ptr;
+    }
+    
   }
 };
 

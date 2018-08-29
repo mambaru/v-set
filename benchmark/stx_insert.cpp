@@ -15,6 +15,7 @@ struct btree_traits_speed
   static const bool debug = false;
   static const int leafslots = _innerslots;
   static const int innerslots = _leafslots;
+  static const size_t binsearch_threshold = 256;
 };
 
 typedef stx::btree_multiset<int, std::less<int>, struct btree_traits_speed<CHUNK_SIZE, CHUNK_SIZE> > storage_type;
@@ -24,6 +25,7 @@ int main()
   storage_type stg;
 
   fas::nanospan minspan(fas::nanospan::xmax, fas::nanospan::xmax);
+  srand(42);
   fas::nanospan start = fas::process_nanotime();
   for (int i = 0; i < MAX_COUNT; ++i)
   {
@@ -48,13 +50,12 @@ int main()
         minspan = tmp;
       }
 
-      if ( SHOW_PROCESS )
-      {
+#ifdef SHOW_PROCESS
         std::cout << "find time (" << i << "):" << (finish - start).to_double() << std::endl;
         std::cout << "find rate (" << i << "):" <<fas::rate(finish - start)*MAX_COUNT << std::endl;
         std::cout << "find time (" << MIN_COUNT << "):" << (tmp).to_double() << std::endl;
         std::cout << "find rate (" << MIN_COUNT << "):" <<fas::rate(tmp)*MAX_COUNT << std::endl;
-      }
+#endif
       start2 = fas::process_nanotime();
     }
 
