@@ -11,8 +11,8 @@ typedef vset::multiset< int, std::less<int>, allocator<CHUNK_SIZE> > storage_typ
 int main()
 {
   storage_type stg;
-
   fas::nanospan minspan(fas::nanospan::xmax, fas::nanospan::xmax);
+  srand(42);
   fas::nanospan start = fas::process_nanotime();
   for (int i = 0; i < MAX_COUNT; ++i)
   {
