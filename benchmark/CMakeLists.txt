@@ -3,7 +3,7 @@ clone_library(stx-btree "STX_DIR" "https://github.com/bingmann/stx-btree.git" ""
 
 if(STX_DIR)
   set(HAVE_INCLUDE_stx-btree "${STX_DIR}/include")
-  message(STATUS "--------->${HAVE_INCLUDE_stx-btree}")
+  #message(STATUS "--------->${HAVE_INCLUDE_stx-btree}")
   include_directories(${HAVE_INCLUDE_stx-btree})
 endif()
 
@@ -32,8 +32,10 @@ target_link_libraries(compare2_bench rt)
 #CONFIGURE_LIBRARY(stx/btree_multiset.h "/usr/include /usr/local/include" stx-btree "")
 
 if(HAVE_INCLUDE_stx-btree)
+  set(CMAKE_CXX_FLAGS "-Wall")  
   add_executable(stx_insert  stx_insert.cpp)
   add_executable(stx_insert2  stx_insert2.cpp)
+  #target_compile_options(stx_insert BEFORE  PRIVATE -Wall)
   SET( 
     stx_sources 
     stx_insert
