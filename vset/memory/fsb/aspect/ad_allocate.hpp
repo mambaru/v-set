@@ -17,8 +17,9 @@ namespace vset { namespace memory{ namespace fsb{
 struct ad_allocate
 {
   template<typename T, typename Pointer>
-  Pointer operator()(T& t, fas::type2type<Pointer>, size_t /*num*/ = 1, void *  /*hint*/ = 0 ) const
+  Pointer operator()(T& t, fas::type2type<Pointer>, size_t num = 1, void *  /*hint*/ = 0 ) const
   {
+    for(; num > 1; --num) _<Pointer>(t);
     return _<Pointer>(t);
   }
 

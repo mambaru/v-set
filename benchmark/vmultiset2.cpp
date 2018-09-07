@@ -10,11 +10,13 @@ typedef vset::multiset< int, std::less<int>, inmem_allocator<CHUNK_SIZE> > stora
 
 int main()
 {
+  
   storage_type stg;
   stg.get_allocator().memory().buffer().clear();
   stg.get_allocator().memory().buffer().reserve(MAX_COUNT*8*2);
 
   fas::nanospan minspan(fas::nanospan::xmax, fas::nanospan::xmax);
+  srand(42);
   fas::nanospan start = fas::process_nanotime();
   for (int i = 0; i < MAX_COUNT; ++i)
   {

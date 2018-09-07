@@ -1,4 +1,4 @@
-#include "config.hpp"
+
 #include "data.hpp"
 #include "compare.hpp"
 

@@ -9,7 +9,7 @@
 #include <iostream>
 #include <set>
 
-#include "config.hpp"
+
 #include "data.hpp"
 
 
