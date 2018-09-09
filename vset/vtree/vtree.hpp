@@ -121,12 +121,20 @@ public:
 
 public:
 
+  /**
+   * @brief Конструктор по умолчанию. Создаёт пустой контейнер.
+   */
   vtree()
     : _allocator( this->get_aspect().template get<_allocator_>()( *this ) )
     , _container()
   {
   }
 
+  /**
+   * @brief Конструктор создаёт пустой контейнер. 
+   * @param comp функции сравнения ключей
+   * @param alloc функции сравнения ключей
+   */
   explicit vtree(const key_compare& comp,const allocator_type& alloc = allocator_type() )
     : _allocator(alloc)
     , _container( container_comparator(comp) ) 
@@ -135,6 +143,11 @@ public:
     _allocator = this->get_aspect().template get<_allocator_>()(*this);
   }
 
+  /**
+   * @brief Создаёт контейнер с содержимым из диапазона [first, last).
+   * @param first итератор начала диапазона
+   * @param last итератор конеца диапазона
+   */
   template<typename InputIterator>
   vtree(InputIterator b, InputIterator e)
     : _allocator( this->get_aspect().template get<_allocator_>()(*this) )
@@ -143,6 +156,13 @@ public:
     this->insert(b, e);
   }
 
+  /**
+   * @brief Создаёт контейнер с содержимым из диапазона [first, last).
+   * @param first итератор начала диапазона
+   * @param last итератор конеца диапазона
+   * @param comp функции сравнения ключей
+   * @param alloc функции сравнения ключей
+   */
   template<typename InputIterator>
   vtree(InputIterator b, InputIterator e, const value_compare& comp, const allocator_type&  alloc = allocator_type() )
     : _allocator(alloc)
@@ -153,6 +173,10 @@ public:
     this->insert(b, e);
   }
   
+  /**
+   * @brief Конструктор копирования
+   * @details Для персистентных контейнеров копирование запрещено 
+   */
   vtree(const self& __x)
     : _allocator( this->get_aspect().template get<_allocator_>()(*this) )
     , _container()
@@ -168,18 +192,23 @@ public:
 
 #ifdef __GXX_EXPERIMENTAL_CXX0X__
 
-  vtree&& clone(const value_compare& comp, const allocator_type&  alloc = allocator_type()) const
-  {
-    return std::move(vtree( this->begin(), this->end(), comp, alloc));
-  }
-
-
+  /**
+    * @brief Move-конструктор (c++11). Создает контейнер с содержимым other с использованием move-семантики. 
+    * Если alloc не был предоставлен, то он будет получен с помощью move-конструктора от аллокатора принадлежащего other.
+    * @param other другой контейнер, который будет использован в качестве источника данных для инициализации элементов контейнера
+    */  
   vtree(vtree&& __x)
   {
     vtree tmp;
     this->swap(__x);
   }
 
+  /**
+   * @brief Создает контейнер с содержимым списка инициализации init (c++11). 
+   * @param init — список инициализации элементов контейнера
+   * @param comp функции сравнения ключей
+   * @param alloc функции сравнения ключей
+   */
   vtree( std::initializer_list<value_type> il, const value_compare& comp = value_compare(), const allocator_type&  alloc = allocator_type())
     : _allocator(alloc)
     , _container( container_comparator(comp) ) 
@@ -187,6 +216,11 @@ public:
     this->get_aspect().template get<_compare_>() = comp;
     _allocator = this->get_aspect().template get<_allocator_>()(*this);
     this->insert(il.begin(), il.end());
+  }
+
+  vtree&& clone(const value_compare& comp, const allocator_type&  alloc = allocator_type()) const
+  {
+    return std::move(vtree( this->begin(), this->end(), comp, alloc));
   }
 
 #endif
@@ -200,6 +234,10 @@ public:
 
 #ifdef __GXX_EXPERIMENTAL_CXX0X__
 
+  /**
+   * @brief Заменяет содержимое содержимым other использованием семантики переноса (c++11)
+   * @param other другой контейнер, который будет использоваться в качестве источника
+   */
   vtree& operator=(vtree&& __x)
   {
     this->clear();
@@ -207,6 +245,10 @@ public:
     return *this;
   }
 
+  /**
+   * @brief Заменяет содержимое элементами, которые указаны в списке идентификаторов инициализатора (c++11).
+   * @param il список инициализации для использования в качестве источника данных
+   */
   vtree& operator=( std::initializer_list<value_type> il)
   {
     this->clear();

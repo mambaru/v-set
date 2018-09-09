@@ -6,11 +6,12 @@ include(mambaru)
 
 if ( BUILD_TESTING )
   enable_testing()
-  
   add_subdirectory(tests)
   add_subdirectory(examples)
-  add_subdirectory(tutorial)
-  add_subdirectory(benchmark)
+  if ( NOT "${CMAKE_CXX_STANDARD}" STREQUAL "98")
+    add_subdirectory(benchmark)
+    add_subdirectory(tutorial)
+  endif()
 endif()
 
 set(CPACK_PACKAGE_NAME "v-set")
