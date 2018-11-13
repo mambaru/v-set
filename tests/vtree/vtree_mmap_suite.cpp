@@ -429,9 +429,12 @@ void test_all(T& t)
 template<size_t BlockSize, typename T>
 void test_persist(T& t)
 {
-  ::truncate( "./test_erase.bin", 0);
-  ::truncate( "./test_insert.bin", 0);
-  ::truncate( "./test_insert1.bin", 0);
+  if ( -1 == ::truncate( "./test_erase.bin", 0) )
+    return;
+  if ( -1 == ::truncate( "./test_insert.bin", 0) )
+    return;
+  if ( -1 == ::truncate( "./test_insert1.bin", 0) )
+    return;
   output_buffer << "------------------- test_persist ------------------- " << BlockSize << std::endl;
   test_stack.push("test_persist");
   typedef persist_container<BlockSize> container;
