@@ -29,3 +29,5 @@ functionStatic:./tutorial/hitlist_t.hpp
 noCopyConstructor:./tutorial/hitlist2.cpp
 noCopyConstructor:./tutorial/hitlist4.cpp
 
+unusedStructMember:./benchmark/stx_insert.cpp:18
+unusedStructMember:./benchmark/stx_insert2.cpp:15
