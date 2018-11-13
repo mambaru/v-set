@@ -1,7 +1,5 @@
-
-clone_library(stx-btree "STX_DIR" "https://github.com/bingmann/stx-btree.git" "")
-
 if(USE_STX)
+  clone_library(stx-btree "STX_DIR" "https://github.com/bingmann/stx-btree.git" "")
   if(STX_DIR)
     set(HAVE_INCLUDE_stx-btree "${STX_DIR}/include")
     include_directories(${HAVE_INCLUDE_stx-btree})

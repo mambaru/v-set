@@ -132,20 +132,20 @@ public:
   {
   }
 
- 
+  /**
+   * @brief Конструктор копирования
+   * @details Для персистентных контейнеров копирование запрещено 
+   */
+  multiset(const multiset& other) 
+    : super( other )
+  {}
 
 #ifdef __GXX_EXPERIMENTAL_CXX0X__
-
   /**
-   * @brief Копирование запрещено (c++11)
-   */
-  multiset(const multiset&) = delete;
-
-/**
- * @brief Move-конструктор (c++11). Создает контейнер с содержимым other с использованием move-семантики. Если alloc не был предоставлен, то он будет получен 
- *        с помощью move-конструктора от аллокатора принадлежащего other.
- * @param other другой контейнер, который будет использован в качестве источника данных для инициализации элементов контейнера
- */  
+    * @brief Move-конструктор (c++11). Создает контейнер с содержимым other с использованием move-семантики. 
+    * Если alloc не был предоставлен, то он будет получен с помощью move-конструктора от аллокатора принадлежащего other.
+    * @param other другой контейнер, который будет использован в качестве источника данных для инициализации элементов контейнера
+    */  
   multiset(multiset&& other)
     : super( std::move(other) )
   {
@@ -157,8 +157,10 @@ public:
    * @param comp функции сравнения ключей
    * @param alloc функции сравнения ключей
    */
-  multiset( const std::initializer_list<value_type>& init, const value_compare& comp= value_compare(), const allocator_type&  alloc= allocator_type())
-    : super( init, comp, alloc )
+  multiset( const std::initializer_list<value_type>& init, 
+            const value_compare& comp= value_compare(), 
+            const allocator_type&  alloc= allocator_type()
+          ) : super( init, comp, alloc )
   {
   }
 

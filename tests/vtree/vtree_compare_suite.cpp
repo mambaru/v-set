@@ -113,10 +113,10 @@ namespace {
     int b;
   };
   
-  struct foo_compare: vset::compare_list<
+  struct foo_compare: vset::compare_list< fas::type_list_n<
     vset::compare_member< foo, int, &foo::a, std::less<int> >,
     vset::compare_member< foo, int, &foo::b, std::greater<int> >
-  >{};
+  >::type >{};
   
   typedef vset::vtree::vtree< vset::vtree::strategy::vtree_fsb_inmem<foo, foo_compare, 3> > foo_vtree;
 }

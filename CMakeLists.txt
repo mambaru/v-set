@@ -1,16 +1,22 @@
 cmake_minimum_required(VERSION 3.1)
 project(v-set)
 
-set(CMAKE_MODULE_PATH "${CMAKE_CURRENT_SOURCE_DIR}/cmake")
-include(mambaru)
+list(APPEND CMAKE_MODULE_PATH ${CMAKE_CURRENT_SOURCE_DIR}/cmake)
+include(ci)
+
+if ( STANDALONE )
+  getlibs(faslib)
+endif()
 
 if ( BUILD_TESTING )
   enable_testing()
-  
+  include_directories(.)
   add_subdirectory(tests)
   add_subdirectory(examples)
-  add_subdirectory(tutorial)
-  add_subdirectory(benchmark)
+  if ( NOT "${CMAKE_CXX_STANDARD}" STREQUAL "98")
+    add_subdirectory(benchmark)
+    add_subdirectory(tutorial)
+  endif()
 endif()
 
 set(CPACK_PACKAGE_NAME "v-set")
