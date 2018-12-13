@@ -5,4 +5,4 @@ add_executable(
   defrag_suite.cpp
 )
 
-add_test(test_defrag test_defrag)
+add_test(NAME test_defrag COMMAND  test_defrag)

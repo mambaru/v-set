@@ -5,7 +5,7 @@ add_executable(
   comparator_suite.cpp
 )
 
-add_test(test_comparator test_comparator)
+add_test(NAME test_comparator COMMAND test_comparator)
 
 
 
