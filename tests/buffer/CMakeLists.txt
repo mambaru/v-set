@@ -7,4 +7,4 @@ add_executable(
   basic_suite.cpp 
 )
 
-add_test(ctest_buffer test_buffer)
+add_test(NAME ctest_buffer COMMAND test_buffer)

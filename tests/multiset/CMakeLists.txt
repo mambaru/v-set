@@ -9,7 +9,7 @@ add_executable(
   multiset_mmap_cmp_suite.cpp
 )
 
-add_test(test_multiset test_multiset)
+add_test(NAME test_multiset COMMAND test_multiset)
 
 
 

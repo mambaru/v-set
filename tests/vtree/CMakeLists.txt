@@ -10,4 +10,4 @@ add_executable(
   vtree_compare_suite.cpp
 )
 
-add_test(test_vtree test_vtree)
+add_test(NAME test_vtree COMMAND test_vtree)
