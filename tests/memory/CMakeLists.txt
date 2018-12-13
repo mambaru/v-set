@@ -6,7 +6,7 @@ add_executable(
   manager_suite.cpp 
 )
 
-add_test(test_memory test_memory)
+add_test(NAME test_memory COMMAND test_memory)
 
 
 
