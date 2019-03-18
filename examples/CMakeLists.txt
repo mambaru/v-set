@@ -1,4 +1,4 @@
-
+set(CMAKE_RUNTIME_OUTPUT_DIRECTORY ${UNIT_TEST_BIN_OUTPUT_DIR})                                                                                                                 
 add_subdirectory(compare)
 add_subdirectory(multiset)
 add_subdirectory(pointer_storage)
