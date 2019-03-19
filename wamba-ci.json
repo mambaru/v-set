@@ -1,13 +1,12 @@
 {
-  /* Open source проект (публикация на github.com) */
-  "public":true,
-  "tag":"0.7.1",
-  /* Текущий релиз бранч  */
-  "release":"release-0.7",
+  "tag":"0.8.0",
+  "release":"release-0.8",
   
-  "build_threads": 1,
+  "public":true,
+  "paranoid":true,
+  "coverage":true,
+  "build_threads": 4,
 
-  /* Сборка и тестирование*/
   "build-and-test":{
     "Release":true,
     "Debug":true,
@@ -24,4 +23,5 @@
       "14":true,
       "17":false
     }
-  }}
+  }
+}

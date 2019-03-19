@@ -1,6 +1,6 @@
+set(CMAKE_RUNTIME_OUTPUT_DIRECTORY ${UNIT_TEST_BIN_OUTPUT_DIR})                                                                                                                 
 
 include_directories(.)
-include_directories(..)
 
 add_executable(hitlist1 hitconsole.cpp hitlist1.cpp)
 add_executable(hitlist2 hitconsole.cpp hitlist2.cpp)
