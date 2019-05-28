@@ -9,6 +9,7 @@
 
 #include <vset/buffer/tags.hpp>
 #include <vset/buffer/persistent/tags.hpp>
+#include <fas/system/nullptr.hpp>
 
 #include <errno.h>
 #include <unistd.h>
@@ -44,8 +45,8 @@ private:
       throw std::logic_error("buffer_size < sizeof(head_type)");
 
     const head_type* head = t.get_aspect().template get<_head_>()(t);
-    if ( head==0 )
-      throw std::logic_error("head==0");
+    if ( head == fas_nullptr )
+      throw std::logic_error("head==nullptr");
 
     size_t head_offset = head->offset();
     if ( buffer_size < head->offset() )

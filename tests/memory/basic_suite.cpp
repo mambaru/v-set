@@ -69,7 +69,7 @@ void test_char_init(T& t, Alloc& allocator)
   for (int i=0; i < MAX_TEST; ++i)
   {
     value_type* ch = allocator.allocate(1).get_address();
-    t << is_true<assert>( ch != 0 ) << "i=" << i << " " << FAS_TESTING_FILE_LINE;
+    t << is_true<assert>( ch != fas_nullptr ) << "i=" << i << " " << FAS_TESTING_FILE_LINE;
     t << stop;
     *ch = static_cast<char>('0' + i%10);
   }
@@ -80,7 +80,6 @@ void test_char_init(T& t, Alloc& allocator)
   int i=0;
   for ( ; beg != end; ++i)
   {
-    //std::cout << "---------------------------" << std::endl;
     t << equal< assert, value_type > ( *beg, '0' + i%10 ) << char(*beg) << "!=" << char('0' + i%10) << " " << FAS_TESTING_FILE_LINE;
     size_t off1 = beg.get_offset();
     value_type* add1 = beg.get_address();

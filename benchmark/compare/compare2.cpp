@@ -70,7 +70,7 @@ public:
     : _orig(orig), _compare(cmp), _desc(desc)
   {}
   
-  virtual void run(bool show_flag)
+  virtual void run(bool show_flag) override
   {
     _res.assign(_orig.begin(), _orig.end());
     fas::nanospan start = fas::nanotime();
@@ -81,18 +81,21 @@ public:
     _times.insert(span);
   }
   
-  virtual void show()
+  virtual void show() override
   {
     show_( *(_times.begin()) );
   }
   
 private:
+  
   void show_(const fas::nanospan& span) const
   {
     std::cout << _desc << ": " << span << "s " /*<< typeid(C).name()*/ <<  std::endl;
     std::cout.flush();
   }
+  
 protected:
+  
   std::vector<V>& _orig;
   C _compare;
   std::string _desc;
@@ -108,7 +111,7 @@ public:
     : bench_base<V, C, ibench>(orig, cmp, desc)
   {}
   
-  virtual bool equal(ibench*) 
+  virtual bool equal(ibench*) override
   {
     return true;
   }
@@ -131,7 +134,7 @@ public:
       std::cout << i.data1 << " " << i.data2 << " "<< i.data3 << " "<< i.data4 << " "<< i.data5 << " "<< i.data6 << " " << std::endl;
   }*/
     
-  virtual bool equal(ibench* ab) 
+  virtual bool equal(ibench* ab) override
   {
     if ( auto b = dynamic_cast<ibench_data*>(ab) )
     {
@@ -140,7 +143,7 @@ public:
     return true;
   }
   
-  virtual std::vector<data> get_data() 
+  virtual std::vector<data> get_data() override
   {
     return super::_res;
   }
@@ -154,8 +157,9 @@ public:
     : super(orig, cmp3(), desc)
   {}
   
-  virtual void run(bool) {}
-  virtual void run_lambda() 
+  virtual void run(bool) override {}
+  
+  virtual void run_lambda() override
   {
     _res.assign(_orig.begin(), _orig.end());
     fas::nanospan start = fas::nanotime();
@@ -167,7 +171,6 @@ public:
     fas::nanospan span = finish - start;
     _times.insert(span);
   };
-
 };
 
 

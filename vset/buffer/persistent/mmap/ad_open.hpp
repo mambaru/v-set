@@ -7,6 +7,7 @@
 #ifndef VSET_VSET_BUFFER_PERSISTENT_MMAP_AD_OPEN_HPP
 #define VSET_VSET_BUFFER_PERSISTENT_MMAP_AD_OPEN_HPP
 
+#include <fas/system/nullptr.hpp>
 #include <vset/buffer/tags.hpp>
 #include <vset/buffer/persistent/tags.hpp>
 #include <vset/buffer/persistent/mmap/tags.hpp>
@@ -49,7 +50,7 @@ struct ad_open
     }
 
     char* data = static_cast<char*>( ::mmap(
-      NULL,
+      fas_nullptr,
       file_size,
       PROT_READ | PROT_WRITE, MAP_SHARED | MAP_NORESERVE |  MAP_POPULATE,
       t.get_aspect().template get<_descriptor_>(),

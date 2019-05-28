@@ -7,6 +7,7 @@
 #ifndef VSET_VSET_BUFFER_PERSISTENT_FILESYNC_AD_SYNC_HPP
 #define VSET_VSET_BUFFER_PERSISTENT_FILESYNC_AD_SYNC_HPP
 
+#include <fas/system/nullptr.hpp>
 #include <vset/buffer/tags.hpp>
 #include <vset/buffer/persistent/tags.hpp>
 #include <iostream>
@@ -41,7 +42,7 @@ private:
       throw;
 
     const head_type* head = t.get_aspect().template get<_head_>()(t);
-    if ( head==0 )
+    if ( head == fas_nullptr )
       throw;
 
     size_t head_offset = head->offset();

@@ -8,7 +8,8 @@
 #define VSET_VSET_ALLOCATOR_OFFSET_POINTER_HPP
 
 #include <iterator>
-
+#include <fas/system/nullptr.hpp>
+  
 namespace vset { namespace memory{
 
 /**
@@ -89,14 +90,14 @@ public:
   value_type* get_address()
   {
     if ( _offset == static_cast<size_t>(-1) )
-      return nullptr;
+      return fas_nullptr;
     return _provider.get(_offset);
   }
   
   const value_type* get_address() const
   {
     if ( _offset == static_cast<size_t>(-1) )
-      return nullptr;
+      return fas_nullptr;
     return _provider.get(_offset);
   }
 

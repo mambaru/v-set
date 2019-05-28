@@ -7,6 +7,7 @@
 #ifndef VSET_VTREE_ASPECT_AD_SPLIT_NODE_HPP
 #define VSET_VTREE_ASPECT_AD_SPLIT_NODE_HPP
 
+#include <fas/system/nullptr.hpp>
 #include <vset/vtree/aspect/tags.hpp>
 #include <stdlib.h>
 
@@ -40,7 +41,7 @@ struct ad_split_node
     }
 
     array_pointer arr1 = itr->second;
-    array_pointer arr2 = t.get_allocator().allocate(1);
+    array_pointer arr2 = t.get_allocator().allocate(1, fas_nullptr);
     if ( !arr2 )
     {
       abort();//return container.end(); // TODO: проверить что offset_pointer при сравнении с числом не сравнивает оффыеты

@@ -10,6 +10,7 @@
 #include <vset/memory/tags.hpp>
 #include <fas/typemanip/type2type.hpp>
 #include <vset/memory/aspect_maker.hpp>
+#include <fas/system/nullptr.hpp>
 
 namespace vset { namespace memory{
 
@@ -30,7 +31,7 @@ public:
 
   typedef size_t size_type;
 
-  provider(): _manager(0) {}
+  provider(): _manager(fas_nullptr) {}
   
   explicit provider(Manager* m): _manager(m) {}
 
@@ -54,7 +55,7 @@ public:
     return _manager->get_aspect().template get<_end_>()(*_manager, fas::type2type<const_pointer>() );
   }
 
-  pointer allocate(size_t num, void *  hint = 0)
+  pointer allocate(size_t num, void *  hint = fas_nullptr)
   {
     return _manager->get_aspect().template get<_allocate_>()(*_manager, fas::type2type<pointer>(), num, hint );
   }

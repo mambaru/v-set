@@ -9,6 +9,7 @@
 
 #include <cstddef>
 
+#include <fas/system/nullptr.hpp>
 #include <vset/memory/tags.hpp>
 #include <fas/typemanip/type2type.hpp>
 #include <fas/aop.hpp>
@@ -60,7 +61,7 @@ protected:
   }
 
   template<typename T>
-  pointer _allocate(T& t, size_t num, void *  hint = 0)
+  pointer _allocate(T& t, size_t num, void *  hint = fas_nullptr)
   {
     return t.get_aspect().template get<_allocate_>()(t, fas::type2type<pointer>(), num, hint );
   }

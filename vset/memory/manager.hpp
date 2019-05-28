@@ -10,6 +10,7 @@
 #include <cstddef>
 #include <vset/memory/manager_base.hpp>
 #include <vset/memory/strategy.hpp>
+#include <fas/system/nullptr.hpp>
 
 namespace vset { namespace memory{
 
@@ -92,7 +93,7 @@ public:
    * но получить доступ к остальным объектам можно с помощью операторов += и ++. Но основной 
    * кейс это выделение и освобождение по одному объекту
    */
-  pointer allocate(size_t num, void *  hint = 0)
+  pointer allocate(size_t num, void *  hint = fas_nullptr)
   {
     return super::_allocate(*this, num, hint);
   }

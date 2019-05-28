@@ -1,6 +1,7 @@
 #ifndef MANAGED_ALLOCATOR_HPP
 #define MANAGED_ALLOCATOR_HPP
 
+#include <fas/system/nullptr.hpp>
 #include <limits>
 #include <cassert>
 
@@ -49,7 +50,7 @@ struct allocator
     return 1;
   }
 
-  pointer allocate (size_type num, void *  hint = 0)
+  pointer allocate (size_type num, void *  hint = fas_nullptr)
   {
     return this->_memory.allocate(num, hint);
   }

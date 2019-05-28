@@ -7,6 +7,7 @@
 #ifndef VSET_VSET_BUFFER_PERSISTENT_FILESYNC_AD_OPEN_HPP
 #define VSET_VSET_BUFFER_PERSISTENT_FILESYNC_AD_OPEN_HPP
 
+#include <fas/system/nullptr.hpp>
 #include <vset/buffer/tags.hpp>
 #include <vset/buffer/persistent/tags.hpp>
 #include <vset/buffer/persistent/filesync/tags.hpp>
@@ -32,7 +33,7 @@ struct ad_open
     t.get_aspect().template get<_open_file_>()(t);
     size_t file_size = t.get_aspect().template get<_file_size_>()(t);
     typedef typename T::aspect::template advice_cast<_head_type_>::type head_type;
-    head_type* head = 0;
+    head_type* head = fas_nullptr;
     if ( file_size < sizeof(head_type) )
     {
       size_t buffer_size = sizeof(head_type);

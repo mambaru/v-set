@@ -5,7 +5,7 @@
   "public":true,
   "paranoid":true,
   "coverage":true,
-  "build_threads": 4,
+  "build_threads": 1,
   "gc": true,
 
   "build-and-test":{
