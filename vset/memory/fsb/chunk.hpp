@@ -7,6 +7,7 @@
 #ifndef VSET_MEMORY_FSB_CHUNK_HPP
 #define VSET_MEMORY_FSB_CHUNK_HPP
 
+#include <fas/system/nullptr.hpp>
 #include <stdexcept>
 
 namespace vset { namespace memory{ namespace fsb{
@@ -79,7 +80,7 @@ struct chunk
     size_t index = next_occuped(0);
     if ( index == static_cast<size_t>(-1) )
     {
-      return 0;
+      return fas_nullptr;
     }
     return data + index;
   }
@@ -94,7 +95,7 @@ struct chunk
     size_t index = pred_occuped( max_count() - 1 );
     if ( index == static_cast<size_t>(-1) )
     {
-      return 0;
+      return fas_nullptr;
     }
     return data + index;
   }
@@ -109,7 +110,7 @@ struct chunk
     size_t index = this->next_occuped( static_cast<size_t>(current - data + 1) );
     if ( index == static_cast<size_t>(-1) )
     {
-      return 0;
+      return fas_nullptr;
     }
     return data + index;
   }
@@ -124,7 +125,7 @@ struct chunk
     size_t index = this->pred_occuped( static_cast<size_t>(current - data - 1) );
     if ( index == static_cast<size_t>(-1) )
     {
-      return 0;
+      return fas_nullptr;
     }
     return data + index;
   }
@@ -175,7 +176,7 @@ struct chunk
     size_t index = first_free();
     if ( index == static_cast<size_t>(-1) )
     {
-      return 0;
+      return fas_nullptr;
     }
     return mark(index);
   }

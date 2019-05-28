@@ -89,14 +89,14 @@ public:
   value_type* get_address()
   {
     if ( _offset == static_cast<size_t>(-1) )
-      return 0;
+      return nullptr;
     return _provider.get(_offset);
   }
   
   const value_type* get_address() const
   {
     if ( _offset == static_cast<size_t>(-1) )
-      return 0;
+      return nullptr;
     return _provider.get(_offset);
   }
 

@@ -9,6 +9,7 @@
 
 #include <vset/buffer/tags.hpp>
 #include <vset/memory/fsb/tags.hpp>
+#include <fas/system/nullptr.hpp>
 
 namespace vset { namespace memory{ namespace fsb{
 
@@ -17,7 +18,7 @@ struct ad_offset_by_ptr
   template<typename T>
   size_t operator()(T& t, typename T::aspect::template advice_cast<_value_type_>::type* ptr) const
   {
-    if ( ptr == 0 )
+    if ( ptr == fas_nullptr )
       return static_cast<size_t>(-1);
 
     typedef ::vset::buffer::_data_      _buffer_data_;

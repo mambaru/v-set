@@ -7,6 +7,8 @@
 #ifndef VSET_MEMORY_FSB_CHAIN_HPP
 #define VSET_MEMORY_FSB_CHAIN_HPP
 
+#include <fas/system/nullptr.hpp>
+
 namespace vset { namespace memory{ namespace fsb{
 
 template<typename T, template<typename> class Chunk >
@@ -67,7 +69,7 @@ struct chain
     {
       return beg->first_value();
     }
-    return 0;
+    return fas_nullptr;
   }
 
   T* first_value()
@@ -81,7 +83,7 @@ struct chain
     {
       return beg->last_value();
     }
-    return 0;
+    return fas_nullptr;
   }
 
   T* last_value()
@@ -106,7 +108,7 @@ struct chain
     {
       if ( static_cast<size_t>(chk - this->first_chunk()) == size )
       {
-        return 0;
+        return fas_nullptr;
       }
     }
 
@@ -133,14 +135,14 @@ struct chain
 
     if ( chk == this->first_chunk() )
     {
-      return 0;
+      return fas_nullptr;
     }
 
     for ( --chk; chk->empty(); --chk)
     {
       if ( chk == this->first_chunk() )
       {
-        return 0;
+        return fas_nullptr;
       }
     }
     return chk->last_value();
@@ -163,7 +165,7 @@ struct chain
         return beg;
       }
     }
-    return 0;
+    return fas_nullptr;
   }
 
   chunk_type* first_occuped()
@@ -183,7 +185,7 @@ struct chain
         return beg;
       }
     }
-    return 0;
+    return fas_nullptr;
   }
 
   chunk_type* last_occuped()
@@ -206,7 +208,7 @@ struct chain
     }
 
     first_free = static_cast<size_t>( beg - first_chunk() );
-    return 0;
+    return fas_nullptr;
   }
 
   const chunk_type* find_free() const
@@ -223,7 +225,7 @@ struct chain
       }
     }
     first_free = beg - first_chunk();
-    return 0;
+    return fas_nullptr;
   }
 
   T* mark()
@@ -232,7 +234,7 @@ struct chain
     {
       return chk->mark();
     }
-    return 0;
+    return fas_nullptr;
   }
 
   void free(T* value)
