@@ -12,7 +12,7 @@ unusedStructMember:./benchmark/stx_insert2.cpp:13
 unusedStructMember:./benchmark/vset_insert3.cpp:18
 unusedStructMember:./benchmark/vset_insert3.cpp:20
 
-redundantPointerOp:./tests/memory/basic_suite.cpp:88
+redundantPointerOp:./tests/memory/basic_suite.cpp:87
 accessMoved:./tests/vtree/vtree_ctor_suite.cpp:97
 
 functionStatic:./tutorial/hitlist1.cpp
@@ -31,3 +31,4 @@ noCopyConstructor:./tutorial/hitlist4.cpp
 
 unusedStructMember:./benchmark/stx_insert.cpp:18
 unusedStructMember:./benchmark/stx_insert2.cpp:15
+
