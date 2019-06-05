@@ -91,7 +91,8 @@ public:
 
     iterator dst = this->begin() + std::distance(this->cbegin(), position);
     std::copy( position + 1, this->cend(), dst);
-    this->resize( this->size() - 1, value_type(), comp );
+    if ( this->size() > 0 )
+      this->resize( this->size() - 1, value_type(), comp );
     return dst;
   }
 #else
@@ -101,7 +102,8 @@ public:
       throw std::out_of_range("iterator array<>::erase ( iterator position )");
 
     std::copy( position + 1, this->end(), position);
-    this->resize( this->size() - 1, value_type(), comp );
+    if ( this->size() > 0 )
+      this->resize( this->size() - 1, value_type(), comp );
     return position;
   }
 #endif
