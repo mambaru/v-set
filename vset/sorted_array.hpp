@@ -38,7 +38,7 @@ public:
 
   sorted_array( )
     : super()
-  {};
+  {}
 
   void resize ( size_type sz, T value /*= value_type()*/, const value_compare& comp /*= value_compare()*/ )
   {

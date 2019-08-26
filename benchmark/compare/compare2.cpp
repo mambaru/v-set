@@ -50,7 +50,7 @@ struct ibench
 {
   virtual ~ibench() {}
   virtual void run(bool show_flag) = 0;
-  virtual void run_lambda() {};
+  virtual void run_lambda() {}
   virtual void show() = 0;
   virtual bool equal(ibench*) = 0;
 };
@@ -170,7 +170,7 @@ public:
     fas::nanospan finish = fas::nanotime();
     fas::nanospan span = finish - start;
     _times.insert(span);
-  };
+  }
 };
 
 
