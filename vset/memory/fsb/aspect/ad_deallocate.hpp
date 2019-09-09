@@ -27,11 +27,11 @@ struct ad_deallocate
     for (;num!=0; --num)
     {
       data_type data = t.get_aspect().template get<_buffer_data_>()(t);
-      chain_type* chn = reinterpret_cast<chain_type*>(data);
+      chain_type* chn = static_cast<chain_type*>( static_cast<void*>(data) );
       chn->free( ptr.get_address() );
       --ptr;
     }
-    
+
   }
 };
 

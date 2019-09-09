@@ -28,19 +28,19 @@ struct ad_acquire
     typedef typename T::aspect::template advice_cast<_buffer_data_type_>::type data_type;
 
     size_t offset = t.get_aspect().template get< _buffer_size_ >()(t);
-    
+
     size_t new_size = (offset == 0)
       ? sizeof(chain_type) + sizeof(chunk_type)
       : offset + sizeof(chunk_type);
 
-    
+
     t.get_aspect().template get< _buffer_resize_ >()(t, new_size);
 
     data_type data = t.get_aspect().template get<_buffer_data_>()(t);
 
     chain_type* ch = (offset == 0)
       ? new (data) chain_type
-      : reinterpret_cast<chain_type*>(data);
+      : static_cast<chain_type*>( static_cast<void*>(data));
 
     ch->acquire(1);
 
@@ -50,7 +50,7 @@ struct ad_acquire
       ? new ( data + sizeof(chain_type) ) chunk_type
       : new ( data + offset ) chunk_type;
       */
-    
+
     return true;
   }
 };

@@ -24,7 +24,7 @@ struct ad_allocate
   }
 
 private:
-  
+
   template<typename Pointer, typename T>
   Pointer _(T& t) const
   {
@@ -32,24 +32,24 @@ private:
     typedef ::vset::buffer::_size_      _buffer_size_;
     typedef ::vset::buffer::_data_      _buffer_data_;
     typedef ::vset::buffer::_data_type_ _buffer_data_type_;
-    
+
     typedef typename T::aspect::template advice_cast<_chain_type_>::type chain_type;
     typedef typename T::aspect::template advice_cast< _buffer_data_type_ >::type data_type;
-   
+
     if ( t.get_aspect().template get< _buffer_size_ >()(t) == 0 )
     {
       t.get_aspect().template get<_acquire_>()(t);
     }
 
     data_type data = t.get_aspect().template get<_buffer_data_>()(t);
-    chain_type* chn = reinterpret_cast<chain_type*>(data);
+    chain_type* chn = static_cast<chain_type*>( static_cast<void*>(data) );
     pointer p( &t );
     p.set_address( chn->mark() );
     if (!p)
     {
       t.get_aspect().template get<_acquire_>()(t);
       data = t.get_aspect().template get<_buffer_data_>()(t);
-      chn = reinterpret_cast<chain_type*>(data);
+      chn = static_cast<chain_type*>( static_cast<void*>(data) );
       p.set_address(chn->mark());
       if (!p)
       {
