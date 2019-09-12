@@ -1,0 +1,612 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<meta http-equiv="Content-Type" content="text/xhtml;charset=UTF-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=9"/>
+<meta name="generator" content="Doxygen 1.8.15"/>
+<meta name="viewport" content="width=device-width, initial-scale=1"/>
+<title>v-set: Шаблон класса vset::memory::manager&lt; S, A &gt;</title>
+<link href="tabs.css" rel="stylesheet" type="text/css"/>
+<script type="text/javascript" src="jquery.js"></script>
+<script type="text/javascript" src="dynsections.js"></script>
+<link href="doxygen.css" rel="stylesheet" type="text/css" />
+<link href="customdoxygen.css" rel="stylesheet" type="text/css"/>
+</head>
+<body>
+<div id="top"><!-- do not remove this div, it is closed by doxygen! -->
+<div id="titlearea">
+<table cellspacing="0" cellpadding="0">
+ <tbody>
+ <tr style="height: 56px;">
+  <td id="projectalign" style="padding-left: 0.5em;">
+   <div id="projectname">v-set
+   </div>
+  </td>
+ </tr>
+ </tbody>
+</table>
+</div>
+<!-- end header part -->
+<!-- Создано системой Doxygen 1.8.15 -->
+<script type="text/javascript" src="menudata.js"></script>
+<script type="text/javascript" src="menu.js"></script>
+<script type="text/javascript">
+/* @license magnet:?xt=urn:btih:cf05388f2679ee054f2beb29a391d25f4e673ac3&amp;dn=gpl-2.0.txt GPL-v2 */
+$(function() {
+  initMenu('',false,false,'search.php','Поиск');
+});
+/* @license-end */</script>
+<div id="main-nav"></div>
+<div id="nav-path" class="navpath">
+  <ul>
+<li class="navelem"><b>vset</b></li><li class="navelem"><b>memory</b></li><li class="navelem"><a class="el" href="classvset_1_1memory_1_1manager.html">manager</a></li>  </ul>
+</div>
+</div><!-- top -->
+<div class="header">
+  <div class="summary">
+<a href="#pub-types">Открытые типы</a> &#124;
+<a href="#pub-methods">Открытые члены</a> &#124;
+<a href="classvset_1_1memory_1_1manager-members.html">Полный список членов класса</a>  </div>
+  <div class="headertitle">
+<div class="title">Шаблон класса vset::memory::manager&lt; S, A &gt;</div>  </div>
+</div><!--header-->
+<div class="contents">
+
+<p>Интерфейс менеждера памяти  
+ <a href="classvset_1_1memory_1_1manager.html#details">Подробнее...</a></p>
+
+<p><code>#include &lt;<a class="el" href="manager_8hpp_source.html">manager.hpp</a>&gt;</code></p>
+
+<p>Базовые классы:vset::memory::manager_base&lt; A &gt;.</p>
+<table class="memberdecls">
+<tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="pub-types"></a>
+Открытые типы</h2></td></tr>
+<tr class="memitem:a6e90c560599f2cae172509d7e9ece2a6"><td class="memItemLeft" align="right" valign="top">typedef super::value_type&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classvset_1_1memory_1_1manager.html#a6e90c560599f2cae172509d7e9ece2a6">value_type</a></td></tr>
+<tr class="separator:a6e90c560599f2cae172509d7e9ece2a6"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a42e9bcf05759d5136a087176199aca70"><td class="memItemLeft" align="right" valign="top">typedef super::buffer_type&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classvset_1_1memory_1_1manager.html#a42e9bcf05759d5136a087176199aca70">buffer_type</a></td></tr>
+<tr class="separator:a42e9bcf05759d5136a087176199aca70"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a344dcce6b7f27151f2511c01928a1351"><td class="memItemLeft" align="right" valign="top">typedef super::pointer&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classvset_1_1memory_1_1manager.html#a344dcce6b7f27151f2511c01928a1351">pointer</a></td></tr>
+<tr class="separator:a344dcce6b7f27151f2511c01928a1351"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a4d16f73f62da7d638cf0000241138633"><td class="memItemLeft" align="right" valign="top">typedef super::const_pointer&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classvset_1_1memory_1_1manager.html#a4d16f73f62da7d638cf0000241138633">const_pointer</a></td></tr>
+<tr class="separator:a4d16f73f62da7d638cf0000241138633"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ad20cf018cb556dc0f6f362817fe5af68"><td class="memItemLeft" align="right" valign="top">typedef size_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classvset_1_1memory_1_1manager.html#ad20cf018cb556dc0f6f362817fe5af68">size_type</a></td></tr>
+<tr class="separator:ad20cf018cb556dc0f6f362817fe5af68"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:af0e301f50a6a39cebca03202677d91d7"><td class="memItemLeft" align="right" valign="top">typedef std::ptrdiff_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classvset_1_1memory_1_1manager.html#af0e301f50a6a39cebca03202677d91d7">difference_type</a></td></tr>
+<tr class="separator:af0e301f50a6a39cebca03202677d91d7"><td class="memSeparator" colspan="2">&#160;</td></tr>
+</table><table class="memberdecls">
+<tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="pub-methods"></a>
+Открытые члены</h2></td></tr>
+<tr class="memitem:a01f7040ec200e629d4f2bc18378ce322"><td class="memItemLeft" align="right" valign="top"><a class="el" href="classvset_1_1memory_1_1manager.html#a344dcce6b7f27151f2511c01928a1351">pointer</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classvset_1_1memory_1_1manager.html#a01f7040ec200e629d4f2bc18378ce322">begin</a> ()</td></tr>
+<tr class="memdesc:a01f7040ec200e629d4f2bc18378ce322"><td class="mdescLeft">&#160;</td><td class="mdescRight">Возвращает указатель на первый элемент контейнера.  <a href="#a01f7040ec200e629d4f2bc18378ce322">Подробнее...</a><br /></td></tr>
+<tr class="separator:a01f7040ec200e629d4f2bc18378ce322"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ab3068ce7c3341350937f65502e02b064"><td class="memItemLeft" align="right" valign="top"><a class="el" href="classvset_1_1memory_1_1manager.html#a4d16f73f62da7d638cf0000241138633">const_pointer</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classvset_1_1memory_1_1manager.html#ab3068ce7c3341350937f65502e02b064">begin</a> () const</td></tr>
+<tr class="memdesc:ab3068ce7c3341350937f65502e02b064"><td class="mdescLeft">&#160;</td><td class="mdescRight">Возвращает указатель на первый элемент контейнера.  <a href="#ab3068ce7c3341350937f65502e02b064">Подробнее...</a><br /></td></tr>
+<tr class="separator:ab3068ce7c3341350937f65502e02b064"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ab6bab271e5a26ee5a3b9c8b00c88f003"><td class="memItemLeft" align="right" valign="top"><a class="el" href="classvset_1_1memory_1_1manager.html#a344dcce6b7f27151f2511c01928a1351">pointer</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classvset_1_1memory_1_1manager.html#ab6bab271e5a26ee5a3b9c8b00c88f003">end</a> ()</td></tr>
+<tr class="memdesc:ab6bab271e5a26ee5a3b9c8b00c88f003"><td class="mdescLeft">&#160;</td><td class="mdescRight">Возвращает указатель на элемент, следующий за последним элементом контейнера  <a href="#ab6bab271e5a26ee5a3b9c8b00c88f003">Подробнее...</a><br /></td></tr>
+<tr class="separator:ab6bab271e5a26ee5a3b9c8b00c88f003"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:aa5b924d3c1ac2fc7fbc6d5e972cd201a"><td class="memItemLeft" align="right" valign="top"><a class="el" href="classvset_1_1memory_1_1manager.html#a4d16f73f62da7d638cf0000241138633">const_pointer</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classvset_1_1memory_1_1manager.html#aa5b924d3c1ac2fc7fbc6d5e972cd201a">end</a> () const</td></tr>
+<tr class="memdesc:aa5b924d3c1ac2fc7fbc6d5e972cd201a"><td class="mdescLeft">&#160;</td><td class="mdescRight">Возвращает указатель на элемент, следующий за последним элементом контейнера  <a href="#aa5b924d3c1ac2fc7fbc6d5e972cd201a">Подробнее...</a><br /></td></tr>
+<tr class="separator:aa5b924d3c1ac2fc7fbc6d5e972cd201a"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:acbd5a39ff74c769b9f53bce2184b9a3c"><td class="memItemLeft" align="right" valign="top"><a class="el" href="classvset_1_1memory_1_1manager.html#a344dcce6b7f27151f2511c01928a1351">pointer</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classvset_1_1memory_1_1manager.html#acbd5a39ff74c769b9f53bce2184b9a3c">allocate</a> (size_t num, void *hint=fas_nullptr)</td></tr>
+<tr class="memdesc:acbd5a39ff74c769b9f53bce2184b9a3c"><td class="mdescLeft">&#160;</td><td class="mdescRight">Выделяет память для num объектов  <a href="#acbd5a39ff74c769b9f53bce2184b9a3c">Подробнее...</a><br /></td></tr>
+<tr class="separator:acbd5a39ff74c769b9f53bce2184b9a3c"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a02a5cd18b433d7959b19f7379ecb37d0"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classvset_1_1memory_1_1manager.html#a02a5cd18b433d7959b19f7379ecb37d0">deallocate</a> (<a class="el" href="classvset_1_1memory_1_1manager.html#a344dcce6b7f27151f2511c01928a1351">pointer</a> ptr, <a class="el" href="classvset_1_1memory_1_1manager.html#ad20cf018cb556dc0f6f362817fe5af68">size_type</a> num)</td></tr>
+<tr class="memdesc:a02a5cd18b433d7959b19f7379ecb37d0"><td class="mdescLeft">&#160;</td><td class="mdescRight">Освобождает память для num объектов  <a href="#a02a5cd18b433d7959b19f7379ecb37d0">Подробнее...</a><br /></td></tr>
+<tr class="separator:a02a5cd18b433d7959b19f7379ecb37d0"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a703cad1a7eca40a9ca7ed12b2607d2e0"><td class="memItemLeft" align="right" valign="top"><a class="el" href="classvset_1_1memory_1_1manager.html#ad20cf018cb556dc0f6f362817fe5af68">size_type</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classvset_1_1memory_1_1manager.html#a703cad1a7eca40a9ca7ed12b2607d2e0">count</a> () const</td></tr>
+<tr class="memdesc:a703cad1a7eca40a9ca7ed12b2607d2e0"><td class="mdescLeft">&#160;</td><td class="mdescRight">Возвращает количество распределенных объектов  <a href="#a703cad1a7eca40a9ca7ed12b2607d2e0">Подробнее...</a><br /></td></tr>
+<tr class="separator:a703cad1a7eca40a9ca7ed12b2607d2e0"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a1bfb2607ba7e3445b80ceb854e03290b"><td class="memItemLeft" align="right" valign="top">bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classvset_1_1memory_1_1manager.html#a1bfb2607ba7e3445b80ceb854e03290b">empty</a> () const</td></tr>
+<tr class="memdesc:a1bfb2607ba7e3445b80ceb854e03290b"><td class="mdescLeft">&#160;</td><td class="mdescRight">Проверка на отсутствие элементов  <a href="#a1bfb2607ba7e3445b80ceb854e03290b">Подробнее...</a><br /></td></tr>
+<tr class="separator:a1bfb2607ba7e3445b80ceb854e03290b"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a1b6a968484f8f332bf4ebc3a2a502cc2"><td class="memItemLeft" align="right" valign="top"><a class="el" href="classvset_1_1memory_1_1manager.html#ad20cf018cb556dc0f6f362817fe5af68">size_type</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classvset_1_1memory_1_1manager.html#a1b6a968484f8f332bf4ebc3a2a502cc2">capacity</a> () const</td></tr>
+<tr class="memdesc:a1b6a968484f8f332bf4ebc3a2a502cc2"><td class="mdescLeft">&#160;</td><td class="mdescRight">Возвращает количество элементов, для которого зарезервирована память контейнером.  <a href="#a1b6a968484f8f332bf4ebc3a2a502cc2">Подробнее...</a><br /></td></tr>
+<tr class="separator:a1b6a968484f8f332bf4ebc3a2a502cc2"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a6ac0e1ae17927bf10b6f9d2bab6a272a"><td class="memItemLeft" align="right" valign="top"><a class="el" href="classvset_1_1memory_1_1manager.html#a42e9bcf05759d5136a087176199aca70">buffer_type</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classvset_1_1memory_1_1manager.html#a6ac0e1ae17927bf10b6f9d2bab6a272a">buffer</a> ()</td></tr>
+<tr class="memdesc:a6ac0e1ae17927bf10b6f9d2bab6a272a"><td class="mdescLeft">&#160;</td><td class="mdescRight">Буфер  <a href="#a6ac0e1ae17927bf10b6f9d2bab6a272a">Подробнее...</a><br /></td></tr>
+<tr class="separator:a6ac0e1ae17927bf10b6f9d2bab6a272a"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ae402403bac9fd76ba0bbc92aa2ccba4f"><td class="memItemLeft" align="right" valign="top">const <a class="el" href="classvset_1_1memory_1_1manager.html#a42e9bcf05759d5136a087176199aca70">buffer_type</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classvset_1_1memory_1_1manager.html#ae402403bac9fd76ba0bbc92aa2ccba4f">buffer</a> () const</td></tr>
+<tr class="memdesc:ae402403bac9fd76ba0bbc92aa2ccba4f"><td class="mdescLeft">&#160;</td><td class="mdescRight">Буфер  <a href="#ae402403bac9fd76ba0bbc92aa2ccba4f">Подробнее...</a><br /></td></tr>
+<tr class="separator:ae402403bac9fd76ba0bbc92aa2ccba4f"><td class="memSeparator" colspan="2">&#160;</td></tr>
+</table>
+<a name="details" id="details"></a><h2 class="groupheader">Подробное описание</h2>
+<div class="textblock"><h3>template&lt;typename S, typename A = fas::aspect&lt;&gt;&gt;<br />
+class vset::memory::manager&lt; S, A &gt;</h3>
+
+<p class="">Интерфейс менеждера памяти </p>
+<dl class="tparams"><dt>Параметры шаблона</dt><dd>
+  <table class="tparams">
+    <tr><td class="paramname">S</td><td>стратегия </td></tr>
+    <tr><td class="paramname">A</td><td>дополнительный аспект</td></tr>
+  </table>
+  </dd>
+</dl>
+<p>доступные стратегии:</p><ul>
+<li><a class="el" href="structvset_1_1memory_1_1strategy_1_1fsb__mmap.html" title="стратегия менеджера памяти на файле отображенном в память ">vset::memory::strategy::fsb_mmap</a></li>
+<li><a class="el" href="structvset_1_1memory_1_1strategy_1_1fsb__inmem.html" title="стратегия менеджера памяти на непрерывном буфере ">vset::memory::strategy::fsb_inmem</a></li>
+<li><a class="el" href="structvset_1_1memory_1_1strategy_1_1fsb__filesync.html" title="стратегия менеджера памяти на непрерывном буфере с поддержкой полного дампма в файл ...">vset::memory::strategy::fsb_filesync</a> </li>
+</ul>
+</div><h2 class="groupheader">Определения типов</h2>
+<a id="a42e9bcf05759d5136a087176199aca70"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a42e9bcf05759d5136a087176199aca70">&#9670;&nbsp;</a></span>buffer_type</h2>
+
+<div class="memitem">
+<div class="memproto">
+<div class="memtemplate">
+template&lt;typename S, typename A = fas::aspect&lt;&gt;&gt; </div>
+      <table class="memname">
+        <tr>
+          <td class="memname">typedef super::buffer_type <a class="el" href="classvset_1_1memory_1_1manager.html">vset::memory::manager</a>&lt; S, A &gt;::<a class="el" href="classvset_1_1memory_1_1manager.html#a42e9bcf05759d5136a087176199aca70">buffer_type</a></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<p class="">Буфер, где рамещаются объекты value_type </p>
+
+</div>
+</div>
+<a id="a4d16f73f62da7d638cf0000241138633"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a4d16f73f62da7d638cf0000241138633">&#9670;&nbsp;</a></span>const_pointer</h2>
+
+<div class="memitem">
+<div class="memproto">
+<div class="memtemplate">
+template&lt;typename S, typename A = fas::aspect&lt;&gt;&gt; </div>
+      <table class="memname">
+        <tr>
+          <td class="memname">typedef super::const_pointer <a class="el" href="classvset_1_1memory_1_1manager.html">vset::memory::manager</a>&lt; S, A &gt;::<a class="el" href="classvset_1_1memory_1_1manager.html#a4d16f73f62da7d638cf0000241138633">const_pointer</a></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<p class="">Константный <a class="el" href="classvset_1_1memory_1_1offset__pointer.html" title="Указатель для перемещения в буфере менеджера памяти vset::memory::manager. ">vset::memory::offset_pointer</a> </p>
+
+</div>
+</div>
+<a id="af0e301f50a6a39cebca03202677d91d7"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#af0e301f50a6a39cebca03202677d91d7">&#9670;&nbsp;</a></span>difference_type</h2>
+
+<div class="memitem">
+<div class="memproto">
+<div class="memtemplate">
+template&lt;typename S, typename A = fas::aspect&lt;&gt;&gt; </div>
+      <table class="memname">
+        <tr>
+          <td class="memname">typedef std::ptrdiff_t <a class="el" href="classvset_1_1memory_1_1manager.html">vset::memory::manager</a>&lt; S, A &gt;::<a class="el" href="classvset_1_1memory_1_1manager.html#af0e301f50a6a39cebca03202677d91d7">difference_type</a></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<p class="">Знаковый целочисленный тип (std::ptrdiff_t) </p>
+
+</div>
+</div>
+<a id="a344dcce6b7f27151f2511c01928a1351"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a344dcce6b7f27151f2511c01928a1351">&#9670;&nbsp;</a></span>pointer</h2>
+
+<div class="memitem">
+<div class="memproto">
+<div class="memtemplate">
+template&lt;typename S, typename A = fas::aspect&lt;&gt;&gt; </div>
+      <table class="memname">
+        <tr>
+          <td class="memname">typedef super::pointer <a class="el" href="classvset_1_1memory_1_1manager.html">vset::memory::manager</a>&lt; S, A &gt;::<a class="el" href="classvset_1_1memory_1_1manager.html#a344dcce6b7f27151f2511c01928a1351">pointer</a></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<p class="">Указатель <a class="el" href="classvset_1_1memory_1_1offset__pointer.html" title="Указатель для перемещения в буфере менеджера памяти vset::memory::manager. ">vset::memory::offset_pointer</a> </p>
+
+</div>
+</div>
+<a id="ad20cf018cb556dc0f6f362817fe5af68"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ad20cf018cb556dc0f6f362817fe5af68">&#9670;&nbsp;</a></span>size_type</h2>
+
+<div class="memitem">
+<div class="memproto">
+<div class="memtemplate">
+template&lt;typename S, typename A = fas::aspect&lt;&gt;&gt; </div>
+      <table class="memname">
+        <tr>
+          <td class="memname">typedef size_t <a class="el" href="classvset_1_1memory_1_1manager.html">vset::memory::manager</a>&lt; S, A &gt;::<a class="el" href="classvset_1_1memory_1_1manager.html#ad20cf018cb556dc0f6f362817fe5af68">size_type</a></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<p class="">Беззнаковый целочисленный тип (size_t) </p>
+
+</div>
+</div>
+<a id="a6e90c560599f2cae172509d7e9ece2a6"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a6e90c560599f2cae172509d7e9ece2a6">&#9670;&nbsp;</a></span>value_type</h2>
+
+<div class="memitem">
+<div class="memproto">
+<div class="memtemplate">
+template&lt;typename S, typename A = fas::aspect&lt;&gt;&gt; </div>
+      <table class="memname">
+        <tr>
+          <td class="memname">typedef super::value_type <a class="el" href="classvset_1_1memory_1_1manager.html">vset::memory::manager</a>&lt; S, A &gt;::<a class="el" href="classvset_1_1memory_1_1manager.html#a6e90c560599f2cae172509d7e9ece2a6">value_type</a></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<p class="">Тип размещаемого объекта </p>
+
+</div>
+</div>
+<h2 class="groupheader">Методы</h2>
+<a id="acbd5a39ff74c769b9f53bce2184b9a3c"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#acbd5a39ff74c769b9f53bce2184b9a3c">&#9670;&nbsp;</a></span>allocate()</h2>
+
+<div class="memitem">
+<div class="memproto">
+<div class="memtemplate">
+template&lt;typename S, typename A = fas::aspect&lt;&gt;&gt; </div>
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname"><a class="el" href="classvset_1_1memory_1_1manager.html#a344dcce6b7f27151f2511c01928a1351">pointer</a> <a class="el" href="classvset_1_1memory_1_1manager.html">vset::memory::manager</a>&lt; S, A &gt;::allocate </td>
+          <td>(</td>
+          <td class="paramtype">size_t&#160;</td>
+          <td class="paramname"><em>num</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">void *&#160;</td>
+          <td class="paramname"><em>hint</em> = <code>fas_nullptr</code>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">inline</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p>Выделяет память для num объектов </p>
+<dl class="params"><dt>Аргументы</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">num</td><td>количество объектов </td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="section return"><dt>Возвращает</dt><dd>указатель <a class="el" href="classvset_1_1memory_1_1offset__pointer.html" title="Указатель для перемещения в буфере менеджера памяти vset::memory::manager. ">vset::memory::offset_pointer</a> на первый объект</dd></dl>
+<p>указатель на первый объект не является указателем на первый элемент массива, но получить доступ к остальным объектам можно с помощью операторов += и ++. Но основной кейс это выделение и освобождение по одному объекту </p>
+
+</div>
+</div>
+<a id="a01f7040ec200e629d4f2bc18378ce322"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a01f7040ec200e629d4f2bc18378ce322">&#9670;&nbsp;</a></span>begin() <span class="overload">[1/2]</span></h2>
+
+<div class="memitem">
+<div class="memproto">
+<div class="memtemplate">
+template&lt;typename S, typename A = fas::aspect&lt;&gt;&gt; </div>
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname"><a class="el" href="classvset_1_1memory_1_1manager.html#a344dcce6b7f27151f2511c01928a1351">pointer</a> <a class="el" href="classvset_1_1memory_1_1manager.html">vset::memory::manager</a>&lt; S, A &gt;::begin </td>
+          <td>(</td>
+          <td class="paramname"></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">inline</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p>Возвращает указатель на первый элемент контейнера. </p>
+<dl class="section return"><dt>Возвращает</dt><dd>указатель <a class="el" href="classvset_1_1memory_1_1offset__pointer.html" title="Указатель для перемещения в буфере менеджера памяти vset::memory::manager. ">vset::memory::offset_pointer</a> на первый элемент </dd></dl>
+
+</div>
+</div>
+<a id="ab3068ce7c3341350937f65502e02b064"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ab3068ce7c3341350937f65502e02b064">&#9670;&nbsp;</a></span>begin() <span class="overload">[2/2]</span></h2>
+
+<div class="memitem">
+<div class="memproto">
+<div class="memtemplate">
+template&lt;typename S, typename A = fas::aspect&lt;&gt;&gt; </div>
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname"><a class="el" href="classvset_1_1memory_1_1manager.html#a4d16f73f62da7d638cf0000241138633">const_pointer</a> <a class="el" href="classvset_1_1memory_1_1manager.html">vset::memory::manager</a>&lt; S, A &gt;::begin </td>
+          <td>(</td>
+          <td class="paramname"></td><td>)</td>
+          <td> const</td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">inline</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p>Возвращает указатель на первый элемент контейнера. </p>
+<dl class="section return"><dt>Возвращает</dt><dd>указатель <a class="el" href="classvset_1_1memory_1_1offset__pointer.html" title="Указатель для перемещения в буфере менеджера памяти vset::memory::manager. ">vset::memory::offset_pointer</a> на первый элемент </dd></dl>
+
+</div>
+</div>
+<a id="a6ac0e1ae17927bf10b6f9d2bab6a272a"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a6ac0e1ae17927bf10b6f9d2bab6a272a">&#9670;&nbsp;</a></span>buffer() <span class="overload">[1/2]</span></h2>
+
+<div class="memitem">
+<div class="memproto">
+<div class="memtemplate">
+template&lt;typename S, typename A = fas::aspect&lt;&gt;&gt; </div>
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname"><a class="el" href="classvset_1_1memory_1_1manager.html#a42e9bcf05759d5136a087176199aca70">buffer_type</a> <a class="el" href="classvset_1_1memory_1_1manager.html">vset::memory::manager</a>&lt; S, A &gt;::buffer </td>
+          <td>(</td>
+          <td class="paramname"></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">inline</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p>Буфер </p>
+<dl class="section return"><dt>Возвращает</dt><dd>Объект управления буфером в котором происходит размещение объектов </dd></dl>
+
+</div>
+</div>
+<a id="ae402403bac9fd76ba0bbc92aa2ccba4f"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ae402403bac9fd76ba0bbc92aa2ccba4f">&#9670;&nbsp;</a></span>buffer() <span class="overload">[2/2]</span></h2>
+
+<div class="memitem">
+<div class="memproto">
+<div class="memtemplate">
+template&lt;typename S, typename A = fas::aspect&lt;&gt;&gt; </div>
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">const <a class="el" href="classvset_1_1memory_1_1manager.html#a42e9bcf05759d5136a087176199aca70">buffer_type</a> <a class="el" href="classvset_1_1memory_1_1manager.html">vset::memory::manager</a>&lt; S, A &gt;::buffer </td>
+          <td>(</td>
+          <td class="paramname"></td><td>)</td>
+          <td> const</td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">inline</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p>Буфер </p>
+<dl class="section return"><dt>Возвращает</dt><dd>Объект управления буфером в котором происходит размещение объектов </dd></dl>
+
+</div>
+</div>
+<a id="a1b6a968484f8f332bf4ebc3a2a502cc2"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a1b6a968484f8f332bf4ebc3a2a502cc2">&#9670;&nbsp;</a></span>capacity()</h2>
+
+<div class="memitem">
+<div class="memproto">
+<div class="memtemplate">
+template&lt;typename S, typename A = fas::aspect&lt;&gt;&gt; </div>
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname"><a class="el" href="classvset_1_1memory_1_1manager.html#ad20cf018cb556dc0f6f362817fe5af68">size_type</a> <a class="el" href="classvset_1_1memory_1_1manager.html">vset::memory::manager</a>&lt; S, A &gt;::capacity </td>
+          <td>(</td>
+          <td class="paramname"></td><td>)</td>
+          <td> const</td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">inline</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p>Возвращает количество элементов, для которого зарезервирована память контейнером. </p>
+<dl class="section return"><dt>Возвращает</dt><dd>Текущая вместимость, под которую в сейчас выделена память </dd></dl>
+
+</div>
+</div>
+<a id="a703cad1a7eca40a9ca7ed12b2607d2e0"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a703cad1a7eca40a9ca7ed12b2607d2e0">&#9670;&nbsp;</a></span>count()</h2>
+
+<div class="memitem">
+<div class="memproto">
+<div class="memtemplate">
+template&lt;typename S, typename A = fas::aspect&lt;&gt;&gt; </div>
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname"><a class="el" href="classvset_1_1memory_1_1manager.html#ad20cf018cb556dc0f6f362817fe5af68">size_type</a> <a class="el" href="classvset_1_1memory_1_1manager.html">vset::memory::manager</a>&lt; S, A &gt;::count </td>
+          <td>(</td>
+          <td class="paramname"></td><td>)</td>
+          <td> const</td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">inline</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p>Возвращает количество распределенных объектов </p>
+<dl class="section return"><dt>Возвращает</dt><dd>количество распределенных объектов </dd></dl>
+
+</div>
+</div>
+<a id="a02a5cd18b433d7959b19f7379ecb37d0"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a02a5cd18b433d7959b19f7379ecb37d0">&#9670;&nbsp;</a></span>deallocate()</h2>
+
+<div class="memitem">
+<div class="memproto">
+<div class="memtemplate">
+template&lt;typename S, typename A = fas::aspect&lt;&gt;&gt; </div>
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">void <a class="el" href="classvset_1_1memory_1_1manager.html">vset::memory::manager</a>&lt; S, A &gt;::deallocate </td>
+          <td>(</td>
+          <td class="paramtype"><a class="el" href="classvset_1_1memory_1_1manager.html#a344dcce6b7f27151f2511c01928a1351">pointer</a>&#160;</td>
+          <td class="paramname"><em>ptr</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype"><a class="el" href="classvset_1_1memory_1_1manager.html#ad20cf018cb556dc0f6f362817fe5af68">size_type</a>&#160;</td>
+          <td class="paramname"><em>num</em>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">inline</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p>Освобождает память для num объектов </p>
+<dl class="params"><dt>Аргументы</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">num</td><td>количество объектов</td></tr>
+  </table>
+  </dd>
+</dl>
+<p>освобождает память для текущего объекта и еще для num-1 следующих. Но основной кейс это выделение и освобождение по одному объекту </p>
+
+</div>
+</div>
+<a id="a1bfb2607ba7e3445b80ceb854e03290b"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a1bfb2607ba7e3445b80ceb854e03290b">&#9670;&nbsp;</a></span>empty()</h2>
+
+<div class="memitem">
+<div class="memproto">
+<div class="memtemplate">
+template&lt;typename S, typename A = fas::aspect&lt;&gt;&gt; </div>
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">bool <a class="el" href="classvset_1_1memory_1_1manager.html">vset::memory::manager</a>&lt; S, A &gt;::empty </td>
+          <td>(</td>
+          <td class="paramname"></td><td>)</td>
+          <td> const</td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">inline</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p>Проверка на отсутствие элементов </p>
+<dl class="section return"><dt>Возвращает</dt><dd>true если память ни для одного элемента не распределена, false - в противном случае </dd></dl>
+
+</div>
+</div>
+<a id="ab6bab271e5a26ee5a3b9c8b00c88f003"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ab6bab271e5a26ee5a3b9c8b00c88f003">&#9670;&nbsp;</a></span>end() <span class="overload">[1/2]</span></h2>
+
+<div class="memitem">
+<div class="memproto">
+<div class="memtemplate">
+template&lt;typename S, typename A = fas::aspect&lt;&gt;&gt; </div>
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname"><a class="el" href="classvset_1_1memory_1_1manager.html#a344dcce6b7f27151f2511c01928a1351">pointer</a> <a class="el" href="classvset_1_1memory_1_1manager.html">vset::memory::manager</a>&lt; S, A &gt;::end </td>
+          <td>(</td>
+          <td class="paramname"></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">inline</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p>Возвращает указатель на элемент, следующий за последним элементом контейнера </p>
+<dl class="section return"><dt>Возвращает</dt><dd>указатель <a class="el" href="classvset_1_1memory_1_1offset__pointer.html" title="Указатель для перемещения в буфере менеджера памяти vset::memory::manager. ">vset::memory::offset_pointer</a> на элемент, следующий за последним элементом контейнера</dd></dl>
+<p>Этот элемент выступает в качестве заполнителя; попытке доступа к нему приводит к неопределенному поведению </p>
+
+</div>
+</div>
+<a id="aa5b924d3c1ac2fc7fbc6d5e972cd201a"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#aa5b924d3c1ac2fc7fbc6d5e972cd201a">&#9670;&nbsp;</a></span>end() <span class="overload">[2/2]</span></h2>
+
+<div class="memitem">
+<div class="memproto">
+<div class="memtemplate">
+template&lt;typename S, typename A = fas::aspect&lt;&gt;&gt; </div>
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname"><a class="el" href="classvset_1_1memory_1_1manager.html#a4d16f73f62da7d638cf0000241138633">const_pointer</a> <a class="el" href="classvset_1_1memory_1_1manager.html">vset::memory::manager</a>&lt; S, A &gt;::end </td>
+          <td>(</td>
+          <td class="paramname"></td><td>)</td>
+          <td> const</td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">inline</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p>Возвращает указатель на элемент, следующий за последним элементом контейнера </p>
+<dl class="section return"><dt>Возвращает</dt><dd>указатель <a class="el" href="classvset_1_1memory_1_1offset__pointer.html" title="Указатель для перемещения в буфере менеджера памяти vset::memory::manager. ">vset::memory::offset_pointer</a> на элемент, следующий за последним элементом контейнера</dd></dl>
+<p>Этот элемент выступает в качестве заполнителя; попытке доступа к нему приводит к неопределенному поведению </p>
+
+</div>
+</div>
+<hr/>Объявления и описания членов класса находятся в файле:<ul>
+<li>vset/memory/<a class="el" href="manager_8hpp_source.html">manager.hpp</a></li>
+</ul>
+</div><!-- contents -->
+<!-- start footer part -->
+<hr class="footer"/><address class="footer"><small>
+Создано системой &#160;<a href="http://www.doxygen.org/index.html">
+<img class="footer" src="doxygen.png" alt="doxygen"/>
+</a> 1.8.15
+</small></address>
+</body>
+</html>

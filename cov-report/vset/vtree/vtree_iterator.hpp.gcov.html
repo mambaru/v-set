@@ -1,0 +1,371 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+
+<html lang="en">
+
+<head>
+  <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+  <title>LCOV - v-set-coverage.info - vset/vtree/vtree_iterator.hpp</title>
+  <link rel="stylesheet" type="text/css" href="../../gcov.css">
+</head>
+
+<body>
+
+  <table width="100%" border=0 cellspacing=0 cellpadding=0>
+    <tr><td class="title">LCOV - code coverage report</td></tr>
+    <tr><td class="ruler"><img src="../../glass.png" width=3 height=3 alt=""></td></tr>
+
+    <tr>
+      <td width="100%">
+        <table cellpadding=1 border=0 width="100%">
+          <tr>
+            <td width="10%" class="headerItem">Current view:</td>
+            <td width="35%" class="headerValue"><a href="../../index.html">top level</a> - <a href="index.html">vset/vtree</a> - vtree_iterator.hpp<span style="font-size: 80%;"> (source / <a href="vtree_iterator.hpp.func.html">functions</a>)</span></td>
+            <td width="5%"></td>
+            <td width="15%"></td>
+            <td width="10%" class="headerCovTableHead">Hit</td>
+            <td width="10%" class="headerCovTableHead">Total</td>
+            <td width="15%" class="headerCovTableHead">Coverage</td>
+          </tr>
+          <tr>
+            <td class="headerItem">Test:</td>
+            <td class="headerValue">v-set-coverage.info</td>
+            <td></td>
+            <td class="headerItem">Lines:</td>
+            <td class="headerCovTableEntry">59</td>
+            <td class="headerCovTableEntry">62</td>
+            <td class="headerCovTableEntryHi">95.2 %</td>
+          </tr>
+          <tr>
+            <td class="headerItem">Date:</td>
+            <td class="headerValue">2019-09-12</td>
+            <td></td>
+            <td class="headerItem">Functions:</td>
+            <td class="headerCovTableEntry">139</td>
+            <td class="headerCovTableEntry">161</td>
+            <td class="headerCovTableEntryMed">86.3 %</td>
+          </tr>
+          <tr><td><img src="../../glass.png" width=3 height=3 alt=""></td></tr>
+        </table>
+      </td>
+    </tr>
+
+    <tr><td class="ruler"><img src="../../glass.png" width=3 height=3 alt=""></td></tr>
+  </table>
+
+  <table cellpadding=0 cellspacing=0 border=0>
+    <tr>
+      <td><br></td>
+    </tr>
+    <tr>
+      <td>
+<pre class="sourceHeading">          Line data    Source code</pre>
+<pre class="source">
+<a name="1"><span class="lineNum">       1 </span>            : #ifndef VSET_VTREE_VTREE_ITERATOR_HPP</a>
+<span class="lineNum">       2 </span>            : #define VSET_VTREE_VTREE_ITERATOR_HPP
+<span class="lineNum">       3 </span>            : 
+<span class="lineNum">       4 </span>            : namespace vset{ namespace vtree{
+<span class="lineNum">       5 </span>            : 
+<span class="lineNum">       6 </span>            : template&lt;typename T&gt;
+<span class="lineNum">       7 </span>            : struct mapped_type_helper
+<span class="lineNum">       8 </span>            : {
+<span class="lineNum">       9 </span>            :   typedef typename T::value_type value_type;
+<span class="lineNum">      10 </span>            : };
+<span class="lineNum">      11 </span>            : 
+<span class="lineNum">      12 </span>            : template&lt;typename T&gt;
+<span class="lineNum">      13 </span>            : struct mapped_type_helper&lt;T*&gt;
+<span class="lineNum">      14 </span>            : {
+<span class="lineNum">      15 </span>            :   typedef T value_type;
+<span class="lineNum">      16 </span>            : };
+<span class="lineNum">      17 </span>            : 
+<span class="lineNum">      18 </span>            : template&lt;typename SourceIterator, typename ValueType&gt;
+<span class="lineNum">      19 </span>            : class vtree_iterator
+<span class="lineNum">      20 </span>            : {
+<span class="lineNum">      21 </span>            : public:
+<span class="lineNum">      22 </span>            :   typedef vtree_iterator&lt;SourceIterator, ValueType&gt; self;
+<span class="lineNum">      23 </span>            :   typedef SourceIterator source_iterator;
+<span class="lineNum">      24 </span>            :   typedef typename source_iterator::value_type source_value_type;
+<span class="lineNum">      25 </span>            :   typedef typename source_value_type::first_type source_key_type;
+<span class="lineNum">      26 </span>            :   typedef typename source_value_type::second_type source_mapped_type;
+<span class="lineNum">      27 </span>            :   
+<span class="lineNum">      28 </span>            :   typedef typename mapped_type_helper&lt;source_mapped_type&gt;::value_type array_type;
+<span class="lineNum">      29 </span>            :   
+<span class="lineNum">      30 </span>            :   typedef typename array_type::value_type array_value_type;
+<span class="lineNum">      31 </span>            :   typedef typename array_type::size_type  size_type;
+<span class="lineNum">      32 </span>            : 
+<span class="lineNum">      33 </span>            :   typedef typename std::iterator_traits&lt;array_value_type*&gt;::iterator_category iterator_category;
+<span class="lineNum">      34 </span>            :   typedef typename std::iterator_traits&lt;ValueType*&gt;::value_type value_type;
+<span class="lineNum">      35 </span>            :   typedef typename std::iterator_traits&lt;ValueType*&gt;::difference_type difference_type;
+<span class="lineNum">      36 </span>            :   typedef typename std::iterator_traits&lt;ValueType*&gt;::pointer pointer;
+<a name="37"><span class="lineNum">      37 </span>            :   typedef typename std::iterator_traits&lt;ValueType*&gt;::reference reference;</a>
+<span class="lineNum">      38 </span>            :   
+<span class="lineNum">      39 </span><span class="lineCov">          1 :   vtree_iterator()</span>
+<span class="lineNum">      40 </span>            :     : _itr()
+<span class="lineNum">      41 </span><span class="lineCov">          1 :     , _pos(0)</span>
+<span class="lineNum">      42 </span>            :   {
+<span class="lineNum">      43 </span>            : 
+<span class="lineNum">      44 </span><span class="lineCov">          1 :   }</span>
+<a name="45"><span class="lineNum">      45 </span>            : </a>
+<span class="lineNum">      46 </span>            :   // cctor
+<span class="lineNum">      47 </span><span class="lineCov">     344280 :   vtree_iterator(const self&amp; slf)</span>
+<span class="lineNum">      48 </span>            :     : _itr(slf._itr )
+<span class="lineNum">      49 </span><span class="lineCov">     344280 :     , _pos(slf._pos )</span>
+<span class="lineNum">      50 </span>            :   {
+<a name="51"><span class="lineNum">      51 </span><span class="lineCov">     344280 :   }</span></a>
+<span class="lineNum">      52 </span>            : 
+<span class="lineNum">      53 </span><span class="lineCov">      16866 :   vtree_iterator&amp; operator=(const self&amp; slf)</span>
+<span class="lineNum">      54 </span>            :   {
+<span class="lineNum">      55 </span><span class="lineCov">      16866 :     _itr = slf._itr;</span>
+<span class="lineNum">      56 </span><span class="lineCov">      16866 :     _pos = slf._pos;</span>
+<span class="lineNum">      57 </span><span class="lineCov">      16866 :     return *this;</span>
+<a name="58"><span class="lineNum">      58 </span>            :   }</a>
+<span class="lineNum">      59 </span>            : 
+<span class="lineNum">      60 </span><span class="lineCov">     179152 :   vtree_iterator(const source_iterator&amp; itr, difference_type pos)</span>
+<span class="lineNum">      61 </span>            :     : _itr(itr)
+<span class="lineNum">      62 </span><span class="lineCov">     179152 :     , _pos(pos)</span>
+<span class="lineNum">      63 </span>            :   {
+<span class="lineNum">      64 </span><span class="lineCov">     179152 :   }</span>
+<span class="lineNum">      65 </span>            : 
+<a name="66"><span class="lineNum">      66 </span>            :   </a>
+<span class="lineNum">      67 </span>            :   template&lt;typename TI, typename VT&gt;
+<span class="lineNum">      68 </span><span class="lineCov">      50562 :   /*explicit*/ vtree_iterator(const vtree_iterator&lt;TI, VT&gt;&amp; oth)</span>
+<span class="lineNum">      69 </span>            :     : _itr( oth.get_source_iterator() )
+<span class="lineNum">      70 </span><span class="lineCov">      50562 :     , _pos( oth.get_position() )</span>
+<span class="lineNum">      71 </span>            :   {
+<span class="lineNum">      72 </span><span class="lineCov">      50562 :   }</span>
+<span class="lineNum">      73 </span>            :   
+<span class="lineNum">      74 </span>            :   template&lt;typename TI, typename VT&gt;
+<span class="lineNum">      75 </span>            :   vtree_iterator&amp; operator=(const vtree_iterator&lt;TI, VT&gt;&amp; oth)
+<span class="lineNum">      76 </span>            :   {
+<span class="lineNum">      77 </span>            :     _itr = oth.get_source_iterator();
+<span class="lineNum">      78 </span>            :     _pos = oth.get_position();
+<span class="lineNum">      79 </span>            :     return *this;
+<span class="lineNum">      80 </span>            :   }
+<a name="81"><span class="lineNum">      81 </span>            : </a>
+<span class="lineNum">      82 </span>            : 
+<span class="lineNum">      83 </span><span class="lineCov">      19285 :   reference operator*() const</span>
+<span class="lineNum">      84 </span>            :   {
+<span class="lineNum">      85 </span><span class="lineCov">      19285 :     return _itr-&gt;second-&gt;at( static_cast&lt;size_type&gt;(_pos) );</span>
+<a name="86"><span class="lineNum">      86 </span>            :   }</a>
+<span class="lineNum">      87 </span>            :   
+<span class="lineNum">      88 </span><span class="lineCov">         12 :   pointer operator-&gt;() const</span>
+<span class="lineNum">      89 </span>            :   {
+<span class="lineNum">      90 </span><span class="lineCov">         12 :     return &amp;*(_itr-&gt;second-&gt;begin() + _pos);</span>
+<a name="91"><span class="lineNum">      91 </span>            :   }</a>
+<span class="lineNum">      92 </span>            : 
+<span class="lineNum">      93 </span><span class="lineCov">      14557 :   self&amp; operator++()</span>
+<span class="lineNum">      94 </span>            :   {
+<span class="lineNum">      95 </span><span class="lineCov">      14557 :     ++_pos;</span>
+<span class="lineNum">      96 </span><span class="lineCov">      14557 :     if ( _itr-&gt;second-&gt;size() == static_cast&lt;size_t&gt;(_pos))</span>
+<span class="lineNum">      97 </span>            :     {
+<span class="lineNum">      98 </span><span class="lineCov">      13286 :       ++_itr;</span>
+<span class="lineNum">      99 </span><span class="lineCov">      13286 :       _pos = 0;</span>
+<span class="lineNum">     100 </span>            :     }
+<span class="lineNum">     101 </span><span class="lineCov">      14557 :     return *this;</span>
+<span class="lineNum">     102 </span>            :   }
+<span class="lineNum">     103 </span>            : 
+<span class="lineNum">     104 </span>            :   self operator++(int)
+<span class="lineNum">     105 </span>            :   {
+<span class="lineNum">     106 </span>            :     self ans = *this;
+<span class="lineNum">     107 </span>            :     this-&gt;operator++();
+<span class="lineNum">     108 </span>            :     return ans;
+<a name="109"><span class="lineNum">     109 </span>            :   }</a>
+<span class="lineNum">     110 </span>            : 
+<span class="lineNum">     111 </span><span class="lineCov">        918 :   self&amp; operator--()</span>
+<span class="lineNum">     112 </span>            :   {
+<span class="lineNum">     113 </span><span class="lineCov">        918 :     if ( _pos == 0 )</span>
+<span class="lineNum">     114 </span>            :     {
+<span class="lineNum">     115 </span><span class="lineCov">         14 :       --_itr;</span>
+<span class="lineNum">     116 </span><span class="lineCov">         14 :       _pos = static_cast&lt;difference_type&gt;( _itr-&gt;second-&gt;size() ) - 1;</span>
+<span class="lineNum">     117 </span>            :     }
+<span class="lineNum">     118 </span>            :     else
+<span class="lineNum">     119 </span>            :     {
+<span class="lineNum">     120 </span><span class="lineCov">        904 :       --_pos;</span>
+<span class="lineNum">     121 </span>            :     }
+<span class="lineNum">     122 </span><span class="lineCov">        918 :     return *this;</span>
+<span class="lineNum">     123 </span>            :   }
+<span class="lineNum">     124 </span>            : 
+<span class="lineNum">     125 </span>            :   self operator--(int)
+<span class="lineNum">     126 </span>            :   {
+<span class="lineNum">     127 </span>            :     self ans = *this;
+<span class="lineNum">     128 </span>            :     this-&gt;operator--();
+<span class="lineNum">     129 </span>            :     return ans;
+<a name="130"><span class="lineNum">     130 </span>            :   }</a>
+<span class="lineNum">     131 </span>            : 
+<span class="lineNum">     132 </span><span class="lineCov">        206 :   self&amp; operator += (difference_type n )</span>
+<span class="lineNum">     133 </span>            :   {
+<span class="lineNum">     134 </span><span class="lineCov">        206 :     if ( n &gt;= static_cast&lt;difference_type&gt;( _itr-&gt;second-&gt;size() ) - _pos )</span>
+<span class="lineNum">     135 </span>            :     {
+<span class="lineNum">     136 </span><span class="lineCov">          2 :       n -= static_cast&lt;difference_type&gt;(_itr-&gt;second-&gt;size()) - _pos;</span>
+<span class="lineNum">     137 </span><span class="lineCov">          2 :       ++_itr;</span>
+<span class="lineNum">     138 </span><span class="lineCov">          2 :       _pos = 0;</span>
+<span class="lineNum">     139 </span>            : 
+<span class="lineNum">     140 </span><span class="lineCov">          4 :       while ( n &gt;= static_cast&lt;difference_type&gt;( _itr-&gt;second-&gt;size() ) )</span>
+<span class="lineNum">     141 </span>            :       {
+<span class="lineNum">     142 </span><span class="lineNoCov">          0 :         n -= static_cast&lt;difference_type&gt;( _itr-&gt;second-&gt;size() );</span>
+<span class="lineNum">     143 </span><span class="lineNoCov">          0 :         ++_itr;</span>
+<span class="lineNum">     144 </span><span class="lineNoCov">          0 :         _pos = 0;</span>
+<span class="lineNum">     145 </span>            :       }
+<span class="lineNum">     146 </span>            :     }
+<span class="lineNum">     147 </span><span class="lineCov">        206 :     _pos += n;</span>
+<span class="lineNum">     148 </span><span class="lineCov">        206 :     return *this;</span>
+<span class="lineNum">     149 </span>            :   }
+<span class="lineNum">     150 </span>            : 
+<span class="lineNum">     151 </span>            :   self&amp; operator -= (difference_type n )
+<span class="lineNum">     152 </span>            :   {
+<span class="lineNum">     153 </span>            :     if ( n &gt; _pos )
+<span class="lineNum">     154 </span>            :     {
+<span class="lineNum">     155 </span>            :       n -= _pos;
+<span class="lineNum">     156 </span>            :       --_itr;
+<span class="lineNum">     157 </span>            :       _pos = _itr-&gt;second-&gt;size() - 1;
+<span class="lineNum">     158 </span>            : 
+<span class="lineNum">     159 </span>            :       while ( n &gt;= static_cast&lt;difference_type&gt;( _itr-&gt;second-&gt;size() ) )
+<span class="lineNum">     160 </span>            :       {
+<span class="lineNum">     161 </span>            :         n -= _itr-&gt;second-&gt;size();
+<span class="lineNum">     162 </span>            :         --_itr;
+<span class="lineNum">     163 </span>            :         _pos = _itr-&gt;second-&gt;size() - 1;
+<span class="lineNum">     164 </span>            :       }
+<span class="lineNum">     165 </span>            :     }
+<span class="lineNum">     166 </span>            :     _pos -= n;
+<span class="lineNum">     167 </span>            :     return *this;
+<a name="168"><span class="lineNum">     168 </span>            :   }</a>
+<span class="lineNum">     169 </span>            : 
+<span class="lineNum">     170 </span><span class="lineCov">      47895 :   bool operator == (const self&amp; r ) const</span>
+<span class="lineNum">     171 </span>            :   {
+<span class="lineNum">     172 </span><span class="lineCov">      47895 :     return _pos == r._pos &amp;&amp; _itr == r._itr;</span>
+<a name="173"><span class="lineNum">     173 </span>            :   }</a>
+<span class="lineNum">     174 </span>            : 
+<span class="lineNum">     175 </span><span class="lineCov">        994 :   bool operator != (const self&amp; r ) const</span>
+<span class="lineNum">     176 </span>            :   {
+<span class="lineNum">     177 </span><span class="lineCov">        994 :     return !this-&gt;operator == (r);</span>
+<span class="lineNum">     178 </span>            :   }
+<span class="lineNum">     179 </span>            : 
+<span class="lineNum">     180 </span>            :   bool operator &lt; (const self&amp; r ) const
+<span class="lineNum">     181 </span>            :   {
+<span class="lineNum">     182 </span>            :     if ( _itr &lt; r._itr ) return true;
+<span class="lineNum">     183 </span>            :     return _pos &lt; r._pos;
+<span class="lineNum">     184 </span>            :   }
+<span class="lineNum">     185 </span>            : 
+<span class="lineNum">     186 </span>            :   bool operator &gt; (const self&amp; r ) const
+<span class="lineNum">     187 </span>            :   {
+<span class="lineNum">     188 </span>            :     if ( _itr &gt; r._itr ) return true;
+<span class="lineNum">     189 </span>            :     return _pos &gt; r._pos;
+<span class="lineNum">     190 </span>            :   }
+<span class="lineNum">     191 </span>            : 
+<span class="lineNum">     192 </span>            :   bool operator &lt;= (const self&amp; r ) const
+<span class="lineNum">     193 </span>            :   {
+<span class="lineNum">     194 </span>            :     return !this-&gt;operator &gt;( r );
+<span class="lineNum">     195 </span>            :   }
+<span class="lineNum">     196 </span>            : 
+<span class="lineNum">     197 </span>            :   bool operator &gt;= (const self&amp; r ) const
+<span class="lineNum">     198 </span>            :   {
+<span class="lineNum">     199 </span>            :     return !this-&gt;operator &lt; ( r );
+<span class="lineNum">     200 </span>            :   }
+<span class="lineNum">     201 </span>            : 
+<span class="lineNum">     202 </span>            :   reference operator[] ( difference_type n ) const
+<span class="lineNum">     203 </span>            :   {
+<span class="lineNum">     204 </span>            :     self ans = *this;
+<span class="lineNum">     205 </span>            :     ans += n;
+<span class="lineNum">     206 </span>            :     return *ans;
+<span class="lineNum">     207 </span>            :   }
+<span class="lineNum">     208 </span>            : 
+<span class="lineNum">     209 </span>            :   template&lt;typename TI, typename VT&gt;
+<a name="210"><span class="lineNum">     210 </span>            :   friend typename vtree_iterator&lt;TI, VT&gt;::difference_type operator - ( vtree_iterator&lt;TI, VT&gt; r1, vtree_iterator&lt;TI, VT&gt; r2 );</a>
+<span class="lineNum">     211 </span>            : 
+<span class="lineNum">     212 </span><span class="lineCov">     101125 :   source_iterator get_source_iterator() const</span>
+<span class="lineNum">     213 </span>            :   {
+<span class="lineNum">     214 </span><span class="lineCov">     101125 :     return this-&gt;_itr;</span>
+<a name="215"><span class="lineNum">     215 </span>            :   }</a>
+<span class="lineNum">     216 </span>            : 
+<span class="lineNum">     217 </span><span class="lineCov">      67418 :   difference_type get_position() const</span>
+<span class="lineNum">     218 </span>            :   {
+<span class="lineNum">     219 </span><span class="lineCov">      67418 :     return this-&gt;_pos;</span>
+<span class="lineNum">     220 </span>            :   }
+<span class="lineNum">     221 </span>            : 
+<span class="lineNum">     222 </span>            : private:
+<span class="lineNum">     223 </span>            :   source_iterator _itr;
+<span class="lineNum">     224 </span>            :   difference_type _pos;
+<span class="lineNum">     225 </span>            : };
+<a name="226"><span class="lineNum">     226 </span>            : </a>
+<span class="lineNum">     227 </span>            : template&lt;typename TI, typename VT, typename Dist&gt;
+<span class="lineNum">     228 </span><span class="lineCov">        205 : inline vtree_iterator&lt;TI, VT&gt; operator +</span>
+<span class="lineNum">     229 </span>            :   (
+<span class="lineNum">     230 </span>            :     vtree_iterator&lt;TI, VT&gt; r,
+<span class="lineNum">     231 </span>            :     Dist n
+<span class="lineNum">     232 </span>            :   )
+<span class="lineNum">     233 </span>            : {
+<span class="lineNum">     234 </span><span class="lineCov">        205 :   return r+=n;</span>
+<span class="lineNum">     235 </span>            : }
+<span class="lineNum">     236 </span>            : 
+<span class="lineNum">     237 </span>            : template&lt;typename TI, typename VT, typename Dist&gt;
+<span class="lineNum">     238 </span>            : inline vtree_iterator&lt;TI, VT&gt; operator +
+<span class="lineNum">     239 </span>            :   (
+<span class="lineNum">     240 </span>            :     Dist n,
+<span class="lineNum">     241 </span>            :     vtree_iterator&lt;TI, VT&gt; r
+<span class="lineNum">     242 </span>            :   )
+<span class="lineNum">     243 </span>            : {
+<span class="lineNum">     244 </span>            :   return r+= n;
+<span class="lineNum">     245 </span>            : }
+<span class="lineNum">     246 </span>            : 
+<span class="lineNum">     247 </span>            : template&lt;typename TI, typename VT, typename Dist&gt;
+<span class="lineNum">     248 </span>            : inline vtree_iterator&lt;TI, VT&gt; operator -
+<span class="lineNum">     249 </span>            :   (
+<span class="lineNum">     250 </span>            :     vtree_iterator&lt;TI, VT&gt; r,
+<span class="lineNum">     251 </span>            :     Dist n
+<span class="lineNum">     252 </span>            :   )
+<span class="lineNum">     253 </span>            : {
+<span class="lineNum">     254 </span>            :   return r-= n;
+<span class="lineNum">     255 </span>            : }
+<span class="lineNum">     256 </span>            : 
+<span class="lineNum">     257 </span>            : template&lt;typename TI, typename VT, typename Dist&gt;
+<span class="lineNum">     258 </span>            : inline vtree_iterator&lt;TI, VT&gt; operator -
+<span class="lineNum">     259 </span>            :   (
+<span class="lineNum">     260 </span>            :     Dist n,
+<span class="lineNum">     261 </span>            :     vtree_iterator&lt;TI, VT&gt; r
+<span class="lineNum">     262 </span>            :   )
+<span class="lineNum">     263 </span>            : {
+<span class="lineNum">     264 </span>            :   return r -= n;
+<span class="lineNum">     265 </span>            : }
+<a name="266"><span class="lineNum">     266 </span>            : </a>
+<span class="lineNum">     267 </span>            : template&lt;typename TI, typename VT&gt;
+<span class="lineNum">     268 </span><span class="lineCov">      43944 : inline typename vtree_iterator&lt;TI, VT&gt;::difference_type operator -</span>
+<span class="lineNum">     269 </span>            :   (
+<span class="lineNum">     270 </span>            :     vtree_iterator&lt;TI, VT&gt; r1,
+<span class="lineNum">     271 </span>            :     vtree_iterator&lt;TI, VT&gt; r2
+<span class="lineNum">     272 </span>            :   )
+<span class="lineNum">     273 </span>            : {
+<span class="lineNum">     274 </span>            :   typedef typename vtree_iterator&lt;TI, VT&gt;::difference_type difference_type;
+<span class="lineNum">     275 </span><span class="lineCov">      43944 :   if ( r1._itr == r2._itr )</span>
+<span class="lineNum">     276 </span>            :   {
+<span class="lineNum">     277 </span><span class="lineCov">      23860 :     return  r1._pos - r2._pos;</span>
+<span class="lineNum">     278 </span>            :   }
+<span class="lineNum">     279 </span>            : 
+<span class="lineNum">     280 </span><span class="lineCov">      20084 :   typename vtree_iterator&lt;TI, VT&gt;::source_iterator titr = r2._itr;</span>
+<span class="lineNum">     281 </span><span class="lineCov">      20084 :   difference_type result =  static_cast&lt;difference_type&gt;(titr-&gt;second-&gt;size()) - r2._pos;</span>
+<span class="lineNum">     282 </span>            :   
+<span class="lineNum">     283 </span><span class="lineCov">      20089 :   for ( ++titr; titr != r1._itr; ++titr )</span>
+<span class="lineNum">     284 </span>            :   {
+<span class="lineNum">     285 </span><span class="lineCov">          5 :     result += static_cast&lt;difference_type&gt;( titr-&gt;second-&gt;size() );</span>
+<span class="lineNum">     286 </span>            :   }
+<span class="lineNum">     287 </span>            : 
+<span class="lineNum">     288 </span><span class="lineCov">      20084 :   result += r1._pos;</span>
+<span class="lineNum">     289 </span><span class="lineCov">      20084 :   return result;</span>
+<span class="lineNum">     290 </span>            : }
+<span class="lineNum">     291 </span>            : 
+<span class="lineNum">     292 </span>            : }}
+<span class="lineNum">     293 </span>            : 
+<span class="lineNum">     294 </span>            : #endif
+<span class="lineNum">     295 </span>            : 
+</pre>
+      </td>
+    </tr>
+  </table>
+  <br>
+
+  <table width="100%" border=0 cellspacing=0 cellpadding=0>
+    <tr><td class="ruler"><img src="../../glass.png" width=3 height=3 alt=""></td></tr>
+    <tr><td class="versionInfo">Generated by: <a href="http://ltp.sourceforge.net/coverage/lcov.php" target="_parent">LCOV version 1.10</a></td></tr>
+  </table>
+  <br>
+
+</body>
+</html>

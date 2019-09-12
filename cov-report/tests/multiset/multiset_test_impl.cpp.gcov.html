@@ -1,0 +1,338 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+
+<html lang="en">
+
+<head>
+  <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+  <title>LCOV - v-set-coverage.info - tests/multiset/multiset_test_impl.cpp</title>
+  <link rel="stylesheet" type="text/css" href="../../gcov.css">
+</head>
+
+<body>
+
+  <table width="100%" border=0 cellspacing=0 cellpadding=0>
+    <tr><td class="title">LCOV - code coverage report</td></tr>
+    <tr><td class="ruler"><img src="../../glass.png" width=3 height=3 alt=""></td></tr>
+
+    <tr>
+      <td width="100%">
+        <table cellpadding=1 border=0 width="100%">
+          <tr>
+            <td width="10%" class="headerItem">Current view:</td>
+            <td width="35%" class="headerValue"><a href="../../index.html">top level</a> - <a href="index.html">tests/multiset</a> - multiset_test_impl.cpp<span style="font-size: 80%;"> (source / <a href="multiset_test_impl.cpp.func.html">functions</a>)</span></td>
+            <td width="5%"></td>
+            <td width="15%"></td>
+            <td width="10%" class="headerCovTableHead">Hit</td>
+            <td width="10%" class="headerCovTableHead">Total</td>
+            <td width="15%" class="headerCovTableHead">Coverage</td>
+          </tr>
+          <tr>
+            <td class="headerItem">Test:</td>
+            <td class="headerValue">v-set-coverage.info</td>
+            <td></td>
+            <td class="headerItem">Lines:</td>
+            <td class="headerCovTableEntry">99</td>
+            <td class="headerCovTableEntry">121</td>
+            <td class="headerCovTableEntryMed">81.8 %</td>
+          </tr>
+          <tr>
+            <td class="headerItem">Date:</td>
+            <td class="headerValue">2019-09-12</td>
+            <td></td>
+            <td class="headerItem">Functions:</td>
+            <td class="headerCovTableEntry">15</td>
+            <td class="headerCovTableEntry">15</td>
+            <td class="headerCovTableEntryHi">100.0 %</td>
+          </tr>
+          <tr><td><img src="../../glass.png" width=3 height=3 alt=""></td></tr>
+        </table>
+      </td>
+    </tr>
+
+    <tr><td class="ruler"><img src="../../glass.png" width=3 height=3 alt=""></td></tr>
+  </table>
+
+  <table cellpadding=0 cellspacing=0 border=0>
+    <tr>
+      <td><br></td>
+    </tr>
+    <tr>
+      <td>
+<pre class="sourceHeading">          Line data    Source code</pre>
+<pre class="source">
+<a name="1"><span class="lineNum">       1 </span>            : #include &quot;multiset_test_impl.hpp&quot;</a>
+<span class="lineNum">       2 </span>            : 
+<span class="lineNum">       3 </span>            : #include &lt;vset/allocators/mmap_allocator.hpp&gt;
+<span class="lineNum">       4 </span>            : #include &lt;vset/allocators/inmem_allocator.hpp&gt;
+<span class="lineNum">       5 </span>            : #include &lt;vset/multiset.hpp&gt;
+<span class="lineNum">       6 </span>            : #include &lt;vset/memory/manager.hpp&gt;
+<span class="lineNum">       7 </span>            : #include &lt;vset/memory/fsb/aspect.hpp&gt;
+<span class="lineNum">       8 </span>            : 
+<span class="lineNum">       9 </span>            : #ifdef NDEBUG
+<span class="lineNum">      10 </span>            : #define TEST_COUNT 10000
+<span class="lineNum">      11 </span>            : #else
+<span class="lineNum">      12 </span>            : #define TEST_COUNT 5
+<span class="lineNum">      13 </span>            : #endif
+<span class="lineNum">      14 </span>            : 
+<span class="lineNum">      15 </span>            : 
+<span class="lineNum">      16 </span>            : namespace {
+<span class="lineNum">      17 </span>            : 
+<span class="lineNum">      18 </span>            : struct data
+<span class="lineNum">      19 </span>            : {
+<span class="lineNum">      20 </span>            :   int data1;
+<span class="lineNum">      21 </span>            :   int data2;
+<span class="lineNum">      22 </span>            :   int data3;
+<span class="lineNum">      23 </span>            : };
+<span class="lineNum">      24 </span>            : 
+<span class="lineNum">      25 </span>            : typedef vset::memory::strategy::fsb_mmap&lt;data, ::vset::memory::fsb::aspect_offset &gt; mmap_data_aspect;
+<span class="lineNum">      26 </span>            : typedef vset::memory::manager&lt;mmap_data_aspect&gt; data_buffer;
+<span class="lineNum">      27 </span>            : typedef data_buffer::const_pointer data_const_pointer;
+<span class="lineNum">      28 </span>            : typedef data_buffer::pointer data_pointer;
+<span class="lineNum">      29 </span>            : 
+<span class="lineNum">      30 </span>            : typedef unsigned int offset_t;
+<span class="lineNum">      31 </span>            : 
+<span class="lineNum">      32 </span>            : struct cmp123
+<span class="lineNum">      33 </span>            : {
+<span class="lineNum">      34 </span>            :   mutable data_const_pointer left;
+<a name="35"><span class="lineNum">      35 </span>            :   mutable data_const_pointer right;</a>
+<span class="lineNum">      36 </span>            : 
+<a name="37"><span class="lineNum">      37 </span><span class="lineCov">          1 :   cmp123(): left(), right() {}</span></a>
+<span class="lineNum">      38 </span>            : 
+<span class="lineNum">      39 </span><span class="lineCov">        204 :   explicit cmp123(const data_buffer&amp; b)</span>
+<span class="lineNum">      40 </span>            :     : left(b.end())
+<span class="lineNum">      41 </span><span class="lineCov">        204 :     , right(b.end())</span>
+<a name="42"><span class="lineNum">      42 </span><span class="lineCov">        204 :   {}</span></a>
+<span class="lineNum">      43 </span>            : 
+<span class="lineNum">      44 </span><span class="lineCov">     360621 :   bool operator()(offset_t l, offset_t r) const</span>
+<span class="lineNum">      45 </span>            :   {
+<span class="lineNum">      46 </span><span class="lineCov">     360621 :     left.set_offset(l);</span>
+<span class="lineNum">      47 </span><span class="lineCov">     360621 :     right.set_offset(r);</span>
+<span class="lineNum">      48 </span>            : 
+<span class="lineNum">      49 </span><span class="lineCov">     572488 :     return left-&gt;data1 &lt; right-&gt;data1 ||</span>
+<span class="lineNum">      50 </span><span class="lineCov">     847782 :     ( ! ( right-&gt;data1 &lt; left-&gt;data1 ) &amp;&amp; left-&gt;data2 &lt; right-&gt;data2 ) ||</span>
+<span class="lineNum">      51 </span><span class="lineCov">     691017 :     ( ! ( right-&gt;data1 &lt; left-&gt;data1 ) &amp;&amp; ! ( right-&gt;data2 &lt; left-&gt;data2 ) &amp;&amp; left-&gt;data3 &lt; right-&gt;data3 );</span>
+<span class="lineNum">      52 </span>            :   }
+<span class="lineNum">      53 </span>            : };
+<span class="lineNum">      54 </span>            : 
+<a name="55"><span class="lineNum">      55 </span>            : typedef vset::multiset&lt; offset_t, cmp123, vset::inmem_allocator&lt;9&gt; &gt; index123_type;</a>
+<span class="lineNum">      56 </span>            : 
+<span class="lineNum">      57 </span><span class="lineCov">      10010 : data generate()</span>
+<span class="lineNum">      58 </span>            : {
+<span class="lineNum">      59 </span>            :   data d;
+<span class="lineNum">      60 </span><span class="lineCov">      10010 :   d.data1 = std::rand()%(TEST_COUNT*10);</span>
+<span class="lineNum">      61 </span><span class="lineCov">      10010 :   d.data2 = std::rand()%(TEST_COUNT*10);</span>
+<span class="lineNum">      62 </span><span class="lineCov">      10010 :   d.data3 = std::rand()%(TEST_COUNT*10);</span>
+<span class="lineNum">      63 </span><span class="lineCov">      10010 :   return d;</span>
+<a name="64"><span class="lineNum">      64 </span>            : }</a>
+<span class="lineNum">      65 </span>            : 
+<span class="lineNum">      66 </span><span class="lineCov">      10010 : bool create(data_buffer&amp; buffer, index123_type&amp; index123)</span>
+<span class="lineNum">      67 </span>            : {
+<span class="lineNum">      68 </span><span class="lineCov">      10010 :   data_pointer ptr = buffer.allocate(1);</span>
+<span class="lineNum">      69 </span><span class="lineCov">      10010 :   *ptr = generate();</span>
+<span class="lineNum">      70 </span><span class="lineCov">      10010 :   index123_type::iterator itr = index123.find( static_cast&lt;offset_t&gt;( ptr.get_offset() ) );</span>
+<span class="lineNum">      71 </span><span class="lineCov">      10010 :   if (itr == index123.end())</span>
+<span class="lineNum">      72 </span>            :   {
+<span class="lineNum">      73 </span><span class="lineCov">      10010 :     index123.insert( static_cast&lt;offset_t&gt;( ptr.get_offset() ) );</span>
+<span class="lineNum">      74 </span>            :   }
+<span class="lineNum">      75 </span>            :   else
+<span class="lineNum">      76 </span>            :   {
+<span class="lineNum">      77 </span><span class="lineNoCov">          0 :     buffer.deallocate(ptr, 1);</span>
+<span class="lineNum">      78 </span>            :   }
+<span class="lineNum">      79 </span><span class="lineCov">      10010 :   return itr == index123.end();</span>
+<a name="80"><span class="lineNum">      80 </span>            : }</a>
+<span class="lineNum">      81 </span>            : 
+<span class="lineNum">      82 </span><span class="lineCov">      10000 : void create_one(data_buffer&amp; buffer, index123_type&amp; index123)</span>
+<span class="lineNum">      83 </span>            : {
+<span class="lineNum">      84 </span><span class="lineCov">      10000 :   while(!create(buffer,index123));</span>
+<a name="85"><span class="lineNum">      85 </span><span class="lineCov">      10000 : }</span></a>
+<span class="lineNum">      86 </span>            : 
+<span class="lineNum">      87 </span><span class="lineCov">        203 : bool check(data_buffer&amp; buffer, index123_type&amp; index123)</span>
+<span class="lineNum">      88 </span>            : {
+<span class="lineNum">      89 </span><span class="lineCov">        203 :   std::ptrdiff_t buffer_size = std::distance(buffer.begin(), buffer.end());</span>
+<span class="lineNum">      90 </span><span class="lineCov">        203 :   std::ptrdiff_t buffer2_size = std::ptrdiff_t(buffer.count());</span>
+<span class="lineNum">      91 </span><span class="lineCov">        203 :   std::ptrdiff_t index_size = std::ptrdiff_t(index123.size());</span>
+<span class="lineNum">      92 </span><span class="lineCov">        203 :   std::ptrdiff_t index2_size = std::distance(index123.begin(), index123.end());</span>
+<span class="lineNum">      93 </span><span class="lineCov">        203 :   bool size_check_fail = (buffer_size != index_size || buffer2_size != index2_size || buffer2_size != index_size);</span>
+<span class="lineNum">      94 </span><span class="lineCov">        203 :   if ( size_check_fail )</span>
+<span class="lineNum">      95 </span>            :   {
+<span class="lineNum">      96 </span><span class="lineNoCov">          0 :     std::cout &lt;&lt; std::endl &lt;&lt; &quot;buffer/index size check failed!&quot; &lt;&lt; std::endl;</span>
+<span class="lineNum">      97 </span><span class="lineNoCov">          0 :     std::cout &lt;&lt; &quot;buffer_size &quot; &lt;&lt; buffer_size &lt;&lt; std::endl;</span>
+<span class="lineNum">      98 </span><span class="lineNoCov">          0 :     std::cout &lt;&lt; &quot;index_size &quot; &lt;&lt; index_size &lt;&lt; std::endl;</span>
+<span class="lineNum">      99 </span><span class="lineNoCov">          0 :     return false;</span>
+<span class="lineNum">     100 </span>            :   }
+<span class="lineNum">     101 </span>            : 
+<span class="lineNum">     102 </span><span class="lineCov">        203 :   if ( index123.size() &lt; 2 )</span>
+<span class="lineNum">     103 </span>            :   {
+<span class="lineNum">     104 </span><span class="lineNoCov">          0 :     return true;</span>
+<span class="lineNum">     105 </span>            :   }
+<span class="lineNum">     106 </span>            :   
+<span class="lineNum">     107 </span><span class="lineCov">        203 :   cmp123 cmp(buffer);</span>
+<span class="lineNum">     108 </span><span class="lineCov">        203 :   index123_type::iterator itr1 = index123.begin();</span>
+<span class="lineNum">     109 </span><span class="lineCov">        203 :   index123_type::iterator itr2 = itr1 + 1;</span>
+<span class="lineNum">     110 </span><span class="lineCov">        914 :   for ( ;itr2!=index123.end(); ++itr1, ++itr2)</span>
+<span class="lineNum">     111 </span>            :   {
+<span class="lineNum">     112 </span><span class="lineCov">        711 :     if ( cmp(*itr1, *itr2) )</span>
+<span class="lineNum">     113 </span>            :     {
+<span class="lineNum">     114 </span><span class="lineCov">        711 :       continue;</span>
+<span class="lineNum">     115 </span>            :     }
+<span class="lineNum">     116 </span><span class="lineNoCov">          0 :     if ( !cmp(*itr2, *itr1) )</span>
+<span class="lineNum">     117 </span>            :     {
+<span class="lineNum">     118 </span><span class="lineNoCov">          0 :       continue;</span>
+<span class="lineNum">     119 </span>            :     }
+<span class="lineNum">     120 </span>            : 
+<span class="lineNum">     121 </span><span class="lineNoCov">          0 :     std::cout &lt;&lt; std::endl &lt;&lt; &quot;comparator failed!&quot; &lt;&lt; std::endl;</span>
+<span class="lineNum">     122 </span><span class="lineNoCov">          0 :     return false;</span>
+<span class="lineNum">     123 </span>            :   }
+<span class="lineNum">     124 </span><span class="lineCov">        203 :   return true;</span>
+<a name="125"><span class="lineNum">     125 </span>            : }</a>
+<span class="lineNum">     126 </span>            : 
+<span class="lineNum">     127 </span><span class="lineCov">          2 : bool init(data_buffer&amp; buffer, index123_type&amp; index123)</span>
+<span class="lineNum">     128 </span>            : {
+<span class="lineNum">     129 </span><span class="lineCov">         14 :   for (int i = 0; i &lt; TEST_COUNT; )</span>
+<span class="lineNum">     130 </span>            :   {
+<span class="lineNum">     131 </span><span class="lineCov">         10 :     if ( create(buffer, index123) )</span>
+<span class="lineNum">     132 </span>            :     {
+<span class="lineNum">     133 </span><span class="lineCov">         10 :       ++i;</span>
+<span class="lineNum">     134 </span><span class="lineCov">         10 :       if (i % 1000 == 0)</span>
+<span class="lineNum">     135 </span>            :       {
+<span class="lineNum">     136 </span><span class="lineNoCov">          0 :         buffer.buffer().reserve( buffer.buffer().size() + 100);</span>
+<span class="lineNum">     137 </span><span class="lineNoCov">          0 :         if( !check(buffer, index123) )</span>
+<span class="lineNum">     138 </span>            :         {
+<span class="lineNum">     139 </span><span class="lineNoCov">          0 :           return false;</span>
+<span class="lineNum">     140 </span>            :         }
+<span class="lineNum">     141 </span>            :       }
+<span class="lineNum">     142 </span>            :     }
+<span class="lineNum">     143 </span>            :   }
+<span class="lineNum">     144 </span><span class="lineCov">          2 :   return true;</span>
+<span class="lineNum">     145 </span>            : }
+<a name="146"><span class="lineNum">     146 </span>            : </a>
+<span class="lineNum">     147 </span>            : static const volatile int negate_optfix = -1;
+<span class="lineNum">     148 </span><span class="lineCov">      10005 : bool erase_one(data_buffer&amp; buffer, index123_type&amp; index123)</span>
+<span class="lineNum">     149 </span>            : {
+<span class="lineNum">     150 </span><span class="lineCov">      10005 :   std::ptrdiff_t buffer_size = std::distance(buffer.begin(), buffer.end());</span>
+<span class="lineNum">     151 </span><span class="lineCov">      10005 :   data_pointer ptr = buffer.begin() /* + buffer_size &gt; 0 ? std::rand()%buffer_size : 0*/;</span>
+<span class="lineNum">     152 </span><span class="lineCov">      10005 :   if ( buffer_size &gt; 0 )</span>
+<span class="lineNum">     153 </span>            :   {
+<span class="lineNum">     154 </span><span class="lineCov">      10005 :     ptr -= negate_optfix;    </span>
+<span class="lineNum">     155 </span><span class="lineCov">      10005 :     ptr += negate_optfix;</span>
+<span class="lineNum">     156 </span><span class="lineCov">      10005 :     ptr += std::rand()%buffer_size;</span>
+<span class="lineNum">     157 </span>            :   }
+<span class="lineNum">     158 </span>            :   
+<span class="lineNum">     159 </span><span class="lineCov">      10005 :   offset_t offset = static_cast&lt;offset_t&gt;( ptr.get_offset() );</span>
+<span class="lineNum">     160 </span>            :   
+<span class="lineNum">     161 </span><span class="lineCov">      10005 :   index123_type::iterator lower = index123.lower_bound(offset);</span>
+<span class="lineNum">     162 </span><span class="lineCov">      10005 :   index123_type::iterator upper = index123.upper_bound(offset);</span>
+<span class="lineNum">     163 </span><span class="lineCov">      10005 :   if (std::distance(lower,upper)!=1 )</span>
+<span class="lineNum">     164 </span>            :   {
+<span class="lineNum">     165 </span><span class="lineNoCov">          0 :     std::cout &lt;&lt; ptr-&gt;data1 &lt;&lt; &quot;,&quot; &lt;&lt; ptr-&gt;data2 &lt;&lt; &quot;, &quot; &lt;&lt; ptr-&gt;data3 &lt;&lt; std::endl;</span>
+<span class="lineNum">     166 </span><span class="lineNoCov">          0 :     std::cout &lt;&lt; &quot;std::distance(lower,upper): &quot;  &lt;&lt; std::distance(lower,upper) &lt;&lt; std::endl;</span>
+<span class="lineNum">     167 </span><span class="lineNoCov">          0 :     return false;</span>
+<span class="lineNum">     168 </span>            :   }
+<span class="lineNum">     169 </span>            :   
+<span class="lineNum">     170 </span><span class="lineCov">      10005 :   index123.erase( offset );</span>
+<span class="lineNum">     171 </span><span class="lineCov">      10005 :   buffer.deallocate(ptr, 1);</span>
+<span class="lineNum">     172 </span><span class="lineCov">      10005 :   std::ptrdiff_t buffer_size2 = std::distance(buffer.begin(), buffer.end());</span>
+<span class="lineNum">     173 </span><span class="lineCov">      10005 :   if ( (buffer_size - buffer_size2) != 1)</span>
+<span class="lineNum">     174 </span>            :   {
+<span class="lineNum">     175 </span><span class="lineNoCov">          0 :     std::cout  &lt;&lt; &quot;Buffer size check failed - &quot; &lt;&lt; (buffer_size-1) &lt;&lt; &quot;!=&quot; &lt;&lt; buffer_size2 &lt;&lt; std::endl;</span>
+<span class="lineNum">     176 </span><span class="lineNoCov">          0 :     return false;</span>
+<span class="lineNum">     177 </span>            :   }
+<span class="lineNum">     178 </span>            :   
+<span class="lineNum">     179 </span><span class="lineCov">      10005 :   return true;</span>
+<a name="180"><span class="lineNum">     180 </span>            : }</a>
+<span class="lineNum">     181 </span>            : 
+<span class="lineNum">     182 </span><span class="lineCov">          1 : bool erase_begin(data_buffer&amp; buffer, index123_type&amp; index123)</span>
+<span class="lineNum">     183 </span>            : {
+<span class="lineNum">     184 </span><span class="lineCov">          1 :   data_pointer ptr = buffer.begin();</span>
+<span class="lineNum">     185 </span><span class="lineCov">          1 :   index123_type::iterator itr = index123.find( static_cast&lt;offset_t&gt;( ptr.get_offset() ) );</span>
+<span class="lineNum">     186 </span><span class="lineCov">          1 :   index123.erase(itr);</span>
+<span class="lineNum">     187 </span><span class="lineCov">          1 :   buffer.deallocate(ptr, 1);</span>
+<span class="lineNum">     188 </span><span class="lineCov">          1 :   return true;</span>
+<a name="189"><span class="lineNum">     189 </span>            : }</a>
+<span class="lineNum">     190 </span>            : 
+<span class="lineNum">     191 </span><span class="lineCov">          1 : bool clear(data_buffer&amp; buffer, index123_type&amp; index123)</span>
+<span class="lineNum">     192 </span>            : {
+<span class="lineNum">     193 </span><span class="lineCov">          7 :   for (int i = 0; i &lt; TEST_COUNT; )</span>
+<span class="lineNum">     194 </span>            :   {
+<span class="lineNum">     195 </span><span class="lineCov">          5 :     if ( erase_one(buffer, index123) )</span>
+<span class="lineNum">     196 </span>            :     {
+<span class="lineNum">     197 </span><span class="lineCov">          5 :       ++i;</span>
+<span class="lineNum">     198 </span><span class="lineCov">          5 :       if (i%1000 == 0)</span>
+<span class="lineNum">     199 </span>            :       {
+<span class="lineNum">     200 </span><span class="lineNoCov">          0 :         if( !check(buffer, index123) )</span>
+<span class="lineNum">     201 </span>            :         {
+<span class="lineNum">     202 </span><span class="lineNoCov">          0 :           return false;</span>
+<span class="lineNum">     203 </span>            :         }
+<span class="lineNum">     204 </span>            :       }
+<span class="lineNum">     205 </span>            :     }
+<span class="lineNum">     206 </span>            :   }
+<span class="lineNum">     207 </span>            : 
+<span class="lineNum">     208 </span><span class="lineCov">          1 :   return true;</span>
+<a name="209"><span class="lineNum">     209 </span>            : }</a>
+<span class="lineNum">     210 </span>            : 
+<span class="lineNum">     211 </span><span class="lineCov">          1 : bool stress(data_buffer&amp; buffer, index123_type&amp; index123, int count)</span>
+<span class="lineNum">     212 </span>            : {
+<span class="lineNum">     213 </span><span class="lineCov">      10001 :   for(int i =0 ; i &lt; count &amp;&amp; index123.size() &gt; 1; i++)</span>
+<span class="lineNum">     214 </span>            :   {
+<span class="lineNum">     215 </span><span class="lineCov">      10000 :     erase_one(buffer, index123);</span>
+<span class="lineNum">     216 </span><span class="lineCov">      10000 :     if (i % 100 == 0)</span>
+<span class="lineNum">     217 </span>            :     {
+<span class="lineNum">     218 </span><span class="lineCov">        100 :       if( !check(buffer, index123) )</span>
+<span class="lineNum">     219 </span>            :       {
+<span class="lineNum">     220 </span><span class="lineNoCov">          0 :         return false;</span>
+<span class="lineNum">     221 </span>            :       }
+<span class="lineNum">     222 </span>            :     }
+<span class="lineNum">     223 </span><span class="lineCov">      10000 :     create_one(buffer, index123);</span>
+<span class="lineNum">     224 </span><span class="lineCov">      10000 :     if (i % 100 == 0)</span>
+<span class="lineNum">     225 </span>            :     {
+<span class="lineNum">     226 </span><span class="lineCov">        100 :       if( !check(buffer, index123) )</span>
+<span class="lineNum">     227 </span>            :       {
+<span class="lineNum">     228 </span><span class="lineNoCov">          0 :         return false;</span>
+<span class="lineNum">     229 </span>            :       }
+<span class="lineNum">     230 </span>            :     }
+<span class="lineNum">     231 </span>            :   }
+<span class="lineNum">     232 </span>            : 
+<span class="lineNum">     233 </span><span class="lineCov">          1 :   return true;</span>
+<span class="lineNum">     234 </span>            : }
+<a name="235"><span class="lineNum">     235 </span>            : }</a>
+<span class="lineNum">     236 </span>            : 
+<span class="lineNum">     237 </span><span class="lineCov">          1 : bool multiset_test()</span>
+<span class="lineNum">     238 </span>            : {
+<span class="lineNum">     239 </span>            : #if ( ! (__GNUC__==4 &amp;&amp; __GNUC_MINOR__==6) )
+<span class="lineNum">     240 </span><span class="lineCov">          1 :   data_buffer buffer;</span>
+<span class="lineNum">     241 </span><span class="lineCov">          1 :   buffer.buffer().open(&quot;./test2_.bin&quot;);</span>
+<span class="lineNum">     242 </span><span class="lineCov">          1 :   buffer.buffer().reserve(TEST_COUNT*sizeof(data)+TEST_COUNT);</span>
+<span class="lineNum">     243 </span><span class="lineCov">          1 :   buffer.buffer().clear();</span>
+<span class="lineNum">     244 </span>            : 
+<span class="lineNum">     245 </span><span class="lineCov">          2 :   index123_type index123( (cmp123(buffer)) );</span>
+<span class="lineNum">     246 </span><span class="lineCov">          1 :   index123.clear();</span>
+<span class="lineNum">     247 </span>            : 
+<span class="lineNum">     248 </span>            :   return
+<span class="lineNum">     249 </span><span class="lineCov">          1 :     init(buffer, index123)</span>
+<span class="lineNum">     250 </span>            :     
+<span class="lineNum">     251 </span><span class="lineCov">          1 :     &amp;&amp; check(buffer, index123)</span>
+<span class="lineNum">     252 </span><span class="lineCov">          1 :     &amp;&amp; stress(buffer, index123, 10000)</span>
+<span class="lineNum">     253 </span><span class="lineCov">          1 :     &amp;&amp; check(buffer, index123)</span>
+<span class="lineNum">     254 </span><span class="lineCov">          1 :     &amp;&amp; clear(buffer, index123)</span>
+<span class="lineNum">     255 </span><span class="lineCov">          1 :     &amp;&amp; init(buffer, index123)</span>
+<span class="lineNum">     256 </span><span class="lineCov">          1 :     &amp;&amp; erase_begin(buffer, index123)</span>
+<span class="lineNum">     257 </span><span class="lineCov">          3 :     &amp;&amp; check(buffer, index123);</span>
+<span class="lineNum">     258 </span>            : #else
+<span class="lineNum">     259 </span>            :   return true;
+<a name="260"><span class="lineNum">     260 </span>            : #endif</a>
+<span class="lineNum">     261 </span>            :   
+<span class="lineNum">     262 </span><span class="lineCov">          3 : }</span>
+</pre>
+      </td>
+    </tr>
+  </table>
+  <br>
+
+  <table width="100%" border=0 cellspacing=0 cellpadding=0>
+    <tr><td class="ruler"><img src="../../glass.png" width=3 height=3 alt=""></td></tr>
+    <tr><td class="versionInfo">Generated by: <a href="http://ltp.sourceforge.net/coverage/lcov.php" target="_parent">LCOV version 1.10</a></td></tr>
+  </table>
+  <br>
+
+</body>
+</html>

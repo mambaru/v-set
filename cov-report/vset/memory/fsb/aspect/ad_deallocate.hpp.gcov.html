@@ -1,0 +1,116 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+
+<html lang="en">
+
+<head>
+  <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+  <title>LCOV - v-set-coverage.info - vset/memory/fsb/aspect/ad_deallocate.hpp</title>
+  <link rel="stylesheet" type="text/css" href="../../../../gcov.css">
+</head>
+
+<body>
+
+  <table width="100%" border=0 cellspacing=0 cellpadding=0>
+    <tr><td class="title">LCOV - code coverage report</td></tr>
+    <tr><td class="ruler"><img src="../../../../glass.png" width=3 height=3 alt=""></td></tr>
+
+    <tr>
+      <td width="100%">
+        <table cellpadding=1 border=0 width="100%">
+          <tr>
+            <td width="10%" class="headerItem">Current view:</td>
+            <td width="35%" class="headerValue"><a href="../../../../index.html">top level</a> - <a href="index.html">vset/memory/fsb/aspect</a> - ad_deallocate.hpp<span style="font-size: 80%;"> (source / <a href="ad_deallocate.hpp.func.html">functions</a>)</span></td>
+            <td width="5%"></td>
+            <td width="15%"></td>
+            <td width="10%" class="headerCovTableHead">Hit</td>
+            <td width="10%" class="headerCovTableHead">Total</td>
+            <td width="15%" class="headerCovTableHead">Coverage</td>
+          </tr>
+          <tr>
+            <td class="headerItem">Test:</td>
+            <td class="headerValue">v-set-coverage.info</td>
+            <td></td>
+            <td class="headerItem">Lines:</td>
+            <td class="headerCovTableEntry">8</td>
+            <td class="headerCovTableEntry">8</td>
+            <td class="headerCovTableEntryHi">100.0 %</td>
+          </tr>
+          <tr>
+            <td class="headerItem">Date:</td>
+            <td class="headerValue">2019-09-12</td>
+            <td></td>
+            <td class="headerItem">Functions:</td>
+            <td class="headerCovTableEntry">4</td>
+            <td class="headerCovTableEntry">7</td>
+            <td class="headerCovTableEntryLo">57.1 %</td>
+          </tr>
+          <tr><td><img src="../../../../glass.png" width=3 height=3 alt=""></td></tr>
+        </table>
+      </td>
+    </tr>
+
+    <tr><td class="ruler"><img src="../../../../glass.png" width=3 height=3 alt=""></td></tr>
+  </table>
+
+  <table cellpadding=0 cellspacing=0 border=0>
+    <tr>
+      <td><br></td>
+    </tr>
+    <tr>
+      <td>
+<pre class="sourceHeading">          Line data    Source code</pre>
+<pre class="source">
+<a name="1"><span class="lineNum">       1 </span>            : //</a>
+<span class="lineNum">       2 </span>            : // Author: Vladimir Migashko &lt;migashko@gmail.com&gt;, (C) 2012
+<span class="lineNum">       3 </span>            : //
+<span class="lineNum">       4 </span>            : // Copyright: See COPYING file that comes with this distribution
+<span class="lineNum">       5 </span>            : //
+<span class="lineNum">       6 </span>            : 
+<span class="lineNum">       7 </span>            : #ifndef VSET_VSET_MEMORY_FSB_ASPECT_AD_DEALLOCATE_HPP
+<span class="lineNum">       8 </span>            : #define VSET_VSET_MEMORY_FSB_ASPECT_AD_DEALLOCATE_HPP
+<span class="lineNum">       9 </span>            : 
+<span class="lineNum">      10 </span>            : #include &lt;vset/buffer/tags.hpp&gt;
+<span class="lineNum">      11 </span>            : #include &lt;vset/memory/fsb/tags.hpp&gt;
+<span class="lineNum">      12 </span>            : 
+<a name="13"><span class="lineNum">      13 </span>            : namespace vset { namespace memory{ namespace fsb{</a>
+<span class="lineNum">      14 </span>            : 
+<span class="lineNum">      15 </span><span class="lineCov">         31 : struct ad_deallocate</span>
+<a name="16"><span class="lineNum">      16 </span>            : {</a>
+<span class="lineNum">      17 </span>            :   template&lt;typename T, typename Pointer&gt;
+<span class="lineNum">      18 </span><span class="lineCov">      10008 :   void operator()(T&amp; t, Pointer ptr, size_t num = 1) const</span>
+<span class="lineNum">      19 </span>            :   {
+<span class="lineNum">      20 </span>            :     typedef ::vset::buffer::_data_      _buffer_data_;
+<span class="lineNum">      21 </span>            :     typedef ::vset::buffer::_data_type_ _buffer_data_type_;
+<span class="lineNum">      22 </span>            : 
+<span class="lineNum">      23 </span>            :     //typedef typename T::aspect::template advice_cast&lt;_value_type_&gt;::type value_type;
+<span class="lineNum">      24 </span>            :     typedef typename T::aspect::template advice_cast&lt;_chain_type_&gt;::type chain_type;
+<span class="lineNum">      25 </span>            :     typedef typename T::aspect::template advice_cast&lt;_buffer_data_type_&gt;::type data_type;
+<span class="lineNum">      26 </span>            : 
+<span class="lineNum">      27 </span><span class="lineCov">      20016 :     for (;num!=0; --num)</span>
+<span class="lineNum">      28 </span>            :     {
+<span class="lineNum">      29 </span><span class="lineCov">      10008 :       data_type data = t.get_aspect().template get&lt;_buffer_data_&gt;()(t);</span>
+<span class="lineNum">      30 </span><span class="lineCov">      10008 :       chain_type* chn = static_cast&lt;chain_type*&gt;( static_cast&lt;void*&gt;(data) );</span>
+<span class="lineNum">      31 </span><span class="lineCov">      10008 :       chn-&gt;free( ptr.get_address() );</span>
+<span class="lineNum">      32 </span><span class="lineCov">      10008 :       --ptr;</span>
+<span class="lineNum">      33 </span>            :     }
+<span class="lineNum">      34 </span>            : 
+<span class="lineNum">      35 </span><span class="lineCov">      10008 :   }</span>
+<span class="lineNum">      36 </span>            : };
+<span class="lineNum">      37 </span>            : 
+<span class="lineNum">      38 </span>            : }}}
+<span class="lineNum">      39 </span>            : 
+<span class="lineNum">      40 </span>            : #endif
+</pre>
+      </td>
+    </tr>
+  </table>
+  <br>
+
+  <table width="100%" border=0 cellspacing=0 cellpadding=0>
+    <tr><td class="ruler"><img src="../../../../glass.png" width=3 height=3 alt=""></td></tr>
+    <tr><td class="versionInfo">Generated by: <a href="http://ltp.sourceforge.net/coverage/lcov.php" target="_parent">LCOV version 1.10</a></td></tr>
+  </table>
+  <br>
+
+</body>
+</html>

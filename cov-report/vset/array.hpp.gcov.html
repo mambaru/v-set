@@ -1,0 +1,384 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+
+<html lang="en">
+
+<head>
+  <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+  <title>LCOV - v-set-coverage.info - vset/array.hpp</title>
+  <link rel="stylesheet" type="text/css" href="../gcov.css">
+</head>
+
+<body>
+
+  <table width="100%" border=0 cellspacing=0 cellpadding=0>
+    <tr><td class="title">LCOV - code coverage report</td></tr>
+    <tr><td class="ruler"><img src="../glass.png" width=3 height=3 alt=""></td></tr>
+
+    <tr>
+      <td width="100%">
+        <table cellpadding=1 border=0 width="100%">
+          <tr>
+            <td width="10%" class="headerItem">Current view:</td>
+            <td width="35%" class="headerValue"><a href="../index.html">top level</a> - <a href="index.html">vset</a> - array.hpp<span style="font-size: 80%;"> (source / <a href="array.hpp.func.html">functions</a>)</span></td>
+            <td width="5%"></td>
+            <td width="15%"></td>
+            <td width="10%" class="headerCovTableHead">Hit</td>
+            <td width="10%" class="headerCovTableHead">Total</td>
+            <td width="15%" class="headerCovTableHead">Coverage</td>
+          </tr>
+          <tr>
+            <td class="headerItem">Test:</td>
+            <td class="headerValue">v-set-coverage.info</td>
+            <td></td>
+            <td class="headerItem">Lines:</td>
+            <td class="headerCovTableEntry">58</td>
+            <td class="headerCovTableEntry">64</td>
+            <td class="headerCovTableEntryHi">90.6 %</td>
+          </tr>
+          <tr>
+            <td class="headerItem">Date:</td>
+            <td class="headerValue">2019-09-12</td>
+            <td></td>
+            <td class="headerItem">Functions:</td>
+            <td class="headerCovTableEntry">101</td>
+            <td class="headerCovTableEntry">109</td>
+            <td class="headerCovTableEntryHi">92.7 %</td>
+          </tr>
+          <tr><td><img src="../glass.png" width=3 height=3 alt=""></td></tr>
+        </table>
+      </td>
+    </tr>
+
+    <tr><td class="ruler"><img src="../glass.png" width=3 height=3 alt=""></td></tr>
+  </table>
+
+  <table cellpadding=0 cellspacing=0 border=0>
+    <tr>
+      <td><br></td>
+    </tr>
+    <tr>
+      <td>
+<pre class="sourceHeading">          Line data    Source code</pre>
+<pre class="source">
+<a name="1"><span class="lineNum">       1 </span>            : #ifndef VSET_VTREE_ARRAY_HPP</a>
+<span class="lineNum">       2 </span>            : #define VSET_VTREE_ARRAY_HPP
+<span class="lineNum">       3 </span>            : 
+<span class="lineNum">       4 </span>            : #include &lt;algorithm&gt;
+<span class="lineNum">       5 </span>            : #include &lt;cstddef&gt;
+<span class="lineNum">       6 </span>            : #include &lt;stdexcept&gt;
+<span class="lineNum">       7 </span>            : #include &lt;iterator&gt;
+<span class="lineNum">       8 </span>            : //#include &lt;fas/typemanip/remove_const.hpp&gt;
+<span class="lineNum">       9 </span>            : 
+<span class="lineNum">      10 </span>            : namespace vset{ 
+<span class="lineNum">      11 </span>            : 
+<span class="lineNum">      12 </span>            : template&lt;typename T, size_t N&gt;
+<span class="lineNum">      13 </span>            : class array
+<span class="lineNum">      14 </span>            : {
+<span class="lineNum">      15 </span>            : public:
+<span class="lineNum">      16 </span>            :   enum { dimension = N};
+<span class="lineNum">      17 </span>            :   typedef T value_type;
+<span class="lineNum">      18 </span>            :   //typedef typename fas::remove_const&lt;T&gt;::type data_type[N];
+<span class="lineNum">      19 </span>            :   typedef value_type data_type[N];
+<span class="lineNum">      20 </span>            :   typedef size_t size_type;
+<span class="lineNum">      21 </span>            :   typedef T&amp; reference;
+<span class="lineNum">      22 </span>            :   typedef const T&amp; const_reference;
+<span class="lineNum">      23 </span>            :   typedef T* pointer;
+<span class="lineNum">      24 </span>            :   typedef const T* const_pointer;
+<span class="lineNum">      25 </span>            :   typedef pointer iterator;
+<span class="lineNum">      26 </span>            :   typedef const_pointer const_iterator;
+<span class="lineNum">      27 </span>            :   typedef std::reverse_iterator&lt;iterator&gt; reverse_iterator;
+<span class="lineNum">      28 </span>            :   typedef const std::reverse_iterator&lt;iterator&gt; const_reverse_iterator;
+<a name="29"><span class="lineNum">      29 </span>            :   typedef std::ptrdiff_t difference_type;</a>
+<span class="lineNum">      30 </span>            : 
+<span class="lineNum">      31 </span><span class="lineCov">       1438 :   array()</span>
+<span class="lineNum">      32 </span>            :     : _size()
+<span class="lineNum">      33 </span><span class="lineCov">       1438 :     , _data()</span>
+<span class="lineNum">      34 </span>            :   {
+<span class="lineNum">      35 </span><span class="lineCov">       1438 :   }</span>
+<span class="lineNum">      36 </span>            : 
+<span class="lineNum">      37 </span>            :   reference operator[](size_type n)
+<span class="lineNum">      38 </span>            :   {
+<span class="lineNum">      39 </span>            :     return this-&gt;at(n);
+<span class="lineNum">      40 </span>            :   }
+<span class="lineNum">      41 </span>            : 
+<span class="lineNum">      42 </span>            :   const_reference operator[](size_type n) const
+<span class="lineNum">      43 </span>            :   {
+<span class="lineNum">      44 </span>            :     return this-&gt;at(n);
+<a name="45"><span class="lineNum">      45 </span>            :   }</a>
+<span class="lineNum">      46 </span>            : 
+<span class="lineNum">      47 </span><span class="lineCov">        128 :   const_reference at ( size_type n ) const</span>
+<span class="lineNum">      48 </span>            :   {
+<span class="lineNum">      49 </span><span class="lineCov">        128 :     if ( n &lt; _size)</span>
+<span class="lineNum">      50 </span><span class="lineCov">        256 :       return _data[n];</span>
+<span class="lineNum">      51 </span><span class="lineNoCov">          0 :     throw std::out_of_range(&quot;array::at&quot;);</span>
+<a name="52"><span class="lineNum">      52 </span>            :   }</a>
+<span class="lineNum">      53 </span>            : 
+<span class="lineNum">      54 </span><span class="lineCov">      21589 :   reference at ( size_type n )</span>
+<span class="lineNum">      55 </span>            :   {
+<span class="lineNum">      56 </span><span class="lineCov">      21589 :     if ( n &lt; _size )</span>
+<span class="lineNum">      57 </span><span class="lineCov">      43178 :       return _data[n];</span>
+<span class="lineNum">      58 </span><span class="lineNoCov">          0 :     throw std::out_of_range(&quot;array::at&quot;);</span>
+<a name="59"><span class="lineNum">      59 </span>            :   }</a>
+<span class="lineNum">      60 </span>            :   
+<span class="lineNum">      61 </span><span class="lineCov">      90596 :   reference front ( )</span>
+<span class="lineNum">      62 </span>            :   {
+<span class="lineNum">      63 </span><span class="lineCov">      90596 :     if ( _size==0 )</span>
+<span class="lineNum">      64 </span><span class="lineNoCov">          0 :       throw std::out_of_range(&quot;array::at&quot;);</span>
+<span class="lineNum">      65 </span><span class="lineCov">      90596 :     return _data[0];</span>
+<span class="lineNum">      66 </span>            :   }
+<span class="lineNum">      67 </span>            :   
+<span class="lineNum">      68 </span>            :   const_reference front ( ) const
+<span class="lineNum">      69 </span>            :   {
+<span class="lineNum">      70 </span>            :     if ( _size==0 )
+<span class="lineNum">      71 </span>            :       throw std::out_of_range(&quot;array::at&quot;);
+<span class="lineNum">      72 </span>            :     return _data[0];
+<a name="73"><span class="lineNum">      73 </span>            :   }</a>
+<span class="lineNum">      74 </span>            :   
+<span class="lineNum">      75 </span><span class="lineCov">      72374 :   reference back ( )</span>
+<span class="lineNum">      76 </span>            :   {
+<span class="lineNum">      77 </span><span class="lineCov">      72374 :     if ( _size==0 )</span>
+<span class="lineNum">      78 </span><span class="lineNoCov">          0 :       throw std::out_of_range(&quot;array::at&quot;);</span>
+<span class="lineNum">      79 </span><span class="lineCov">      72374 :     return _data[_size-1];</span>
+<span class="lineNum">      80 </span>            :   }
+<span class="lineNum">      81 </span>            :   
+<span class="lineNum">      82 </span>            :   const_reference back ( ) const
+<span class="lineNum">      83 </span>            :   {
+<span class="lineNum">      84 </span>            :     if ( _size==0 )
+<span class="lineNum">      85 </span>            :       throw std::out_of_range(&quot;array::at&quot;);
+<span class="lineNum">      86 </span>            :     return _data[_size-1];
+<a name="87"><span class="lineNum">      87 </span>            :   }</a>
+<span class="lineNum">      88 </span>            : 
+<span class="lineNum">      89 </span><span class="lineCov">     158919 :   size_type size() const</span>
+<span class="lineNum">      90 </span>            :   {
+<span class="lineNum">      91 </span><span class="lineCov">     158919 :     return _size;</span>
+<a name="92"><span class="lineNum">      92 </span>            :   }</a>
+<span class="lineNum">      93 </span>            :   
+<span class="lineNum">      94 </span><span class="lineCov">      21356 :   static size_type max_size() </span>
+<span class="lineNum">      95 </span>            :   {
+<span class="lineNum">      96 </span><span class="lineCov">      21356 :     return N;</span>
+<a name="97"><span class="lineNum">      97 </span>            :   }</a>
+<span class="lineNum">      98 </span>            :   
+<span class="lineNum">      99 </span><span class="lineCov">      13247 :   static size_type capacity()</span>
+<span class="lineNum">     100 </span>            :   {
+<span class="lineNum">     101 </span><span class="lineCov">      13247 :     return N;</span>
+<a name="102"><span class="lineNum">     102 </span>            :   }</a>
+<span class="lineNum">     103 </span>            :   
+<span class="lineNum">     104 </span><span class="lineCov">      16856 :   bool empty () const</span>
+<span class="lineNum">     105 </span>            :   {
+<span class="lineNum">     106 </span><span class="lineCov">      16856 :     return _size==0;</span>
+<a name="107"><span class="lineNum">     107 </span>            :   }</a>
+<span class="lineNum">     108 </span>            :   
+<span class="lineNum">     109 </span><span class="lineCov">      21356 :   bool filled () const</span>
+<span class="lineNum">     110 </span>            :   {
+<span class="lineNum">     111 </span><span class="lineCov">      21356 :     return _size == N;</span>
+<a name="112"><span class="lineNum">     112 </span>            :   }</a>
+<span class="lineNum">     113 </span>            :   
+<span class="lineNum">     114 </span><span class="lineCov">      16918 :   void resize ( size_type sz, T value = value_type() )</span>
+<span class="lineNum">     115 </span>            :   {
+<span class="lineNum">     116 </span><span class="lineCov">      16918 :     if (sz &gt; _size)</span>
+<span class="lineNum">     117 </span><span class="lineNoCov">          0 :       std::fill_n( end(), sz - _size, value );</span>
+<span class="lineNum">     118 </span><span class="lineCov">      16918 :     _size = sz;</span>
+<span class="lineNum">     119 </span><span class="lineCov">      16918 :   }</span>
+<span class="lineNum">     120 </span>            :   
+<span class="lineNum">     121 </span>            :   static void reserve ( size_type ) {}
+<span class="lineNum">     122 </span>            : 
+<span class="lineNum">     123 </span>            :   reverse_iterator rbegin()
+<span class="lineNum">     124 </span>            :   {
+<span class="lineNum">     125 </span>            :     return reverse_iterator(end());
+<span class="lineNum">     126 </span>            :   }
+<span class="lineNum">     127 </span>            :   
+<span class="lineNum">     128 </span>            :   const_reverse_iterator rbegin() const
+<span class="lineNum">     129 </span>            :   {
+<span class="lineNum">     130 </span>            :     return const_reverse_iterator( end() );
+<span class="lineNum">     131 </span>            :   }
+<span class="lineNum">     132 </span>            : 
+<span class="lineNum">     133 </span>            :   reverse_iterator rend()
+<span class="lineNum">     134 </span>            :   {
+<span class="lineNum">     135 </span>            :     return reverse_iterator( begin() );
+<span class="lineNum">     136 </span>            :   }
+<span class="lineNum">     137 </span>            :   
+<span class="lineNum">     138 </span>            :   const_reverse_iterator rend() const
+<span class="lineNum">     139 </span>            :   {
+<span class="lineNum">     140 </span>            :     return const_reverse_iterator( begin() );
+<a name="141"><span class="lineNum">     141 </span>            :   }</a>
+<span class="lineNum">     142 </span>            : 
+<span class="lineNum">     143 </span><span class="lineCov">     222924 :   iterator begin()</span>
+<span class="lineNum">     144 </span>            :   {
+<span class="lineNum">     145 </span><span class="lineCov">     222924 :     return _data;</span>
+<a name="146"><span class="lineNum">     146 </span>            :   }</a>
+<span class="lineNum">     147 </span>            :   
+<span class="lineNum">     148 </span><span class="lineCov">         14 :   const_iterator begin() const</span>
+<span class="lineNum">     149 </span>            :   {
+<span class="lineNum">     150 </span><span class="lineCov">         14 :     return _data;</span>
+<a name="151"><span class="lineNum">     151 </span>            :   }</a>
+<span class="lineNum">     152 </span>            :   
+<span class="lineNum">     153 </span><span class="lineCov">     176390 :   iterator end()</span>
+<span class="lineNum">     154 </span>            :   {
+<span class="lineNum">     155 </span><span class="lineCov">     176390 :     return _data + _size;</span>
+<a name="156"><span class="lineNum">     156 </span>            :   }</a>
+<span class="lineNum">     157 </span>            :   
+<span class="lineNum">     158 </span><span class="lineCov">         14 :   const_iterator end() const</span>
+<span class="lineNum">     159 </span>            :   {
+<span class="lineNum">     160 </span><span class="lineCov">         14 :     return _data + _size;</span>
+<span class="lineNum">     161 </span>            :   }
+<span class="lineNum">     162 </span>            : 
+<span class="lineNum">     163 </span>            : #ifdef __GXX_EXPERIMENTAL_CXX0X__
+<span class="lineNum">     164 </span>            : 
+<span class="lineNum">     165 </span>            :   const reverse_iterator crbegin() const
+<span class="lineNum">     166 </span>            :   {
+<span class="lineNum">     167 </span>            :     return const_reverse_iterator(cend());
+<span class="lineNum">     168 </span>            :   }
+<span class="lineNum">     169 </span>            : 
+<span class="lineNum">     170 </span>            :   const_reverse_iterator crend() const
+<span class="lineNum">     171 </span>            :   {
+<span class="lineNum">     172 </span>            :     return const_reverse_iterator( begin() );
+<a name="173"><span class="lineNum">     173 </span>            :   }</a>
+<span class="lineNum">     174 </span>            : 
+<span class="lineNum">     175 </span><span class="lineCov">      33720 :   const_iterator cbegin() const</span>
+<span class="lineNum">     176 </span>            :   {
+<span class="lineNum">     177 </span><span class="lineCov">      33720 :     return _data;</span>
+<a name="178"><span class="lineNum">     178 </span>            :   }</a>
+<span class="lineNum">     179 </span>            : 
+<span class="lineNum">     180 </span><span class="lineCov">      33726 :   const_iterator cend() const</span>
+<span class="lineNum">     181 </span>            :   {
+<span class="lineNum">     182 </span><span class="lineCov">      33726 :     return _data + _size;</span>
+<span class="lineNum">     183 </span>            :   }
+<span class="lineNum">     184 </span>            : 
+<span class="lineNum">     185 </span>            : #endif
+<span class="lineNum">     186 </span>            : 
+<span class="lineNum">     187 </span>            :   iterator last()
+<span class="lineNum">     188 </span>            :   {
+<span class="lineNum">     189 </span>            :     return _data + _size - 1;
+<span class="lineNum">     190 </span>            :   }
+<span class="lineNum">     191 </span>            :   
+<span class="lineNum">     192 </span>            :   const_iterator last() const
+<span class="lineNum">     193 </span>            :   {
+<span class="lineNum">     194 </span>            :     return _data  + _size - 1;
+<span class="lineNum">     195 </span>            :   }
+<span class="lineNum">     196 </span>            : 
+<span class="lineNum">     197 </span>            :   void clear()
+<span class="lineNum">     198 </span>            :   {
+<span class="lineNum">     199 </span>            :     _size = 0;
+<span class="lineNum">     200 </span>            :   }
+<a name="201"><span class="lineNum">     201 </span>            : </a>
+<span class="lineNum">     202 </span>            :   template &lt;class InputIterator&gt;
+<span class="lineNum">     203 </span><span class="lineCov">         62 :   void assign ( InputIterator f, InputIterator l )</span>
+<span class="lineNum">     204 </span>            :   {
+<span class="lineNum">     205 </span><span class="lineCov">         62 :     std::copy( f, l, _data );</span>
+<span class="lineNum">     206 </span><span class="lineCov">         62 :     _size = static_cast&lt;size_t&gt;(std::distance(f, l));</span>
+<span class="lineNum">     207 </span><span class="lineCov">         62 :   }</span>
+<span class="lineNum">     208 </span>            : 
+<span class="lineNum">     209 </span>            :   void assign ( size_type n, const T&amp; u )
+<span class="lineNum">     210 </span>            :   {
+<span class="lineNum">     211 </span>            :     std::fill_n( begin(), n, u );
+<span class="lineNum">     212 </span>            :     _size = n;
+<a name="213"><span class="lineNum">     213 </span>            :   }</a>
+<span class="lineNum">     214 </span>            : 
+<span class="lineNum">     215 </span><span class="lineCov">       2432 :   void push_back ( const T&amp; x )</span>
+<span class="lineNum">     216 </span>            :   {
+<span class="lineNum">     217 </span><span class="lineCov">       2432 :     _data[_size++] = x;</span>
+<span class="lineNum">     218 </span><span class="lineCov">       2432 :   }</span>
+<span class="lineNum">     219 </span>            : 
+<span class="lineNum">     220 </span>            :   void pop_back ( )
+<span class="lineNum">     221 </span>            :   {
+<span class="lineNum">     222 </span>            :     --_size;
+<a name="223"><span class="lineNum">     223 </span>            :   }</a>
+<span class="lineNum">     224 </span>            : 
+<span class="lineNum">     225 </span><span class="lineCov">      21356 :   iterator insert ( iterator position, const T&amp; x )</span>
+<span class="lineNum">     226 </span>            :   {
+<span class="lineNum">     227 </span><span class="lineCov">      21356 :     if ( this-&gt;size() + 1 &gt; this-&gt;max_size() )</span>
+<span class="lineNum">     228 </span><span class="lineNoCov">          0 :       throw std::out_of_range(&quot;array::insert&quot;);</span>
+<span class="lineNum">     229 </span>            : 
+<span class="lineNum">     230 </span><span class="lineCov">      21356 :     iterator first = position;</span>
+<span class="lineNum">     231 </span><span class="lineCov">      21356 :     iterator l = this-&gt;end();</span>
+<span class="lineNum">     232 </span><span class="lineCov">      21356 :     iterator d_last = l+1;</span>
+<span class="lineNum">     233 </span><span class="lineCov">    3924076 :     while (first != l)</span>
+<span class="lineNum">     234 </span>            :     {
+<span class="lineNum">     235 </span><span class="lineCov">    3881364 :         *(--d_last) = *(--l);</span>
+<span class="lineNum">     236 </span>            :     }
+<span class="lineNum">     237 </span>            : 
+<span class="lineNum">     238 </span><span class="lineCov">      21356 :     *position = x;</span>
+<span class="lineNum">     239 </span><span class="lineCov">      21356 :     ++_size;</span>
+<span class="lineNum">     240 </span><span class="lineCov">      21356 :     return position;</span>
+<span class="lineNum">     241 </span>            :   }
+<span class="lineNum">     242 </span>            : 
+<span class="lineNum">     243 </span>            :   void insert ( iterator position, size_type n, const T&amp; x )
+<span class="lineNum">     244 </span>            :   {
+<span class="lineNum">     245 </span>            :     if ( this-&gt;size() + n &gt; this-&gt;max_size() )
+<span class="lineNum">     246 </span>            :       throw std::out_of_range(&quot;array::insert&quot;);
+<span class="lineNum">     247 </span>            :     std::copy_backward(position, end(), end()+n);
+<span class="lineNum">     248 </span>            :     std::fill_n(position, n, x);
+<span class="lineNum">     249 </span>            :     _size+=n;
+<span class="lineNum">     250 </span>            :   }
+<span class="lineNum">     251 </span>            : 
+<span class="lineNum">     252 </span>            :   template &lt;class InputIterator&gt;
+<span class="lineNum">     253 </span>            :   void insert ( iterator position, InputIterator f, InputIterator l )
+<span class="lineNum">     254 </span>            :   {
+<span class="lineNum">     255 </span>            :     difference_type dist = std::distance(f,l);
+<span class="lineNum">     256 </span>            :     if (dist&lt;=0)
+<span class="lineNum">     257 </span>            :       return;
+<span class="lineNum">     258 </span>            :     if ( this-&gt;size() + dist &gt; this-&gt;max_size() )
+<span class="lineNum">     259 </span>            :       throw std::out_of_range(&quot;array::insert&quot;);
+<span class="lineNum">     260 </span>            : 
+<span class="lineNum">     261 </span>            :     std::copy_backward(position, end(), end()+dist );
+<span class="lineNum">     262 </span>            :     std::copy(f, l, position);
+<span class="lineNum">     263 </span>            :     _size+=dist;
+<span class="lineNum">     264 </span>            :   }
+<span class="lineNum">     265 </span>            : 
+<span class="lineNum">     266 </span>            : #ifdef __GXX_EXPERIMENTAL_CXX0X__
+<span class="lineNum">     267 </span>            : 
+<span class="lineNum">     268 </span>            :   iterator erase ( const_iterator position )
+<span class="lineNum">     269 </span>            :   {
+<span class="lineNum">     270 </span>            :     if ( position == this-&gt;cend() )
+<span class="lineNum">     271 </span>            :       throw std::out_of_range(&quot;iterator array&lt;&gt;::erase ( iterator position )&quot;);
+<span class="lineNum">     272 </span>            :     
+<span class="lineNum">     273 </span>            :     std::copy( position + 1, this-&gt;end(), position);
+<span class="lineNum">     274 </span>            :     this-&gt;resize( _size - 1 );
+<span class="lineNum">     275 </span>            :     return position;
+<span class="lineNum">     276 </span>            :   }
+<span class="lineNum">     277 </span>            :   
+<span class="lineNum">     278 </span>            : #else
+<span class="lineNum">     279 </span>            : 
+<span class="lineNum">     280 </span>            :   iterator erase ( iterator position )
+<span class="lineNum">     281 </span>            :   {
+<span class="lineNum">     282 </span>            :     if ( position == this-&gt;end() )
+<span class="lineNum">     283 </span>            :       throw std::out_of_range(&quot;iterator array&lt;&gt;::erase ( iterator position )&quot;);
+<span class="lineNum">     284 </span>            : 
+<span class="lineNum">     285 </span>            :     std::copy( position + 1, this-&gt;end(), position);
+<span class="lineNum">     286 </span>            :     this-&gt;resize( _size - 1 );
+<span class="lineNum">     287 </span>            :     return position;
+<span class="lineNum">     288 </span>            :   }
+<span class="lineNum">     289 </span>            :   
+<span class="lineNum">     290 </span>            : #endif
+<span class="lineNum">     291 </span>            : 
+<span class="lineNum">     292 </span>            :   iterator erase ( iterator f, iterator l )
+<span class="lineNum">     293 </span>            :   {
+<span class="lineNum">     294 </span>            :     difference_type dist = std::distance(f,l);;
+<span class="lineNum">     295 </span>            :     std::copy( l, this-&gt;end(), f);
+<span class="lineNum">     296 </span>            :     this-&gt;resize( _size - dist );
+<span class="lineNum">     297 </span>            :     return f;
+<span class="lineNum">     298 </span>            :   }
+<span class="lineNum">     299 </span>            : 
+<span class="lineNum">     300 </span>            : private:
+<span class="lineNum">     301 </span>            :   
+<span class="lineNum">     302 </span>            :   size_type _size;
+<span class="lineNum">     303 </span>            :   data_type _data;
+<span class="lineNum">     304 </span>            : };
+<span class="lineNum">     305 </span>            : 
+<span class="lineNum">     306 </span>            : }
+<span class="lineNum">     307 </span>            : 
+<span class="lineNum">     308 </span>            : #endif
+</pre>
+      </td>
+    </tr>
+  </table>
+  <br>
+
+  <table width="100%" border=0 cellspacing=0 cellpadding=0>
+    <tr><td class="ruler"><img src="../glass.png" width=3 height=3 alt=""></td></tr>
+    <tr><td class="versionInfo">Generated by: <a href="http://ltp.sourceforge.net/coverage/lcov.php" target="_parent">LCOV version 1.10</a></td></tr>
+  </table>
+  <br>
+
+</body>
+</html>

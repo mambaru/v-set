@@ -1,0 +1,869 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+
+<html lang="en">
+
+<head>
+  <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+  <title>LCOV - v-set-coverage.info - vset/vtree/vtree.hpp</title>
+  <link rel="stylesheet" type="text/css" href="../../gcov.css">
+</head>
+
+<body>
+
+  <table width="100%" border=0 cellspacing=0 cellpadding=0>
+    <tr><td class="title">LCOV - code coverage report</td></tr>
+    <tr><td class="ruler"><img src="../../glass.png" width=3 height=3 alt=""></td></tr>
+
+    <tr>
+      <td width="100%">
+        <table cellpadding=1 border=0 width="100%">
+          <tr>
+            <td width="10%" class="headerItem">Current view:</td>
+            <td width="35%" class="headerValue"><a href="../../index.html">top level</a> - <a href="index.html">vset/vtree</a> - vtree.hpp<span style="font-size: 80%;"> (source / <a href="vtree.hpp.func.html">functions</a>)</span></td>
+            <td width="5%"></td>
+            <td width="15%"></td>
+            <td width="10%" class="headerCovTableHead">Hit</td>
+            <td width="10%" class="headerCovTableHead">Total</td>
+            <td width="15%" class="headerCovTableHead">Coverage</td>
+          </tr>
+          <tr>
+            <td class="headerItem">Test:</td>
+            <td class="headerValue">v-set-coverage.info</td>
+            <td></td>
+            <td class="headerItem">Lines:</td>
+            <td class="headerCovTableEntry">85</td>
+            <td class="headerCovTableEntry">87</td>
+            <td class="headerCovTableEntryHi">97.7 %</td>
+          </tr>
+          <tr>
+            <td class="headerItem">Date:</td>
+            <td class="headerValue">2019-09-12</td>
+            <td></td>
+            <td class="headerItem">Functions:</td>
+            <td class="headerCovTableEntry">139</td>
+            <td class="headerCovTableEntry">157</td>
+            <td class="headerCovTableEntryMed">88.5 %</td>
+          </tr>
+          <tr><td><img src="../../glass.png" width=3 height=3 alt=""></td></tr>
+        </table>
+      </td>
+    </tr>
+
+    <tr><td class="ruler"><img src="../../glass.png" width=3 height=3 alt=""></td></tr>
+  </table>
+
+  <table cellpadding=0 cellspacing=0 border=0>
+    <tr>
+      <td><br></td>
+    </tr>
+    <tr>
+      <td>
+<pre class="sourceHeading">          Line data    Source code</pre>
+<pre class="source">
+<a name="1"><span class="lineNum">       1 </span>            : #ifndef VSET_VTREE_VTREE_HPP</a>
+<span class="lineNum">       2 </span>            : #define VSET_VTREE_VTREE_HPP
+<span class="lineNum">       3 </span>            : 
+<span class="lineNum">       4 </span>            : #include &lt;cstddef&gt;
+<span class="lineNum">       5 </span>            : #include &lt;stdexcept&gt;
+<span class="lineNum">       6 </span>            : #include &lt;map&gt;
+<span class="lineNum">       7 </span>            : #include &lt;limits&gt;
+<span class="lineNum">       8 </span>            : #include &lt;algorithm&gt;
+<span class="lineNum">       9 </span>            : 
+<span class="lineNum">      10 </span>            : #ifdef __GXX_EXPERIMENTAL_CXX0X__
+<span class="lineNum">      11 </span>            :   #include &lt;type_traits&gt;
+<span class="lineNum">      12 </span>            : #endif
+<span class="lineNum">      13 </span>            : 
+<span class="lineNum">      14 </span>            : #include &lt;vset/vtree/vtree_iterator.hpp&gt;
+<span class="lineNum">      15 </span>            : #include &lt;vset/vtree/aspect/tags.hpp&gt;
+<span class="lineNum">      16 </span>            : #include &lt;vset/buffer/persistent/tags.hpp&gt;
+<span class="lineNum">      17 </span>            : 
+<span class="lineNum">      18 </span>            : #include &lt;fas/aop.hpp&gt;
+<span class="lineNum">      19 </span>            : #include &lt;fas/static_check/static_error.hpp&gt;
+<span class="lineNum">      20 </span>            : 
+<span class="lineNum">      21 </span>            : namespace vset{ namespace vtree{
+<span class="lineNum">      22 </span>            : 
+<span class="lineNum">      23 </span>            : /// @cond ignore
+<span class="lineNum">      24 </span>            : template&lt;typename K, typename C&gt;
+<span class="lineNum">      25 </span>            : struct compare_pair
+<span class="lineNum">      26 </span>            : {
+<a name="27"><span class="lineNum">      27 </span>            :   C _comp;</a>
+<span class="lineNum">      28 </span>            : 
+<span class="lineNum">      29 </span><span class="lineCov">         27 :   compare_pair()</span>
+<span class="lineNum">      30 </span>            :     : _comp()
+<a name="31"><span class="lineNum">      31 </span><span class="lineCov">         27 :   {}</span></a>
+<span class="lineNum">      32 </span>            :     
+<span class="lineNum">      33 </span><span class="lineCov">          2 :   explicit compare_pair(C comp)</span>
+<span class="lineNum">      34 </span><span class="lineCov">          2 :     : _comp(comp)</span>
+<span class="lineNum">      35 </span>            :   {
+<a name="36"><span class="lineNum">      36 </span><span class="lineCov">          2 :   }</span></a>
+<span class="lineNum">      37 </span>            :     
+<span class="lineNum">      38 </span><span class="lineCov">     299648 :   bool operator()(const K&amp; first, const K&amp; second) const</span>
+<span class="lineNum">      39 </span>            :   {
+<span class="lineNum">      40 </span>            :     return _comp(first.first, second.first)
+<span class="lineNum">      41 </span><span class="lineCov">     448947 :           || ( !_comp(second.first, first.first)</span>
+<span class="lineNum">      42 </span><span class="lineCov">     448947 :                 &amp;&amp; _comp(first.second, second.second) );</span>
+<span class="lineNum">      43 </span>            :   }
+<span class="lineNum">      44 </span>            : };
+<span class="lineNum">      45 </span>            : 
+<span class="lineNum">      46 </span>            : /// @endcond
+<span class="lineNum">      47 </span>            : 
+<span class="lineNum">      48 </span>            : 
+<span class="lineNum">      49 </span>            : /**
+<span class="lineNum">      50 </span>            :    @brief Базовый класс для vset::multiset реализующий основные его методы.
+<span class="lineNum">      51 </span>            :    @tparam A - аспект
+<a name="52"><span class="lineNum">      52 </span>            : */</a>
+<span class="lineNum">      53 </span>            : template&lt; typename A &gt;
+<span class="lineNum">      54 </span><span class="lineCov">         29 : class vtree:</span>
+<span class="lineNum">      55 </span>            :   public fas::aspect_class&lt;A&gt;
+<span class="lineNum">      56 </span>            : {
+<span class="lineNum">      57 </span>            :   typedef vtree&lt;A&gt; self;
+<span class="lineNum">      58 </span>            :   typedef fas::aspect_class&lt;A&gt; super;
+<span class="lineNum">      59 </span>            :   typedef typename super::aspect::template advice_cast&lt;_allocator_&gt;::type         allocator_builder;
+<span class="lineNum">      60 </span>            : 
+<span class="lineNum">      61 </span>            :   typedef typename super::aspect::template advice_cast&lt;_key_compare_&gt;::type       key_compare_tag;
+<span class="lineNum">      62 </span>            :   typedef typename super::aspect::template advice_cast&lt;_value_compare_&gt;::type     value_compare_tag;
+<span class="lineNum">      63 </span>            :   typedef typename super::aspect::template advice_cast&lt;_value_type_&gt;::type        value_type_tag;
+<span class="lineNum">      64 </span>            :   typedef typename super::aspect::template advice_cast&lt;_key_type_&gt;::type          key_type_tag;
+<span class="lineNum">      65 </span>            : 
+<span class="lineNum">      66 </span>            :   typedef typename allocator_builder::template apply&lt;self&gt;::type                  allocator_type_tag;
+<span class="lineNum">      67 </span>            :   typedef typename allocator_type_tag::size_type                                      size_type_tag;
+<span class="lineNum">      68 </span>            :   typedef typename allocator_type_tag::difference_type                                difference_type_tag;
+<span class="lineNum">      69 </span>            : 
+<span class="lineNum">      70 </span>            :   typedef std::pair&lt;key_type_tag, key_type_tag&gt;                                           container_key_tag;
+<span class="lineNum">      71 </span>            :   typedef compare_pair&lt;container_key_tag, key_compare_tag&gt;                        container_comparator_tag;
+<span class="lineNum">      72 </span>            : 
+<span class="lineNum">      73 </span>            :   typedef typename super::aspect
+<span class="lineNum">      74 </span>            :     ::template advice_cast&lt;_container_&gt;::type
+<span class="lineNum">      75 </span>            :     ::template apply&lt;
+<span class="lineNum">      76 </span>            :        container_key_tag,
+<span class="lineNum">      77 </span>            :        typename allocator_type_tag::pointer, 
+<span class="lineNum">      78 </span>            :        container_comparator_tag
+<span class="lineNum">      79 </span>            :     &gt;::type                                                                         container_type_tag;
+<span class="lineNum">      80 </span>            :     
+<span class="lineNum">      81 </span>            :   typedef vtree_iterator&lt;typename container_type_tag::iterator, value_type_tag&gt;             iterator_tag;
+<span class="lineNum">      82 </span>            :   typedef vtree_iterator&lt;typename container_type_tag::const_iterator, const value_type_tag&gt; const_iterator_tag;
+<span class="lineNum">      83 </span>            :   typedef std::reverse_iterator&lt;iterator_tag&gt;                                           reverse_iterator_tag;
+<span class="lineNum">      84 </span>            :   typedef std::reverse_iterator&lt;const_iterator_tag&gt;                                     const_reverse_iterator_tag;
+<span class="lineNum">      85 </span>            : 
+<span class="lineNum">      86 </span>            :   typedef typename std::iterator_traits&lt;iterator_tag&gt;::pointer                          pointer_tag;
+<span class="lineNum">      87 </span>            :   typedef typename std::iterator_traits&lt;iterator_tag&gt;::reference                        reference_tag;
+<span class="lineNum">      88 </span>            :   typedef typename std::iterator_traits&lt;const_iterator_tag&gt;::pointer                    const_pointer_tag;
+<span class="lineNum">      89 </span>            :   typedef typename std::iterator_traits&lt;const_iterator_tag&gt;::reference                  const_reference_tag;
+<span class="lineNum">      90 </span>            : public:
+<span class="lineNum">      91 </span>            : 
+<span class="lineNum">      92 </span>            :   typedef key_compare_tag key_compare;
+<span class="lineNum">      93 </span>            :   typedef value_compare_tag value_compare;
+<span class="lineNum">      94 </span>            :   typedef value_type_tag value_type;
+<span class="lineNum">      95 </span>            :   typedef key_type_tag key_type;
+<span class="lineNum">      96 </span>            : 
+<span class="lineNum">      97 </span>            :   typedef allocator_type_tag allocator_type;
+<span class="lineNum">      98 </span>            :   typedef size_type_tag size_type;
+<span class="lineNum">      99 </span>            :   typedef difference_type_tag difference_type;
+<span class="lineNum">     100 </span>            : 
+<span class="lineNum">     101 </span>            :   typedef container_key_tag container_key;
+<span class="lineNum">     102 </span>            :   typedef container_comparator_tag container_comparator;
+<span class="lineNum">     103 </span>            :   typedef container_type_tag container_type;
+<span class="lineNum">     104 </span>            :     
+<span class="lineNum">     105 </span>            :   typedef iterator_tag iterator;
+<span class="lineNum">     106 </span>            :   typedef const_iterator_tag const_iterator;
+<span class="lineNum">     107 </span>            :   typedef reverse_iterator_tag reverse_iterator;
+<span class="lineNum">     108 </span>            :   typedef const_reverse_iterator_tag const_reverse_iterator;
+<span class="lineNum">     109 </span>            : 
+<span class="lineNum">     110 </span>            :   typedef pointer_tag pointer;
+<span class="lineNum">     111 </span>            :   typedef reference_tag reference;
+<span class="lineNum">     112 </span>            :   typedef const_pointer_tag const_pointer;
+<span class="lineNum">     113 </span>            :   typedef const_reference_tag const_reference;
+<span class="lineNum">     114 </span>            :   
+<span class="lineNum">     115 </span>            :   
+<span class="lineNum">     116 </span>            :   allocator_type  _allocator;
+<span class="lineNum">     117 </span>            :   container_type  _container;
+<span class="lineNum">     118 </span>            : 
+<span class="lineNum">     119 </span>            :   // если есть _open_file_ копирование недоступно
+<span class="lineNum">     120 </span>            :   struct copy_ctor_disabled_for_mapped_files;
+<span class="lineNum">     121 </span>            : 
+<span class="lineNum">     122 </span>            : public:
+<span class="lineNum">     123 </span>            : 
+<span class="lineNum">     124 </span>            :   /**
+<a name="125"><span class="lineNum">     125 </span>            :    * @brief Конструктор по умолчанию. Создаёт пустой контейнер.</a>
+<span class="lineNum">     126 </span>            :    */
+<span class="lineNum">     127 </span><span class="lineCov">         25 :   vtree()</span>
+<span class="lineNum">     128 </span><span class="lineCov">         25 :     : _allocator( this-&gt;get_aspect().template get&lt;_allocator_&gt;()( *this ) )</span>
+<span class="lineNum">     129 </span><span class="lineCov">         50 :     , _container()</span>
+<span class="lineNum">     130 </span>            :   {
+<span class="lineNum">     131 </span><span class="lineCov">         25 :   }</span>
+<span class="lineNum">     132 </span>            : 
+<span class="lineNum">     133 </span>            :   /**
+<span class="lineNum">     134 </span>            :    * @brief Конструктор создаёт пустой контейнер. 
+<span class="lineNum">     135 </span>            :    * @param comp функции сравнения ключей
+<a name="136"><span class="lineNum">     136 </span>            :    * @param alloc функции сравнения ключей</a>
+<span class="lineNum">     137 </span>            :    */
+<span class="lineNum">     138 </span><span class="lineCov">          2 :   explicit vtree(const key_compare&amp; comp,const allocator_type&amp; alloc = allocator_type() )</span>
+<span class="lineNum">     139 </span>            :     : _allocator(alloc)
+<span class="lineNum">     140 </span><span class="lineCov">          2 :     , _container( container_comparator(comp) ) </span>
+<span class="lineNum">     141 </span>            :   {
+<span class="lineNum">     142 </span><span class="lineCov">          2 :     this-&gt;get_aspect().template get&lt;_compare_&gt;() = comp;</span>
+<span class="lineNum">     143 </span><span class="lineCov">          2 :     _allocator = this-&gt;get_aspect().template get&lt;_allocator_&gt;()(*this);</span>
+<span class="lineNum">     144 </span><span class="lineCov">          2 :   }</span>
+<span class="lineNum">     145 </span>            : 
+<span class="lineNum">     146 </span>            :   /**
+<span class="lineNum">     147 </span>            :    * @brief Создаёт контейнер с содержимым из диапазона [first, last).
+<span class="lineNum">     148 </span>            :    * @param first итератор начала диапазона
+<span class="lineNum">     149 </span>            :    * @param last итератор конеца диапазона
+<span class="lineNum">     150 </span>            :    */
+<span class="lineNum">     151 </span>            :   template&lt;typename InputIterator&gt;
+<span class="lineNum">     152 </span>            :   vtree(InputIterator b, InputIterator e)
+<span class="lineNum">     153 </span>            :     : _allocator( this-&gt;get_aspect().template get&lt;_allocator_&gt;()(*this) )
+<span class="lineNum">     154 </span>            :     , _container()
+<span class="lineNum">     155 </span>            :   {
+<span class="lineNum">     156 </span>            :     this-&gt;insert(b, e);
+<span class="lineNum">     157 </span>            :   }
+<span class="lineNum">     158 </span>            : 
+<span class="lineNum">     159 </span>            :   /**
+<span class="lineNum">     160 </span>            :    * @brief Создаёт контейнер с содержимым из диапазона [first, last).
+<span class="lineNum">     161 </span>            :    * @param first итератор начала диапазона
+<span class="lineNum">     162 </span>            :    * @param last итератор конеца диапазона
+<span class="lineNum">     163 </span>            :    * @param comp функции сравнения ключей
+<span class="lineNum">     164 </span>            :    * @param alloc функции сравнения ключей
+<span class="lineNum">     165 </span>            :    */
+<span class="lineNum">     166 </span>            :   template&lt;typename InputIterator&gt;
+<span class="lineNum">     167 </span>            :   vtree(InputIterator b, InputIterator e, const value_compare&amp; comp, const allocator_type&amp;  alloc = allocator_type() )
+<span class="lineNum">     168 </span>            :     : _allocator(alloc)
+<span class="lineNum">     169 </span>            :     , _container( container_comparator(comp) ) 
+<span class="lineNum">     170 </span>            :   {
+<span class="lineNum">     171 </span>            :     this-&gt;get_aspect().template get&lt;_compare_&gt;() = comp;
+<span class="lineNum">     172 </span>            :     _allocator = this-&gt;get_aspect().template get&lt;_allocator_&gt;()(*this);
+<span class="lineNum">     173 </span>            :     this-&gt;insert(b, e);
+<span class="lineNum">     174 </span>            :   }
+<span class="lineNum">     175 </span>            :   
+<span class="lineNum">     176 </span>            :   /**
+<span class="lineNum">     177 </span>            :    * @brief Конструктор копирования
+<a name="178"><span class="lineNum">     178 </span>            :    * @details Для персистентных контейнеров копирование запрещено </a>
+<span class="lineNum">     179 </span>            :    */
+<span class="lineNum">     180 </span><span class="lineCov">          1 :   vtree(const self&amp; __x)</span>
+<span class="lineNum">     181 </span><span class="lineCov">          1 :     : _allocator( this-&gt;get_aspect().template get&lt;_allocator_&gt;()(*this) )</span>
+<span class="lineNum">     182 </span><span class="lineCov">          2 :     , _container()</span>
+<span class="lineNum">     183 </span>            :   {
+<span class="lineNum">     184 </span>            :     typedef typename fas::static_error&lt; 
+<span class="lineNum">     185 </span>            :       copy_ctor_disabled_for_mapped_files, 
+<span class="lineNum">     186 </span>            :       super::aspect::template has_advice&lt; ::vset::buffer::persistent::_open_file_ &gt;::value == 0 
+<span class="lineNum">     187 </span>            :     &gt;::type error;
+<span class="lineNum">     188 </span><span class="lineCov">          1 :     this-&gt;dummy( error() );</span>
+<span class="lineNum">     189 </span><span class="lineCov">          1 :     this-&gt;insert(__x.begin(), __x.end());</span>
+<span class="lineNum">     190 </span><span class="lineCov">          1 :   }</span>
+<span class="lineNum">     191 </span>            :   
+<span class="lineNum">     192 </span>            : 
+<span class="lineNum">     193 </span>            : #ifdef __GXX_EXPERIMENTAL_CXX0X__
+<span class="lineNum">     194 </span>            : 
+<span class="lineNum">     195 </span>            :   /**
+<span class="lineNum">     196 </span>            :     * @brief Move-конструктор (c++11). Создает контейнер с содержимым other с использованием move-семантики. 
+<span class="lineNum">     197 </span>            :     * Если alloc не был предоставлен, то он будет получен с помощью move-конструктора от аллокатора принадлежащего other.
+<a name="198"><span class="lineNum">     198 </span>            :     * @param other другой контейнер, который будет использован в качестве источника данных для инициализации элементов контейнера</a>
+<span class="lineNum">     199 </span>            :     */  
+<span class="lineNum">     200 </span><span class="lineCov">          1 :   vtree(vtree&amp;&amp; __x)</span>
+<span class="lineNum">     201 </span><span class="lineCov">          1 :   {</span>
+<span class="lineNum">     202 </span><span class="lineCov">          1 :     vtree tmp;</span>
+<span class="lineNum">     203 </span><span class="lineCov">          1 :     this-&gt;swap(__x);</span>
+<span class="lineNum">     204 </span><span class="lineCov">          1 :   }</span>
+<span class="lineNum">     205 </span>            : 
+<span class="lineNum">     206 </span>            :   /**
+<span class="lineNum">     207 </span>            :    * @brief Создает контейнер с содержимым списка инициализации init (c++11). 
+<span class="lineNum">     208 </span>            :    * @param init — список инициализации элементов контейнера
+<span class="lineNum">     209 </span>            :    * @param comp функции сравнения ключей
+<span class="lineNum">     210 </span>            :    * @param alloc функции сравнения ключей
+<span class="lineNum">     211 </span>            :    */
+<span class="lineNum">     212 </span>            :   vtree( std::initializer_list&lt;value_type&gt; il, const value_compare&amp; comp = value_compare(), const allocator_type&amp;  alloc = allocator_type())
+<span class="lineNum">     213 </span>            :     : _allocator(alloc)
+<span class="lineNum">     214 </span>            :     , _container( container_comparator(comp) ) 
+<span class="lineNum">     215 </span>            :   {
+<span class="lineNum">     216 </span>            :     this-&gt;get_aspect().template get&lt;_compare_&gt;() = comp;
+<span class="lineNum">     217 </span>            :     _allocator = this-&gt;get_aspect().template get&lt;_allocator_&gt;()(*this);
+<span class="lineNum">     218 </span>            :     this-&gt;insert(il.begin(), il.end());
+<span class="lineNum">     219 </span>            :   }
+<span class="lineNum">     220 </span>            : 
+<span class="lineNum">     221 </span>            :   vtree&amp;&amp; clone(const value_compare&amp; comp, const allocator_type&amp;  alloc = allocator_type()) const
+<span class="lineNum">     222 </span>            :   {
+<span class="lineNum">     223 </span>            :     return std::move(vtree( this-&gt;begin(), this-&gt;end(), comp, alloc));
+<span class="lineNum">     224 </span>            :   }
+<span class="lineNum">     225 </span>            : 
+<span class="lineNum">     226 </span>            : #endif
+<span class="lineNum">     227 </span>            : 
+<span class="lineNum">     228 </span>            :   vtree&amp; operator=(const vtree&amp; __x)
+<span class="lineNum">     229 </span>            :   {
+<span class="lineNum">     230 </span>            :     vtree tmp(__x);
+<span class="lineNum">     231 </span>            :     this-&gt;swap(tmp);
+<span class="lineNum">     232 </span>            :     return *this;
+<span class="lineNum">     233 </span>            :   }
+<span class="lineNum">     234 </span>            : 
+<span class="lineNum">     235 </span>            : #ifdef __GXX_EXPERIMENTAL_CXX0X__
+<span class="lineNum">     236 </span>            : 
+<span class="lineNum">     237 </span>            :   /**
+<span class="lineNum">     238 </span>            :    * @brief Заменяет содержимое содержимым other использованием семантики переноса (c++11)
+<span class="lineNum">     239 </span>            :    * @param other другой контейнер, который будет использоваться в качестве источника
+<span class="lineNum">     240 </span>            :    */
+<span class="lineNum">     241 </span>            :   vtree&amp; operator=(vtree&amp;&amp; __x)
+<span class="lineNum">     242 </span>            :   {
+<span class="lineNum">     243 </span>            :     this-&gt;clear();
+<span class="lineNum">     244 </span>            :     this-&gt;swap(__x);
+<span class="lineNum">     245 </span>            :     return *this;
+<span class="lineNum">     246 </span>            :   }
+<span class="lineNum">     247 </span>            : 
+<span class="lineNum">     248 </span>            :   /**
+<span class="lineNum">     249 </span>            :    * @brief Заменяет содержимое элементами, которые указаны в списке идентификаторов инициализатора (c++11).
+<span class="lineNum">     250 </span>            :    * @param il список инициализации для использования в качестве источника данных
+<span class="lineNum">     251 </span>            :    */
+<span class="lineNum">     252 </span>            :   vtree&amp; operator=( std::initializer_list&lt;value_type&gt; il)
+<span class="lineNum">     253 </span>            :   {
+<span class="lineNum">     254 </span>            :     this-&gt;clear();
+<span class="lineNum">     255 </span>            :     this-&gt;insert(il.begin(), il.end());
+<span class="lineNum">     256 </span>            :     return *this;
+<span class="lineNum">     257 </span>            :   }
+<a name="258"><span class="lineNum">     258 </span>            : #endif</a>
+<span class="lineNum">     259 </span>            : 
+<span class="lineNum">     260 </span><span class="lineCov">         13 :   const key_compare&amp; key_comp() const</span>
+<span class="lineNum">     261 </span>            :   {
+<span class="lineNum">     262 </span><span class="lineCov">         13 :     return this-&gt;get_aspect().template get&lt;_key_compare_&gt;();</span>
+<span class="lineNum">     263 </span>            :   }
+<span class="lineNum">     264 </span>            : 
+<span class="lineNum">     265 </span>            :   const value_compare&amp; value_comp() const
+<span class="lineNum">     266 </span>            :   {
+<span class="lineNum">     267 </span>            :     return this-&gt;get_aspect().template get&lt;_value_compare_&gt;();
+<a name="268"><span class="lineNum">     268 </span>            :   }</a>
+<span class="lineNum">     269 </span>            : 
+<span class="lineNum">     270 </span><span class="lineCov">        146 :   allocator_type get_allocator() const</span>
+<span class="lineNum">     271 </span>            :   {
+<span class="lineNum">     272 </span><span class="lineCov">        146 :     return _allocator;</span>
+<a name="273"><span class="lineNum">     273 </span>            :   }</a>
+<span class="lineNum">     274 </span>            : 
+<span class="lineNum">     275 </span><span class="lineCov">         40 :   const container_type&amp; get_container() const</span>
+<span class="lineNum">     276 </span>            :   {
+<span class="lineNum">     277 </span><span class="lineCov">         40 :     return _container;</span>
+<a name="278"><span class="lineNum">     278 </span>            :   }</a>
+<span class="lineNum">     279 </span>            : 
+<span class="lineNum">     280 </span><span class="lineCov">     326326 :   container_type&amp; get_container()</span>
+<span class="lineNum">     281 </span>            :   {
+<span class="lineNum">     282 </span><span class="lineCov">     326326 :     return _container;</span>
+<span class="lineNum">     283 </span>            :   }
+<span class="lineNum">     284 </span>            : 
+<span class="lineNum">     285 </span>            :   /** 
+<span class="lineNum">     286 </span>            :    * @brief Возвращает итератор на первый элемент контейнера. 
+<a name="287"><span class="lineNum">     287 </span>            :    * @return итератор на первый элемент</a>
+<span class="lineNum">     288 </span>            :    */
+<span class="lineNum">     289 </span><span class="lineCov">        411 :   iterator  begin()</span>
+<span class="lineNum">     290 </span>            :   {
+<span class="lineNum">     291 </span><span class="lineCov">        411 :     return iterator( _container.begin(), typename iterator::difference_type(0));</span>
+<span class="lineNum">     292 </span>            :   }
+<span class="lineNum">     293 </span>            : 
+<span class="lineNum">     294 </span>            :   /** 
+<span class="lineNum">     295 </span>            :    * @brief Возвращает итератор на элемент, следующий за последним элементом контейнера
+<span class="lineNum">     296 </span>            :    * @return итератор на элемент, следующий за последним элементом контейнера
+<a name="297"><span class="lineNum">     297 </span>            :    * @details Этот элемент выступает в качестве заполнителя; попытке доступа к нему приводит к неопределенному поведению</a>
+<span class="lineNum">     298 </span>            :    */  
+<span class="lineNum">     299 </span><span class="lineCov">      74895 :   iterator end()</span>
+<span class="lineNum">     300 </span>            :   {
+<span class="lineNum">     301 </span><span class="lineCov">      74895 :     return iterator( _container.end(), typename  iterator::difference_type(0) );</span>
+<span class="lineNum">     302 </span>            :   }
+<span class="lineNum">     303 </span>            : 
+<span class="lineNum">     304 </span>            :   /** 
+<span class="lineNum">     305 </span>            :    * @brief Возвращает константный итератор на первый элемент контейнера. 
+<a name="306"><span class="lineNum">     306 </span>            :    * @return Константный итератор на первый элемент</a>
+<span class="lineNum">     307 </span>            :    */
+<span class="lineNum">     308 </span><span class="lineCov">         27 :   const_iterator  begin() const</span>
+<span class="lineNum">     309 </span>            :   {
+<span class="lineNum">     310 </span><span class="lineCov">         27 :     return const_iterator( _container.begin(), 0);</span>
+<span class="lineNum">     311 </span>            :   }
+<span class="lineNum">     312 </span>            : 
+<span class="lineNum">     313 </span>            :   /** 
+<span class="lineNum">     314 </span>            :    * @brief Возвращает константный итератор на элемент, следующий за последним элементом контейнера
+<span class="lineNum">     315 </span>            :    * @return константный  итератор на элемент, следующий за последним элементом контейнера
+<a name="316"><span class="lineNum">     316 </span>            :    * @details Этот элемент выступает в качестве заполнителя; попытке доступа к нему приводит к неопределенному поведению</a>
+<span class="lineNum">     317 </span>            :    */  
+<span class="lineNum">     318 </span><span class="lineCov">         27 :   const_iterator end() const</span>
+<span class="lineNum">     319 </span>            :   {
+<span class="lineNum">     320 </span><span class="lineCov">         27 :     return const_iterator( _container.end(), 0 );</span>
+<span class="lineNum">     321 </span>            :   }
+<span class="lineNum">     322 </span>            : 
+<span class="lineNum">     323 </span>            :   /** 
+<span class="lineNum">     324 </span>            :    * @brief Возвращает обратный итератор на последний элемент контейнера. 
+<span class="lineNum">     325 </span>            :    * @return обратный итератор на последний элемент
+<span class="lineNum">     326 </span>            :    */
+<span class="lineNum">     327 </span>            :   reverse_iterator rbegin()
+<span class="lineNum">     328 </span>            :   {
+<span class="lineNum">     329 </span>            :     return reverse_iterator( this-&gt;end() );
+<span class="lineNum">     330 </span>            :   }
+<span class="lineNum">     331 </span>            : 
+<span class="lineNum">     332 </span>            :   /** 
+<span class="lineNum">     333 </span>            :    * @brief Возвращает обратный итератор на элемент, перед первым элементом контейнера
+<span class="lineNum">     334 </span>            :    * @return обратный  итератор на элемент, перед первым элементом контейнера
+<span class="lineNum">     335 </span>            :    * @details Этот элемент выступает в качестве заполнителя; попытке доступа к нему приводит к неопределенному поведению
+<span class="lineNum">     336 </span>            :    */  
+<span class="lineNum">     337 </span>            :   reverse_iterator rend()
+<span class="lineNum">     338 </span>            :   {
+<span class="lineNum">     339 </span>            :     return reverse_iterator( this-&gt;begin() );
+<span class="lineNum">     340 </span>            :   }
+<span class="lineNum">     341 </span>            : 
+<span class="lineNum">     342 </span>            :   /** 
+<span class="lineNum">     343 </span>            :    * @brief Возвращает константный обратный итератор на последний элемент контейнера. 
+<span class="lineNum">     344 </span>            :    * @return Константный обратный итератор на последний элемент
+<span class="lineNum">     345 </span>            :    */
+<span class="lineNum">     346 </span>            :   const_reverse_iterator rbegin() const
+<span class="lineNum">     347 </span>            :   {
+<span class="lineNum">     348 </span>            :     return const_reverse_iterator( this-&gt;end() );
+<span class="lineNum">     349 </span>            :   }
+<span class="lineNum">     350 </span>            : 
+<span class="lineNum">     351 </span>            :   /** 
+<span class="lineNum">     352 </span>            :    * @brief Возвращает константный обратный итератор на элемент, следующий перед первым элементом контейнера
+<span class="lineNum">     353 </span>            :    * @return константный  итератор обратный на элемент, следующий за последним элементом контейнера
+<span class="lineNum">     354 </span>            :    * @details Этот элемент выступает в качестве заполнителя; попытке доступа к нему приводит к неопределенному поведению
+<span class="lineNum">     355 </span>            :    */  
+<span class="lineNum">     356 </span>            :   const_reverse_iterator rend() const
+<span class="lineNum">     357 </span>            :   {
+<span class="lineNum">     358 </span>            :     return const_reverse_iterator( this-&gt;begin() );
+<span class="lineNum">     359 </span>            :   }
+<span class="lineNum">     360 </span>            : 
+<span class="lineNum">     361 </span>            : #ifdef __GXX_EXPERIMENTAL_CXX0X__
+<span class="lineNum">     362 </span>            : 
+<span class="lineNum">     363 </span>            :   /** 
+<span class="lineNum">     364 </span>            :    * @brief Возвращает константный итератор на первый элемент контейнера (c++11). 
+<span class="lineNum">     365 </span>            :    * @return Константный итератор на первый элемент
+<span class="lineNum">     366 </span>            :    */
+<span class="lineNum">     367 </span>            :   const_iterator  cbegin() const
+<span class="lineNum">     368 </span>            :   {
+<span class="lineNum">     369 </span>            :     return const_iterator( _container.cbegin(), 0);
+<span class="lineNum">     370 </span>            :   }
+<span class="lineNum">     371 </span>            : 
+<span class="lineNum">     372 </span>            :   /** 
+<span class="lineNum">     373 </span>            :    * @brief Возвращает константный итератор на элемент, следующий за последним элементом контейнера (c++11)
+<span class="lineNum">     374 </span>            :    * @return константный  итератор на элемент, следующий за последним элементом контейнера
+<a name="375"><span class="lineNum">     375 </span>            :    * @details Этот элемент выступает в качестве заполнителя; попытке доступа к нему приводит к неопределенному поведению</a>
+<span class="lineNum">     376 </span>            :    */  
+<span class="lineNum">     377 </span><span class="lineNoCov">          0 :   const_iterator cend() const</span>
+<span class="lineNum">     378 </span>            :   {
+<span class="lineNum">     379 </span><span class="lineNoCov">          0 :     return const_iterator( _container.cend(), 0 );</span>
+<span class="lineNum">     380 </span>            :   }
+<span class="lineNum">     381 </span>            : 
+<span class="lineNum">     382 </span>            :   /** 
+<span class="lineNum">     383 </span>            :    * @brief Возвращает константный обратный итератор на последний элемент контейнера (c++11). 
+<span class="lineNum">     384 </span>            :    * @return Константный обратный итератор на последний элемент
+<span class="lineNum">     385 </span>            :    */
+<span class="lineNum">     386 </span>            :   const_reverse_iterator crbegin() const
+<span class="lineNum">     387 </span>            :   {
+<span class="lineNum">     388 </span>            :     return const_reverse_iterator( this-&gt;begin() );
+<span class="lineNum">     389 </span>            :   }
+<span class="lineNum">     390 </span>            : 
+<span class="lineNum">     391 </span>            : 
+<span class="lineNum">     392 </span>            :   /** 
+<span class="lineNum">     393 </span>            :    * @brief Возвращает константный обратный итератор на элемент, следующий перед первым элементом контейнера (c++11)
+<span class="lineNum">     394 </span>            :    * @return константный  итератор обратный на элемент, следующий перед первым элементом контейнера
+<span class="lineNum">     395 </span>            :    * @details Этот элемент выступает в качестве заполнителя; попытке доступа к нему приводит к неопределенному поведению
+<span class="lineNum">     396 </span>            :    */  
+<span class="lineNum">     397 </span>            :   reverse_iterator crend() const
+<span class="lineNum">     398 </span>            :   {
+<span class="lineNum">     399 </span>            :     return const_reverse_iterator( this-&gt;end() );
+<span class="lineNum">     400 </span>            :   }
+<span class="lineNum">     401 </span>            : 
+<span class="lineNum">     402 </span>            : #endif
+<span class="lineNum">     403 </span>            : 
+<span class="lineNum">     404 </span>            :   /**
+<span class="lineNum">     405 </span>            :    * @brief Проверка на отсутствие элементов в контейнере 
+<span class="lineNum">     406 </span>            :    * @return true если контейнер пуст, false - в противном случае 
+<span class="lineNum">     407 </span>            :    */
+<span class="lineNum">     408 </span>            :   bool empty() const
+<span class="lineNum">     409 </span>            :   {
+<span class="lineNum">     410 </span>            :     return _container.empty();
+<span class="lineNum">     411 </span>            :   }
+<span class="lineNum">     412 </span>            : 
+<span class="lineNum">     413 </span>            :   /**
+<span class="lineNum">     414 </span>            :    * @brief Возвращает количество элементов в контейнере
+<a name="415"><span class="lineNum">     415 </span>            :    * @return количество элементов в контейнере</a>
+<span class="lineNum">     416 </span>            :    */
+<span class="lineNum">     417 </span><span class="lineCov">      10638 :   size_type size() const</span>
+<span class="lineNum">     418 </span>            :   {
+<span class="lineNum">     419 </span><span class="lineCov">      10638 :     return this-&gt;get_aspect().template get&lt;_size_&gt;();</span>
+<span class="lineNum">     420 </span>            :   }
+<span class="lineNum">     421 </span>            : 
+<span class="lineNum">     422 </span>            :   /**
+<span class="lineNum">     423 </span>            :    * @brief Возвращает максимально допустимое количество элементов в контейнере 
+<span class="lineNum">     424 </span>            :    * @return Максимальное количество элементов.
+<span class="lineNum">     425 </span>            :    * @details Это значение обычно равно std::numeric_limits&lt;size_type&gt;::max(), и отражает теоретический предел на размер контейнера. 
+<span class="lineNum">     426 </span>            :    * Ввиду ограничений на доступную оперативную память, во время исполнения это значение может быть ниже чем max_size().
+<span class="lineNum">     427 </span>            :    */
+<span class="lineNum">     428 </span>            :   size_type max_size() const
+<span class="lineNum">     429 </span>            :   {
+<span class="lineNum">     430 </span>            :     return std::numeric_limits&lt;size_type&gt;::max();
+<span class="lineNum">     431 </span>            :   }
+<span class="lineNum">     432 </span>            : 
+<span class="lineNum">     433 </span>            :   /**
+<span class="lineNum">     434 </span>            :    * @brief Обменивает содержимое контейнера с содержимым контейнера другого
+<span class="lineNum">     435 </span>            :    * @param other — Контейнер для обмена содержимым
+<span class="lineNum">     436 </span>            :    * @details  The behavior is undefined if get_allocator() != other.get_allocator() 
+<a name="437"><span class="lineNum">     437 </span>            :    * and std::allocator_traits&lt;allocator_type&gt;::propagate_on_container_swap::value != true.</a>
+<span class="lineNum">     438 </span>            :    */
+<span class="lineNum">     439 </span><span class="lineCov">          1 :   void swap( vtree&amp; other )</span>
+<span class="lineNum">     440 </span>            :   {
+<span class="lineNum">     441 </span><span class="lineCov">          1 :     this-&gt;get_aspect().template get&lt;_swap_container_&gt;()(*this, other);</span>
+<span class="lineNum">     442 </span><span class="lineCov">          1 :     _allocator = this-&gt;get_aspect().template get&lt;_allocator_&gt;()(*this);</span>
+<span class="lineNum">     443 </span><span class="lineCov">          1 :     other._allocator = this-&gt;get_aspect().template get&lt;_allocator_&gt;()(other);</span>
+<span class="lineNum">     444 </span><span class="lineCov">          1 :   }</span>
+<span class="lineNum">     445 </span>            : 
+<span class="lineNum">     446 </span>            :   /**
+<span class="lineNum">     447 </span>            :    * @brief Возвращает количество элементов, которые могут одновременно храниться в выделенной области памяти 
+<a name="448"><span class="lineNum">     448 </span>            :    * @return Вместимость контейнера, под которую в сейчас выделена память</a>
+<span class="lineNum">     449 </span>            :    */
+<span class="lineNum">     450 </span><span class="lineCov">          5 :   size_t capacity() const</span>
+<span class="lineNum">     451 </span>            :   {
+<span class="lineNum">     452 </span><span class="lineCov">          5 :     return this-&gt;get_aspect().template get&lt;_capacity_&gt;()(*this);</span>
+<span class="lineNum">     453 </span>            :   }
+<span class="lineNum">     454 </span>            :   
+<span class="lineNum">     455 </span>            :   /**
+<span class="lineNum">     456 </span>            :    * @brief Вставляет элемент
+<span class="lineNum">     457 </span>            :    * @param value вставляемое значение
+<span class="lineNum">     458 </span>            :    * @return итератор на вставленный элемент
+<a name="459"><span class="lineNum">     459 </span>            :    * @details Сложность от O(log(size/t)) до O(log(size*4/t) + t)</a>
+<span class="lineNum">     460 </span>            :    */
+<span class="lineNum">     461 </span><span class="lineCov">      11262 :   iterator insert(const value_type&amp; value)</span>
+<span class="lineNum">     462 </span>            :   {
+<span class="lineNum">     463 </span><span class="lineCov">      11262 :     return this-&gt;get_aspect().template get&lt;_insert_value_&gt;()(*this, value);</span>
+<span class="lineNum">     464 </span>            :   }
+<span class="lineNum">     465 </span>            : 
+<span class="lineNum">     466 </span>            : 
+<span class="lineNum">     467 </span>            : #ifdef __GXX_EXPERIMENTAL_CXX0X__
+<span class="lineNum">     468 </span>            : 
+<span class="lineNum">     469 </span>            :   /**
+<span class="lineNum">     470 </span>            :    * @brief Вставляет элемент (c++11)
+<span class="lineNum">     471 </span>            :    * @param value вставляемое значение
+<span class="lineNum">     472 </span>            :    * @return итератор на вставленный элемент
+<a name="473"><span class="lineNum">     473 </span>            :    * @details Сложность от O(log(size/t)) до O(log(size*4/t) + t)</a>
+<span class="lineNum">     474 </span>            :    */
+<span class="lineNum">     475 </span><span class="lineCov">      10094 :   iterator insert(value_type&amp;&amp; value)</span>
+<span class="lineNum">     476 </span>            :   {
+<span class="lineNum">     477 </span><span class="lineCov">      10094 :     return this-&gt;get_aspect().template get&lt;_insert_value_&gt;()(*this, value );</span>
+<span class="lineNum">     478 </span>            :   }
+<span class="lineNum">     479 </span>            : 
+<span class="lineNum">     480 </span>            : #endif
+<span class="lineNum">     481 </span>            : 
+<span class="lineNum">     482 </span>            :   /**
+<span class="lineNum">     483 </span>            :    * @brief Вставляет элемент
+<span class="lineNum">     484 </span>            :    * @param const_iterator игнорируеться
+<span class="lineNum">     485 </span>            :    * @param value вставляемое значение
+<span class="lineNum">     486 </span>            :    * @return итератор на вставленный элемент
+<span class="lineNum">     487 </span>            :    * @details Сложность от O(log(size/t)) до O(log(size*4/t) + t)
+<span class="lineNum">     488 </span>            :    */
+<span class="lineNum">     489 </span>            :   iterator insert(const_iterator, const value_type&amp; value)
+<span class="lineNum">     490 </span>            :   {
+<span class="lineNum">     491 </span>            :     return this-&gt;get_aspect().template get&lt;_insert_value_&gt;()(*this, value );
+<span class="lineNum">     492 </span>            :   }
+<span class="lineNum">     493 </span>            : 
+<span class="lineNum">     494 </span>            : #ifdef __GXX_EXPERIMENTAL_CXX0X__
+<span class="lineNum">     495 </span>            :   /**
+<span class="lineNum">     496 </span>            :    * @brief Вставляет элемент (c++11)
+<span class="lineNum">     497 </span>            :    * @param const_iterator игнорируеться
+<span class="lineNum">     498 </span>            :    * @param value вставляемое значение
+<span class="lineNum">     499 </span>            :    * @return итератор на вставленный элемент
+<span class="lineNum">     500 </span>            :    * @details Сложность от O(log(size/t)) до O(log(size*4/t) + t)
+<span class="lineNum">     501 </span>            :    */
+<span class="lineNum">     502 </span>            :   iterator insert(const_iterator, value_type&amp;&amp; value)
+<span class="lineNum">     503 </span>            :   {
+<span class="lineNum">     504 </span>            :     return this-&gt;get_aspect().template get&lt;_insert_value_&gt;()(*this, value );
+<span class="lineNum">     505 </span>            :   }
+<span class="lineNum">     506 </span>            : #endif
+<span class="lineNum">     507 </span>            : 
+<span class="lineNum">     508 </span>            :   /**
+<span class="lineNum">     509 </span>            :    * @brief Вставляет элементы из диапазона [first, last)
+<span class="lineNum">     510 </span>            :    * @param first итератор начала диапазона
+<span class="lineNum">     511 </span>            :    * @param last итератор конеца диапазона
+<a name="512"><span class="lineNum">     512 </span>            :    */</a>
+<span class="lineNum">     513 </span>            :   template&lt;typename InputIterator&gt;
+<span class="lineNum">     514 </span><span class="lineCov">          1 :   void insert(InputIterator first, InputIterator last)</span>
+<span class="lineNum">     515 </span>            :   {
+<span class="lineNum">     516 </span><span class="lineCov">          5 :     for (; first != last; ++first)</span>
+<span class="lineNum">     517 </span>            :     {
+<span class="lineNum">     518 </span><span class="lineCov">          4 :       this-&gt;insert(*first);</span>
+<span class="lineNum">     519 </span>            :     }
+<span class="lineNum">     520 </span><span class="lineCov">          1 :   }</span>
+<span class="lineNum">     521 </span>            : 
+<span class="lineNum">     522 </span>            : #ifdef __GXX_EXPERIMENTAL_CXX0X__
+<span class="lineNum">     523 </span>            : 
+<span class="lineNum">     524 </span>            :   /**
+<span class="lineNum">     525 </span>            :    * @brief Вставляет элементы из списка инициализации init (c++11)
+<span class="lineNum">     526 </span>            :    * @param init — список инициализации элементов контейнера
+<span class="lineNum">     527 </span>            :    */
+<span class="lineNum">     528 </span>            :   void insert( std::initializer_list&lt;value_type&gt; init)
+<span class="lineNum">     529 </span>            :   {
+<span class="lineNum">     530 </span>            :     this-&gt;insert(init.begin(), init.end());
+<span class="lineNum">     531 </span>            :   }
+<span class="lineNum">     532 </span>            : 
+<span class="lineNum">     533 </span>            : #endif
+<span class="lineNum">     534 </span>            : 
+<span class="lineNum">     535 </span>            : #ifdef __GXX_EXPERIMENTAL_CXX0X__
+<span class="lineNum">     536 </span>            : 
+<span class="lineNum">     537 </span>            :   /**
+<span class="lineNum">     538 </span>            :    * @brief Удаляет элементы (c++11)
+<a name="539"><span class="lineNum">     539 </span>            :    * @param pos итератор на элемент для удаления</a>
+<span class="lineNum">     540 </span>            :    */
+<span class="lineNum">     541 </span><span class="lineCov">          5 :   iterator erase(const_iterator pos)</span>
+<span class="lineNum">     542 </span>            :   {
+<span class="lineNum">     543 </span><span class="lineCov">          5 :     return this-&gt;get_aspect().template get&lt;_erase_iterator_&gt;()(*this, pos);</span>
+<span class="lineNum">     544 </span>            :   }
+<span class="lineNum">     545 </span>            : 
+<span class="lineNum">     546 </span>            : #else
+<span class="lineNum">     547 </span>            : 
+<span class="lineNum">     548 </span>            :   /**
+<span class="lineNum">     549 </span>            :    * @brief Удаляет элементы (c++03)
+<span class="lineNum">     550 </span>            :    * @param pos итератор на элемент для удаления
+<span class="lineNum">     551 </span>            :    */
+<span class="lineNum">     552 </span>            :   void erase(iterator itr)
+<span class="lineNum">     553 </span>            :   {
+<span class="lineNum">     554 </span>            :     this-&gt;get_aspect().template get&lt;_erase_iterator_&gt;()(*this, itr);
+<span class="lineNum">     555 </span>            :   }
+<span class="lineNum">     556 </span>            : 
+<span class="lineNum">     557 </span>            : #endif
+<span class="lineNum">     558 </span>            : 
+<span class="lineNum">     559 </span>            :   /**
+<span class="lineNum">     560 </span>            :    * @brief Удаляет элементы (c++11)
+<a name="561"><span class="lineNum">     561 </span>            :    * @param key Ключевое значение элементов для удаления</a>
+<span class="lineNum">     562 </span>            :    */
+<span class="lineNum">     563 </span><span class="lineCov">      16847 :   size_type erase(const key_type&amp; key)</span>
+<span class="lineNum">     564 </span>            :   {
+<span class="lineNum">     565 </span><span class="lineCov">      16847 :     return this-&gt;get_aspect().template get&lt;_erase_value_&gt;()(*this, key);</span>
+<span class="lineNum">     566 </span>            :   }
+<span class="lineNum">     567 </span>            : 
+<span class="lineNum">     568 </span>            : #ifdef __GXX_EXPERIMENTAL_CXX0X__
+<span class="lineNum">     569 </span>            : 
+<span class="lineNum">     570 </span>            :   /**
+<span class="lineNum">     571 </span>            :    * @brief Удаляет элементы (c++11) из диапазона [first, last)
+<span class="lineNum">     572 </span>            :    * @param first итератор начала диапазона
+<span class="lineNum">     573 </span>            :    * @param last итератор конеца диапазона
+<span class="lineNum">     574 </span>            :    * @return iterator, следующего за последним удаленным элементом
+<span class="lineNum">     575 </span>            :    */
+<span class="lineNum">     576 </span>            :   iterator erase(const_iterator first, const_iterator last)
+<span class="lineNum">     577 </span>            :   {
+<span class="lineNum">     578 </span>            :     return this-&gt;get_aspect().template get&lt;_erase_range_&gt;()(*this, first, last);
+<span class="lineNum">     579 </span>            :   }
+<span class="lineNum">     580 </span>            : 
+<span class="lineNum">     581 </span>            : #else
+<span class="lineNum">     582 </span>            : 
+<span class="lineNum">     583 </span>            :   /**
+<span class="lineNum">     584 </span>            :    * @brief Удаляет элементы (c++03) из диапазона [first, last)
+<span class="lineNum">     585 </span>            :    * @param first итератор начала диапазона
+<span class="lineNum">     586 </span>            :    * @param last итератор конеца диапазона
+<span class="lineNum">     587 </span>            :    */
+<span class="lineNum">     588 </span>            :   void erase(iterator first, iterator last)
+<span class="lineNum">     589 </span>            :   {
+<span class="lineNum">     590 </span>            :     this-&gt;get_aspect().template get&lt;_erase_range_&gt;()(*this, first, last);
+<span class="lineNum">     591 </span>            :   }
+<span class="lineNum">     592 </span>            : 
+<span class="lineNum">     593 </span>            : #endif
+<a name="594"><span class="lineNum">     594 </span>            : </a>
+<span class="lineNum">     595 </span>            :   /** @brief Очищает контейнер */
+<span class="lineNum">     596 </span><span class="lineCov">          3 :   void clear()</span>
+<span class="lineNum">     597 </span>            :   {
+<span class="lineNum">     598 </span><span class="lineCov">          3 :     return this-&gt;get_aspect().template get&lt;_clear_&gt;()(*this);</span>
+<span class="lineNum">     599 </span>            :   }
+<span class="lineNum">     600 </span>            : 
+<span class="lineNum">     601 </span>            :   /** 
+<span class="lineNum">     602 </span>            :    * @brief Возвращает количество элементов с ключом key.
+<span class="lineNum">     603 </span>            :    * @param key Значение ключа
+<a name="604"><span class="lineNum">     604 </span>            :    * @return Количество элементов с ключом key</a>
+<span class="lineNum">     605 </span>            :    */
+<span class="lineNum">     606 </span><span class="lineCov">          7 :   size_type count(const key_type&amp; key) const</span>
+<span class="lineNum">     607 </span>            :   {
+<span class="lineNum">     608 </span><span class="lineCov">          7 :     return static_cast&lt;size_type&gt;( this-&gt;upper_bound(key) - this-&gt;lower_bound(key) );</span>
+<span class="lineNum">     609 </span>            :   }
+<span class="lineNum">     610 </span>            : 
+<span class="lineNum">     611 </span>            : #ifdef __GXX_EXPERIMENTAL_CXX0X__
+<span class="lineNum">     612 </span>            : 
+<span class="lineNum">     613 </span>            :   /** 
+<span class="lineNum">     614 </span>            :    * @brief находит элемент с конкретным ключом (c++11)
+<span class="lineNum">     615 </span>            :    * @param key Ключевое значение элемента для поиска
+<a name="616"><span class="lineNum">     616 </span>            :    * @return Итератор элемент с ключом key. Если такой элемент не найден, итератора возвращается vtree::end()</a>
+<span class="lineNum">     617 </span>            :    */
+<span class="lineNum">     618 </span><span class="lineCov">      10014 :   iterator find(const key_type&amp; key)</span>
+<span class="lineNum">     619 </span>            :   {
+<span class="lineNum">     620 </span><span class="lineCov">      10014 :     return this-&gt;get_aspect().template get&lt;_find_&gt;()(*this, key);</span>
+<span class="lineNum">     621 </span>            :   }
+<span class="lineNum">     622 </span>            : 
+<span class="lineNum">     623 </span>            :   /** 
+<span class="lineNum">     624 </span>            :    * @brief находит элемент с конкретным ключом (c++11)
+<span class="lineNum">     625 </span>            :    * @param key Ключевое значение элемента для поиска
+<span class="lineNum">     626 </span>            :    * @return Итератор элемент с ключом key. Если такой элемент не найден, итератора возвращается vtree::end()
+<span class="lineNum">     627 </span>            :    */
+<span class="lineNum">     628 </span>            :   const_iterator find(const key_type&amp; key ) const
+<span class="lineNum">     629 </span>            :   {
+<span class="lineNum">     630 </span>            :     return this-&gt;get_aspect().template get&lt;_find_&gt;()(*this, key);
+<span class="lineNum">     631 </span>            :   }
+<span class="lineNum">     632 </span>            : 
+<span class="lineNum">     633 </span>            :   /** 
+<span class="lineNum">     634 </span>            :    * @brief возвращает итератор на первый элемент не меньшим, чем заданное значение (c++11)
+<span class="lineNum">     635 </span>            :    * @param key ключевое значение для сравнения элементов
+<a name="636"><span class="lineNum">     636 </span>            :    * @return итератор, указывающий на первый элемент, который не меньше, чем key. Если такой элемент не найден, итератора возвращается vtree::end()</a>
+<span class="lineNum">     637 </span>            :    */
+<span class="lineNum">     638 </span><span class="lineCov">      10933 :   iterator lower_bound(const key_type&amp; key)</span>
+<span class="lineNum">     639 </span>            :   {
+<span class="lineNum">     640 </span><span class="lineCov">      10933 :     return this-&gt;get_aspect().template get&lt;_lower_bound_&gt;()(*this, key);</span>
+<span class="lineNum">     641 </span>            :   }
+<span class="lineNum">     642 </span>            : 
+<span class="lineNum">     643 </span>            :   /** 
+<span class="lineNum">     644 </span>            :    * @brief возвращает итератор на первый элемент не меньшим, чем заданное значение (c++11)
+<span class="lineNum">     645 </span>            :    * @param key ключевое значение для сравнения элементов
+<a name="646"><span class="lineNum">     646 </span>            :    * @return итератор, указывающий на первый элемент, который не меньше, чем key. Если такой элемент не найден, итератора возвращается vtree::end()</a>
+<span class="lineNum">     647 </span>            :    */
+<span class="lineNum">     648 </span><span class="lineCov">          7 :   const_iterator lower_bound(const key_type&amp; key) const</span>
+<span class="lineNum">     649 </span>            :   {
+<span class="lineNum">     650 </span><span class="lineCov">          7 :     return this-&gt;get_aspect().template get&lt;_lower_bound_&gt;()(*this, key);</span>
+<span class="lineNum">     651 </span>            :   }
+<span class="lineNum">     652 </span>            : 
+<span class="lineNum">     653 </span>            :   /** 
+<span class="lineNum">     654 </span>            :    * @brief возвращает итератор на первый элемент больше, чем заданное значение (c++11)
+<span class="lineNum">     655 </span>            :    * @param key ключевое значение для сравнения элементов
+<a name="656"><span class="lineNum">     656 </span>            :    * @return итератор, указывающий на первый элемент, который больше, чем key. Если такой элемент не найден, итератора возвращается vtree::end()</a>
+<span class="lineNum">     657 </span>            :    */
+<span class="lineNum">     658 </span><span class="lineCov">      10924 :   iterator upper_bound(const key_type&amp; key)</span>
+<span class="lineNum">     659 </span>            :   {
+<span class="lineNum">     660 </span><span class="lineCov">      10924 :     return this-&gt;get_aspect().template get&lt;_upper_bound_&gt;()(*this, key);</span>
+<span class="lineNum">     661 </span>            :   }
+<span class="lineNum">     662 </span>            : 
+<span class="lineNum">     663 </span>            :   /** 
+<span class="lineNum">     664 </span>            :    * @brief возвращает итератор на первый элемент больше, чем заданное значение (c++11)
+<span class="lineNum">     665 </span>            :    * @param key ключевое значение для сравнения элементов
+<a name="666"><span class="lineNum">     666 </span>            :    * @return итератор, указывающий на первый элемент, который больше, чем key. Если такой элемент не найден, итератора возвращается vtree::end()</a>
+<span class="lineNum">     667 </span>            :    */
+<span class="lineNum">     668 </span><span class="lineCov">          7 :   const_iterator upper_bound(const key_type&amp; key) const</span>
+<span class="lineNum">     669 </span>            :   {
+<span class="lineNum">     670 </span><span class="lineCov">          7 :     return this-&gt;get_aspect().template get&lt;_upper_bound_&gt;()(*this, key);</span>
+<span class="lineNum">     671 </span>            :   }
+<span class="lineNum">     672 </span>            : 
+<span class="lineNum">     673 </span>            : #else
+<span class="lineNum">     674 </span>            : 
+<span class="lineNum">     675 </span>            :   /** 
+<span class="lineNum">     676 </span>            :    * @brief находит элемент с конкретным ключом (c++03)
+<span class="lineNum">     677 </span>            :    * @param key Ключевое значение элемента для поиска
+<span class="lineNum">     678 </span>            :    * @return Итератор элемент с ключом key. Если такой элемент не найден, итератора возвращается vtree::end()
+<span class="lineNum">     679 </span>            :    */
+<span class="lineNum">     680 </span>            :   iterator find(const key_type&amp; key) const
+<span class="lineNum">     681 </span>            :   {
+<span class="lineNum">     682 </span>            :     self* t = const_cast&lt;self*&gt;(this);
+<span class="lineNum">     683 </span>            :     return t-&gt;get_aspect().template get&lt;_find_&gt;()(*t, key);
+<span class="lineNum">     684 </span>            :   }
+<span class="lineNum">     685 </span>            : 
+<span class="lineNum">     686 </span>            :   /** 
+<span class="lineNum">     687 </span>            :    * @brief возвращает итератор на первый элемент не меньшим, чем заданное значение (c++03)
+<span class="lineNum">     688 </span>            :    * @param key ключевое значение для сравнения элементов
+<span class="lineNum">     689 </span>            :    * @return итератор, указывающий на первый элемент, который не меньше, чем key. Если такой элемент не найден, итератора возвращается vtree::end()
+<span class="lineNum">     690 </span>            :    */
+<span class="lineNum">     691 </span>            :   iterator lower_bound(const key_type&amp; key) const
+<span class="lineNum">     692 </span>            :   {
+<span class="lineNum">     693 </span>            :     self* t = const_cast&lt;self*&gt;(this);
+<span class="lineNum">     694 </span>            :     return t-&gt;get_aspect().template get&lt;_lower_bound_&gt;()(*t, key);
+<span class="lineNum">     695 </span>            :   }
+<span class="lineNum">     696 </span>            : 
+<span class="lineNum">     697 </span>            :   /** 
+<span class="lineNum">     698 </span>            :    * @brief возвращает итератор на первый элемент больше, чем заданное значение (c++03)
+<span class="lineNum">     699 </span>            :    * @param key ключевое значение для сравнения элементов
+<span class="lineNum">     700 </span>            :    * @return итератор, указывающий на первый элемент, который больше, чем key. Если такой элемент не найден, итератора возвращается vtree::end()
+<span class="lineNum">     701 </span>            :    */
+<span class="lineNum">     702 </span>            :   iterator upper_bound(const key_type&amp; key) const
+<span class="lineNum">     703 </span>            :   {
+<span class="lineNum">     704 </span>            :     self* t = const_cast&lt;self*&gt;(this);
+<span class="lineNum">     705 </span>            :     return t-&gt;get_aspect().template get&lt;_upper_bound_&gt;()(*t, key);
+<span class="lineNum">     706 </span>            :   }
+<span class="lineNum">     707 </span>            : 
+<span class="lineNum">     708 </span>            : #endif
+<span class="lineNum">     709 </span>            : 
+<span class="lineNum">     710 </span>            :   /** 
+<span class="lineNum">     711 </span>            :    * @brief Возвращает диапазон, содержащий все элементы с ключевыми key в контейнере
+<span class="lineNum">     712 </span>            :    * @param key ключевое значение для сравнения элементов
+<span class="lineNum">     713 </span>            :    * @return Пара (std::pair) итераторов, определяющих требуемый диапазон: первый указывает на первый элемент, который не меньше ключа, 
+<span class="lineNum">     714 </span>            :    * а второй указывает на первый элемент, кторый больше ключа.
+<span class="lineNum">     715 </span>            :    */
+<span class="lineNum">     716 </span>            :   std::pair&lt;iterator, iterator&gt; equal_range(const key_type&amp; x)
+<span class="lineNum">     717 </span>            :   {
+<span class="lineNum">     718 </span>            :     return std::make_pair(this-&gt;lower_bound(x), this-&gt;upper_bound(x) );
+<span class="lineNum">     719 </span>            :   }
+<span class="lineNum">     720 </span>            : 
+<span class="lineNum">     721 </span>            :   /** 
+<span class="lineNum">     722 </span>            :    * @brief Возвращает диапазон, содержащий все элементы с ключевыми key в контейнере
+<span class="lineNum">     723 </span>            :    * @param key ключевое значение для сравнения элементов
+<span class="lineNum">     724 </span>            :    * @return Пара (std::pair) итераторов, определяющих требуемый диапазон: первый указывает на первый элемент, который не меньше ключа, 
+<span class="lineNum">     725 </span>            :    * а второй указывает на первый элемент, кторый больше ключа.
+<span class="lineNum">     726 </span>            :    */
+<span class="lineNum">     727 </span>            :   std::pair&lt;const_iterator, const_iterator&gt; equal_range(const key_type&amp; x) const
+<span class="lineNum">     728 </span>            :   {
+<span class="lineNum">     729 </span>            :     return std::make_pair(this-&gt;lower_bound(x), this-&gt;upper_bound(x) );
+<span class="lineNum">     730 </span>            :   }
+<span class="lineNum">     731 </span>            : 
+<span class="lineNum">     732 </span>            : 
+<span class="lineNum">     733 </span>            :   template&lt;typename AA&gt;
+<span class="lineNum">     734 </span>            :   friend bool operator==(const vtree&lt;AA&gt;&amp;, const vtree&lt;AA&gt;&amp;);
+<span class="lineNum">     735 </span>            : 
+<span class="lineNum">     736 </span>            :   template&lt;typename AA&gt;
+<span class="lineNum">     737 </span>            :   friend bool operator&lt;(const vtree&lt;AA&gt;&amp;, const vtree&lt;AA&gt;&amp;);
+<span class="lineNum">     738 </span>            :   
+<span class="lineNum">     739 </span>            : private:
+<span class="lineNum">     740 </span>            :   
+<a name="741"><span class="lineNum">     741 </span>            :   </a>
+<span class="lineNum">     742 </span>            :   template&lt;typename T&gt;
+<span class="lineNum">     743 </span><span class="lineCov">          1 :   void dummy(T){}</span>
+<span class="lineNum">     744 </span>            : 
+<span class="lineNum">     745 </span>            : };
+<a name="746"><span class="lineNum">     746 </span>            : </a>
+<span class="lineNum">     747 </span>            : template&lt;typename A&gt;
+<span class="lineNum">     748 </span><span class="lineCov">          5 : inline bool operator==(const vtree&lt;A&gt;&amp; __x, const vtree&lt;A&gt;&amp; __y)</span>
+<span class="lineNum">     749 </span>            : {
+<span class="lineNum">     750 </span><span class="lineCov">          5 :   return !(__x &lt; __y) &amp;&amp; !(__y &lt; __x);</span>
+<span class="lineNum">     751 </span>            :   //return __x.size() == __y.size() &amp;&amp; std::equal(__x.begin(), __x.end(), __y.begin());
+<span class="lineNum">     752 </span>            : }
+<a name="753"><span class="lineNum">     753 </span>            : </a>
+<span class="lineNum">     754 </span>            : template&lt;typename A&gt;
+<span class="lineNum">     755 </span><span class="lineCov">         13 : inline bool operator&lt; (const vtree&lt;A&gt;&amp; __x, const vtree&lt;A&gt;&amp; __y)</span>
+<span class="lineNum">     756 </span>            : {
+<span class="lineNum">     757 </span><span class="lineCov">         13 :   return std::lexicographical_compare(__x.begin(), __x.end(), __y.begin(), __y.end(), __x.key_comp() );</span>
+<span class="lineNum">     758 </span>            : }
+<span class="lineNum">     759 </span>            : 
+<span class="lineNum">     760 </span>            : template&lt;typename A&gt;
+<span class="lineNum">     761 </span>            : inline bool
+<span class="lineNum">     762 </span>            : operator!=(const vtree&lt;A&gt;&amp; __x, const vtree&lt;A&gt;&amp; __y)
+<span class="lineNum">     763 </span>            : {
+<span class="lineNum">     764 </span>            :   return !(__x == __y);
+<span class="lineNum">     765 </span>            : }
+<span class="lineNum">     766 </span>            : 
+<span class="lineNum">     767 </span>            : template&lt;typename A&gt;
+<span class="lineNum">     768 </span>            : inline bool operator&gt;(const vtree&lt;A&gt;&amp; __x, const vtree&lt;A&gt;&amp; __y)
+<span class="lineNum">     769 </span>            : {
+<span class="lineNum">     770 </span>            :   return __y &lt; __x;
+<span class="lineNum">     771 </span>            : }
+<span class="lineNum">     772 </span>            : 
+<span class="lineNum">     773 </span>            : template&lt;typename A&gt;
+<span class="lineNum">     774 </span>            : inline bool operator&lt;=(const vtree&lt;A&gt;&amp; __x, const vtree&lt;A&gt;&amp; __y)
+<span class="lineNum">     775 </span>            : {
+<span class="lineNum">     776 </span>            :   return !(__y &lt; __x);
+<span class="lineNum">     777 </span>            : }
+<span class="lineNum">     778 </span>            : 
+<span class="lineNum">     779 </span>            : template&lt;typename A&gt;
+<span class="lineNum">     780 </span>            : inline bool operator&gt;=(const vtree&lt;A&gt;&amp; __x, const vtree&lt;A&gt;&amp; __y)
+<span class="lineNum">     781 </span>            : {
+<span class="lineNum">     782 </span>            :   return !(__x &lt; __y);
+<span class="lineNum">     783 </span>            : }
+<span class="lineNum">     784 </span>            : 
+<span class="lineNum">     785 </span>            : template&lt;typename A&gt;
+<span class="lineNum">     786 </span>            : inline void swap(vtree&lt;A&gt;&amp; __x, vtree&lt;A&gt;&amp; __y)
+<span class="lineNum">     787 </span>            : {
+<span class="lineNum">     788 </span>            :   __x.swap(__y);
+<span class="lineNum">     789 </span>            : }
+<span class="lineNum">     790 </span>            : 
+<span class="lineNum">     791 </span>            : }}
+<span class="lineNum">     792 </span>            : 
+<span class="lineNum">     793 </span>            : #endif
+</pre>
+      </td>
+    </tr>
+  </table>
+  <br>
+
+  <table width="100%" border=0 cellspacing=0 cellpadding=0>
+    <tr><td class="ruler"><img src="../../glass.png" width=3 height=3 alt=""></td></tr>
+    <tr><td class="versionInfo">Generated by: <a href="http://ltp.sourceforge.net/coverage/lcov.php" target="_parent">LCOV version 1.10</a></td></tr>
+  </table>
+  <br>
+
+</body>
+</html>

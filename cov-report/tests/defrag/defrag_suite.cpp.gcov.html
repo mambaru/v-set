@@ -1,0 +1,143 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+
+<html lang="en">
+
+<head>
+  <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+  <title>LCOV - v-set-coverage.info - tests/defrag/defrag_suite.cpp</title>
+  <link rel="stylesheet" type="text/css" href="../../gcov.css">
+</head>
+
+<body>
+
+  <table width="100%" border=0 cellspacing=0 cellpadding=0>
+    <tr><td class="title">LCOV - code coverage report</td></tr>
+    <tr><td class="ruler"><img src="../../glass.png" width=3 height=3 alt=""></td></tr>
+
+    <tr>
+      <td width="100%">
+        <table cellpadding=1 border=0 width="100%">
+          <tr>
+            <td width="10%" class="headerItem">Current view:</td>
+            <td width="35%" class="headerValue"><a href="../../index.html">top level</a> - <a href="index.html">tests/defrag</a> - defrag_suite.cpp<span style="font-size: 80%;"> (source / <a href="defrag_suite.cpp.func.html">functions</a>)</span></td>
+            <td width="5%"></td>
+            <td width="15%"></td>
+            <td width="10%" class="headerCovTableHead">Hit</td>
+            <td width="10%" class="headerCovTableHead">Total</td>
+            <td width="15%" class="headerCovTableHead">Coverage</td>
+          </tr>
+          <tr>
+            <td class="headerItem">Test:</td>
+            <td class="headerValue">v-set-coverage.info</td>
+            <td></td>
+            <td class="headerItem">Lines:</td>
+            <td class="headerCovTableEntry">32</td>
+            <td class="headerCovTableEntry">32</td>
+            <td class="headerCovTableEntryHi">100.0 %</td>
+          </tr>
+          <tr>
+            <td class="headerItem">Date:</td>
+            <td class="headerValue">2019-09-12</td>
+            <td></td>
+            <td class="headerItem">Functions:</td>
+            <td class="headerCovTableEntry">10</td>
+            <td class="headerCovTableEntry">10</td>
+            <td class="headerCovTableEntryHi">100.0 %</td>
+          </tr>
+          <tr><td><img src="../../glass.png" width=3 height=3 alt=""></td></tr>
+        </table>
+      </td>
+    </tr>
+
+    <tr><td class="ruler"><img src="../../glass.png" width=3 height=3 alt=""></td></tr>
+  </table>
+
+  <table cellpadding=0 cellspacing=0 border=0>
+    <tr>
+      <td><br></td>
+    </tr>
+    <tr>
+      <td>
+<pre class="sourceHeading">          Line data    Source code</pre>
+<pre class="source">
+<a name="1"><span class="lineNum">       1 </span>            : //</a>
+<span class="lineNum">       2 </span>            : // Author: Dmitry Saprykin &lt;saprykin.dmitry@gmail.com&gt;, (C) 2013
+<span class="lineNum">       3 </span>            : //
+<span class="lineNum">       4 </span>            : // Copyright: See COPYING file that comes with this distribution
+<span class="lineNum">       5 </span>            : //
+<span class="lineNum">       6 </span>            : 
+<span class="lineNum">       7 </span>            : #include &lt;vset/multiset.hpp&gt;
+<span class="lineNum">       8 </span>            : #include &lt;fas/testing.hpp&gt;
+<a name="9"><span class="lineNum">       9 </span>            : #include &lt;set&gt;</a>
+<span class="lineNum">      10 </span>            : 
+<span class="lineNum">      11 </span><span class="lineCov">          3 : UNIT(defrag, &quot;&quot;)</span>
+<span class="lineNum">      12 </span>            : {
+<span class="lineNum">      13 </span>            :   
+<span class="lineNum">      14 </span>            :   using namespace fas::testing;
+<span class="lineNum">      15 </span>            :   using namespace vset;
+<span class="lineNum">      16 </span>            : 
+<span class="lineNum">      17 </span>            :   typedef multiset&lt;int, std::greater&lt;int&gt; &gt; multiset_type;
+<span class="lineNum">      18 </span><span class="lineCov">          1 :   multiset_type int_set;</span>
+<span class="lineNum">      19 </span>            : 
+<span class="lineNum">      20 </span><span class="lineCov">          2 :   std::set&lt;int&gt; etalon;</span>
+<span class="lineNum">      21 </span>            : 
+<span class="lineNum">      22 </span><span class="lineCov">      10241 :   for(int i = 0; i &lt; 10 * 1024; ++i) {</span>
+<span class="lineNum">      23 </span><span class="lineCov">      10240 :     int_set.insert(i);</span>
+<span class="lineNum">      24 </span><span class="lineCov">      10240 :     etalon.insert(i);</span>
+<span class="lineNum">      25 </span>            :   }
+<span class="lineNum">      26 </span>            : 
+<span class="lineNum">      27 </span><span class="lineCov">          1 :   std::cout &lt;&lt; std::endl;</span>
+<span class="lineNum">      28 </span><span class="lineCov">        221 :   for(int i = 0; i &lt; 220; ++i)</span>
+<span class="lineNum">      29 </span>            :   {
+<span class="lineNum">      30 </span><span class="lineCov">        220 :     size_t size = 0;</span>
+<span class="lineNum">      31 </span><span class="lineCov">        220 :     size_t size_max = 1;</span>
+<span class="lineNum">      32 </span>            :     typedef multiset_type::container_type container_type;
+<span class="lineNum">      33 </span><span class="lineCov">        220 :     container_type&amp; container = int_set.get_container();</span>
+<span class="lineNum">      34 </span><span class="lineCov">       7071 :     for (  container_type::iterator it = container.begin(); it != container.end(); ++it)</span>
+<span class="lineNum">      35 </span>            :     {
+<span class="lineNum">      36 </span><span class="lineCov">       6851 :       typename container_type::value_type::second_type second = (*it).second;</span>
+<span class="lineNum">      37 </span>            : 
+<span class="lineNum">      38 </span><span class="lineCov">       6851 :       size += second-&gt;size();</span>
+<span class="lineNum">      39 </span><span class="lineCov">       6851 :       size_max += second-&gt;capacity();</span>
+<span class="lineNum">      40 </span>            :     }
+<span class="lineNum">      41 </span>            : 
+<span class="lineNum">      42 </span><span class="lineCov">        220 :     t &lt;&lt; equal&lt;expect, size_t&gt;( int_set.size(), etalon.size()) &lt;&lt; FAS_TESTING_FILE_LINE;</span>
+<span class="lineNum">      43 </span><span class="lineCov">        220 :     t &lt;&lt; is_true&lt;expect&gt;( (size * 100)/size_max &gt; 25) &lt;&lt; FAS_TESTING_FILE_LINE;;</span>
+<span class="lineNum">      44 </span>            : 
+<span class="lineNum">      45 </span><span class="lineCov">        220 :     size_t skip = 0;</span>
+<span class="lineNum">      46 </span><span class="lineCov">        220 :     container_type::iterator it = container.begin();</span>
+<span class="lineNum">      47 </span><span class="lineCov">       7492 :     while( it != container.end() )</span>
+<span class="lineNum">      48 </span>            :     {
+<span class="lineNum">      49 </span><span class="lineCov">       7052 :       size_t skipped = 0;</span>
+<span class="lineNum">      50 </span><span class="lineCov">       7052 :       for (; skipped &lt; skip &amp;&amp; it != container.end(); ++it, ++skipped);</span>
+<span class="lineNum">      51 </span><span class="lineCov">       7052 :       if( it != container.end() )</span>
+<span class="lineNum">      52 </span>            :       {
+<span class="lineNum">      53 </span><span class="lineCov">       6832 :         int erase_item = (*it).second-&gt;back();</span>
+<span class="lineNum">      54 </span><span class="lineCov">       6832 :         int_set.erase(erase_item);</span>
+<span class="lineNum">      55 </span><span class="lineCov">       6832 :         etalon.erase(erase_item);</span>
+<span class="lineNum">      56 </span><span class="lineCov">       6832 :         it = container.begin();</span>
+<span class="lineNum">      57 </span><span class="lineCov">       6832 :         skip++;</span>
+<span class="lineNum">      58 </span>            :       }
+<span class="lineNum">      59 </span>            :     }
+<span class="lineNum">      60 </span>            :   }
+<span class="lineNum">      61 </span>            : 
+<span class="lineNum">      62 </span><span class="lineCov">          2 :   t &lt;&lt; nothing;</span>
+<a name="63"><span class="lineNum">      63 </span><span class="lineCov">          1 : }</span></a>
+<span class="lineNum">      64 </span>            : 
+<a name="65"><span class="lineNum">      65 </span><span class="lineCov">          1 : BEGIN_SUITE(defrag_suite, &quot;&quot;)</span></a>
+<span class="lineNum">      66 </span>            :   ADD_UNIT(defrag)
+<span class="lineNum">      67 </span><span class="lineCov">          7 : END_SUITE(defrag_suite)</span>
+</pre>
+      </td>
+    </tr>
+  </table>
+  <br>
+
+  <table width="100%" border=0 cellspacing=0 cellpadding=0>
+    <tr><td class="ruler"><img src="../../glass.png" width=3 height=3 alt=""></td></tr>
+    <tr><td class="versionInfo">Generated by: <a href="http://ltp.sourceforge.net/coverage/lcov.php" target="_parent">LCOV version 1.10</a></td></tr>
+  </table>
+  <br>
+
+</body>
+</html>

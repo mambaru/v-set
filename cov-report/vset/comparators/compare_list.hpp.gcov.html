@@ -1,0 +1,209 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+
+<html lang="en">
+
+<head>
+  <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+  <title>LCOV - v-set-coverage.info - vset/comparators/compare_list.hpp</title>
+  <link rel="stylesheet" type="text/css" href="../../gcov.css">
+</head>
+
+<body>
+
+  <table width="100%" border=0 cellspacing=0 cellpadding=0>
+    <tr><td class="title">LCOV - code coverage report</td></tr>
+    <tr><td class="ruler"><img src="../../glass.png" width=3 height=3 alt=""></td></tr>
+
+    <tr>
+      <td width="100%">
+        <table cellpadding=1 border=0 width="100%">
+          <tr>
+            <td width="10%" class="headerItem">Current view:</td>
+            <td width="35%" class="headerValue"><a href="../../index.html">top level</a> - <a href="index.html">vset/comparators</a> - compare_list.hpp<span style="font-size: 80%;"> (source / <a href="compare_list.hpp.func.html">functions</a>)</span></td>
+            <td width="5%"></td>
+            <td width="15%"></td>
+            <td width="10%" class="headerCovTableHead">Hit</td>
+            <td width="10%" class="headerCovTableHead">Total</td>
+            <td width="15%" class="headerCovTableHead">Coverage</td>
+          </tr>
+          <tr>
+            <td class="headerItem">Test:</td>
+            <td class="headerValue">v-set-coverage.info</td>
+            <td></td>
+            <td class="headerItem">Lines:</td>
+            <td class="headerCovTableEntry">10</td>
+            <td class="headerCovTableEntry">10</td>
+            <td class="headerCovTableEntryHi">100.0 %</td>
+          </tr>
+          <tr>
+            <td class="headerItem">Date:</td>
+            <td class="headerValue">2019-09-12</td>
+            <td></td>
+            <td class="headerItem">Functions:</td>
+            <td class="headerCovTableEntry">20</td>
+            <td class="headerCovTableEntry">20</td>
+            <td class="headerCovTableEntryHi">100.0 %</td>
+          </tr>
+          <tr><td><img src="../../glass.png" width=3 height=3 alt=""></td></tr>
+        </table>
+      </td>
+    </tr>
+
+    <tr><td class="ruler"><img src="../../glass.png" width=3 height=3 alt=""></td></tr>
+  </table>
+
+  <table cellpadding=0 cellspacing=0 border=0>
+    <tr>
+      <td><br></td>
+    </tr>
+    <tr>
+      <td>
+<pre class="sourceHeading">          Line data    Source code</pre>
+<pre class="source">
+<a name="1"><span class="lineNum">       1 </span>            : //</a>
+<span class="lineNum">       2 </span>            : // Author: Vladimir Migashko &lt;migashko@wamba.com&gt;, (C) 2013
+<span class="lineNum">       3 </span>            : //
+<span class="lineNum">       4 </span>            : // Copyright: See COPYING file that comes with this distribution
+<span class="lineNum">       5 </span>            : //
+<span class="lineNum">       6 </span>            : 
+<span class="lineNum">       7 </span>            : #ifndef COMPARATORS_COMPARE_LIST_HPP
+<span class="lineNum">       8 </span>            : #define COMPARATORS_COMPARE_LIST_HPP
+<span class="lineNum">       9 </span>            : 
+<span class="lineNum">      10 </span>            : #include &lt;fas/type_list/type_list.hpp&gt;
+<span class="lineNum">      11 </span>            : #include &lt;fas/type_list/type_list_n.hpp&gt;
+<span class="lineNum">      12 </span>            : #include &lt;fas/type_list/empty_list.hpp&gt;
+<span class="lineNum">      13 </span>            : #include &lt;fas/type_list/head.hpp&gt;
+<span class="lineNum">      14 </span>            : #include &lt;fas/type_list/tail.hpp&gt;
+<span class="lineNum">      15 </span>            : #include &lt;fas/type_list/erase_c.hpp&gt;
+<span class="lineNum">      16 </span>            : #include &lt;fas/type_list/push_back.hpp&gt;
+<span class="lineNum">      17 </span>            : 
+<span class="lineNum">      18 </span>            : namespace vset{
+<span class="lineNum">      19 </span>            : 
+<span class="lineNum">      20 </span>            : template&lt;typename CompareList&gt;
+<span class="lineNum">      21 </span>            : struct compare_list_impl;
+<span class="lineNum">      22 </span>            : 
+<span class="lineNum">      23 </span>            : template&lt;typename CompareList&gt;
+<span class="lineNum">      24 </span>            : struct compare_list2_impl;
+<span class="lineNum">      25 </span>            : 
+<span class="lineNum">      26 </span>            : 
+<span class="lineNum">      27 </span>            : #ifdef __GXX_EXPERIMENTAL_CXX0X__
+<span class="lineNum">      28 </span>            : 
+<span class="lineNum">      29 </span>            : /**
+<span class="lineNum">      30 </span>            :  * @brief Создает композитный компаратор на основе списка компараторов
+<span class="lineNum">      31 </span>            :  * @tparam Args... список компараторов, например vset::compare_member
+<span class="lineNum">      32 </span>            :  * @details может использоваться для определения компаратора сложных структур.
+<a name="33"><span class="lineNum">      33 </span>            :  */</a>
+<span class="lineNum">      34 </span>            : template&lt;typename... Args&gt;
+<span class="lineNum">      35 </span><span class="lineCov">          2 : struct compare_list: compare_list_impl&lt; typename fas::type_list_n&lt;Args...&gt;::type &gt; {};</span>
+<span class="lineNum">      36 </span>            : 
+<span class="lineNum">      37 </span>            : /**
+<span class="lineNum">      38 </span>            :  * @brief Создает композитный компаратор на основе списка компараторов 
+<span class="lineNum">      39 </span>            :  * @tparam Args... список компараторов, например vset::compare_member 
+<span class="lineNum">      40 </span>            :  * @details может использоваться для определения компаратора сложных структур.
+<span class="lineNum">      41 </span>            :  */
+<span class="lineNum">      42 </span>            : template&lt;typename... Args&gt;
+<span class="lineNum">      43 </span>            : struct compare_list2: compare_list2_impl&lt; typename fas::type_list_n&lt;Args...&gt;::type &gt; {};
+<span class="lineNum">      44 </span>            : 
+<span class="lineNum">      45 </span>            : #else
+<span class="lineNum">      46 </span>            : 
+<span class="lineNum">      47 </span>            : /**
+<span class="lineNum">      48 </span>            :  * @brief Создает композитный компаратор на основе списка компараторов 
+<span class="lineNum">      49 </span>            :  * @tparam CompareList список компараторов (fas::type_list), например из vset::compare_member
+<span class="lineNum">      50 </span>            :  * @details может использоваться для определения компаратора сложных структур.
+<span class="lineNum">      51 </span>            :  */
+<span class="lineNum">      52 </span>            : template&lt;typename CompareList&gt;
+<span class="lineNum">      53 </span>            : struct compare_list: compare_list_impl&lt; CompareList &gt; {};
+<span class="lineNum">      54 </span>            : 
+<span class="lineNum">      55 </span>            : /**
+<span class="lineNum">      56 </span>            :  * @brief Создает композитный компаратор на основе списка компараторов 
+<span class="lineNum">      57 </span>            :  * @tparam CompareList список компараторов (fas::type_list), например из vset::compare_member
+<span class="lineNum">      58 </span>            :  * @details может использоваться для определения компаратора сложных структур.
+<span class="lineNum">      59 </span>            :  */
+<span class="lineNum">      60 </span>            : template&lt;typename CompareList&gt;
+<span class="lineNum">      61 </span>            : struct compare_list2: compare_list2_impl&lt; CompareList &gt; {};
+<span class="lineNum">      62 </span>            : 
+<span class="lineNum">      63 </span>            : #endif
+<a name="64"><span class="lineNum">      64 </span>            :   </a>
+<span class="lineNum">      65 </span>            : template&lt;typename CompareList&gt;
+<span class="lineNum">      66 </span><span class="lineCov">          2 : struct compare_list_impl</span>
+<a name="67"><span class="lineNum">      67 </span>            : {</a>
+<span class="lineNum">      68 </span>            :   template&lt;typename D&gt;
+<span class="lineNum">      69 </span><span class="lineCov">        451 :   bool operator()(const D&amp; l, const D&amp; r) const</span>
+<span class="lineNum">      70 </span>            :   {
+<span class="lineNum">      71 </span><span class="lineCov">        451 :     return _( CompareList(), l, r);</span>
+<span class="lineNum">      72 </span>            :   }
+<a name="73"><span class="lineNum">      73 </span>            : </a>
+<span class="lineNum">      74 </span>            :   template&lt; typename L, typename D&gt;
+<span class="lineNum">      75 </span><span class="lineCov">        770 :   bool _( L, const D&amp; l, const D&amp; r) const</span>
+<span class="lineNum">      76 </span>            :   {
+<span class="lineNum">      77 </span>            :     typedef typename fas::head&lt;L&gt;::type head;
+<span class="lineNum">      78 </span>            :     typedef typename fas::tail&lt;L&gt;::type tail;
+<span class="lineNum">      79 </span>            : 
+<span class="lineNum">      80 </span><span class="lineCov">       1540 :     return head()(l, r) </span>
+<span class="lineNum">      81 </span>            :       ? true
+<span class="lineNum">      82 </span><span class="lineCov">       1360 :       : head()(r, l)</span>
+<span class="lineNum">      83 </span>            :         ? false
+<span class="lineNum">      84 </span><span class="lineCov">       2130 :         : _(tail(), l, r);</span>
+<span class="lineNum">      85 </span>            :   }
+<a name="86"><span class="lineNum">      86 </span>            : </a>
+<span class="lineNum">      87 </span>            :   template&lt; typename D&gt;
+<span class="lineNum">      88 </span><span class="lineCov">        150 :   static bool _( fas::empty_list, const D&amp; , const D&amp; )</span>
+<span class="lineNum">      89 </span>            :   {
+<span class="lineNum">      90 </span><span class="lineCov">        150 :     return false;</span>
+<span class="lineNum">      91 </span>            :   }
+<span class="lineNum">      92 </span>            : };
+<span class="lineNum">      93 </span>            : 
+<span class="lineNum">      94 </span>            : template&lt;typename CompareList&gt;
+<span class="lineNum">      95 </span>            : struct compare_list2_impl
+<span class="lineNum">      96 </span>            : {
+<span class="lineNum">      97 </span>            :   template&lt;typename D&gt;
+<span class="lineNum">      98 </span>            :   bool operator()(const D&amp; l, const D&amp; r) const
+<span class="lineNum">      99 </span>            :   {
+<span class="lineNum">     100 </span>            :     return _1_( fas::empty_list(), CompareList(), l, r);
+<span class="lineNum">     101 </span>            :   }
+<span class="lineNum">     102 </span>            : 
+<span class="lineNum">     103 </span>            :   template&lt; typename L, typename R,  typename D&gt;
+<span class="lineNum">     104 </span>            :   static bool _1_( L, R, const D&amp; l, const D&amp; r) 
+<span class="lineNum">     105 </span>            :   {
+<span class="lineNum">     106 </span>            :     typedef typename fas::push_back&lt; typename fas::head&lt;R&gt;::type, L &gt;::type left;
+<span class="lineNum">     107 </span>            :     typedef typename fas::erase_c&lt; 0, R &gt;::type right;
+<span class="lineNum">     108 </span>            :     return _2_( left(), l, r) || _1_( left(), right(), l, r );
+<span class="lineNum">     109 </span>            :   }
+<span class="lineNum">     110 </span>            : 
+<span class="lineNum">     111 </span>            :   template&lt; typename L, typename D&gt;
+<span class="lineNum">     112 </span>            :   static bool _1_( L, fas::empty_list, const D&amp; , const D&amp; ) 
+<span class="lineNum">     113 </span>            :   {
+<span class="lineNum">     114 </span>            :     return false;
+<span class="lineNum">     115 </span>            :   }
+<span class="lineNum">     116 </span>            : 
+<span class="lineNum">     117 </span>            :   template&lt; typename H, typename T, typename D&gt;
+<span class="lineNum">     118 </span>            :   static bool _2_( fas::type_list&lt;H, T&gt;, const D&amp; l, const D&amp; r) 
+<span class="lineNum">     119 </span>            :   {
+<span class="lineNum">     120 </span>            :     return !H()(r, l) &amp;&amp; _2_( T(), l, r);
+<span class="lineNum">     121 </span>            :   }
+<span class="lineNum">     122 </span>            : 
+<span class="lineNum">     123 </span>            :   template&lt; typename H, typename D&gt;
+<span class="lineNum">     124 </span>            :   static bool _2_( fas::type_list&lt;H, fas::empty_list&gt;, const D&amp; l, const D&amp; r) 
+<span class="lineNum">     125 </span>            :   {
+<span class="lineNum">     126 </span>            :     return H()(l, r);
+<span class="lineNum">     127 </span>            :   }
+<span class="lineNum">     128 </span>            : };
+<span class="lineNum">     129 </span>            : 
+<span class="lineNum">     130 </span>            : }
+<span class="lineNum">     131 </span>            : 
+<span class="lineNum">     132 </span>            : #endif
+<span class="lineNum">     133 </span>            : 
+</pre>
+      </td>
+    </tr>
+  </table>
+  <br>
+
+  <table width="100%" border=0 cellspacing=0 cellpadding=0>
+    <tr><td class="ruler"><img src="../../glass.png" width=3 height=3 alt=""></td></tr>
+    <tr><td class="versionInfo">Generated by: <a href="http://ltp.sourceforge.net/coverage/lcov.php" target="_parent">LCOV version 1.10</a></td></tr>
+  </table>
+  <br>
+
+</body>
+</html>

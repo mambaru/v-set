@@ -1,0 +1,801 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<meta http-equiv="Content-Type" content="text/xhtml;charset=UTF-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=9"/>
+<meta name="generator" content="Doxygen 1.8.15"/>
+<meta name="viewport" content="width=device-width, initial-scale=1"/>
+<title>v-set: Шаблон класса vset::multiset&lt; V, C, A &gt;</title>
+<link href="tabs.css" rel="stylesheet" type="text/css"/>
+<script type="text/javascript" src="jquery.js"></script>
+<script type="text/javascript" src="dynsections.js"></script>
+<link href="doxygen.css" rel="stylesheet" type="text/css" />
+<link href="customdoxygen.css" rel="stylesheet" type="text/css"/>
+</head>
+<body>
+<div id="top"><!-- do not remove this div, it is closed by doxygen! -->
+<div id="titlearea">
+<table cellspacing="0" cellpadding="0">
+ <tbody>
+ <tr style="height: 56px;">
+  <td id="projectalign" style="padding-left: 0.5em;">
+   <div id="projectname">v-set
+   </div>
+  </td>
+ </tr>
+ </tbody>
+</table>
+</div>
+<!-- end header part -->
+<!-- Создано системой Doxygen 1.8.15 -->
+<script type="text/javascript" src="menudata.js"></script>
+<script type="text/javascript" src="menu.js"></script>
+<script type="text/javascript">
+/* @license magnet:?xt=urn:btih:cf05388f2679ee054f2beb29a391d25f4e673ac3&amp;dn=gpl-2.0.txt GPL-v2 */
+$(function() {
+  initMenu('',false,false,'search.php','Поиск');
+});
+/* @license-end */</script>
+<div id="main-nav"></div>
+<div id="nav-path" class="navpath">
+  <ul>
+<li class="navelem"><b>vset</b></li><li class="navelem"><a class="el" href="classvset_1_1multiset.html">multiset</a></li>  </ul>
+</div>
+</div><!-- top -->
+<div class="header">
+  <div class="summary">
+<a href="#pub-types">Открытые типы</a> &#124;
+<a href="#pub-methods">Открытые члены</a> &#124;
+<a href="classvset_1_1multiset-members.html">Полный список членов класса</a>  </div>
+  <div class="headertitle">
+<div class="title">Шаблон класса vset::multiset&lt; V, C, A &gt;</div>  </div>
+</div><!--header-->
+<div class="contents">
+
+<p>ассоциативный контейнер <a class="el" href="classvset_1_1multiset.html" title="ассоциативный контейнер vset::multiset содержит упорядоченный набор объектов типа V (допускаются ключ...">vset::multiset</a> содержит упорядоченный набор объектов типа V (допускаются ключи с одинаковыми значениями). Сортировка производится с помощью функции сравнения ключей Compare. Операции поиска, вставки и удаления имеют отличную от <code>std::multiset</code> логорифмичскую сложность и определяется стратегией хранения, которая внедряется через аллокатор.  
+ <a href="classvset_1_1multiset.html#details">Подробнее...</a></p>
+
+<p><code>#include &lt;<a class="el" href="multiset_8hpp_source.html">multiset.hpp</a>&gt;</code></p>
+
+<p>Базовые классы:type&lt; V, C, A &gt;.</p>
+<table class="memberdecls">
+<tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="pub-types"></a>
+Открытые типы</h2></td></tr>
+<tr class="memitem:a620c72103d12689c655c2fdc8b86076c"><td class="memItemLeft" align="right" valign="top">typedef super::key_type&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classvset_1_1multiset.html#a620c72103d12689c655c2fdc8b86076c">key_type</a></td></tr>
+<tr class="separator:a620c72103d12689c655c2fdc8b86076c"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:aee011e37ffe457dc7a5da7be011917e0"><td class="memItemLeft" align="right" valign="top">typedef super::value_type&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classvset_1_1multiset.html#aee011e37ffe457dc7a5da7be011917e0">value_type</a></td></tr>
+<tr class="separator:aee011e37ffe457dc7a5da7be011917e0"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ad3741a6001c05cbfb414b9822fd62e1c"><td class="memItemLeft" align="right" valign="top">typedef super::key_compare&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classvset_1_1multiset.html#ad3741a6001c05cbfb414b9822fd62e1c">key_compare</a></td></tr>
+<tr class="separator:ad3741a6001c05cbfb414b9822fd62e1c"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a3709e367ca1b5bd9a40a77a21f41e149"><td class="memItemLeft" align="right" valign="top">typedef super::value_compare&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classvset_1_1multiset.html#a3709e367ca1b5bd9a40a77a21f41e149">value_compare</a></td></tr>
+<tr class="separator:a3709e367ca1b5bd9a40a77a21f41e149"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a307a4e3b928896e477ac865cb6f285d4"><td class="memItemLeft" align="right" valign="top">typedef super::allocator_type&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classvset_1_1multiset.html#a307a4e3b928896e477ac865cb6f285d4">allocator_type</a></td></tr>
+<tr class="separator:a307a4e3b928896e477ac865cb6f285d4"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a762ad79fd0480bc179850512b76069e7"><td class="memItemLeft" align="right" valign="top">typedef super::reference&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classvset_1_1multiset.html#a762ad79fd0480bc179850512b76069e7">reference</a></td></tr>
+<tr class="separator:a762ad79fd0480bc179850512b76069e7"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a2a09f16abbd0813fca14b0cef8dc3cc5"><td class="memItemLeft" align="right" valign="top">typedef super::const_reference&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classvset_1_1multiset.html#a2a09f16abbd0813fca14b0cef8dc3cc5">const_reference</a></td></tr>
+<tr class="separator:a2a09f16abbd0813fca14b0cef8dc3cc5"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a42f987896b64c0920381d3f86d417f6c"><td class="memItemLeft" align="right" valign="top">typedef super::pointer&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classvset_1_1multiset.html#a42f987896b64c0920381d3f86d417f6c">pointer</a></td></tr>
+<tr class="separator:a42f987896b64c0920381d3f86d417f6c"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a51f2b67bd594301a3856fb026d99d50f"><td class="memItemLeft" align="right" valign="top">typedef super::const_pointer&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classvset_1_1multiset.html#a51f2b67bd594301a3856fb026d99d50f">const_pointer</a></td></tr>
+<tr class="separator:a51f2b67bd594301a3856fb026d99d50f"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ab6603fa69b8c6a59ed0b14409ca46a7b"><td class="memItemLeft" align="right" valign="top">typedef super::iterator&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classvset_1_1multiset.html#ab6603fa69b8c6a59ed0b14409ca46a7b">iterator</a></td></tr>
+<tr class="separator:ab6603fa69b8c6a59ed0b14409ca46a7b"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a666d0b7cedc8e98d9dfdac7cb4ac5462"><td class="memItemLeft" align="right" valign="top">typedef super::const_iterator&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classvset_1_1multiset.html#a666d0b7cedc8e98d9dfdac7cb4ac5462">const_iterator</a></td></tr>
+<tr class="separator:a666d0b7cedc8e98d9dfdac7cb4ac5462"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a93bcfdbbefe48193a7e80ea7e45a2b3c"><td class="memItemLeft" align="right" valign="top">typedef super::reverse_iterator&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classvset_1_1multiset.html#a93bcfdbbefe48193a7e80ea7e45a2b3c">reverse_iterator</a></td></tr>
+<tr class="separator:a93bcfdbbefe48193a7e80ea7e45a2b3c"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a446d605faa6229d2182bfbec7b1e3c88"><td class="memItemLeft" align="right" valign="top">typedef super::const_reverse_iterator&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classvset_1_1multiset.html#a446d605faa6229d2182bfbec7b1e3c88">const_reverse_iterator</a></td></tr>
+<tr class="separator:a446d605faa6229d2182bfbec7b1e3c88"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a0341f594b9023b8d05c820eb2d628d3a"><td class="memItemLeft" align="right" valign="top">typedef super::difference_type&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classvset_1_1multiset.html#a0341f594b9023b8d05c820eb2d628d3a">difference_type</a></td></tr>
+<tr class="separator:a0341f594b9023b8d05c820eb2d628d3a"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:acbf7d33a93677ea528286b071d422418"><td class="memItemLeft" align="right" valign="top">typedef super::size_type&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classvset_1_1multiset.html#acbf7d33a93677ea528286b071d422418">size_type</a></td></tr>
+<tr class="separator:acbf7d33a93677ea528286b071d422418"><td class="memSeparator" colspan="2">&#160;</td></tr>
+</table><table class="memberdecls">
+<tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="pub-methods"></a>
+Открытые члены</h2></td></tr>
+<tr class="memitem:af28a0d477db6f406648abfbd80f04e5d"><td class="memItemLeft" align="right" valign="top"><a id="af28a0d477db6f406648abfbd80f04e5d"></a>
+&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classvset_1_1multiset.html#af28a0d477db6f406648abfbd80f04e5d">multiset</a> ()</td></tr>
+<tr class="memdesc:af28a0d477db6f406648abfbd80f04e5d"><td class="mdescLeft">&#160;</td><td class="mdescRight">Конструктор по умолчанию. Создаёт пустой контейнер. <br /></td></tr>
+<tr class="separator:af28a0d477db6f406648abfbd80f04e5d"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ac0ed63538cbc1634422c7772be813240"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classvset_1_1multiset.html#ac0ed63538cbc1634422c7772be813240">multiset</a> (const <a class="el" href="classvset_1_1multiset.html#ad3741a6001c05cbfb414b9822fd62e1c">key_compare</a> &amp;comp, const <a class="el" href="classvset_1_1multiset.html#a307a4e3b928896e477ac865cb6f285d4">allocator_type</a> &amp;alloc=<a class="el" href="classvset_1_1multiset.html#a307a4e3b928896e477ac865cb6f285d4">allocator_type</a>())</td></tr>
+<tr class="memdesc:ac0ed63538cbc1634422c7772be813240"><td class="mdescLeft">&#160;</td><td class="mdescRight">Конструктор создаёт пустой контейнер.  <a href="#ac0ed63538cbc1634422c7772be813240">Подробнее...</a><br /></td></tr>
+<tr class="separator:ac0ed63538cbc1634422c7772be813240"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a7726dfe46febc34a81806139af5cae78"><td class="memTemplParams" colspan="2">template&lt;typename InputIterator &gt; </td></tr>
+<tr class="memitem:a7726dfe46febc34a81806139af5cae78"><td class="memTemplItemLeft" align="right" valign="top">&#160;</td><td class="memTemplItemRight" valign="bottom"><a class="el" href="classvset_1_1multiset.html#a7726dfe46febc34a81806139af5cae78">multiset</a> (InputIterator first, InputIterator last)</td></tr>
+<tr class="memdesc:a7726dfe46febc34a81806139af5cae78"><td class="mdescLeft">&#160;</td><td class="mdescRight">Создаёт контейнер с содержимым из диапазона [first, last).  <a href="#a7726dfe46febc34a81806139af5cae78">Подробнее...</a><br /></td></tr>
+<tr class="separator:a7726dfe46febc34a81806139af5cae78"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:afd21bb82851781c9a7210b871dd0257d"><td class="memTemplParams" colspan="2">template&lt;typename InputIterator &gt; </td></tr>
+<tr class="memitem:afd21bb82851781c9a7210b871dd0257d"><td class="memTemplItemLeft" align="right" valign="top">&#160;</td><td class="memTemplItemRight" valign="bottom"><a class="el" href="classvset_1_1multiset.html#afd21bb82851781c9a7210b871dd0257d">multiset</a> (InputIterator first, InputIterator last, const <a class="el" href="classvset_1_1multiset.html#a3709e367ca1b5bd9a40a77a21f41e149">value_compare</a> &amp;comp, const <a class="el" href="classvset_1_1multiset.html#a307a4e3b928896e477ac865cb6f285d4">allocator_type</a> &amp;alloc=<a class="el" href="classvset_1_1multiset.html#a307a4e3b928896e477ac865cb6f285d4">allocator_type</a>())</td></tr>
+<tr class="memdesc:afd21bb82851781c9a7210b871dd0257d"><td class="mdescLeft">&#160;</td><td class="mdescRight">Создаёт контейнер с содержимым из диапазона [first, last).  <a href="#afd21bb82851781c9a7210b871dd0257d">Подробнее...</a><br /></td></tr>
+<tr class="separator:afd21bb82851781c9a7210b871dd0257d"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a501260e4cea023d305aff0e17024ac56"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classvset_1_1multiset.html#a501260e4cea023d305aff0e17024ac56">multiset</a> (const <a class="el" href="classvset_1_1multiset.html">multiset</a> &amp;other)</td></tr>
+<tr class="memdesc:a501260e4cea023d305aff0e17024ac56"><td class="mdescLeft">&#160;</td><td class="mdescRight">Конструктор копирования  <a href="#a501260e4cea023d305aff0e17024ac56">Подробнее...</a><br /></td></tr>
+<tr class="separator:a501260e4cea023d305aff0e17024ac56"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a25d8b24a82ce6a81f7b5494a9d11941d"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classvset_1_1multiset.html#a25d8b24a82ce6a81f7b5494a9d11941d">multiset</a> (<a class="el" href="classvset_1_1multiset.html">multiset</a> &amp;&amp;other)</td></tr>
+<tr class="memdesc:a25d8b24a82ce6a81f7b5494a9d11941d"><td class="mdescLeft">&#160;</td><td class="mdescRight">Move-конструктор (c++11). Создает контейнер с содержимым other с использованием move-семантики. Если alloc не был предоставлен, то он будет получен с помощью move-конструктора от аллокатора принадлежащего other.  <a href="#a25d8b24a82ce6a81f7b5494a9d11941d">Подробнее...</a><br /></td></tr>
+<tr class="separator:a25d8b24a82ce6a81f7b5494a9d11941d"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:aeb79bb34801ec2e0d403a1ec393f2e65"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classvset_1_1multiset.html#aeb79bb34801ec2e0d403a1ec393f2e65">multiset</a> (const std::initializer_list&lt; <a class="el" href="classvset_1_1multiset.html#aee011e37ffe457dc7a5da7be011917e0">value_type</a> &gt; &amp;init, const <a class="el" href="classvset_1_1multiset.html#a3709e367ca1b5bd9a40a77a21f41e149">value_compare</a> &amp;comp=<a class="el" href="classvset_1_1multiset.html#a3709e367ca1b5bd9a40a77a21f41e149">value_compare</a>(), const <a class="el" href="classvset_1_1multiset.html#a307a4e3b928896e477ac865cb6f285d4">allocator_type</a> &amp;alloc=<a class="el" href="classvset_1_1multiset.html#a307a4e3b928896e477ac865cb6f285d4">allocator_type</a>())</td></tr>
+<tr class="memdesc:aeb79bb34801ec2e0d403a1ec393f2e65"><td class="mdescLeft">&#160;</td><td class="mdescRight">Создает контейнер с содержимым списка инициализации init (c++11).  <a href="#aeb79bb34801ec2e0d403a1ec393f2e65">Подробнее...</a><br /></td></tr>
+<tr class="separator:aeb79bb34801ec2e0d403a1ec393f2e65"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a4f9c78aee28fb68cbab027c1cd8bc314"><td class="memItemLeft" align="right" valign="top"><a class="el" href="classvset_1_1multiset.html">multiset</a> &amp;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classvset_1_1multiset.html#a4f9c78aee28fb68cbab027c1cd8bc314">operator=</a> (const <a class="el" href="classvset_1_1multiset.html">multiset</a> &amp;other)</td></tr>
+<tr class="memdesc:a4f9c78aee28fb68cbab027c1cd8bc314"><td class="mdescLeft">&#160;</td><td class="mdescRight">Заменяет содержимое копией содержимого other.  <a href="#a4f9c78aee28fb68cbab027c1cd8bc314">Подробнее...</a><br /></td></tr>
+<tr class="separator:a4f9c78aee28fb68cbab027c1cd8bc314"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a609a726b510dc539c736b01612df854b"><td class="memItemLeft" align="right" valign="top"><a class="el" href="classvset_1_1multiset.html">multiset</a> &amp;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classvset_1_1multiset.html#a609a726b510dc539c736b01612df854b">operator=</a> (<a class="el" href="classvset_1_1multiset.html">multiset</a> &amp;&amp;other)</td></tr>
+<tr class="memdesc:a609a726b510dc539c736b01612df854b"><td class="mdescLeft">&#160;</td><td class="mdescRight">Заменяет содержимое содержимым other использованием семантики переноса (c++11)  <a href="#a609a726b510dc539c736b01612df854b">Подробнее...</a><br /></td></tr>
+<tr class="separator:a609a726b510dc539c736b01612df854b"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a77fe83220abc11bb9a943c0709ab996b"><td class="memItemLeft" align="right" valign="top"><a class="el" href="classvset_1_1multiset.html">multiset</a> &amp;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classvset_1_1multiset.html#a77fe83220abc11bb9a943c0709ab996b">operator=</a> (std::initializer_list&lt; <a class="el" href="classvset_1_1multiset.html#aee011e37ffe457dc7a5da7be011917e0">value_type</a> &gt; il)</td></tr>
+<tr class="memdesc:a77fe83220abc11bb9a943c0709ab996b"><td class="mdescLeft">&#160;</td><td class="mdescRight">Заменяет содержимое элементами, которые указаны в списке идентификаторов инициализатора (c++11).  <a href="#a77fe83220abc11bb9a943c0709ab996b">Подробнее...</a><br /></td></tr>
+<tr class="separator:a77fe83220abc11bb9a943c0709ab996b"><td class="memSeparator" colspan="2">&#160;</td></tr>
+</table>
+<a name="details" id="details"></a><h2 class="groupheader">Подробное описание</h2>
+<div class="textblock"><h3>template&lt;typename V, typename C, typename A&gt;<br />
+class vset::multiset&lt; V, C, A &gt;</h3>
+
+<p class="">ассоциативный контейнер <a class="el" href="classvset_1_1multiset.html" title="ассоциативный контейнер vset::multiset содержит упорядоченный набор объектов типа V (допускаются ключ...">vset::multiset</a> содержит упорядоченный набор объектов типа V (допускаются ключи с одинаковыми значениями). Сортировка производится с помощью функции сравнения ключей Compare. Операции поиска, вставки и удаления имеют отличную от <code>std::multiset</code> логорифмичскую сложность и определяется стратегией хранения, которая внедряется через аллокатор. </p>
+<dl class="tparams"><dt>Параметры шаблона</dt><dd>
+  <table class="tparams">
+    <tr><td class="paramname">V</td><td>- тип хранимых объектов </td></tr>
+    <tr><td class="paramname">C</td><td>- функции сравнения ключей </td></tr>
+    <tr><td class="paramname">A</td><td>- аллокатор </td></tr>
+  </table>
+  </dd>
+</dl>
+</div><h2 class="groupheader">Определения типов</h2>
+<a id="a307a4e3b928896e477ac865cb6f285d4"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a307a4e3b928896e477ac865cb6f285d4">&#9670;&nbsp;</a></span>allocator_type</h2>
+
+<div class="memitem">
+<div class="memproto">
+<div class="memtemplate">
+template&lt;typename V , typename C , typename A &gt; </div>
+      <table class="memname">
+        <tr>
+          <td class="memname">typedef super::allocator_type <a class="el" href="classvset_1_1multiset.html">vset::multiset</a>&lt; V, C, A &gt;::<a class="el" href="classvset_1_1multiset.html#a307a4e3b928896e477ac865cb6f285d4">allocator_type</a></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<p class="">Allocator </p>
+
+</div>
+</div>
+<a id="a666d0b7cedc8e98d9dfdac7cb4ac5462"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a666d0b7cedc8e98d9dfdac7cb4ac5462">&#9670;&nbsp;</a></span>const_iterator</h2>
+
+<div class="memitem">
+<div class="memproto">
+<div class="memtemplate">
+template&lt;typename V , typename C , typename A &gt; </div>
+      <table class="memname">
+        <tr>
+          <td class="memname">typedef super::const_iterator <a class="el" href="classvset_1_1multiset.html">vset::multiset</a>&lt; V, C, A &gt;::<a class="el" href="classvset_1_1multiset.html#a666d0b7cedc8e98d9dfdac7cb4ac5462">const_iterator</a></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<p class="">Константный итератор произвольного доступа </p>
+
+</div>
+</div>
+<a id="a51f2b67bd594301a3856fb026d99d50f"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a51f2b67bd594301a3856fb026d99d50f">&#9670;&nbsp;</a></span>const_pointer</h2>
+
+<div class="memitem">
+<div class="memproto">
+<div class="memtemplate">
+template&lt;typename V , typename C , typename A &gt; </div>
+      <table class="memname">
+        <tr>
+          <td class="memname">typedef super::const_pointer <a class="el" href="classvset_1_1multiset.html">vset::multiset</a>&lt; V, C, A &gt;::<a class="el" href="classvset_1_1multiset.html#a51f2b67bd594301a3856fb026d99d50f">const_pointer</a></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<p class="">std::iterator_traits&lt;iterator&gt;::const_pointer </p>
+
+</div>
+</div>
+<a id="a2a09f16abbd0813fca14b0cef8dc3cc5"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a2a09f16abbd0813fca14b0cef8dc3cc5">&#9670;&nbsp;</a></span>const_reference</h2>
+
+<div class="memitem">
+<div class="memproto">
+<div class="memtemplate">
+template&lt;typename V , typename C , typename A &gt; </div>
+      <table class="memname">
+        <tr>
+          <td class="memname">typedef super::const_reference <a class="el" href="classvset_1_1multiset.html">vset::multiset</a>&lt; V, C, A &gt;::<a class="el" href="classvset_1_1multiset.html#a2a09f16abbd0813fca14b0cef8dc3cc5">const_reference</a></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<p class="">std::iterator_traits&lt;iterator&gt;::const_reference </p>
+
+</div>
+</div>
+<a id="a446d605faa6229d2182bfbec7b1e3c88"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a446d605faa6229d2182bfbec7b1e3c88">&#9670;&nbsp;</a></span>const_reverse_iterator</h2>
+
+<div class="memitem">
+<div class="memproto">
+<div class="memtemplate">
+template&lt;typename V , typename C , typename A &gt; </div>
+      <table class="memname">
+        <tr>
+          <td class="memname">typedef super::const_reverse_iterator <a class="el" href="classvset_1_1multiset.html">vset::multiset</a>&lt; V, C, A &gt;::<a class="el" href="classvset_1_1multiset.html#a446d605faa6229d2182bfbec7b1e3c88">const_reverse_iterator</a></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<p class="">std::reverse_iterator&lt;const_iterator&gt; </p>
+
+</div>
+</div>
+<a id="a0341f594b9023b8d05c820eb2d628d3a"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a0341f594b9023b8d05c820eb2d628d3a">&#9670;&nbsp;</a></span>difference_type</h2>
+
+<div class="memitem">
+<div class="memproto">
+<div class="memtemplate">
+template&lt;typename V , typename C , typename A &gt; </div>
+      <table class="memname">
+        <tr>
+          <td class="memname">typedef super::difference_type <a class="el" href="classvset_1_1multiset.html">vset::multiset</a>&lt; V, C, A &gt;::<a class="el" href="classvset_1_1multiset.html#a0341f594b9023b8d05c820eb2d628d3a">difference_type</a></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<p class="">Знаковый целочисленный тип (обычно std::ptrdiff_t) </p>
+
+</div>
+</div>
+<a id="ab6603fa69b8c6a59ed0b14409ca46a7b"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ab6603fa69b8c6a59ed0b14409ca46a7b">&#9670;&nbsp;</a></span>iterator</h2>
+
+<div class="memitem">
+<div class="memproto">
+<div class="memtemplate">
+template&lt;typename V , typename C , typename A &gt; </div>
+      <table class="memname">
+        <tr>
+          <td class="memname">typedef super::iterator <a class="el" href="classvset_1_1multiset.html">vset::multiset</a>&lt; V, C, A &gt;::<a class="el" href="classvset_1_1multiset.html#ab6603fa69b8c6a59ed0b14409ca46a7b">iterator</a></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<p class="">Итератор произвольного доступа </p>
+
+</div>
+</div>
+<a id="ad3741a6001c05cbfb414b9822fd62e1c"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ad3741a6001c05cbfb414b9822fd62e1c">&#9670;&nbsp;</a></span>key_compare</h2>
+
+<div class="memitem">
+<div class="memproto">
+<div class="memtemplate">
+template&lt;typename V , typename C , typename A &gt; </div>
+      <table class="memname">
+        <tr>
+          <td class="memname">typedef super::key_compare <a class="el" href="classvset_1_1multiset.html">vset::multiset</a>&lt; V, C, A &gt;::<a class="el" href="classvset_1_1multiset.html#ad3741a6001c05cbfb414b9822fd62e1c">key_compare</a></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<p class="">Compare: <em>key_compare</em> </p>
+
+</div>
+</div>
+<a id="a620c72103d12689c655c2fdc8b86076c"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a620c72103d12689c655c2fdc8b86076c">&#9670;&nbsp;</a></span>key_type</h2>
+
+<div class="memitem">
+<div class="memproto">
+<div class="memtemplate">
+template&lt;typename V , typename C , typename A &gt; </div>
+      <table class="memname">
+        <tr>
+          <td class="memname">typedef super::key_type <a class="el" href="classvset_1_1multiset.html">vset::multiset</a>&lt; V, C, A &gt;::<a class="el" href="classvset_1_1multiset.html#a620c72103d12689c655c2fdc8b86076c">key_type</a></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<p class="">Key: <em>key_type</em> </p>
+
+</div>
+</div>
+<a id="a42f987896b64c0920381d3f86d417f6c"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a42f987896b64c0920381d3f86d417f6c">&#9670;&nbsp;</a></span>pointer</h2>
+
+<div class="memitem">
+<div class="memproto">
+<div class="memtemplate">
+template&lt;typename V , typename C , typename A &gt; </div>
+      <table class="memname">
+        <tr>
+          <td class="memname">typedef super::pointer <a class="el" href="classvset_1_1multiset.html">vset::multiset</a>&lt; V, C, A &gt;::<a class="el" href="classvset_1_1multiset.html#a42f987896b64c0920381d3f86d417f6c">pointer</a></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<p class="">std::iterator_traits&lt;iterator&gt;::pointer </p>
+
+</div>
+</div>
+<a id="a762ad79fd0480bc179850512b76069e7"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a762ad79fd0480bc179850512b76069e7">&#9670;&nbsp;</a></span>reference</h2>
+
+<div class="memitem">
+<div class="memproto">
+<div class="memtemplate">
+template&lt;typename V , typename C , typename A &gt; </div>
+      <table class="memname">
+        <tr>
+          <td class="memname">typedef super::reference <a class="el" href="classvset_1_1multiset.html">vset::multiset</a>&lt; V, C, A &gt;::<a class="el" href="classvset_1_1multiset.html#a762ad79fd0480bc179850512b76069e7">reference</a></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<p class="">std::iterator_traits&lt;iterator&gt;::reference </p>
+
+</div>
+</div>
+<a id="a93bcfdbbefe48193a7e80ea7e45a2b3c"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a93bcfdbbefe48193a7e80ea7e45a2b3c">&#9670;&nbsp;</a></span>reverse_iterator</h2>
+
+<div class="memitem">
+<div class="memproto">
+<div class="memtemplate">
+template&lt;typename V , typename C , typename A &gt; </div>
+      <table class="memname">
+        <tr>
+          <td class="memname">typedef super::reverse_iterator <a class="el" href="classvset_1_1multiset.html">vset::multiset</a>&lt; V, C, A &gt;::<a class="el" href="classvset_1_1multiset.html#a93bcfdbbefe48193a7e80ea7e45a2b3c">reverse_iterator</a></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<p class="">std::reverse_iterator&lt;iterator&gt; </p>
+
+</div>
+</div>
+<a id="acbf7d33a93677ea528286b071d422418"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#acbf7d33a93677ea528286b071d422418">&#9670;&nbsp;</a></span>size_type</h2>
+
+<div class="memitem">
+<div class="memproto">
+<div class="memtemplate">
+template&lt;typename V , typename C , typename A &gt; </div>
+      <table class="memname">
+        <tr>
+          <td class="memname">typedef super::size_type <a class="el" href="classvset_1_1multiset.html">vset::multiset</a>&lt; V, C, A &gt;::<a class="el" href="classvset_1_1multiset.html#acbf7d33a93677ea528286b071d422418">size_type</a></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<p class="">Беззнаковый целочисленный тип (обычно size_t) </p>
+
+</div>
+</div>
+<a id="a3709e367ca1b5bd9a40a77a21f41e149"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a3709e367ca1b5bd9a40a77a21f41e149">&#9670;&nbsp;</a></span>value_compare</h2>
+
+<div class="memitem">
+<div class="memproto">
+<div class="memtemplate">
+template&lt;typename V , typename C , typename A &gt; </div>
+      <table class="memname">
+        <tr>
+          <td class="memname">typedef super::value_compare <a class="el" href="classvset_1_1multiset.html">vset::multiset</a>&lt; V, C, A &gt;::<a class="el" href="classvset_1_1multiset.html#a3709e367ca1b5bd9a40a77a21f41e149">value_compare</a></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<p class="">Compare: <em>value_compare</em> </p>
+
+</div>
+</div>
+<a id="aee011e37ffe457dc7a5da7be011917e0"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#aee011e37ffe457dc7a5da7be011917e0">&#9670;&nbsp;</a></span>value_type</h2>
+
+<div class="memitem">
+<div class="memproto">
+<div class="memtemplate">
+template&lt;typename V , typename C , typename A &gt; </div>
+      <table class="memname">
+        <tr>
+          <td class="memname">typedef super::value_type <a class="el" href="classvset_1_1multiset.html">vset::multiset</a>&lt; V, C, A &gt;::<a class="el" href="classvset_1_1multiset.html#aee011e37ffe457dc7a5da7be011917e0">value_type</a></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<p class="">Key: <em>value_type</em> </p>
+
+</div>
+</div>
+<h2 class="groupheader">Конструктор(ы)</h2>
+<a id="ac0ed63538cbc1634422c7772be813240"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ac0ed63538cbc1634422c7772be813240">&#9670;&nbsp;</a></span>multiset() <span class="overload">[1/6]</span></h2>
+
+<div class="memitem">
+<div class="memproto">
+<div class="memtemplate">
+template&lt;typename V , typename C , typename A &gt; </div>
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname"><a class="el" href="classvset_1_1multiset.html">vset::multiset</a>&lt; V, C, A &gt;::<a class="el" href="classvset_1_1multiset.html">multiset</a> </td>
+          <td>(</td>
+          <td class="paramtype">const <a class="el" href="classvset_1_1multiset.html#ad3741a6001c05cbfb414b9822fd62e1c">key_compare</a> &amp;&#160;</td>
+          <td class="paramname"><em>comp</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">const <a class="el" href="classvset_1_1multiset.html#a307a4e3b928896e477ac865cb6f285d4">allocator_type</a> &amp;&#160;</td>
+          <td class="paramname"><em>alloc</em> = <code><a class="el" href="classvset_1_1multiset.html#a307a4e3b928896e477ac865cb6f285d4">allocator_type</a>()</code>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">inline</span><span class="mlabel">explicit</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p>Конструктор создаёт пустой контейнер. </p>
+<dl class="params"><dt>Аргументы</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">comp</td><td>функции сравнения ключей </td></tr>
+    <tr><td class="paramname">alloc</td><td>функции сравнения ключей </td></tr>
+  </table>
+  </dd>
+</dl>
+
+</div>
+</div>
+<a id="a7726dfe46febc34a81806139af5cae78"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a7726dfe46febc34a81806139af5cae78">&#9670;&nbsp;</a></span>multiset() <span class="overload">[2/6]</span></h2>
+
+<div class="memitem">
+<div class="memproto">
+<div class="memtemplate">
+template&lt;typename V , typename C , typename A &gt; </div>
+<div class="memtemplate">
+template&lt;typename InputIterator &gt; </div>
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname"><a class="el" href="classvset_1_1multiset.html">vset::multiset</a>&lt; V, C, A &gt;::<a class="el" href="classvset_1_1multiset.html">multiset</a> </td>
+          <td>(</td>
+          <td class="paramtype">InputIterator&#160;</td>
+          <td class="paramname"><em>first</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">InputIterator&#160;</td>
+          <td class="paramname"><em>last</em>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">inline</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p>Создаёт контейнер с содержимым из диапазона [first, last). </p>
+<dl class="params"><dt>Аргументы</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">first</td><td>итератор начала диапазона </td></tr>
+    <tr><td class="paramname">last</td><td>итератор конеца диапазона </td></tr>
+  </table>
+  </dd>
+</dl>
+
+</div>
+</div>
+<a id="afd21bb82851781c9a7210b871dd0257d"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#afd21bb82851781c9a7210b871dd0257d">&#9670;&nbsp;</a></span>multiset() <span class="overload">[3/6]</span></h2>
+
+<div class="memitem">
+<div class="memproto">
+<div class="memtemplate">
+template&lt;typename V , typename C , typename A &gt; </div>
+<div class="memtemplate">
+template&lt;typename InputIterator &gt; </div>
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname"><a class="el" href="classvset_1_1multiset.html">vset::multiset</a>&lt; V, C, A &gt;::<a class="el" href="classvset_1_1multiset.html">multiset</a> </td>
+          <td>(</td>
+          <td class="paramtype">InputIterator&#160;</td>
+          <td class="paramname"><em>first</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">InputIterator&#160;</td>
+          <td class="paramname"><em>last</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">const <a class="el" href="classvset_1_1multiset.html#a3709e367ca1b5bd9a40a77a21f41e149">value_compare</a> &amp;&#160;</td>
+          <td class="paramname"><em>comp</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">const <a class="el" href="classvset_1_1multiset.html#a307a4e3b928896e477ac865cb6f285d4">allocator_type</a> &amp;&#160;</td>
+          <td class="paramname"><em>alloc</em> = <code><a class="el" href="classvset_1_1multiset.html#a307a4e3b928896e477ac865cb6f285d4">allocator_type</a>()</code>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">inline</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p>Создаёт контейнер с содержимым из диапазона [first, last). </p>
+<dl class="params"><dt>Аргументы</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">first</td><td>итератор начала диапазона </td></tr>
+    <tr><td class="paramname">last</td><td>итератор конеца диапазона </td></tr>
+    <tr><td class="paramname">comp</td><td>функции сравнения ключей </td></tr>
+    <tr><td class="paramname">alloc</td><td>функции сравнения ключей </td></tr>
+  </table>
+  </dd>
+</dl>
+
+</div>
+</div>
+<a id="a501260e4cea023d305aff0e17024ac56"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a501260e4cea023d305aff0e17024ac56">&#9670;&nbsp;</a></span>multiset() <span class="overload">[4/6]</span></h2>
+
+<div class="memitem">
+<div class="memproto">
+<div class="memtemplate">
+template&lt;typename V , typename C , typename A &gt; </div>
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname"><a class="el" href="classvset_1_1multiset.html">vset::multiset</a>&lt; V, C, A &gt;::<a class="el" href="classvset_1_1multiset.html">multiset</a> </td>
+          <td>(</td>
+          <td class="paramtype">const <a class="el" href="classvset_1_1multiset.html">multiset</a>&lt; V, C, A &gt; &amp;&#160;</td>
+          <td class="paramname"><em>other</em></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">inline</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p>Конструктор копирования </p>
+<p class="">Для персистентных контейнеров копирование запрещено </p>
+
+</div>
+</div>
+<a id="a25d8b24a82ce6a81f7b5494a9d11941d"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a25d8b24a82ce6a81f7b5494a9d11941d">&#9670;&nbsp;</a></span>multiset() <span class="overload">[5/6]</span></h2>
+
+<div class="memitem">
+<div class="memproto">
+<div class="memtemplate">
+template&lt;typename V , typename C , typename A &gt; </div>
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname"><a class="el" href="classvset_1_1multiset.html">vset::multiset</a>&lt; V, C, A &gt;::<a class="el" href="classvset_1_1multiset.html">multiset</a> </td>
+          <td>(</td>
+          <td class="paramtype"><a class="el" href="classvset_1_1multiset.html">multiset</a>&lt; V, C, A &gt; &amp;&amp;&#160;</td>
+          <td class="paramname"><em>other</em></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">inline</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p>Move-конструктор (c++11). Создает контейнер с содержимым other с использованием move-семантики. Если alloc не был предоставлен, то он будет получен с помощью move-конструктора от аллокатора принадлежащего other. </p>
+<dl class="params"><dt>Аргументы</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">other</td><td>другой контейнер, который будет использован в качестве источника данных для инициализации элементов контейнера </td></tr>
+  </table>
+  </dd>
+</dl>
+
+</div>
+</div>
+<a id="aeb79bb34801ec2e0d403a1ec393f2e65"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#aeb79bb34801ec2e0d403a1ec393f2e65">&#9670;&nbsp;</a></span>multiset() <span class="overload">[6/6]</span></h2>
+
+<div class="memitem">
+<div class="memproto">
+<div class="memtemplate">
+template&lt;typename V , typename C , typename A &gt; </div>
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname"><a class="el" href="classvset_1_1multiset.html">vset::multiset</a>&lt; V, C, A &gt;::<a class="el" href="classvset_1_1multiset.html">multiset</a> </td>
+          <td>(</td>
+          <td class="paramtype">const std::initializer_list&lt; <a class="el" href="classvset_1_1multiset.html#aee011e37ffe457dc7a5da7be011917e0">value_type</a> &gt; &amp;&#160;</td>
+          <td class="paramname"><em>init</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">const <a class="el" href="classvset_1_1multiset.html#a3709e367ca1b5bd9a40a77a21f41e149">value_compare</a> &amp;&#160;</td>
+          <td class="paramname"><em>comp</em> = <code><a class="el" href="classvset_1_1multiset.html#a3709e367ca1b5bd9a40a77a21f41e149">value_compare</a>()</code>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">const <a class="el" href="classvset_1_1multiset.html#a307a4e3b928896e477ac865cb6f285d4">allocator_type</a> &amp;&#160;</td>
+          <td class="paramname"><em>alloc</em> = <code><a class="el" href="classvset_1_1multiset.html#a307a4e3b928896e477ac865cb6f285d4">allocator_type</a>()</code>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">inline</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p>Создает контейнер с содержимым списка инициализации init (c++11). </p>
+<dl class="params"><dt>Аргументы</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">init</td><td>— список инициализации элементов контейнера </td></tr>
+    <tr><td class="paramname">comp</td><td>функции сравнения ключей </td></tr>
+    <tr><td class="paramname">alloc</td><td>функции сравнения ключей </td></tr>
+  </table>
+  </dd>
+</dl>
+
+</div>
+</div>
+<h2 class="groupheader">Методы</h2>
+<a id="a4f9c78aee28fb68cbab027c1cd8bc314"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a4f9c78aee28fb68cbab027c1cd8bc314">&#9670;&nbsp;</a></span>operator=() <span class="overload">[1/3]</span></h2>
+
+<div class="memitem">
+<div class="memproto">
+<div class="memtemplate">
+template&lt;typename V , typename C , typename A &gt; </div>
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname"><a class="el" href="classvset_1_1multiset.html">multiset</a>&amp; <a class="el" href="classvset_1_1multiset.html">vset::multiset</a>&lt; V, C, A &gt;::operator= </td>
+          <td>(</td>
+          <td class="paramtype">const <a class="el" href="classvset_1_1multiset.html">multiset</a>&lt; V, C, A &gt; &amp;&#160;</td>
+          <td class="paramname"><em>other</em></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">inline</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p>Заменяет содержимое копией содержимого other. </p>
+<dl class="params"><dt>Аргументы</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">other</td><td>другой контейнер, который будет использоваться в качестве источника </td></tr>
+  </table>
+  </dd>
+</dl>
+
+</div>
+</div>
+<a id="a609a726b510dc539c736b01612df854b"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a609a726b510dc539c736b01612df854b">&#9670;&nbsp;</a></span>operator=() <span class="overload">[2/3]</span></h2>
+
+<div class="memitem">
+<div class="memproto">
+<div class="memtemplate">
+template&lt;typename V , typename C , typename A &gt; </div>
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname"><a class="el" href="classvset_1_1multiset.html">multiset</a>&amp; <a class="el" href="classvset_1_1multiset.html">vset::multiset</a>&lt; V, C, A &gt;::operator= </td>
+          <td>(</td>
+          <td class="paramtype"><a class="el" href="classvset_1_1multiset.html">multiset</a>&lt; V, C, A &gt; &amp;&amp;&#160;</td>
+          <td class="paramname"><em>other</em></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">inline</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p>Заменяет содержимое содержимым other использованием семантики переноса (c++11) </p>
+<dl class="params"><dt>Аргументы</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">other</td><td>другой контейнер, который будет использоваться в качестве источника </td></tr>
+  </table>
+  </dd>
+</dl>
+
+</div>
+</div>
+<a id="a77fe83220abc11bb9a943c0709ab996b"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a77fe83220abc11bb9a943c0709ab996b">&#9670;&nbsp;</a></span>operator=() <span class="overload">[3/3]</span></h2>
+
+<div class="memitem">
+<div class="memproto">
+<div class="memtemplate">
+template&lt;typename V , typename C , typename A &gt; </div>
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname"><a class="el" href="classvset_1_1multiset.html">multiset</a>&amp; <a class="el" href="classvset_1_1multiset.html">vset::multiset</a>&lt; V, C, A &gt;::operator= </td>
+          <td>(</td>
+          <td class="paramtype">std::initializer_list&lt; <a class="el" href="classvset_1_1multiset.html#aee011e37ffe457dc7a5da7be011917e0">value_type</a> &gt;&#160;</td>
+          <td class="paramname"><em>il</em></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">inline</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p>Заменяет содержимое элементами, которые указаны в списке идентификаторов инициализатора (c++11). </p>
+<dl class="params"><dt>Аргументы</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">il</td><td>список инициализации для использования в качестве источника данных </td></tr>
+  </table>
+  </dd>
+</dl>
+
+</div>
+</div>
+<hr/>Объявления и описания членов класса находятся в файле:<ul>
+<li>vset/<a class="el" href="multiset_8hpp_source.html">multiset.hpp</a></li>
+</ul>
+</div><!-- contents -->
+<!-- start footer part -->
+<hr class="footer"/><address class="footer"><small>
+Создано системой &#160;<a href="http://www.doxygen.org/index.html">
+<img class="footer" src="doxygen.png" alt="doxygen"/>
+</a> 1.8.15
+</small></address>
+</body>
+</html>

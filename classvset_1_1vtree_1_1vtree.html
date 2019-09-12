@@ -1,0 +1,1816 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<meta http-equiv="Content-Type" content="text/xhtml;charset=UTF-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=9"/>
+<meta name="generator" content="Doxygen 1.8.15"/>
+<meta name="viewport" content="width=device-width, initial-scale=1"/>
+<title>v-set: Шаблон класса vset::vtree::vtree&lt; A &gt;</title>
+<link href="tabs.css" rel="stylesheet" type="text/css"/>
+<script type="text/javascript" src="jquery.js"></script>
+<script type="text/javascript" src="dynsections.js"></script>
+<link href="doxygen.css" rel="stylesheet" type="text/css" />
+<link href="customdoxygen.css" rel="stylesheet" type="text/css"/>
+</head>
+<body>
+<div id="top"><!-- do not remove this div, it is closed by doxygen! -->
+<div id="titlearea">
+<table cellspacing="0" cellpadding="0">
+ <tbody>
+ <tr style="height: 56px;">
+  <td id="projectalign" style="padding-left: 0.5em;">
+   <div id="projectname">v-set
+   </div>
+  </td>
+ </tr>
+ </tbody>
+</table>
+</div>
+<!-- end header part -->
+<!-- Создано системой Doxygen 1.8.15 -->
+<script type="text/javascript" src="menudata.js"></script>
+<script type="text/javascript" src="menu.js"></script>
+<script type="text/javascript">
+/* @license magnet:?xt=urn:btih:cf05388f2679ee054f2beb29a391d25f4e673ac3&amp;dn=gpl-2.0.txt GPL-v2 */
+$(function() {
+  initMenu('',false,false,'search.php','Поиск');
+});
+/* @license-end */</script>
+<div id="main-nav"></div>
+<div id="nav-path" class="navpath">
+  <ul>
+<li class="navelem"><b>vset</b></li><li class="navelem"><b>vtree</b></li><li class="navelem"><a class="el" href="classvset_1_1vtree_1_1vtree.html">vtree</a></li>  </ul>
+</div>
+</div><!-- top -->
+<div class="header">
+  <div class="summary">
+<a href="#pub-methods">Открытые члены</a> &#124;
+<a href="classvset_1_1vtree_1_1vtree-members.html">Полный список членов класса</a>  </div>
+  <div class="headertitle">
+<div class="title">Шаблон класса vset::vtree::vtree&lt; A &gt;</div>  </div>
+</div><!--header-->
+<div class="contents">
+
+<p>Базовый класс для <a class="el" href="classvset_1_1multiset.html" title="ассоциативный контейнер vset::multiset содержит упорядоченный набор объектов типа V (допускаются ключ...">vset::multiset</a> реализующий основные его методы.  
+ <a href="classvset_1_1vtree_1_1vtree.html#details">Подробнее...</a></p>
+
+<p><code>#include &lt;<a class="el" href="vtree_8hpp_source.html">vtree.hpp</a>&gt;</code></p>
+
+<p>Базовые классы:aspect_class&lt; A &gt;.</p>
+<table class="memberdecls">
+<tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="pub-methods"></a>
+Открытые члены</h2></td></tr>
+<tr class="memitem:a91fe0f1b0d6a6aadaa5e98524d80e10b"><td class="memItemLeft" align="right" valign="top"><a id="a91fe0f1b0d6a6aadaa5e98524d80e10b"></a>
+&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classvset_1_1vtree_1_1vtree.html#a91fe0f1b0d6a6aadaa5e98524d80e10b">vtree</a> ()</td></tr>
+<tr class="memdesc:a91fe0f1b0d6a6aadaa5e98524d80e10b"><td class="mdescLeft">&#160;</td><td class="mdescRight">Конструктор по умолчанию. Создаёт пустой контейнер. <br /></td></tr>
+<tr class="separator:a91fe0f1b0d6a6aadaa5e98524d80e10b"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a47e86511ea1afbf4e40f1d2e4a98e8f6"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classvset_1_1vtree_1_1vtree.html#a47e86511ea1afbf4e40f1d2e4a98e8f6">vtree</a> (const key_compare &amp;comp, const allocator_type &amp;alloc=allocator_type())</td></tr>
+<tr class="memdesc:a47e86511ea1afbf4e40f1d2e4a98e8f6"><td class="mdescLeft">&#160;</td><td class="mdescRight">Конструктор создаёт пустой контейнер.  <a href="#a47e86511ea1afbf4e40f1d2e4a98e8f6">Подробнее...</a><br /></td></tr>
+<tr class="separator:a47e86511ea1afbf4e40f1d2e4a98e8f6"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ad63a92878a0f1287ef2af26ef82356a7"><td class="memTemplParams" colspan="2">template&lt;typename InputIterator &gt; </td></tr>
+<tr class="memitem:ad63a92878a0f1287ef2af26ef82356a7"><td class="memTemplItemLeft" align="right" valign="top">&#160;</td><td class="memTemplItemRight" valign="bottom"><a class="el" href="classvset_1_1vtree_1_1vtree.html#ad63a92878a0f1287ef2af26ef82356a7">vtree</a> (InputIterator b, InputIterator e)</td></tr>
+<tr class="memdesc:ad63a92878a0f1287ef2af26ef82356a7"><td class="mdescLeft">&#160;</td><td class="mdescRight">Создаёт контейнер с содержимым из диапазона [first, last).  <a href="#ad63a92878a0f1287ef2af26ef82356a7">Подробнее...</a><br /></td></tr>
+<tr class="separator:ad63a92878a0f1287ef2af26ef82356a7"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a15d2422dbd80f2f020062e8dacaa80ce"><td class="memTemplParams" colspan="2">template&lt;typename InputIterator &gt; </td></tr>
+<tr class="memitem:a15d2422dbd80f2f020062e8dacaa80ce"><td class="memTemplItemLeft" align="right" valign="top">&#160;</td><td class="memTemplItemRight" valign="bottom"><a class="el" href="classvset_1_1vtree_1_1vtree.html#a15d2422dbd80f2f020062e8dacaa80ce">vtree</a> (InputIterator b, InputIterator e, const value_compare &amp;comp, const allocator_type &amp;alloc=allocator_type())</td></tr>
+<tr class="memdesc:a15d2422dbd80f2f020062e8dacaa80ce"><td class="mdescLeft">&#160;</td><td class="mdescRight">Создаёт контейнер с содержимым из диапазона [first, last).  <a href="#a15d2422dbd80f2f020062e8dacaa80ce">Подробнее...</a><br /></td></tr>
+<tr class="separator:a15d2422dbd80f2f020062e8dacaa80ce"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a4e2807403f7371422c31afda72fd1323"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classvset_1_1vtree_1_1vtree.html#a4e2807403f7371422c31afda72fd1323">vtree</a> (const <a class="el" href="classvset_1_1vtree_1_1vtree.html">self</a> &amp;__x)</td></tr>
+<tr class="memdesc:a4e2807403f7371422c31afda72fd1323"><td class="mdescLeft">&#160;</td><td class="mdescRight">Конструктор копирования  <a href="#a4e2807403f7371422c31afda72fd1323">Подробнее...</a><br /></td></tr>
+<tr class="separator:a4e2807403f7371422c31afda72fd1323"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a81ceae59f90d25ab83fc86c2e353cd32"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classvset_1_1vtree_1_1vtree.html#a81ceae59f90d25ab83fc86c2e353cd32">vtree</a> (<a class="el" href="classvset_1_1vtree_1_1vtree.html">vtree</a> &amp;&amp;__x)</td></tr>
+<tr class="memdesc:a81ceae59f90d25ab83fc86c2e353cd32"><td class="mdescLeft">&#160;</td><td class="mdescRight">Move-конструктор (c++11). Создает контейнер с содержимым other с использованием move-семантики. Если alloc не был предоставлен, то он будет получен с помощью move-конструктора от аллокатора принадлежащего other.  <a href="#a81ceae59f90d25ab83fc86c2e353cd32">Подробнее...</a><br /></td></tr>
+<tr class="separator:a81ceae59f90d25ab83fc86c2e353cd32"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ab206e47fd88dd0111566ea96ebb4efcb"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classvset_1_1vtree_1_1vtree.html#ab206e47fd88dd0111566ea96ebb4efcb">vtree</a> (std::initializer_list&lt; value_type &gt; il, const value_compare &amp;comp=value_compare(), const allocator_type &amp;alloc=allocator_type())</td></tr>
+<tr class="memdesc:ab206e47fd88dd0111566ea96ebb4efcb"><td class="mdescLeft">&#160;</td><td class="mdescRight">Создает контейнер с содержимым списка инициализации init (c++11).  <a href="#ab206e47fd88dd0111566ea96ebb4efcb">Подробнее...</a><br /></td></tr>
+<tr class="separator:ab206e47fd88dd0111566ea96ebb4efcb"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ae4bbea73f587fc21de3ab3d79352d18b"><td class="memItemLeft" align="right" valign="top"><a class="el" href="classvset_1_1vtree_1_1vtree.html">vtree</a> &amp;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classvset_1_1vtree_1_1vtree.html#ae4bbea73f587fc21de3ab3d79352d18b">operator=</a> (<a class="el" href="classvset_1_1vtree_1_1vtree.html">vtree</a> &amp;&amp;__x)</td></tr>
+<tr class="memdesc:ae4bbea73f587fc21de3ab3d79352d18b"><td class="mdescLeft">&#160;</td><td class="mdescRight">Заменяет содержимое содержимым other использованием семантики переноса (c++11)  <a href="#ae4bbea73f587fc21de3ab3d79352d18b">Подробнее...</a><br /></td></tr>
+<tr class="separator:ae4bbea73f587fc21de3ab3d79352d18b"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a728b4cf068a22e29659246837c48d57a"><td class="memItemLeft" align="right" valign="top"><a class="el" href="classvset_1_1vtree_1_1vtree.html">vtree</a> &amp;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classvset_1_1vtree_1_1vtree.html#a728b4cf068a22e29659246837c48d57a">operator=</a> (std::initializer_list&lt; value_type &gt; il)</td></tr>
+<tr class="memdesc:a728b4cf068a22e29659246837c48d57a"><td class="mdescLeft">&#160;</td><td class="mdescRight">Заменяет содержимое элементами, которые указаны в списке идентификаторов инициализатора (c++11).  <a href="#a728b4cf068a22e29659246837c48d57a">Подробнее...</a><br /></td></tr>
+<tr class="separator:a728b4cf068a22e29659246837c48d57a"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ad229d5833dce3af652390c41dc2c15d5"><td class="memItemLeft" align="right" valign="top">iterator&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classvset_1_1vtree_1_1vtree.html#ad229d5833dce3af652390c41dc2c15d5">begin</a> ()</td></tr>
+<tr class="memdesc:ad229d5833dce3af652390c41dc2c15d5"><td class="mdescLeft">&#160;</td><td class="mdescRight">Возвращает итератор на первый элемент контейнера.  <a href="#ad229d5833dce3af652390c41dc2c15d5">Подробнее...</a><br /></td></tr>
+<tr class="separator:ad229d5833dce3af652390c41dc2c15d5"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a09ac1f9b49b01e6fee3a4e91150c74d8"><td class="memItemLeft" align="right" valign="top">iterator&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classvset_1_1vtree_1_1vtree.html#a09ac1f9b49b01e6fee3a4e91150c74d8">end</a> ()</td></tr>
+<tr class="memdesc:a09ac1f9b49b01e6fee3a4e91150c74d8"><td class="mdescLeft">&#160;</td><td class="mdescRight">Возвращает итератор на элемент, следующий за последним элементом контейнера  <a href="#a09ac1f9b49b01e6fee3a4e91150c74d8">Подробнее...</a><br /></td></tr>
+<tr class="separator:a09ac1f9b49b01e6fee3a4e91150c74d8"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a6305205bbfd9744c9354f95efd280e12"><td class="memItemLeft" align="right" valign="top">const_iterator&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classvset_1_1vtree_1_1vtree.html#a6305205bbfd9744c9354f95efd280e12">begin</a> () const</td></tr>
+<tr class="memdesc:a6305205bbfd9744c9354f95efd280e12"><td class="mdescLeft">&#160;</td><td class="mdescRight">Возвращает константный итератор на первый элемент контейнера.  <a href="#a6305205bbfd9744c9354f95efd280e12">Подробнее...</a><br /></td></tr>
+<tr class="separator:a6305205bbfd9744c9354f95efd280e12"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a3def9162a7411d470365ca53ae5793d8"><td class="memItemLeft" align="right" valign="top">const_iterator&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classvset_1_1vtree_1_1vtree.html#a3def9162a7411d470365ca53ae5793d8">end</a> () const</td></tr>
+<tr class="memdesc:a3def9162a7411d470365ca53ae5793d8"><td class="mdescLeft">&#160;</td><td class="mdescRight">Возвращает константный итератор на элемент, следующий за последним элементом контейнера  <a href="#a3def9162a7411d470365ca53ae5793d8">Подробнее...</a><br /></td></tr>
+<tr class="separator:a3def9162a7411d470365ca53ae5793d8"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:aa4cb5ef5a3813e989bf532fcdf99e0c6"><td class="memItemLeft" align="right" valign="top">reverse_iterator&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classvset_1_1vtree_1_1vtree.html#aa4cb5ef5a3813e989bf532fcdf99e0c6">rbegin</a> ()</td></tr>
+<tr class="memdesc:aa4cb5ef5a3813e989bf532fcdf99e0c6"><td class="mdescLeft">&#160;</td><td class="mdescRight">Возвращает обратный итератор на последний элемент контейнера.  <a href="#aa4cb5ef5a3813e989bf532fcdf99e0c6">Подробнее...</a><br /></td></tr>
+<tr class="separator:aa4cb5ef5a3813e989bf532fcdf99e0c6"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a0348d706e07298fc12085d010fd76d9d"><td class="memItemLeft" align="right" valign="top">reverse_iterator&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classvset_1_1vtree_1_1vtree.html#a0348d706e07298fc12085d010fd76d9d">rend</a> ()</td></tr>
+<tr class="memdesc:a0348d706e07298fc12085d010fd76d9d"><td class="mdescLeft">&#160;</td><td class="mdescRight">Возвращает обратный итератор на элемент, перед первым элементом контейнера  <a href="#a0348d706e07298fc12085d010fd76d9d">Подробнее...</a><br /></td></tr>
+<tr class="separator:a0348d706e07298fc12085d010fd76d9d"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a494844cfcb0baf8b2987da54cad670f5"><td class="memItemLeft" align="right" valign="top">const_reverse_iterator&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classvset_1_1vtree_1_1vtree.html#a494844cfcb0baf8b2987da54cad670f5">rbegin</a> () const</td></tr>
+<tr class="memdesc:a494844cfcb0baf8b2987da54cad670f5"><td class="mdescLeft">&#160;</td><td class="mdescRight">Возвращает константный обратный итератор на последний элемент контейнера.  <a href="#a494844cfcb0baf8b2987da54cad670f5">Подробнее...</a><br /></td></tr>
+<tr class="separator:a494844cfcb0baf8b2987da54cad670f5"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a862676b7e0369fd3459ec5fdf4204d0d"><td class="memItemLeft" align="right" valign="top">const_reverse_iterator&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classvset_1_1vtree_1_1vtree.html#a862676b7e0369fd3459ec5fdf4204d0d">rend</a> () const</td></tr>
+<tr class="memdesc:a862676b7e0369fd3459ec5fdf4204d0d"><td class="mdescLeft">&#160;</td><td class="mdescRight">Возвращает константный обратный итератор на элемент, следующий перед первым элементом контейнера  <a href="#a862676b7e0369fd3459ec5fdf4204d0d">Подробнее...</a><br /></td></tr>
+<tr class="separator:a862676b7e0369fd3459ec5fdf4204d0d"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a7e4f639f22d767977cf6ce82c3222cd9"><td class="memItemLeft" align="right" valign="top">const_iterator&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classvset_1_1vtree_1_1vtree.html#a7e4f639f22d767977cf6ce82c3222cd9">cbegin</a> () const</td></tr>
+<tr class="memdesc:a7e4f639f22d767977cf6ce82c3222cd9"><td class="mdescLeft">&#160;</td><td class="mdescRight">Возвращает константный итератор на первый элемент контейнера (c++11).  <a href="#a7e4f639f22d767977cf6ce82c3222cd9">Подробнее...</a><br /></td></tr>
+<tr class="separator:a7e4f639f22d767977cf6ce82c3222cd9"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a14182b16d8af7ed554c345323fce227a"><td class="memItemLeft" align="right" valign="top">const_iterator&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classvset_1_1vtree_1_1vtree.html#a14182b16d8af7ed554c345323fce227a">cend</a> () const</td></tr>
+<tr class="memdesc:a14182b16d8af7ed554c345323fce227a"><td class="mdescLeft">&#160;</td><td class="mdescRight">Возвращает константный итератор на элемент, следующий за последним элементом контейнера (c++11)  <a href="#a14182b16d8af7ed554c345323fce227a">Подробнее...</a><br /></td></tr>
+<tr class="separator:a14182b16d8af7ed554c345323fce227a"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a1d79133489d415953d382e140ede32a9"><td class="memItemLeft" align="right" valign="top">const_reverse_iterator&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classvset_1_1vtree_1_1vtree.html#a1d79133489d415953d382e140ede32a9">crbegin</a> () const</td></tr>
+<tr class="memdesc:a1d79133489d415953d382e140ede32a9"><td class="mdescLeft">&#160;</td><td class="mdescRight">Возвращает константный обратный итератор на последний элемент контейнера (c++11).  <a href="#a1d79133489d415953d382e140ede32a9">Подробнее...</a><br /></td></tr>
+<tr class="separator:a1d79133489d415953d382e140ede32a9"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a8b7923d643e55bb8a615dd972145cec4"><td class="memItemLeft" align="right" valign="top">reverse_iterator&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classvset_1_1vtree_1_1vtree.html#a8b7923d643e55bb8a615dd972145cec4">crend</a> () const</td></tr>
+<tr class="memdesc:a8b7923d643e55bb8a615dd972145cec4"><td class="mdescLeft">&#160;</td><td class="mdescRight">Возвращает константный обратный итератор на элемент, следующий перед первым элементом контейнера (c++11)  <a href="#a8b7923d643e55bb8a615dd972145cec4">Подробнее...</a><br /></td></tr>
+<tr class="separator:a8b7923d643e55bb8a615dd972145cec4"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ad442af87f39bc983860881a044a03158"><td class="memItemLeft" align="right" valign="top">bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classvset_1_1vtree_1_1vtree.html#ad442af87f39bc983860881a044a03158">empty</a> () const</td></tr>
+<tr class="memdesc:ad442af87f39bc983860881a044a03158"><td class="mdescLeft">&#160;</td><td class="mdescRight">Проверка на отсутствие элементов в контейнере  <a href="#ad442af87f39bc983860881a044a03158">Подробнее...</a><br /></td></tr>
+<tr class="separator:ad442af87f39bc983860881a044a03158"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ac177c7d5fc687d65ddac1fbd0f9b1605"><td class="memItemLeft" align="right" valign="top">size_type&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classvset_1_1vtree_1_1vtree.html#ac177c7d5fc687d65ddac1fbd0f9b1605">size</a> () const</td></tr>
+<tr class="memdesc:ac177c7d5fc687d65ddac1fbd0f9b1605"><td class="mdescLeft">&#160;</td><td class="mdescRight">Возвращает количество элементов в контейнере  <a href="#ac177c7d5fc687d65ddac1fbd0f9b1605">Подробнее...</a><br /></td></tr>
+<tr class="separator:ac177c7d5fc687d65ddac1fbd0f9b1605"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:abc27868c12e3237a7723a72670516c85"><td class="memItemLeft" align="right" valign="top">size_type&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classvset_1_1vtree_1_1vtree.html#abc27868c12e3237a7723a72670516c85">max_size</a> () const</td></tr>
+<tr class="memdesc:abc27868c12e3237a7723a72670516c85"><td class="mdescLeft">&#160;</td><td class="mdescRight">Возвращает максимально допустимое количество элементов в контейнере  <a href="#abc27868c12e3237a7723a72670516c85">Подробнее...</a><br /></td></tr>
+<tr class="separator:abc27868c12e3237a7723a72670516c85"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ad092d5331aeaaa8380290a21001dc605"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classvset_1_1vtree_1_1vtree.html#ad092d5331aeaaa8380290a21001dc605">swap</a> (<a class="el" href="classvset_1_1vtree_1_1vtree.html">vtree</a> &amp;other)</td></tr>
+<tr class="memdesc:ad092d5331aeaaa8380290a21001dc605"><td class="mdescLeft">&#160;</td><td class="mdescRight">Обменивает содержимое контейнера с содержимым контейнера другого  <a href="#ad092d5331aeaaa8380290a21001dc605">Подробнее...</a><br /></td></tr>
+<tr class="separator:ad092d5331aeaaa8380290a21001dc605"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a80a47da3b67d41a70654119f40ba303c"><td class="memItemLeft" align="right" valign="top">size_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classvset_1_1vtree_1_1vtree.html#a80a47da3b67d41a70654119f40ba303c">capacity</a> () const</td></tr>
+<tr class="memdesc:a80a47da3b67d41a70654119f40ba303c"><td class="mdescLeft">&#160;</td><td class="mdescRight">Возвращает количество элементов, которые могут одновременно храниться в выделенной области памяти  <a href="#a80a47da3b67d41a70654119f40ba303c">Подробнее...</a><br /></td></tr>
+<tr class="separator:a80a47da3b67d41a70654119f40ba303c"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a3f11d02d59e7efeacb2260489247cab8"><td class="memItemLeft" align="right" valign="top">iterator&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classvset_1_1vtree_1_1vtree.html#a3f11d02d59e7efeacb2260489247cab8">insert</a> (const value_type &amp;value)</td></tr>
+<tr class="memdesc:a3f11d02d59e7efeacb2260489247cab8"><td class="mdescLeft">&#160;</td><td class="mdescRight">Вставляет элемент  <a href="#a3f11d02d59e7efeacb2260489247cab8">Подробнее...</a><br /></td></tr>
+<tr class="separator:a3f11d02d59e7efeacb2260489247cab8"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ab423ec67f805ed9b4490faacbe28286e"><td class="memItemLeft" align="right" valign="top">iterator&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classvset_1_1vtree_1_1vtree.html#ab423ec67f805ed9b4490faacbe28286e">insert</a> (value_type &amp;&amp;value)</td></tr>
+<tr class="memdesc:ab423ec67f805ed9b4490faacbe28286e"><td class="mdescLeft">&#160;</td><td class="mdescRight">Вставляет элемент (c++11)  <a href="#ab423ec67f805ed9b4490faacbe28286e">Подробнее...</a><br /></td></tr>
+<tr class="separator:ab423ec67f805ed9b4490faacbe28286e"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a63188ed5437b41e7eedf65f64b45b8fe"><td class="memItemLeft" align="right" valign="top">iterator&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classvset_1_1vtree_1_1vtree.html#a63188ed5437b41e7eedf65f64b45b8fe">insert</a> (const_iterator, const value_type &amp;value)</td></tr>
+<tr class="memdesc:a63188ed5437b41e7eedf65f64b45b8fe"><td class="mdescLeft">&#160;</td><td class="mdescRight">Вставляет элемент  <a href="#a63188ed5437b41e7eedf65f64b45b8fe">Подробнее...</a><br /></td></tr>
+<tr class="separator:a63188ed5437b41e7eedf65f64b45b8fe"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a0ba78b4571c9169bf6fdd49db5bddeb2"><td class="memItemLeft" align="right" valign="top">iterator&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classvset_1_1vtree_1_1vtree.html#a0ba78b4571c9169bf6fdd49db5bddeb2">insert</a> (const_iterator, value_type &amp;&amp;value)</td></tr>
+<tr class="memdesc:a0ba78b4571c9169bf6fdd49db5bddeb2"><td class="mdescLeft">&#160;</td><td class="mdescRight">Вставляет элемент (c++11)  <a href="#a0ba78b4571c9169bf6fdd49db5bddeb2">Подробнее...</a><br /></td></tr>
+<tr class="separator:a0ba78b4571c9169bf6fdd49db5bddeb2"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a939970cf9baa27f6e6540b6a82427bcb"><td class="memTemplParams" colspan="2">template&lt;typename InputIterator &gt; </td></tr>
+<tr class="memitem:a939970cf9baa27f6e6540b6a82427bcb"><td class="memTemplItemLeft" align="right" valign="top">void&#160;</td><td class="memTemplItemRight" valign="bottom"><a class="el" href="classvset_1_1vtree_1_1vtree.html#a939970cf9baa27f6e6540b6a82427bcb">insert</a> (InputIterator first, InputIterator last)</td></tr>
+<tr class="memdesc:a939970cf9baa27f6e6540b6a82427bcb"><td class="mdescLeft">&#160;</td><td class="mdescRight">Вставляет элементы из диапазона [first, last)  <a href="#a939970cf9baa27f6e6540b6a82427bcb">Подробнее...</a><br /></td></tr>
+<tr class="separator:a939970cf9baa27f6e6540b6a82427bcb"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ab1a2da49986bdb99834ba122c2d05a05"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classvset_1_1vtree_1_1vtree.html#ab1a2da49986bdb99834ba122c2d05a05">insert</a> (std::initializer_list&lt; value_type &gt; init)</td></tr>
+<tr class="memdesc:ab1a2da49986bdb99834ba122c2d05a05"><td class="mdescLeft">&#160;</td><td class="mdescRight">Вставляет элементы из списка инициализации init (c++11)  <a href="#ab1a2da49986bdb99834ba122c2d05a05">Подробнее...</a><br /></td></tr>
+<tr class="separator:ab1a2da49986bdb99834ba122c2d05a05"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a595687b5a22ec1795a460439decdbedf"><td class="memItemLeft" align="right" valign="top">iterator&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classvset_1_1vtree_1_1vtree.html#a595687b5a22ec1795a460439decdbedf">erase</a> (const_iterator pos)</td></tr>
+<tr class="memdesc:a595687b5a22ec1795a460439decdbedf"><td class="mdescLeft">&#160;</td><td class="mdescRight">Удаляет элементы (c++11)  <a href="#a595687b5a22ec1795a460439decdbedf">Подробнее...</a><br /></td></tr>
+<tr class="separator:a595687b5a22ec1795a460439decdbedf"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a4e06dfd07ace43e2e0ffdb1868f97b25"><td class="memItemLeft" align="right" valign="top">size_type&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classvset_1_1vtree_1_1vtree.html#a4e06dfd07ace43e2e0ffdb1868f97b25">erase</a> (const key_type &amp;key)</td></tr>
+<tr class="memdesc:a4e06dfd07ace43e2e0ffdb1868f97b25"><td class="mdescLeft">&#160;</td><td class="mdescRight">Удаляет элементы (c++11)  <a href="#a4e06dfd07ace43e2e0ffdb1868f97b25">Подробнее...</a><br /></td></tr>
+<tr class="separator:a4e06dfd07ace43e2e0ffdb1868f97b25"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:afb66e84cc26a46abb4871a7ebf9cab5c"><td class="memItemLeft" align="right" valign="top">iterator&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classvset_1_1vtree_1_1vtree.html#afb66e84cc26a46abb4871a7ebf9cab5c">erase</a> (const_iterator first, const_iterator last)</td></tr>
+<tr class="memdesc:afb66e84cc26a46abb4871a7ebf9cab5c"><td class="mdescLeft">&#160;</td><td class="mdescRight">Удаляет элементы (c++11) из диапазона [first, last)  <a href="#afb66e84cc26a46abb4871a7ebf9cab5c">Подробнее...</a><br /></td></tr>
+<tr class="separator:afb66e84cc26a46abb4871a7ebf9cab5c"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a9c9a054f2fb302747e07421ea9171e8a"><td class="memItemLeft" align="right" valign="top"><a id="a9c9a054f2fb302747e07421ea9171e8a"></a>
+void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classvset_1_1vtree_1_1vtree.html#a9c9a054f2fb302747e07421ea9171e8a">clear</a> ()</td></tr>
+<tr class="memdesc:a9c9a054f2fb302747e07421ea9171e8a"><td class="mdescLeft">&#160;</td><td class="mdescRight">Очищает контейнер <br /></td></tr>
+<tr class="separator:a9c9a054f2fb302747e07421ea9171e8a"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a128f0f041537452a370fa0ff8e5dad92"><td class="memItemLeft" align="right" valign="top">size_type&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classvset_1_1vtree_1_1vtree.html#a128f0f041537452a370fa0ff8e5dad92">count</a> (const key_type &amp;key) const</td></tr>
+<tr class="memdesc:a128f0f041537452a370fa0ff8e5dad92"><td class="mdescLeft">&#160;</td><td class="mdescRight">Возвращает количество элементов с ключом key.  <a href="#a128f0f041537452a370fa0ff8e5dad92">Подробнее...</a><br /></td></tr>
+<tr class="separator:a128f0f041537452a370fa0ff8e5dad92"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:afa82d709ce76ac0569766bfbe5dc47fe"><td class="memItemLeft" align="right" valign="top">iterator&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classvset_1_1vtree_1_1vtree.html#afa82d709ce76ac0569766bfbe5dc47fe">find</a> (const key_type &amp;key)</td></tr>
+<tr class="memdesc:afa82d709ce76ac0569766bfbe5dc47fe"><td class="mdescLeft">&#160;</td><td class="mdescRight">находит элемент с конкретным ключом (c++11)  <a href="#afa82d709ce76ac0569766bfbe5dc47fe">Подробнее...</a><br /></td></tr>
+<tr class="separator:afa82d709ce76ac0569766bfbe5dc47fe"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a056bad76a21a059e836cbcde776972a7"><td class="memItemLeft" align="right" valign="top">const_iterator&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classvset_1_1vtree_1_1vtree.html#a056bad76a21a059e836cbcde776972a7">find</a> (const key_type &amp;key) const</td></tr>
+<tr class="memdesc:a056bad76a21a059e836cbcde776972a7"><td class="mdescLeft">&#160;</td><td class="mdescRight">находит элемент с конкретным ключом (c++11)  <a href="#a056bad76a21a059e836cbcde776972a7">Подробнее...</a><br /></td></tr>
+<tr class="separator:a056bad76a21a059e836cbcde776972a7"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a319b7fc08f5e6f3ac3acee67e4bbafde"><td class="memItemLeft" align="right" valign="top">iterator&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classvset_1_1vtree_1_1vtree.html#a319b7fc08f5e6f3ac3acee67e4bbafde">lower_bound</a> (const key_type &amp;key)</td></tr>
+<tr class="memdesc:a319b7fc08f5e6f3ac3acee67e4bbafde"><td class="mdescLeft">&#160;</td><td class="mdescRight">возвращает итератор на первый элемент не меньшим, чем заданное значение (c++11)  <a href="#a319b7fc08f5e6f3ac3acee67e4bbafde">Подробнее...</a><br /></td></tr>
+<tr class="separator:a319b7fc08f5e6f3ac3acee67e4bbafde"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:af9c90d33b456a4f8c9ff64af4bc32551"><td class="memItemLeft" align="right" valign="top">const_iterator&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classvset_1_1vtree_1_1vtree.html#af9c90d33b456a4f8c9ff64af4bc32551">lower_bound</a> (const key_type &amp;key) const</td></tr>
+<tr class="memdesc:af9c90d33b456a4f8c9ff64af4bc32551"><td class="mdescLeft">&#160;</td><td class="mdescRight">возвращает итератор на первый элемент не меньшим, чем заданное значение (c++11)  <a href="#af9c90d33b456a4f8c9ff64af4bc32551">Подробнее...</a><br /></td></tr>
+<tr class="separator:af9c90d33b456a4f8c9ff64af4bc32551"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a14c0763c9b9a8b804523fbf530a2929c"><td class="memItemLeft" align="right" valign="top">iterator&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classvset_1_1vtree_1_1vtree.html#a14c0763c9b9a8b804523fbf530a2929c">upper_bound</a> (const key_type &amp;key)</td></tr>
+<tr class="memdesc:a14c0763c9b9a8b804523fbf530a2929c"><td class="mdescLeft">&#160;</td><td class="mdescRight">возвращает итератор на первый элемент больше, чем заданное значение (c++11)  <a href="#a14c0763c9b9a8b804523fbf530a2929c">Подробнее...</a><br /></td></tr>
+<tr class="separator:a14c0763c9b9a8b804523fbf530a2929c"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:aa072f38eb5f927e684e76b4a7cd8cb3a"><td class="memItemLeft" align="right" valign="top">const_iterator&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classvset_1_1vtree_1_1vtree.html#aa072f38eb5f927e684e76b4a7cd8cb3a">upper_bound</a> (const key_type &amp;key) const</td></tr>
+<tr class="memdesc:aa072f38eb5f927e684e76b4a7cd8cb3a"><td class="mdescLeft">&#160;</td><td class="mdescRight">возвращает итератор на первый элемент больше, чем заданное значение (c++11)  <a href="#aa072f38eb5f927e684e76b4a7cd8cb3a">Подробнее...</a><br /></td></tr>
+<tr class="separator:aa072f38eb5f927e684e76b4a7cd8cb3a"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a574c3f839ab47065cb29a5bad1ea6991"><td class="memItemLeft" align="right" valign="top">std::pair&lt; iterator, iterator &gt;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classvset_1_1vtree_1_1vtree.html#a574c3f839ab47065cb29a5bad1ea6991">equal_range</a> (const key_type &amp;x)</td></tr>
+<tr class="memdesc:a574c3f839ab47065cb29a5bad1ea6991"><td class="mdescLeft">&#160;</td><td class="mdescRight">Возвращает диапазон, содержащий все элементы с ключевыми key в контейнере  <a href="#a574c3f839ab47065cb29a5bad1ea6991">Подробнее...</a><br /></td></tr>
+<tr class="separator:a574c3f839ab47065cb29a5bad1ea6991"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:aaa74b32de4c88ad67021b617aaa8c489"><td class="memItemLeft" align="right" valign="top">std::pair&lt; const_iterator, const_iterator &gt;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classvset_1_1vtree_1_1vtree.html#aaa74b32de4c88ad67021b617aaa8c489">equal_range</a> (const key_type &amp;x) const</td></tr>
+<tr class="memdesc:aaa74b32de4c88ad67021b617aaa8c489"><td class="mdescLeft">&#160;</td><td class="mdescRight">Возвращает диапазон, содержащий все элементы с ключевыми key в контейнере  <a href="#aaa74b32de4c88ad67021b617aaa8c489">Подробнее...</a><br /></td></tr>
+<tr class="separator:aaa74b32de4c88ad67021b617aaa8c489"><td class="memSeparator" colspan="2">&#160;</td></tr>
+</table>
+<a name="details" id="details"></a><h2 class="groupheader">Подробное описание</h2>
+<div class="textblock"><h3>template&lt;typename A&gt;<br />
+class vset::vtree::vtree&lt; A &gt;</h3>
+
+<p class="">Базовый класс для <a class="el" href="classvset_1_1multiset.html" title="ассоциативный контейнер vset::multiset содержит упорядоченный набор объектов типа V (допускаются ключ...">vset::multiset</a> реализующий основные его методы. </p>
+<dl class="tparams"><dt>Параметры шаблона</dt><dd>
+  <table class="tparams">
+    <tr><td class="paramname">A</td><td>- аспект </td></tr>
+  </table>
+  </dd>
+</dl>
+</div><h2 class="groupheader">Конструктор(ы)</h2>
+<a id="a47e86511ea1afbf4e40f1d2e4a98e8f6"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a47e86511ea1afbf4e40f1d2e4a98e8f6">&#9670;&nbsp;</a></span>vtree() <span class="overload">[1/6]</span></h2>
+
+<div class="memitem">
+<div class="memproto">
+<div class="memtemplate">
+template&lt;typename A &gt; </div>
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname"><a class="el" href="classvset_1_1vtree_1_1vtree.html">vset::vtree::vtree</a>&lt; A &gt;::<a class="el" href="classvset_1_1vtree_1_1vtree.html">vtree</a> </td>
+          <td>(</td>
+          <td class="paramtype">const key_compare &amp;&#160;</td>
+          <td class="paramname"><em>comp</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">const allocator_type &amp;&#160;</td>
+          <td class="paramname"><em>alloc</em> = <code>allocator_type()</code>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">inline</span><span class="mlabel">explicit</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p>Конструктор создаёт пустой контейнер. </p>
+<dl class="params"><dt>Аргументы</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">comp</td><td>функции сравнения ключей </td></tr>
+    <tr><td class="paramname">alloc</td><td>функции сравнения ключей </td></tr>
+  </table>
+  </dd>
+</dl>
+
+</div>
+</div>
+<a id="ad63a92878a0f1287ef2af26ef82356a7"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ad63a92878a0f1287ef2af26ef82356a7">&#9670;&nbsp;</a></span>vtree() <span class="overload">[2/6]</span></h2>
+
+<div class="memitem">
+<div class="memproto">
+<div class="memtemplate">
+template&lt;typename A &gt; </div>
+<div class="memtemplate">
+template&lt;typename InputIterator &gt; </div>
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname"><a class="el" href="classvset_1_1vtree_1_1vtree.html">vset::vtree::vtree</a>&lt; A &gt;::<a class="el" href="classvset_1_1vtree_1_1vtree.html">vtree</a> </td>
+          <td>(</td>
+          <td class="paramtype">InputIterator&#160;</td>
+          <td class="paramname"><em>b</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">InputIterator&#160;</td>
+          <td class="paramname"><em>e</em>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">inline</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p>Создаёт контейнер с содержимым из диапазона [first, last). </p>
+<dl class="params"><dt>Аргументы</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">first</td><td>итератор начала диапазона </td></tr>
+    <tr><td class="paramname">last</td><td>итератор конеца диапазона </td></tr>
+  </table>
+  </dd>
+</dl>
+
+</div>
+</div>
+<a id="a15d2422dbd80f2f020062e8dacaa80ce"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a15d2422dbd80f2f020062e8dacaa80ce">&#9670;&nbsp;</a></span>vtree() <span class="overload">[3/6]</span></h2>
+
+<div class="memitem">
+<div class="memproto">
+<div class="memtemplate">
+template&lt;typename A &gt; </div>
+<div class="memtemplate">
+template&lt;typename InputIterator &gt; </div>
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname"><a class="el" href="classvset_1_1vtree_1_1vtree.html">vset::vtree::vtree</a>&lt; A &gt;::<a class="el" href="classvset_1_1vtree_1_1vtree.html">vtree</a> </td>
+          <td>(</td>
+          <td class="paramtype">InputIterator&#160;</td>
+          <td class="paramname"><em>b</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">InputIterator&#160;</td>
+          <td class="paramname"><em>e</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">const value_compare &amp;&#160;</td>
+          <td class="paramname"><em>comp</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">const allocator_type &amp;&#160;</td>
+          <td class="paramname"><em>alloc</em> = <code>allocator_type()</code>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">inline</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p>Создаёт контейнер с содержимым из диапазона [first, last). </p>
+<dl class="params"><dt>Аргументы</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">first</td><td>итератор начала диапазона </td></tr>
+    <tr><td class="paramname">last</td><td>итератор конеца диапазона </td></tr>
+    <tr><td class="paramname">comp</td><td>функции сравнения ключей </td></tr>
+    <tr><td class="paramname">alloc</td><td>функции сравнения ключей </td></tr>
+  </table>
+  </dd>
+</dl>
+
+</div>
+</div>
+<a id="a4e2807403f7371422c31afda72fd1323"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a4e2807403f7371422c31afda72fd1323">&#9670;&nbsp;</a></span>vtree() <span class="overload">[4/6]</span></h2>
+
+<div class="memitem">
+<div class="memproto">
+<div class="memtemplate">
+template&lt;typename A &gt; </div>
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname"><a class="el" href="classvset_1_1vtree_1_1vtree.html">vset::vtree::vtree</a>&lt; A &gt;::<a class="el" href="classvset_1_1vtree_1_1vtree.html">vtree</a> </td>
+          <td>(</td>
+          <td class="paramtype">const <a class="el" href="classvset_1_1vtree_1_1vtree.html">self</a> &amp;&#160;</td>
+          <td class="paramname"><em>__x</em></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">inline</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p>Конструктор копирования </p>
+<p class="">Для персистентных контейнеров копирование запрещено </p>
+
+</div>
+</div>
+<a id="a81ceae59f90d25ab83fc86c2e353cd32"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a81ceae59f90d25ab83fc86c2e353cd32">&#9670;&nbsp;</a></span>vtree() <span class="overload">[5/6]</span></h2>
+
+<div class="memitem">
+<div class="memproto">
+<div class="memtemplate">
+template&lt;typename A &gt; </div>
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname"><a class="el" href="classvset_1_1vtree_1_1vtree.html">vset::vtree::vtree</a>&lt; A &gt;::<a class="el" href="classvset_1_1vtree_1_1vtree.html">vtree</a> </td>
+          <td>(</td>
+          <td class="paramtype"><a class="el" href="classvset_1_1vtree_1_1vtree.html">vtree</a>&lt; A &gt; &amp;&amp;&#160;</td>
+          <td class="paramname"><em>__x</em></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">inline</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p>Move-конструктор (c++11). Создает контейнер с содержимым other с использованием move-семантики. Если alloc не был предоставлен, то он будет получен с помощью move-конструктора от аллокатора принадлежащего other. </p>
+<dl class="params"><dt>Аргументы</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">other</td><td>другой контейнер, который будет использован в качестве источника данных для инициализации элементов контейнера </td></tr>
+  </table>
+  </dd>
+</dl>
+
+</div>
+</div>
+<a id="ab206e47fd88dd0111566ea96ebb4efcb"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ab206e47fd88dd0111566ea96ebb4efcb">&#9670;&nbsp;</a></span>vtree() <span class="overload">[6/6]</span></h2>
+
+<div class="memitem">
+<div class="memproto">
+<div class="memtemplate">
+template&lt;typename A &gt; </div>
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname"><a class="el" href="classvset_1_1vtree_1_1vtree.html">vset::vtree::vtree</a>&lt; A &gt;::<a class="el" href="classvset_1_1vtree_1_1vtree.html">vtree</a> </td>
+          <td>(</td>
+          <td class="paramtype">std::initializer_list&lt; value_type &gt;&#160;</td>
+          <td class="paramname"><em>il</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">const value_compare &amp;&#160;</td>
+          <td class="paramname"><em>comp</em> = <code>value_compare()</code>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">const allocator_type &amp;&#160;</td>
+          <td class="paramname"><em>alloc</em> = <code>allocator_type()</code>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">inline</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p>Создает контейнер с содержимым списка инициализации init (c++11). </p>
+<dl class="params"><dt>Аргументы</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">init</td><td>— список инициализации элементов контейнера </td></tr>
+    <tr><td class="paramname">comp</td><td>функции сравнения ключей </td></tr>
+    <tr><td class="paramname">alloc</td><td>функции сравнения ключей </td></tr>
+  </table>
+  </dd>
+</dl>
+
+</div>
+</div>
+<h2 class="groupheader">Методы</h2>
+<a id="ad229d5833dce3af652390c41dc2c15d5"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ad229d5833dce3af652390c41dc2c15d5">&#9670;&nbsp;</a></span>begin() <span class="overload">[1/2]</span></h2>
+
+<div class="memitem">
+<div class="memproto">
+<div class="memtemplate">
+template&lt;typename A &gt; </div>
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">iterator <a class="el" href="classvset_1_1vtree_1_1vtree.html">vset::vtree::vtree</a>&lt; A &gt;::begin </td>
+          <td>(</td>
+          <td class="paramname"></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">inline</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p>Возвращает итератор на первый элемент контейнера. </p>
+<dl class="section return"><dt>Возвращает</dt><dd>итератор на первый элемент </dd></dl>
+
+</div>
+</div>
+<a id="a6305205bbfd9744c9354f95efd280e12"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a6305205bbfd9744c9354f95efd280e12">&#9670;&nbsp;</a></span>begin() <span class="overload">[2/2]</span></h2>
+
+<div class="memitem">
+<div class="memproto">
+<div class="memtemplate">
+template&lt;typename A &gt; </div>
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">const_iterator <a class="el" href="classvset_1_1vtree_1_1vtree.html">vset::vtree::vtree</a>&lt; A &gt;::begin </td>
+          <td>(</td>
+          <td class="paramname"></td><td>)</td>
+          <td> const</td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">inline</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p>Возвращает константный итератор на первый элемент контейнера. </p>
+<dl class="section return"><dt>Возвращает</dt><dd>Константный итератор на первый элемент </dd></dl>
+
+</div>
+</div>
+<a id="a80a47da3b67d41a70654119f40ba303c"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a80a47da3b67d41a70654119f40ba303c">&#9670;&nbsp;</a></span>capacity()</h2>
+
+<div class="memitem">
+<div class="memproto">
+<div class="memtemplate">
+template&lt;typename A &gt; </div>
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">size_t <a class="el" href="classvset_1_1vtree_1_1vtree.html">vset::vtree::vtree</a>&lt; A &gt;::capacity </td>
+          <td>(</td>
+          <td class="paramname"></td><td>)</td>
+          <td> const</td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">inline</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p>Возвращает количество элементов, которые могут одновременно храниться в выделенной области памяти </p>
+<dl class="section return"><dt>Возвращает</dt><dd>Вместимость контейнера, под которую в сейчас выделена память </dd></dl>
+
+</div>
+</div>
+<a id="a7e4f639f22d767977cf6ce82c3222cd9"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a7e4f639f22d767977cf6ce82c3222cd9">&#9670;&nbsp;</a></span>cbegin()</h2>
+
+<div class="memitem">
+<div class="memproto">
+<div class="memtemplate">
+template&lt;typename A &gt; </div>
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">const_iterator <a class="el" href="classvset_1_1vtree_1_1vtree.html">vset::vtree::vtree</a>&lt; A &gt;::cbegin </td>
+          <td>(</td>
+          <td class="paramname"></td><td>)</td>
+          <td> const</td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">inline</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p>Возвращает константный итератор на первый элемент контейнера (c++11). </p>
+<dl class="section return"><dt>Возвращает</dt><dd>Константный итератор на первый элемент </dd></dl>
+
+</div>
+</div>
+<a id="a14182b16d8af7ed554c345323fce227a"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a14182b16d8af7ed554c345323fce227a">&#9670;&nbsp;</a></span>cend()</h2>
+
+<div class="memitem">
+<div class="memproto">
+<div class="memtemplate">
+template&lt;typename A &gt; </div>
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">const_iterator <a class="el" href="classvset_1_1vtree_1_1vtree.html">vset::vtree::vtree</a>&lt; A &gt;::cend </td>
+          <td>(</td>
+          <td class="paramname"></td><td>)</td>
+          <td> const</td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">inline</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p>Возвращает константный итератор на элемент, следующий за последним элементом контейнера (c++11) </p>
+<dl class="section return"><dt>Возвращает</dt><dd>константный итератор на элемент, следующий за последним элементом контейнера</dd></dl>
+<p>Этот элемент выступает в качестве заполнителя; попытке доступа к нему приводит к неопределенному поведению </p>
+
+</div>
+</div>
+<a id="a128f0f041537452a370fa0ff8e5dad92"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a128f0f041537452a370fa0ff8e5dad92">&#9670;&nbsp;</a></span>count()</h2>
+
+<div class="memitem">
+<div class="memproto">
+<div class="memtemplate">
+template&lt;typename A &gt; </div>
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">size_type <a class="el" href="classvset_1_1vtree_1_1vtree.html">vset::vtree::vtree</a>&lt; A &gt;::count </td>
+          <td>(</td>
+          <td class="paramtype">const key_type &amp;&#160;</td>
+          <td class="paramname"><em>key</em></td><td>)</td>
+          <td> const</td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">inline</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p>Возвращает количество элементов с ключом key. </p>
+<dl class="params"><dt>Аргументы</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">key</td><td>Значение ключа </td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="section return"><dt>Возвращает</dt><dd>Количество элементов с ключом key </dd></dl>
+
+</div>
+</div>
+<a id="a1d79133489d415953d382e140ede32a9"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a1d79133489d415953d382e140ede32a9">&#9670;&nbsp;</a></span>crbegin()</h2>
+
+<div class="memitem">
+<div class="memproto">
+<div class="memtemplate">
+template&lt;typename A &gt; </div>
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">const_reverse_iterator <a class="el" href="classvset_1_1vtree_1_1vtree.html">vset::vtree::vtree</a>&lt; A &gt;::crbegin </td>
+          <td>(</td>
+          <td class="paramname"></td><td>)</td>
+          <td> const</td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">inline</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p>Возвращает константный обратный итератор на последний элемент контейнера (c++11). </p>
+<dl class="section return"><dt>Возвращает</dt><dd>Константный обратный итератор на последний элемент </dd></dl>
+
+</div>
+</div>
+<a id="a8b7923d643e55bb8a615dd972145cec4"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a8b7923d643e55bb8a615dd972145cec4">&#9670;&nbsp;</a></span>crend()</h2>
+
+<div class="memitem">
+<div class="memproto">
+<div class="memtemplate">
+template&lt;typename A &gt; </div>
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">reverse_iterator <a class="el" href="classvset_1_1vtree_1_1vtree.html">vset::vtree::vtree</a>&lt; A &gt;::crend </td>
+          <td>(</td>
+          <td class="paramname"></td><td>)</td>
+          <td> const</td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">inline</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p>Возвращает константный обратный итератор на элемент, следующий перед первым элементом контейнера (c++11) </p>
+<dl class="section return"><dt>Возвращает</dt><dd>константный итератор обратный на элемент, следующий перед первым элементом контейнера</dd></dl>
+<p>Этот элемент выступает в качестве заполнителя; попытке доступа к нему приводит к неопределенному поведению </p>
+
+</div>
+</div>
+<a id="ad442af87f39bc983860881a044a03158"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ad442af87f39bc983860881a044a03158">&#9670;&nbsp;</a></span>empty()</h2>
+
+<div class="memitem">
+<div class="memproto">
+<div class="memtemplate">
+template&lt;typename A &gt; </div>
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">bool <a class="el" href="classvset_1_1vtree_1_1vtree.html">vset::vtree::vtree</a>&lt; A &gt;::empty </td>
+          <td>(</td>
+          <td class="paramname"></td><td>)</td>
+          <td> const</td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">inline</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p>Проверка на отсутствие элементов в контейнере </p>
+<dl class="section return"><dt>Возвращает</dt><dd>true если контейнер пуст, false - в противном случае </dd></dl>
+
+</div>
+</div>
+<a id="a09ac1f9b49b01e6fee3a4e91150c74d8"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a09ac1f9b49b01e6fee3a4e91150c74d8">&#9670;&nbsp;</a></span>end() <span class="overload">[1/2]</span></h2>
+
+<div class="memitem">
+<div class="memproto">
+<div class="memtemplate">
+template&lt;typename A &gt; </div>
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">iterator <a class="el" href="classvset_1_1vtree_1_1vtree.html">vset::vtree::vtree</a>&lt; A &gt;::end </td>
+          <td>(</td>
+          <td class="paramname"></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">inline</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p>Возвращает итератор на элемент, следующий за последним элементом контейнера </p>
+<dl class="section return"><dt>Возвращает</dt><dd>итератор на элемент, следующий за последним элементом контейнера</dd></dl>
+<p>Этот элемент выступает в качестве заполнителя; попытке доступа к нему приводит к неопределенному поведению </p>
+
+</div>
+</div>
+<a id="a3def9162a7411d470365ca53ae5793d8"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a3def9162a7411d470365ca53ae5793d8">&#9670;&nbsp;</a></span>end() <span class="overload">[2/2]</span></h2>
+
+<div class="memitem">
+<div class="memproto">
+<div class="memtemplate">
+template&lt;typename A &gt; </div>
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">const_iterator <a class="el" href="classvset_1_1vtree_1_1vtree.html">vset::vtree::vtree</a>&lt; A &gt;::end </td>
+          <td>(</td>
+          <td class="paramname"></td><td>)</td>
+          <td> const</td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">inline</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p>Возвращает константный итератор на элемент, следующий за последним элементом контейнера </p>
+<dl class="section return"><dt>Возвращает</dt><dd>константный итератор на элемент, следующий за последним элементом контейнера</dd></dl>
+<p>Этот элемент выступает в качестве заполнителя; попытке доступа к нему приводит к неопределенному поведению </p>
+
+</div>
+</div>
+<a id="a574c3f839ab47065cb29a5bad1ea6991"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a574c3f839ab47065cb29a5bad1ea6991">&#9670;&nbsp;</a></span>equal_range() <span class="overload">[1/2]</span></h2>
+
+<div class="memitem">
+<div class="memproto">
+<div class="memtemplate">
+template&lt;typename A &gt; </div>
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">std::pair&lt;iterator, iterator&gt; <a class="el" href="classvset_1_1vtree_1_1vtree.html">vset::vtree::vtree</a>&lt; A &gt;::equal_range </td>
+          <td>(</td>
+          <td class="paramtype">const key_type &amp;&#160;</td>
+          <td class="paramname"><em>x</em></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">inline</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p>Возвращает диапазон, содержащий все элементы с ключевыми key в контейнере </p>
+<dl class="params"><dt>Аргументы</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">key</td><td>ключевое значение для сравнения элементов </td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="section return"><dt>Возвращает</dt><dd>Пара (std::pair) итераторов, определяющих требуемый диапазон: первый указывает на первый элемент, который не меньше ключа, а второй указывает на первый элемент, кторый больше ключа. </dd></dl>
+
+</div>
+</div>
+<a id="aaa74b32de4c88ad67021b617aaa8c489"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#aaa74b32de4c88ad67021b617aaa8c489">&#9670;&nbsp;</a></span>equal_range() <span class="overload">[2/2]</span></h2>
+
+<div class="memitem">
+<div class="memproto">
+<div class="memtemplate">
+template&lt;typename A &gt; </div>
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">std::pair&lt;const_iterator, const_iterator&gt; <a class="el" href="classvset_1_1vtree_1_1vtree.html">vset::vtree::vtree</a>&lt; A &gt;::equal_range </td>
+          <td>(</td>
+          <td class="paramtype">const key_type &amp;&#160;</td>
+          <td class="paramname"><em>x</em></td><td>)</td>
+          <td> const</td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">inline</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p>Возвращает диапазон, содержащий все элементы с ключевыми key в контейнере </p>
+<dl class="params"><dt>Аргументы</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">key</td><td>ключевое значение для сравнения элементов </td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="section return"><dt>Возвращает</dt><dd>Пара (std::pair) итераторов, определяющих требуемый диапазон: первый указывает на первый элемент, который не меньше ключа, а второй указывает на первый элемент, кторый больше ключа. </dd></dl>
+
+</div>
+</div>
+<a id="a595687b5a22ec1795a460439decdbedf"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a595687b5a22ec1795a460439decdbedf">&#9670;&nbsp;</a></span>erase() <span class="overload">[1/3]</span></h2>
+
+<div class="memitem">
+<div class="memproto">
+<div class="memtemplate">
+template&lt;typename A &gt; </div>
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">iterator <a class="el" href="classvset_1_1vtree_1_1vtree.html">vset::vtree::vtree</a>&lt; A &gt;::erase </td>
+          <td>(</td>
+          <td class="paramtype">const_iterator&#160;</td>
+          <td class="paramname"><em>pos</em></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">inline</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p>Удаляет элементы (c++11) </p>
+<dl class="params"><dt>Аргументы</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">pos</td><td>итератор на элемент для удаления </td></tr>
+  </table>
+  </dd>
+</dl>
+
+</div>
+</div>
+<a id="a4e06dfd07ace43e2e0ffdb1868f97b25"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a4e06dfd07ace43e2e0ffdb1868f97b25">&#9670;&nbsp;</a></span>erase() <span class="overload">[2/3]</span></h2>
+
+<div class="memitem">
+<div class="memproto">
+<div class="memtemplate">
+template&lt;typename A &gt; </div>
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">size_type <a class="el" href="classvset_1_1vtree_1_1vtree.html">vset::vtree::vtree</a>&lt; A &gt;::erase </td>
+          <td>(</td>
+          <td class="paramtype">const key_type &amp;&#160;</td>
+          <td class="paramname"><em>key</em></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">inline</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p>Удаляет элементы (c++11) </p>
+<dl class="params"><dt>Аргументы</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">key</td><td>Ключевое значение элементов для удаления </td></tr>
+  </table>
+  </dd>
+</dl>
+
+</div>
+</div>
+<a id="afb66e84cc26a46abb4871a7ebf9cab5c"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#afb66e84cc26a46abb4871a7ebf9cab5c">&#9670;&nbsp;</a></span>erase() <span class="overload">[3/3]</span></h2>
+
+<div class="memitem">
+<div class="memproto">
+<div class="memtemplate">
+template&lt;typename A &gt; </div>
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">iterator <a class="el" href="classvset_1_1vtree_1_1vtree.html">vset::vtree::vtree</a>&lt; A &gt;::erase </td>
+          <td>(</td>
+          <td class="paramtype">const_iterator&#160;</td>
+          <td class="paramname"><em>first</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">const_iterator&#160;</td>
+          <td class="paramname"><em>last</em>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">inline</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p>Удаляет элементы (c++11) из диапазона [first, last) </p>
+<dl class="params"><dt>Аргументы</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">first</td><td>итератор начала диапазона </td></tr>
+    <tr><td class="paramname">last</td><td>итератор конеца диапазона </td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="section return"><dt>Возвращает</dt><dd>iterator, следующего за последним удаленным элементом </dd></dl>
+
+</div>
+</div>
+<a id="afa82d709ce76ac0569766bfbe5dc47fe"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#afa82d709ce76ac0569766bfbe5dc47fe">&#9670;&nbsp;</a></span>find() <span class="overload">[1/2]</span></h2>
+
+<div class="memitem">
+<div class="memproto">
+<div class="memtemplate">
+template&lt;typename A &gt; </div>
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">iterator <a class="el" href="classvset_1_1vtree_1_1vtree.html">vset::vtree::vtree</a>&lt; A &gt;::find </td>
+          <td>(</td>
+          <td class="paramtype">const key_type &amp;&#160;</td>
+          <td class="paramname"><em>key</em></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">inline</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p>находит элемент с конкретным ключом (c++11) </p>
+<dl class="params"><dt>Аргументы</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">key</td><td>Ключевое значение элемента для поиска </td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="section return"><dt>Возвращает</dt><dd>Итератор элемент с ключом key. Если такой элемент не найден, итератора возвращается <a class="el" href="classvset_1_1vtree_1_1vtree.html#a09ac1f9b49b01e6fee3a4e91150c74d8" title="Возвращает итератор на элемент, следующий за последним элементом контейнера ">vtree::end()</a> </dd></dl>
+
+</div>
+</div>
+<a id="a056bad76a21a059e836cbcde776972a7"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a056bad76a21a059e836cbcde776972a7">&#9670;&nbsp;</a></span>find() <span class="overload">[2/2]</span></h2>
+
+<div class="memitem">
+<div class="memproto">
+<div class="memtemplate">
+template&lt;typename A &gt; </div>
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">const_iterator <a class="el" href="classvset_1_1vtree_1_1vtree.html">vset::vtree::vtree</a>&lt; A &gt;::find </td>
+          <td>(</td>
+          <td class="paramtype">const key_type &amp;&#160;</td>
+          <td class="paramname"><em>key</em></td><td>)</td>
+          <td> const</td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">inline</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p>находит элемент с конкретным ключом (c++11) </p>
+<dl class="params"><dt>Аргументы</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">key</td><td>Ключевое значение элемента для поиска </td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="section return"><dt>Возвращает</dt><dd>Итератор элемент с ключом key. Если такой элемент не найден, итератора возвращается <a class="el" href="classvset_1_1vtree_1_1vtree.html#a09ac1f9b49b01e6fee3a4e91150c74d8" title="Возвращает итератор на элемент, следующий за последним элементом контейнера ">vtree::end()</a> </dd></dl>
+
+</div>
+</div>
+<a id="a3f11d02d59e7efeacb2260489247cab8"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a3f11d02d59e7efeacb2260489247cab8">&#9670;&nbsp;</a></span>insert() <span class="overload">[1/6]</span></h2>
+
+<div class="memitem">
+<div class="memproto">
+<div class="memtemplate">
+template&lt;typename A &gt; </div>
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">iterator <a class="el" href="classvset_1_1vtree_1_1vtree.html">vset::vtree::vtree</a>&lt; A &gt;::insert </td>
+          <td>(</td>
+          <td class="paramtype">const value_type &amp;&#160;</td>
+          <td class="paramname"><em>value</em></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">inline</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p>Вставляет элемент </p>
+<dl class="params"><dt>Аргументы</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">value</td><td>вставляемое значение </td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="section return"><dt>Возвращает</dt><dd>итератор на вставленный элемент</dd></dl>
+<p>Сложность от O(log(size/t)) до O(log(size*4/t) + t) </p>
+
+</div>
+</div>
+<a id="ab423ec67f805ed9b4490faacbe28286e"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ab423ec67f805ed9b4490faacbe28286e">&#9670;&nbsp;</a></span>insert() <span class="overload">[2/6]</span></h2>
+
+<div class="memitem">
+<div class="memproto">
+<div class="memtemplate">
+template&lt;typename A &gt; </div>
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">iterator <a class="el" href="classvset_1_1vtree_1_1vtree.html">vset::vtree::vtree</a>&lt; A &gt;::insert </td>
+          <td>(</td>
+          <td class="paramtype">value_type &amp;&amp;&#160;</td>
+          <td class="paramname"><em>value</em></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">inline</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p>Вставляет элемент (c++11) </p>
+<dl class="params"><dt>Аргументы</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">value</td><td>вставляемое значение </td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="section return"><dt>Возвращает</dt><dd>итератор на вставленный элемент</dd></dl>
+<p>Сложность от O(log(size/t)) до O(log(size*4/t) + t) </p>
+
+</div>
+</div>
+<a id="a63188ed5437b41e7eedf65f64b45b8fe"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a63188ed5437b41e7eedf65f64b45b8fe">&#9670;&nbsp;</a></span>insert() <span class="overload">[3/6]</span></h2>
+
+<div class="memitem">
+<div class="memproto">
+<div class="memtemplate">
+template&lt;typename A &gt; </div>
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">iterator <a class="el" href="classvset_1_1vtree_1_1vtree.html">vset::vtree::vtree</a>&lt; A &gt;::insert </td>
+          <td>(</td>
+          <td class="paramtype">const_iterator&#160;</td>
+          <td class="paramname">, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">const value_type &amp;&#160;</td>
+          <td class="paramname"><em>value</em>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">inline</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p>Вставляет элемент </p>
+<dl class="params"><dt>Аргументы</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">const_iterator</td><td>игнорируеться </td></tr>
+    <tr><td class="paramname">value</td><td>вставляемое значение </td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="section return"><dt>Возвращает</dt><dd>итератор на вставленный элемент</dd></dl>
+<p>Сложность от O(log(size/t)) до O(log(size*4/t) + t) </p>
+
+</div>
+</div>
+<a id="a0ba78b4571c9169bf6fdd49db5bddeb2"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a0ba78b4571c9169bf6fdd49db5bddeb2">&#9670;&nbsp;</a></span>insert() <span class="overload">[4/6]</span></h2>
+
+<div class="memitem">
+<div class="memproto">
+<div class="memtemplate">
+template&lt;typename A &gt; </div>
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">iterator <a class="el" href="classvset_1_1vtree_1_1vtree.html">vset::vtree::vtree</a>&lt; A &gt;::insert </td>
+          <td>(</td>
+          <td class="paramtype">const_iterator&#160;</td>
+          <td class="paramname">, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">value_type &amp;&amp;&#160;</td>
+          <td class="paramname"><em>value</em>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">inline</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p>Вставляет элемент (c++11) </p>
+<dl class="params"><dt>Аргументы</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">const_iterator</td><td>игнорируеться </td></tr>
+    <tr><td class="paramname">value</td><td>вставляемое значение </td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="section return"><dt>Возвращает</dt><dd>итератор на вставленный элемент</dd></dl>
+<p>Сложность от O(log(size/t)) до O(log(size*4/t) + t) </p>
+
+</div>
+</div>
+<a id="a939970cf9baa27f6e6540b6a82427bcb"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a939970cf9baa27f6e6540b6a82427bcb">&#9670;&nbsp;</a></span>insert() <span class="overload">[5/6]</span></h2>
+
+<div class="memitem">
+<div class="memproto">
+<div class="memtemplate">
+template&lt;typename A &gt; </div>
+<div class="memtemplate">
+template&lt;typename InputIterator &gt; </div>
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">void <a class="el" href="classvset_1_1vtree_1_1vtree.html">vset::vtree::vtree</a>&lt; A &gt;::insert </td>
+          <td>(</td>
+          <td class="paramtype">InputIterator&#160;</td>
+          <td class="paramname"><em>first</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">InputIterator&#160;</td>
+          <td class="paramname"><em>last</em>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">inline</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p>Вставляет элементы из диапазона [first, last) </p>
+<dl class="params"><dt>Аргументы</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">first</td><td>итератор начала диапазона </td></tr>
+    <tr><td class="paramname">last</td><td>итератор конеца диапазона </td></tr>
+  </table>
+  </dd>
+</dl>
+
+</div>
+</div>
+<a id="ab1a2da49986bdb99834ba122c2d05a05"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ab1a2da49986bdb99834ba122c2d05a05">&#9670;&nbsp;</a></span>insert() <span class="overload">[6/6]</span></h2>
+
+<div class="memitem">
+<div class="memproto">
+<div class="memtemplate">
+template&lt;typename A &gt; </div>
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">void <a class="el" href="classvset_1_1vtree_1_1vtree.html">vset::vtree::vtree</a>&lt; A &gt;::insert </td>
+          <td>(</td>
+          <td class="paramtype">std::initializer_list&lt; value_type &gt;&#160;</td>
+          <td class="paramname"><em>init</em></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">inline</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p>Вставляет элементы из списка инициализации init (c++11) </p>
+<dl class="params"><dt>Аргументы</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">init</td><td>— список инициализации элементов контейнера </td></tr>
+  </table>
+  </dd>
+</dl>
+
+</div>
+</div>
+<a id="a319b7fc08f5e6f3ac3acee67e4bbafde"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a319b7fc08f5e6f3ac3acee67e4bbafde">&#9670;&nbsp;</a></span>lower_bound() <span class="overload">[1/2]</span></h2>
+
+<div class="memitem">
+<div class="memproto">
+<div class="memtemplate">
+template&lt;typename A &gt; </div>
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">iterator <a class="el" href="classvset_1_1vtree_1_1vtree.html">vset::vtree::vtree</a>&lt; A &gt;::lower_bound </td>
+          <td>(</td>
+          <td class="paramtype">const key_type &amp;&#160;</td>
+          <td class="paramname"><em>key</em></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">inline</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p>возвращает итератор на первый элемент не меньшим, чем заданное значение (c++11) </p>
+<dl class="params"><dt>Аргументы</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">key</td><td>ключевое значение для сравнения элементов </td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="section return"><dt>Возвращает</dt><dd>итератор, указывающий на первый элемент, который не меньше, чем key. Если такой элемент не найден, итератора возвращается <a class="el" href="classvset_1_1vtree_1_1vtree.html#a09ac1f9b49b01e6fee3a4e91150c74d8" title="Возвращает итератор на элемент, следующий за последним элементом контейнера ">vtree::end()</a> </dd></dl>
+
+</div>
+</div>
+<a id="af9c90d33b456a4f8c9ff64af4bc32551"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#af9c90d33b456a4f8c9ff64af4bc32551">&#9670;&nbsp;</a></span>lower_bound() <span class="overload">[2/2]</span></h2>
+
+<div class="memitem">
+<div class="memproto">
+<div class="memtemplate">
+template&lt;typename A &gt; </div>
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">const_iterator <a class="el" href="classvset_1_1vtree_1_1vtree.html">vset::vtree::vtree</a>&lt; A &gt;::lower_bound </td>
+          <td>(</td>
+          <td class="paramtype">const key_type &amp;&#160;</td>
+          <td class="paramname"><em>key</em></td><td>)</td>
+          <td> const</td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">inline</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p>возвращает итератор на первый элемент не меньшим, чем заданное значение (c++11) </p>
+<dl class="params"><dt>Аргументы</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">key</td><td>ключевое значение для сравнения элементов </td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="section return"><dt>Возвращает</dt><dd>итератор, указывающий на первый элемент, который не меньше, чем key. Если такой элемент не найден, итератора возвращается <a class="el" href="classvset_1_1vtree_1_1vtree.html#a09ac1f9b49b01e6fee3a4e91150c74d8" title="Возвращает итератор на элемент, следующий за последним элементом контейнера ">vtree::end()</a> </dd></dl>
+
+</div>
+</div>
+<a id="abc27868c12e3237a7723a72670516c85"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#abc27868c12e3237a7723a72670516c85">&#9670;&nbsp;</a></span>max_size()</h2>
+
+<div class="memitem">
+<div class="memproto">
+<div class="memtemplate">
+template&lt;typename A &gt; </div>
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">size_type <a class="el" href="classvset_1_1vtree_1_1vtree.html">vset::vtree::vtree</a>&lt; A &gt;::max_size </td>
+          <td>(</td>
+          <td class="paramname"></td><td>)</td>
+          <td> const</td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">inline</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p>Возвращает максимально допустимое количество элементов в контейнере </p>
+<dl class="section return"><dt>Возвращает</dt><dd>Максимальное количество элементов.</dd></dl>
+<p>Это значение обычно равно std::numeric_limits&lt;size_type&gt;::max(), и отражает теоретический предел на размер контейнера. Ввиду ограничений на доступную оперативную память, во время исполнения это значение может быть ниже чем <a class="el" href="classvset_1_1vtree_1_1vtree.html#abc27868c12e3237a7723a72670516c85" title="Возвращает максимально допустимое количество элементов в контейнере ">max_size()</a>. </p>
+
+</div>
+</div>
+<a id="ae4bbea73f587fc21de3ab3d79352d18b"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ae4bbea73f587fc21de3ab3d79352d18b">&#9670;&nbsp;</a></span>operator=() <span class="overload">[1/2]</span></h2>
+
+<div class="memitem">
+<div class="memproto">
+<div class="memtemplate">
+template&lt;typename A &gt; </div>
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname"><a class="el" href="classvset_1_1vtree_1_1vtree.html">vtree</a>&amp; <a class="el" href="classvset_1_1vtree_1_1vtree.html">vset::vtree::vtree</a>&lt; A &gt;::operator= </td>
+          <td>(</td>
+          <td class="paramtype"><a class="el" href="classvset_1_1vtree_1_1vtree.html">vtree</a>&lt; A &gt; &amp;&amp;&#160;</td>
+          <td class="paramname"><em>__x</em></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">inline</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p>Заменяет содержимое содержимым other использованием семантики переноса (c++11) </p>
+<dl class="params"><dt>Аргументы</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">other</td><td>другой контейнер, который будет использоваться в качестве источника </td></tr>
+  </table>
+  </dd>
+</dl>
+
+</div>
+</div>
+<a id="a728b4cf068a22e29659246837c48d57a"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a728b4cf068a22e29659246837c48d57a">&#9670;&nbsp;</a></span>operator=() <span class="overload">[2/2]</span></h2>
+
+<div class="memitem">
+<div class="memproto">
+<div class="memtemplate">
+template&lt;typename A &gt; </div>
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname"><a class="el" href="classvset_1_1vtree_1_1vtree.html">vtree</a>&amp; <a class="el" href="classvset_1_1vtree_1_1vtree.html">vset::vtree::vtree</a>&lt; A &gt;::operator= </td>
+          <td>(</td>
+          <td class="paramtype">std::initializer_list&lt; value_type &gt;&#160;</td>
+          <td class="paramname"><em>il</em></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">inline</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p>Заменяет содержимое элементами, которые указаны в списке идентификаторов инициализатора (c++11). </p>
+<dl class="params"><dt>Аргументы</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">il</td><td>список инициализации для использования в качестве источника данных </td></tr>
+  </table>
+  </dd>
+</dl>
+
+</div>
+</div>
+<a id="aa4cb5ef5a3813e989bf532fcdf99e0c6"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#aa4cb5ef5a3813e989bf532fcdf99e0c6">&#9670;&nbsp;</a></span>rbegin() <span class="overload">[1/2]</span></h2>
+
+<div class="memitem">
+<div class="memproto">
+<div class="memtemplate">
+template&lt;typename A &gt; </div>
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">reverse_iterator <a class="el" href="classvset_1_1vtree_1_1vtree.html">vset::vtree::vtree</a>&lt; A &gt;::rbegin </td>
+          <td>(</td>
+          <td class="paramname"></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">inline</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p>Возвращает обратный итератор на последний элемент контейнера. </p>
+<dl class="section return"><dt>Возвращает</dt><dd>обратный итератор на последний элемент </dd></dl>
+
+</div>
+</div>
+<a id="a494844cfcb0baf8b2987da54cad670f5"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a494844cfcb0baf8b2987da54cad670f5">&#9670;&nbsp;</a></span>rbegin() <span class="overload">[2/2]</span></h2>
+
+<div class="memitem">
+<div class="memproto">
+<div class="memtemplate">
+template&lt;typename A &gt; </div>
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">const_reverse_iterator <a class="el" href="classvset_1_1vtree_1_1vtree.html">vset::vtree::vtree</a>&lt; A &gt;::rbegin </td>
+          <td>(</td>
+          <td class="paramname"></td><td>)</td>
+          <td> const</td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">inline</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p>Возвращает константный обратный итератор на последний элемент контейнера. </p>
+<dl class="section return"><dt>Возвращает</dt><dd>Константный обратный итератор на последний элемент </dd></dl>
+
+</div>
+</div>
+<a id="a0348d706e07298fc12085d010fd76d9d"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a0348d706e07298fc12085d010fd76d9d">&#9670;&nbsp;</a></span>rend() <span class="overload">[1/2]</span></h2>
+
+<div class="memitem">
+<div class="memproto">
+<div class="memtemplate">
+template&lt;typename A &gt; </div>
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">reverse_iterator <a class="el" href="classvset_1_1vtree_1_1vtree.html">vset::vtree::vtree</a>&lt; A &gt;::rend </td>
+          <td>(</td>
+          <td class="paramname"></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">inline</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p>Возвращает обратный итератор на элемент, перед первым элементом контейнера </p>
+<dl class="section return"><dt>Возвращает</dt><dd>обратный итератор на элемент, перед первым элементом контейнера</dd></dl>
+<p>Этот элемент выступает в качестве заполнителя; попытке доступа к нему приводит к неопределенному поведению </p>
+
+</div>
+</div>
+<a id="a862676b7e0369fd3459ec5fdf4204d0d"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a862676b7e0369fd3459ec5fdf4204d0d">&#9670;&nbsp;</a></span>rend() <span class="overload">[2/2]</span></h2>
+
+<div class="memitem">
+<div class="memproto">
+<div class="memtemplate">
+template&lt;typename A &gt; </div>
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">const_reverse_iterator <a class="el" href="classvset_1_1vtree_1_1vtree.html">vset::vtree::vtree</a>&lt; A &gt;::rend </td>
+          <td>(</td>
+          <td class="paramname"></td><td>)</td>
+          <td> const</td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">inline</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p>Возвращает константный обратный итератор на элемент, следующий перед первым элементом контейнера </p>
+<dl class="section return"><dt>Возвращает</dt><dd>константный итератор обратный на элемент, следующий за последним элементом контейнера</dd></dl>
+<p>Этот элемент выступает в качестве заполнителя; попытке доступа к нему приводит к неопределенному поведению </p>
+
+</div>
+</div>
+<a id="ac177c7d5fc687d65ddac1fbd0f9b1605"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ac177c7d5fc687d65ddac1fbd0f9b1605">&#9670;&nbsp;</a></span>size()</h2>
+
+<div class="memitem">
+<div class="memproto">
+<div class="memtemplate">
+template&lt;typename A &gt; </div>
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">size_type <a class="el" href="classvset_1_1vtree_1_1vtree.html">vset::vtree::vtree</a>&lt; A &gt;::size </td>
+          <td>(</td>
+          <td class="paramname"></td><td>)</td>
+          <td> const</td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">inline</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p>Возвращает количество элементов в контейнере </p>
+<dl class="section return"><dt>Возвращает</dt><dd>количество элементов в контейнере </dd></dl>
+
+</div>
+</div>
+<a id="ad092d5331aeaaa8380290a21001dc605"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ad092d5331aeaaa8380290a21001dc605">&#9670;&nbsp;</a></span>swap()</h2>
+
+<div class="memitem">
+<div class="memproto">
+<div class="memtemplate">
+template&lt;typename A &gt; </div>
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">void <a class="el" href="classvset_1_1vtree_1_1vtree.html">vset::vtree::vtree</a>&lt; A &gt;::swap </td>
+          <td>(</td>
+          <td class="paramtype"><a class="el" href="classvset_1_1vtree_1_1vtree.html">vtree</a>&lt; A &gt; &amp;&#160;</td>
+          <td class="paramname"><em>other</em></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">inline</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p>Обменивает содержимое контейнера с содержимым контейнера другого </p>
+<dl class="params"><dt>Аргументы</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">other</td><td>— Контейнер для обмена содержимым</td></tr>
+  </table>
+  </dd>
+</dl>
+<p>The behavior is undefined if get_allocator() != other.get_allocator() and std::allocator_traits&lt;allocator_type&gt;::propagate_on_container_swap::value != true. </p>
+
+</div>
+</div>
+<a id="a14c0763c9b9a8b804523fbf530a2929c"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a14c0763c9b9a8b804523fbf530a2929c">&#9670;&nbsp;</a></span>upper_bound() <span class="overload">[1/2]</span></h2>
+
+<div class="memitem">
+<div class="memproto">
+<div class="memtemplate">
+template&lt;typename A &gt; </div>
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">iterator <a class="el" href="classvset_1_1vtree_1_1vtree.html">vset::vtree::vtree</a>&lt; A &gt;::upper_bound </td>
+          <td>(</td>
+          <td class="paramtype">const key_type &amp;&#160;</td>
+          <td class="paramname"><em>key</em></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">inline</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p>возвращает итератор на первый элемент больше, чем заданное значение (c++11) </p>
+<dl class="params"><dt>Аргументы</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">key</td><td>ключевое значение для сравнения элементов </td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="section return"><dt>Возвращает</dt><dd>итератор, указывающий на первый элемент, который больше, чем key. Если такой элемент не найден, итератора возвращается <a class="el" href="classvset_1_1vtree_1_1vtree.html#a09ac1f9b49b01e6fee3a4e91150c74d8" title="Возвращает итератор на элемент, следующий за последним элементом контейнера ">vtree::end()</a> </dd></dl>
+
+</div>
+</div>
+<a id="aa072f38eb5f927e684e76b4a7cd8cb3a"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#aa072f38eb5f927e684e76b4a7cd8cb3a">&#9670;&nbsp;</a></span>upper_bound() <span class="overload">[2/2]</span></h2>
+
+<div class="memitem">
+<div class="memproto">
+<div class="memtemplate">
+template&lt;typename A &gt; </div>
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">const_iterator <a class="el" href="classvset_1_1vtree_1_1vtree.html">vset::vtree::vtree</a>&lt; A &gt;::upper_bound </td>
+          <td>(</td>
+          <td class="paramtype">const key_type &amp;&#160;</td>
+          <td class="paramname"><em>key</em></td><td>)</td>
+          <td> const</td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">inline</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p>возвращает итератор на первый элемент больше, чем заданное значение (c++11) </p>
+<dl class="params"><dt>Аргументы</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">key</td><td>ключевое значение для сравнения элементов </td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="section return"><dt>Возвращает</dt><dd>итератор, указывающий на первый элемент, который больше, чем key. Если такой элемент не найден, итератора возвращается <a class="el" href="classvset_1_1vtree_1_1vtree.html#a09ac1f9b49b01e6fee3a4e91150c74d8" title="Возвращает итератор на элемент, следующий за последним элементом контейнера ">vtree::end()</a> </dd></dl>
+
+</div>
+</div>
+<hr/>Объявления и описания членов класса находятся в файле:<ul>
+<li>vset/vtree/<a class="el" href="vtree_8hpp_source.html">vtree.hpp</a></li>
+</ul>
+</div><!-- contents -->
+<!-- start footer part -->
+<hr class="footer"/><address class="footer"><small>
+Создано системой &#160;<a href="http://www.doxygen.org/index.html">
+<img class="footer" src="doxygen.png" alt="doxygen"/>
+</a> 1.8.15
+</small></address>
+</body>
+</html>

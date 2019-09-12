@@ -1,0 +1,557 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+
+<html lang="en">
+
+<head>
+  <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+  <title>LCOV - v-set-coverage.info - tests/vtree/vtree_mmap_suite.cpp</title>
+  <link rel="stylesheet" type="text/css" href="../../gcov.css">
+</head>
+
+<body>
+
+  <table width="100%" border=0 cellspacing=0 cellpadding=0>
+    <tr><td class="title">LCOV - code coverage report</td></tr>
+    <tr><td class="ruler"><img src="../../glass.png" width=3 height=3 alt=""></td></tr>
+
+    <tr>
+      <td width="100%">
+        <table cellpadding=1 border=0 width="100%">
+          <tr>
+            <td width="10%" class="headerItem">Current view:</td>
+            <td width="35%" class="headerValue"><a href="../../index.html">top level</a> - <a href="index.html">tests/vtree</a> - vtree_mmap_suite.cpp<span style="font-size: 80%;"> (source / <a href="vtree_mmap_suite.cpp.func.html">functions</a>)</span></td>
+            <td width="5%"></td>
+            <td width="15%"></td>
+            <td width="10%" class="headerCovTableHead">Hit</td>
+            <td width="10%" class="headerCovTableHead">Total</td>
+            <td width="15%" class="headerCovTableHead">Coverage</td>
+          </tr>
+          <tr>
+            <td class="headerItem">Test:</td>
+            <td class="headerValue">v-set-coverage.info</td>
+            <td></td>
+            <td class="headerItem">Lines:</td>
+            <td class="headerCovTableEntry">18</td>
+            <td class="headerCovTableEntry">209</td>
+            <td class="headerCovTableEntryLo">8.6 %</td>
+          </tr>
+          <tr>
+            <td class="headerItem">Date:</td>
+            <td class="headerValue">2019-09-12</td>
+            <td></td>
+            <td class="headerItem">Functions:</td>
+            <td class="headerCovTableEntry">12</td>
+            <td class="headerCovTableEntry">32</td>
+            <td class="headerCovTableEntryLo">37.5 %</td>
+          </tr>
+          <tr><td><img src="../../glass.png" width=3 height=3 alt=""></td></tr>
+        </table>
+      </td>
+    </tr>
+
+    <tr><td class="ruler"><img src="../../glass.png" width=3 height=3 alt=""></td></tr>
+  </table>
+
+  <table cellpadding=0 cellspacing=0 border=0>
+    <tr>
+      <td><br></td>
+    </tr>
+    <tr>
+      <td>
+<pre class="sourceHeading">          Line data    Source code</pre>
+<pre class="source">
+<a name="1"><span class="lineNum">       1 </span>            : //</a>
+<span class="lineNum">       2 </span>            : // Author: Vladimir Migashko &lt;migashko@gmail.com&gt;, (C) 2012
+<span class="lineNum">       3 </span>            : //
+<span class="lineNum">       4 </span>            : // Copyright: See COPYING file that comes with this distribution
+<span class="lineNum">       5 </span>            : //
+<span class="lineNum">       6 </span>            : 
+<span class="lineNum">       7 </span>            : #include &lt;fas/testing.hpp&gt;
+<span class="lineNum">       8 </span>            : #include &lt;vset/vtree/vtree.hpp&gt;
+<span class="lineNum">       9 </span>            : #include &lt;vset/vtree/strategy.hpp&gt;
+<span class="lineNum">      10 </span>            : 
+<span class="lineNum">      11 </span>            : #include &lt;stdexcept&gt;
+<span class="lineNum">      12 </span>            : #include &lt;sstream&gt;
+<span class="lineNum">      13 </span>            : #include &lt;set&gt;
+<span class="lineNum">      14 </span>            : #include &lt;list&gt;
+<span class="lineNum">      15 </span>            : #include &lt;stack&gt;
+<a name="16"><span class="lineNum">      16 </span>            : #include &lt;vector&gt;</a>
+<span class="lineNum">      17 </span>            : 
+<span class="lineNum">      18 </span><span class="lineCov">          1 : std::stack&lt;std::string&gt; test_stack;</span>
+<span class="lineNum">      19 </span><span class="lineCov">          1 : std::stringstream output_buffer;</span>
+<a name="20"><span class="lineNum">      20 </span>            : </a>
+<span class="lineNum">      21 </span>            : void raise(const std::string&amp; text, const std::string&amp; file = __FILE__, int pos = __LINE__  );
+<span class="lineNum">      22 </span><span class="lineNoCov">          0 : void raise(const std::string&amp; text, const std::string&amp; file, int pos  )</span>
+<span class="lineNum">      23 </span>            : {
+<span class="lineNum">      24 </span><span class="lineNoCov">          0 :   std::cout &lt;&lt; output_buffer.str();</span>
+<span class="lineNum">      25 </span><span class="lineNoCov">          0 :   while ( !test_stack.empty() )</span>
+<span class="lineNum">      26 </span>            :   {
+<span class="lineNum">      27 </span><span class="lineNoCov">          0 :     std::cout &lt;&lt; test_stack.top() &lt;&lt; std::endl;</span>
+<span class="lineNum">      28 </span><span class="lineNoCov">          0 :     test_stack.pop();</span>
+<span class="lineNum">      29 </span>            :   }
+<span class="lineNum">      30 </span><span class="lineNoCov">          0 :   std::stringstream ss;</span>
+<span class="lineNum">      31 </span><span class="lineNoCov">          0 :   ss &lt;&lt; file &lt;&lt; &quot;:&quot; &lt;&lt; pos &lt;&lt; &quot; &quot; &lt;&lt; std::endl &lt;&lt; text;</span>
+<span class="lineNum">      32 </span><span class="lineNoCov">          0 :   throw std::logic_error(ss.str());</span>
+<a name="33"><span class="lineNum">      33 </span>            : }</a>
+<span class="lineNum">      34 </span>            : 
+<span class="lineNum">      35 </span><span class="lineNoCov">          0 : struct init_sequence</span>
+<span class="lineNum">      36 </span>            : {
+<span class="lineNum">      37 </span>            :   int count;
+<span class="lineNum">      38 </span>            :   int first;
+<span class="lineNum">      39 </span>            :   int last;
+<span class="lineNum">      40 </span>            : 
+<a name="41"><span class="lineNum">      41 </span>            :   std::vector&lt;int&gt; vect;</a>
+<span class="lineNum">      42 </span>            : 
+<span class="lineNum">      43 </span><span class="lineNoCov">          0 :   init_sequence(int c, int f, int l)</span>
+<span class="lineNum">      44 </span>            :     : count(c)
+<span class="lineNum">      45 </span>            :     , first(f)
+<span class="lineNum">      46 </span><span class="lineNoCov">          0 :     , last(l)</span>
+<span class="lineNum">      47 </span>            :   {
+<span class="lineNum">      48 </span><span class="lineNoCov">          0 :     double step = double(last - first)/count;</span>
+<span class="lineNum">      49 </span><span class="lineNoCov">          0 :     double curr = first;</span>
+<span class="lineNum">      50 </span>            : 
+<span class="lineNum">      51 </span><span class="lineNoCov">          0 :     for (; count != 0; curr += step, --count)</span>
+<span class="lineNum">      52 </span>            :     {
+<span class="lineNum">      53 </span><span class="lineNoCov">          0 :       vect.push_back( static_cast&lt;int&gt;(curr) );</span>
+<span class="lineNum">      54 </span>            :     }
+<span class="lineNum">      55 </span><span class="lineNoCov">          0 :   }</span>
+<a name="56"><span class="lineNum">      56 </span>            : </a>
+<span class="lineNum">      57 </span>            :   template&lt;typename Container&gt;
+<span class="lineNum">      58 </span><span class="lineNoCov">          0 :   void operator()(Container&amp; cnt) const</span>
+<span class="lineNum">      59 </span>            :   {
+<span class="lineNum">      60 </span><span class="lineNoCov">          0 :     std::copy(vect.begin(), vect.end(), std::back_inserter(cnt));</span>
+<span class="lineNum">      61 </span><span class="lineNoCov">          0 :   }</span>
+<a name="62"><span class="lineNum">      62 </span>            : };</a>
+<span class="lineNum">      63 </span>            : 
+<span class="lineNum">      64 </span><span class="lineNoCov">          0 : struct init_random</span>
+<span class="lineNum">      65 </span>            : {
+<span class="lineNum">      66 </span>            :   int count;
+<span class="lineNum">      67 </span>            :   int first;
+<span class="lineNum">      68 </span>            :   int last;
+<span class="lineNum">      69 </span>            : 
+<a name="70"><span class="lineNum">      70 </span>            :   std::vector&lt;int&gt; vect;</a>
+<span class="lineNum">      71 </span>            : 
+<span class="lineNum">      72 </span><span class="lineNoCov">          0 :   init_random(int c, int f, int l)</span>
+<span class="lineNum">      73 </span>            :     : count(c)
+<span class="lineNum">      74 </span>            :     , first(f)
+<span class="lineNum">      75 </span><span class="lineNoCov">          0 :     , last(l)</span>
+<span class="lineNum">      76 </span>            :   {
+<span class="lineNum">      77 </span><span class="lineNoCov">          0 :     int dist = last - first;</span>
+<span class="lineNum">      78 </span><span class="lineNoCov">          0 :     for (; count != 0; --count)</span>
+<span class="lineNum">      79 </span>            :     {
+<span class="lineNum">      80 </span><span class="lineNoCov">          0 :       vect.push_back( first + std::rand()%dist );</span>
+<span class="lineNum">      81 </span>            :     }
+<span class="lineNum">      82 </span><span class="lineNoCov">          0 :   }</span>
+<a name="83"><span class="lineNum">      83 </span>            : </a>
+<span class="lineNum">      84 </span>            :   template&lt;typename Container&gt;
+<span class="lineNum">      85 </span><span class="lineNoCov">          0 :   void operator()(Container&amp; cnt)  const</span>
+<span class="lineNum">      86 </span>            :   {
+<span class="lineNum">      87 </span><span class="lineNoCov">          0 :     std::copy(vect.begin(), vect.end(), std::back_inserter(cnt));</span>
+<span class="lineNum">      88 </span><span class="lineNoCov">          0 :   }</span>
+<span class="lineNum">      89 </span>            : };
+<span class="lineNum">      90 </span>            : 
+<a name="91"><span class="lineNum">      91 </span>            : </a>
+<span class="lineNum">      92 </span>            : template&lt;typename Container1, typename Container2&gt;
+<span class="lineNum">      93 </span><span class="lineNoCov">          0 : bool equal( const Container1&amp; cnt1, const Container2&amp; cnt2)</span>
+<span class="lineNum">      94 </span>            : {
+<span class="lineNum">      95 </span><span class="lineNoCov">          0 :   if (cnt1.size() != cnt2.size() )</span>
+<span class="lineNum">      96 </span>            :   {
+<span class="lineNum">      97 </span><span class="lineNoCov">          0 :     return false;</span>
+<span class="lineNum">      98 </span>            :   }
+<span class="lineNum">      99 </span>            : 
+<span class="lineNum">     100 </span><span class="lineNoCov">          0 :   typename Container1::const_iterator cur1 = cnt1.begin();</span>
+<span class="lineNum">     101 </span><span class="lineNoCov">          0 :   typename Container2::const_iterator  cur2 = cnt2.begin();</span>
+<span class="lineNum">     102 </span><span class="lineNoCov">          0 :   for (size_t i=0; i &lt; cnt1.size(); ++i, ++cur1, ++cur2)</span>
+<span class="lineNum">     103 </span>            :   {
+<span class="lineNum">     104 </span><span class="lineNoCov">          0 :     if ( *cur1 != *cur2 )</span>
+<span class="lineNum">     105 </span>            :     {
+<span class="lineNum">     106 </span><span class="lineNoCov">          0 :       return false;</span>
+<span class="lineNum">     107 </span>            :     }
+<span class="lineNum">     108 </span>            :   }
+<span class="lineNum">     109 </span><span class="lineNoCov">          0 :   return true;</span>
+<span class="lineNum">     110 </span>            : }
+<span class="lineNum">     111 </span>            : 
+<span class="lineNum">     112 </span>            : template&lt;size_t ArraySize&gt;
+<span class="lineNum">     113 </span>            : class persist_container
+<span class="lineNum">     114 </span>            : {
+<span class="lineNum">     115 </span>            : public:
+<span class="lineNum">     116 </span>            : 
+<span class="lineNum">     117 </span>            :   typedef vset::vtree::vtree&lt; vset::vtree::strategy::vtree_fsb_mmap&lt;int, std::less&lt;int&gt;, ArraySize&gt; &gt; set_type;
+<span class="lineNum">     118 </span>            :   typedef typename set_type::iterator iterator;
+<a name="119"><span class="lineNum">     119 </span>            :   typedef typename set_type::const_iterator const_iterator;</a>
+<span class="lineNum">     120 </span>            : 
+<span class="lineNum">     121 </span><span class="lineNoCov">          0 :   persist_container(const std::string&amp; filename, bool clear)</span>
+<span class="lineNum">     122 </span>            :   {
+<span class="lineNum">     123 </span><span class="lineNoCov">          0 :     output_buffer &lt;&lt; &quot;persist_container::persist_container() clear = &quot; &lt;&lt; clear &lt;&lt; std::endl;</span>
+<span class="lineNum">     124 </span>            :     
+<span class="lineNum">     125 </span><span class="lineNoCov">          0 :     _vset = new set_type;</span>
+<span class="lineNum">     126 </span>            :     
+<span class="lineNum">     127 </span><span class="lineNoCov">          0 :     _vset-&gt;get_allocator().memory().buffer().open( filename.c_str() );</span>
+<span class="lineNum">     128 </span><span class="lineNoCov">          0 :     _vset-&gt;get_allocator().memory().buffer().reserve( 1024*1024);</span>
+<span class="lineNum">     129 </span><span class="lineNoCov">          0 :     output_buffer &lt;&lt; &quot;persist_container size after open: &quot; &lt;&lt; _vset-&gt;size() &lt;&lt; std::endl;</span>
+<span class="lineNum">     130 </span><span class="lineNoCov">          0 :     if ( clear )</span>
+<span class="lineNum">     131 </span>            :     {
+<span class="lineNum">     132 </span><span class="lineNoCov">          0 :       _vset-&gt;clear();</span>
+<span class="lineNum">     133 </span><span class="lineNoCov">          0 :       output_buffer &lt;&lt; &quot;persist_container size after clear: &quot; &lt;&lt; _vset-&gt;size() &lt;&lt; std::endl;</span>
+<span class="lineNum">     134 </span>            :     }
+<a name="135"><span class="lineNum">     135 </span><span class="lineNoCov">          0 :   }</span></a>
+<span class="lineNum">     136 </span>            : 
+<span class="lineNum">     137 </span><span class="lineNoCov">          0 :   ~persist_container()</span>
+<span class="lineNum">     138 </span>            :   {
+<span class="lineNum">     139 </span><span class="lineNoCov">          0 :     output_buffer &lt;&lt; &quot;~persist_container() &quot; &lt;&lt; _vset-&gt;size() &lt;&lt; std::endl;</span>
+<span class="lineNum">     140 </span><span class="lineNoCov">          0 :     output_buffer &lt;&lt; &quot;~persist_container() &quot; &lt;&lt; _vset-&gt;get_allocator().memory().buffer().size() &lt;&lt; std::endl;</span>
+<span class="lineNum">     141 </span>            : 
+<span class="lineNum">     142 </span>            :     typedef typename set_type::allocator_type::memory_type::pointer pointer;
+<span class="lineNum">     143 </span><span class="lineNoCov">          0 :     pointer beg = _vset-&gt;get_allocator().memory().begin();</span>
+<span class="lineNum">     144 </span><span class="lineNoCov">          0 :     pointer end = _vset-&gt;get_allocator().memory().end();</span>
+<span class="lineNum">     145 </span><span class="lineNoCov">          0 :     size_t count = 0;</span>
+<span class="lineNum">     146 </span><span class="lineNoCov">          0 :     for (;beg != end; ++beg)</span>
+<span class="lineNum">     147 </span>            :     {
+<span class="lineNum">     148 </span><span class="lineNoCov">          0 :       count += beg-&gt;size();</span>
+<span class="lineNum">     149 </span>            :     }
+<span class="lineNum">     150 </span><span class="lineNoCov">          0 :     output_buffer &lt;&lt; &quot;~persist_container() &quot; &lt;&lt; count &lt;&lt; std::endl;</span>
+<span class="lineNum">     151 </span>            :     
+<span class="lineNum">     152 </span><span class="lineNoCov">          0 :     _vset-&gt;get_allocator().memory().buffer().sync();</span>
+<span class="lineNum">     153 </span><span class="lineNoCov">          0 :     _vset-&gt;get_allocator().memory().buffer().close();</span>
+<span class="lineNum">     154 </span><span class="lineNoCov">          0 :     delete _vset;</span>
+<a name="155"><span class="lineNum">     155 </span><span class="lineNoCov">          0 :   }</span></a>
+<span class="lineNum">     156 </span>            : 
+<span class="lineNum">     157 </span><span class="lineNoCov">          0 :   set_type&amp; operator*() const</span>
+<span class="lineNum">     158 </span>            :   {
+<span class="lineNum">     159 </span><span class="lineNoCov">          0 :     return *_vset;</span>
+<a name="160"><span class="lineNum">     160 </span>            :   }</a>
+<span class="lineNum">     161 </span>            : 
+<span class="lineNum">     162 </span><span class="lineNoCov">          0 :   set_type* operator-&gt;() const</span>
+<span class="lineNum">     163 </span>            :   {
+<span class="lineNum">     164 </span><span class="lineNoCov">          0 :     return _vset;</span>
+<span class="lineNum">     165 </span>            :   }
+<span class="lineNum">     166 </span>            : 
+<span class="lineNum">     167 </span>            :   persist_container(const persist_container&amp; );
+<span class="lineNum">     168 </span>            : private:
+<span class="lineNum">     169 </span>            :   
+<span class="lineNum">     170 </span>            :   set_type* _vset;
+<span class="lineNum">     171 </span>            : };
+<span class="lineNum">     172 </span>            : 
+<span class="lineNum">     173 </span>            : template&lt;size_t ArraySize&gt;
+<span class="lineNum">     174 </span>            : class non_persist_container
+<span class="lineNum">     175 </span>            : {
+<span class="lineNum">     176 </span>            :   non_persist_container(const non_persist_container&amp;);
+<span class="lineNum">     177 </span>            :   non_persist_container&amp; operator=(const non_persist_container&amp;);
+<span class="lineNum">     178 </span>            : public:
+<span class="lineNum">     179 </span>            : 
+<span class="lineNum">     180 </span>            :   typedef vset::vtree::vtree&lt; vset::vtree::strategy::vtree_fsb_mmap&lt;int, std::less&lt;int&gt;, ArraySize&gt; &gt; set_type;
+<span class="lineNum">     181 </span>            :   typedef typename set_type::iterator iterator;
+<span class="lineNum">     182 </span>            :   
+<span class="lineNum">     183 </span>            : 
+<span class="lineNum">     184 </span>            :   non_persist_container(const std::string&amp; filename, bool /*clear*/)
+<span class="lineNum">     185 </span>            :   {
+<span class="lineNum">     186 </span>            :     _vset = new set_type;
+<span class="lineNum">     187 </span>            :     _vset-&gt;get_allocator().memory().buffer().open(filename.c_str());
+<span class="lineNum">     188 </span>            :   }
+<span class="lineNum">     189 </span>            : 
+<span class="lineNum">     190 </span>            :   ~non_persist_container()
+<span class="lineNum">     191 </span>            :   {
+<span class="lineNum">     192 </span>            :     delete _vset;
+<span class="lineNum">     193 </span>            :   }
+<span class="lineNum">     194 </span>            : 
+<span class="lineNum">     195 </span>            :   set_type&amp; operator*() const
+<span class="lineNum">     196 </span>            :   {
+<span class="lineNum">     197 </span>            :     return *_vset;
+<span class="lineNum">     198 </span>            :   }
+<span class="lineNum">     199 </span>            : 
+<span class="lineNum">     200 </span>            :   set_type* operator-&gt;() const
+<span class="lineNum">     201 </span>            :   {
+<span class="lineNum">     202 </span>            :     return _vset;
+<span class="lineNum">     203 </span>            :   }
+<span class="lineNum">     204 </span>            : 
+<span class="lineNum">     205 </span>            : private:
+<span class="lineNum">     206 </span>            :   set_type* _vset;
+<span class="lineNum">     207 </span>            : };
+<span class="lineNum">     208 </span>            : 
+<a name="209"><span class="lineNum">     209 </span>            : </a>
+<span class="lineNum">     210 </span>            : template&lt;typename T, typename Container, typename F&gt;
+<span class="lineNum">     211 </span><span class="lineNoCov">          0 : void test_insert1(T&amp; /*t*/, const Container&amp; cnt, const F&amp; init, bool onlyCheck)</span>
+<span class="lineNum">     212 </span>            : {
+<span class="lineNum">     213 </span><span class="lineNoCov">          0 :   output_buffer &lt;&lt; &quot;test_insert1 onlyCheck=&quot; &lt;&lt; onlyCheck &lt;&lt; &quot;{&quot;  &lt;&lt; std::endl;</span>
+<span class="lineNum">     214 </span>            :   //std::stringstream ss;
+<span class="lineNum">     215 </span><span class="lineNoCov">          0 :   if ( onlyCheck )</span>
+<span class="lineNum">     216 </span>            :   {
+<span class="lineNum">     217 </span><span class="lineNoCov">          0 :     test_stack.push(&quot;test_insert1 onlyCheck&quot;);</span>
+<span class="lineNum">     218 </span>            :   }
+<span class="lineNum">     219 </span>            :   else
+<span class="lineNum">     220 </span>            :   {
+<span class="lineNum">     221 </span><span class="lineNoCov">          0 :     test_stack.push(&quot;test_insert1&quot;);</span>
+<span class="lineNum">     222 </span>            :   }
+<span class="lineNum">     223 </span><span class="lineNoCov">          0 :   std::vector&lt;int&gt; values;</span>
+<span class="lineNum">     224 </span><span class="lineNoCov">          0 :   init(values);</span>
+<span class="lineNum">     225 </span><span class="lineNoCov">          0 :   if ( !onlyCheck )</span>
+<span class="lineNum">     226 </span>            :   {
+<span class="lineNum">     227 </span><span class="lineNoCov">          0 :     cnt-&gt;insert( values.begin(), values.end() );</span>
+<span class="lineNum">     228 </span>            :   }
+<span class="lineNum">     229 </span><span class="lineNoCov">          0 :   output_buffer &lt;&lt; &quot;&lt;&lt;&lt;--- 1&quot; &lt;&lt; std::endl;</span>
+<span class="lineNum">     230 </span><span class="lineNoCov">          0 :   if ( values.size() != cnt-&gt;size() )</span>
+<span class="lineNum">     231 </span>            :   {
+<span class="lineNum">     232 </span><span class="lineNoCov">          0 :     output_buffer &lt;&lt; &quot;----------------------&quot; &lt;&lt; std::endl;</span>
+<span class="lineNum">     233 </span><span class="lineNoCov">          0 :     output_buffer &lt;&lt; values.size() &lt;&lt; std::endl;</span>
+<span class="lineNum">     234 </span><span class="lineNoCov">          0 :     output_buffer &lt;&lt; cnt-&gt;size() &lt;&lt; std::endl;</span>
+<span class="lineNum">     235 </span><span class="lineNoCov">          0 :     output_buffer &lt;&lt; &quot;======================&quot; &lt;&lt; std::endl;</span>
+<span class="lineNum">     236 </span><span class="lineNoCov">          0 :     raise(&quot;values1.size() != cnt-&gt;size()&quot;, __FILE__, __LINE__);</span>
+<span class="lineNum">     237 </span>            :   }
+<span class="lineNum">     238 </span><span class="lineNoCov">          0 :   output_buffer &lt;&lt; &quot;&lt;&lt;&lt;--- 2&quot; &lt;&lt; std::endl;</span>
+<span class="lineNum">     239 </span><span class="lineNoCov">          0 :   std::sort(values.begin(), values.end());</span>
+<span class="lineNum">     240 </span><span class="lineNoCov">          0 :   output_buffer &lt;&lt; &quot;&lt;&lt;&lt;--- 3&quot; &lt;&lt; std::endl;</span>
+<span class="lineNum">     241 </span><span class="lineNoCov">          0 :   if (!equal(*cnt, values))</span>
+<span class="lineNum">     242 </span>            :   {
+<span class="lineNum">     243 </span><span class="lineNoCov">          0 :     typename Container::iterator itr = cnt-&gt;begin();</span>
+<span class="lineNum">     244 </span><span class="lineNoCov">          0 :     for (size_t i = 0; i &lt; values.size(); ++i, ++itr )</span>
+<span class="lineNum">     245 </span>            :     {
+<span class="lineNum">     246 </span><span class="lineNoCov">          0 :       output_buffer &lt;&lt; &quot;&lt;&lt;&lt;--- X&quot; &lt;&lt; std::endl;</span>
+<span class="lineNum">     247 </span><span class="lineNoCov">          0 :       output_buffer &lt;&lt; &quot;[&quot; &lt;&lt; values[i] &lt;&lt; &quot;=&quot; &lt;&lt; &quot;=&quot; &lt;&lt; *itr&lt;&lt; &quot;],&quot;;</span>
+<span class="lineNum">     248 </span><span class="lineNoCov">          0 :       if ( values[i] != *itr )</span>
+<span class="lineNum">     249 </span>            :       {
+<span class="lineNum">     250 </span><span class="lineNoCov">          0 :         output_buffer &lt;&lt; &quot;&lt;&lt;&lt;&quot;;</span>
+<span class="lineNum">     251 </span>            :       }
+<span class="lineNum">     252 </span>            :     }
+<span class="lineNum">     253 </span>            : 
+<span class="lineNum">     254 </span><span class="lineNoCov">          0 :     output_buffer &lt;&lt; std::endl &lt;&lt; &quot;END CHECK&quot; &lt;&lt; std::endl;</span>
+<span class="lineNum">     255 </span><span class="lineNoCov">          0 :     raise(&quot;test_insert1&quot;, __FILE__, __LINE__);</span>
+<span class="lineNum">     256 </span>            : 
+<span class="lineNum">     257 </span>            :   }
+<span class="lineNum">     258 </span><span class="lineNoCov">          0 :   test_stack.pop();</span>
+<span class="lineNum">     259 </span><span class="lineNoCov">          0 :   output_buffer &lt;&lt; &quot;}test_insert1&quot;&lt;&lt; std::endl;</span>
+<span class="lineNum">     260 </span><span class="lineNoCov">          0 : }</span>
+<span class="lineNum">     261 </span>            : 
+<a name="262"><span class="lineNum">     262 </span>            : </a>
+<span class="lineNum">     263 </span>            : template&lt;typename Container, typename T&gt;
+<span class="lineNum">     264 </span><span class="lineNoCov">          0 : void test_insert(T&amp; t)</span>
+<span class="lineNum">     265 </span>            : {
+<span class="lineNum">     266 </span><span class="lineNoCov">          0 :   output_buffer &lt;&lt; &quot;test_insert {&quot; &lt;&lt; std::endl;</span>
+<span class="lineNum">     267 </span>            :   
+<span class="lineNum">     268 </span><span class="lineNoCov">          0 :   test_stack.push(&quot;test_insert&quot;);</span>
+<span class="lineNum">     269 </span>            : 
+<span class="lineNum">     270 </span><span class="lineNoCov">          0 :   test_insert1(t, Container(&quot;test_insert.bin&quot;, true), init_sequence(1, 1, 1), false );</span>
+<span class="lineNum">     271 </span><span class="lineNoCov">          0 :   test_insert1(t, Container(&quot;test_insert.bin&quot;, false), init_sequence(1, 1, 1), true );</span>
+<span class="lineNum">     272 </span>            : 
+<span class="lineNum">     273 </span><span class="lineNoCov">          0 :   test_insert1(t, Container(&quot;test_insert.bin&quot;, true), init_sequence(10, 1, 5), false );</span>
+<span class="lineNum">     274 </span><span class="lineNoCov">          0 :   test_insert1(t, Container(&quot;test_insert.bin&quot;, false), init_sequence(10, 1, 5), true );</span>
+<span class="lineNum">     275 </span>            : 
+<span class="lineNum">     276 </span><span class="lineNoCov">          0 :   test_insert1(t, Container(&quot;test_insert.bin&quot;, true), init_sequence(256, 1, 5), false );</span>
+<span class="lineNum">     277 </span><span class="lineNoCov">          0 :   test_insert1(t, Container(&quot;test_insert.bin&quot;, false), init_sequence(256, 1, 5), true );</span>
+<span class="lineNum">     278 </span>            : 
+<span class="lineNum">     279 </span><span class="lineNoCov">          0 :   test_insert1(t, Container(&quot;test_insert.bin&quot;, true), init_sequence(2048, 1, 500), false );</span>
+<span class="lineNum">     280 </span><span class="lineNoCov">          0 :   test_insert1(t, Container(&quot;test_insert.bin&quot;, false), init_sequence(2048, 1, 500), true );</span>
+<span class="lineNum">     281 </span>            : 
+<span class="lineNum">     282 </span><span class="lineNoCov">          0 :   init_random rnd(100000, 1, 1000);</span>
+<span class="lineNum">     283 </span><span class="lineNoCov">          0 :   output_buffer &lt;&lt; &quot;------------1-----------&quot; &lt;&lt; std::endl;</span>
+<span class="lineNum">     284 </span><span class="lineNoCov">          0 :   test_insert1(t, Container(&quot;test_insert1.bin&quot;, true), rnd, false );</span>
+<span class="lineNum">     285 </span><span class="lineNoCov">          0 :   output_buffer &lt;&lt; &quot;------------2-----------&quot; &lt;&lt; std::endl;</span>
+<span class="lineNum">     286 </span><span class="lineNoCov">          0 :   test_insert1(t, Container(&quot;test_insert1.bin&quot;, false), rnd, true );</span>
+<span class="lineNum">     287 </span>            : 
+<span class="lineNum">     288 </span><span class="lineNoCov">          0 :   test_stack.pop();</span>
+<span class="lineNum">     289 </span><span class="lineNoCov">          0 :   output_buffer &lt;&lt; &quot;}test_insert&quot; &lt;&lt; std::endl;</span>
+<span class="lineNum">     290 </span><span class="lineNoCov">          0 : }</span>
+<a name="291"><span class="lineNum">     291 </span>            : </a>
+<span class="lineNum">     292 </span>            : template&lt;typename T, typename Container, typename F&gt;
+<span class="lineNum">     293 </span><span class="lineNoCov">          0 : void test_erase1(T&amp; /*t*/, const Container&amp; cnt, const F&amp; init, bool onlyCheck)</span>
+<span class="lineNum">     294 </span>            : {
+<span class="lineNum">     295 </span><span class="lineNoCov">          0 :   output_buffer &lt;&lt; &quot;void test_erase1(const Container&amp; cnt, const F&amp; init, bool onlyCheck) &quot; &lt;&lt; init.count &lt;&lt; std::endl;</span>
+<span class="lineNum">     296 </span><span class="lineNoCov">          0 :   if ( onlyCheck )</span>
+<span class="lineNum">     297 </span>            :   {
+<span class="lineNum">     298 </span><span class="lineNoCov">          0 :     test_stack.push(&quot;test_insert1 onlyCheck&quot;);</span>
+<span class="lineNum">     299 </span>            :   }
+<span class="lineNum">     300 </span>            :   else
+<span class="lineNum">     301 </span>            :   {
+<span class="lineNum">     302 </span><span class="lineNoCov">          0 :     test_stack.push(&quot;test_erase1&quot;);</span>
+<span class="lineNum">     303 </span>            :   }
+<span class="lineNum">     304 </span><span class="lineNoCov">          0 :   std::list&lt;int&gt; values1, values2;</span>
+<span class="lineNum">     305 </span><span class="lineNoCov">          0 :   init(values1);</span>
+<span class="lineNum">     306 </span>            : 
+<span class="lineNum">     307 </span><span class="lineNoCov">          0 :   if ( !onlyCheck )</span>
+<span class="lineNum">     308 </span>            :   {
+<span class="lineNum">     309 </span><span class="lineNoCov">          0 :     cnt-&gt;insert( values1.begin(), values1.end() );</span>
+<span class="lineNum">     310 </span>            :   }
+<span class="lineNum">     311 </span>            : 
+<span class="lineNum">     312 </span><span class="lineNoCov">          0 :   std::list&lt;int&gt;::iterator beg = values1.begin();</span>
+<span class="lineNum">     313 </span><span class="lineNoCov">          0 :   std::list&lt;int&gt;::iterator end = values1.end();</span>
+<span class="lineNum">     314 </span>            : 
+<span class="lineNum">     315 </span>            :   // Перемещаем каждый второй
+<span class="lineNum">     316 </span><span class="lineNoCov">          0 :   for ( ;beg!=end; ++beg)</span>
+<span class="lineNum">     317 </span>            :   {
+<span class="lineNum">     318 </span><span class="lineNoCov">          0 :     values2.push_back(*beg);</span>
+<span class="lineNum">     319 </span>            :     try
+<span class="lineNum">     320 </span>            :     {
+<span class="lineNum">     321 </span><span class="lineNoCov">          0 :       values1.erase(beg++);</span>
+<span class="lineNum">     322 </span>            :     }
+<span class="lineNum">     323 </span>            :     catch(const std::exception&amp; e)
+<span class="lineNum">     324 </span>            :     {
+<span class="lineNum">     325 </span>            :       raise( e.what(), __FILE__, __LINE__);
+<span class="lineNum">     326 </span>            :     }
+<span class="lineNum">     327 </span>            :   }
+<span class="lineNum">     328 </span>            : 
+<span class="lineNum">     329 </span><span class="lineNoCov">          0 :   if ( !onlyCheck )</span>
+<span class="lineNum">     330 </span>            :   {
+<span class="lineNum">     331 </span><span class="lineNoCov">          0 :     for ( std::list&lt;int&gt;::iterator beg2 = values2.begin(); beg2!=values2.end(); ++beg2 )</span>
+<span class="lineNum">     332 </span>            :     {
+<span class="lineNum">     333 </span>            :       try
+<span class="lineNum">     334 </span>            :       {
+<span class="lineNum">     335 </span><span class="lineNoCov">          0 :         if ( cnt-&gt;find( *beg2 ) == cnt-&gt;end() )</span>
+<span class="lineNum">     336 </span>            :         {
+<span class="lineNum">     337 </span><span class="lineNoCov">          0 :           output_buffer &lt;&lt; &quot;fatal &quot; &lt;&lt; *beg2 &lt;&lt; std::endl ;</span>
+<span class="lineNum">     338 </span><span class="lineNoCov">          0 :           raise( &quot;Cannot find value while iterating&quot;, __FILE__, __LINE__);</span>
+<span class="lineNum">     339 </span>            :         }
+<span class="lineNum">     340 </span>            : 
+<span class="lineNum">     341 </span><span class="lineNoCov">          0 :         typename Container::iterator upper = cnt-&gt;upper_bound(*beg2);</span>
+<span class="lineNum">     342 </span><span class="lineNoCov">          0 :         if ( upper != cnt-&gt;end() )</span>
+<span class="lineNum">     343 </span>            :         {
+<span class="lineNum">     344 </span><span class="lineNoCov">          0 :           if ( *upper == *beg2 )</span>
+<span class="lineNum">     345 </span>            :           {
+<span class="lineNum">     346 </span><span class="lineNoCov">          0 :             output_buffer &lt;&lt; &quot;fatal2&quot; &lt;&lt; *upper &lt;&lt; std::endl ;</span>
+<span class="lineNum">     347 </span>            :           }
+<span class="lineNum">     348 </span>            :           else
+<span class="lineNum">     349 </span>            :           {
+<span class="lineNum">     350 </span><span class="lineNoCov">          0 :             output_buffer &lt;&lt; &quot;UPPER &quot; &lt;&lt; *upper &lt;&lt; std::endl ;</span>
+<span class="lineNum">     351 </span>            :           }
+<span class="lineNum">     352 </span>            :         }
+<span class="lineNum">     353 </span><span class="lineNoCov">          0 :         cnt-&gt;erase( *beg2 );</span>
+<span class="lineNum">     354 </span>            :       }
+<span class="lineNum">     355 </span><span class="lineNoCov">          0 :       catch(const std::exception&amp; e)</span>
+<span class="lineNum">     356 </span>            :       {
+<span class="lineNum">     357 </span><span class="lineNoCov">          0 :         raise( e.what(), __FILE__, __LINE__);</span>
+<span class="lineNum">     358 </span>            :       }
+<span class="lineNum">     359 </span>            :     }
+<span class="lineNum">     360 </span>            :   }
+<span class="lineNum">     361 </span>            : 
+<span class="lineNum">     362 </span><span class="lineNoCov">          0 :   if ( values1.size() != cnt-&gt;size() )</span>
+<span class="lineNum">     363 </span>            :   {
+<span class="lineNum">     364 </span><span class="lineNoCov">          0 :     output_buffer &lt;&lt; values1.size() &lt;&lt; std::endl;</span>
+<span class="lineNum">     365 </span><span class="lineNoCov">          0 :     output_buffer &lt;&lt; values2.size() &lt;&lt; std::endl;</span>
+<span class="lineNum">     366 </span><span class="lineNoCov">          0 :     output_buffer &lt;&lt; cnt-&gt;size() &lt;&lt; std::endl;</span>
+<span class="lineNum">     367 </span><span class="lineNoCov">          0 :     raise(&quot;values1.size() != cnt-&gt;size()&quot;, __FILE__, __LINE__);</span>
+<span class="lineNum">     368 </span>            :   }
+<span class="lineNum">     369 </span>            : 
+<span class="lineNum">     370 </span><span class="lineNoCov">          0 :   if (!equal(*cnt, values1))</span>
+<span class="lineNum">     371 </span>            :   {
+<span class="lineNum">     372 </span><span class="lineNoCov">          0 :     typename Container::iterator itr = cnt-&gt;begin();</span>
+<span class="lineNum">     373 </span><span class="lineNoCov">          0 :     beg = values1.begin();</span>
+<span class="lineNum">     374 </span><span class="lineNoCov">          0 :     for (size_t i = 0; i &lt; values1.size(); ++i, ++itr, ++beg )</span>
+<span class="lineNum">     375 </span>            :     {
+<span class="lineNum">     376 </span><span class="lineNoCov">          0 :       output_buffer &lt;&lt; &quot;[&quot; &lt;&lt; *beg &lt;&lt; &quot;=&quot; &lt;&lt; &quot;=&quot; &lt;&lt; *itr&lt;&lt; &quot;],&quot;;</span>
+<span class="lineNum">     377 </span><span class="lineNoCov">          0 :       if ( *beg != *itr )</span>
+<span class="lineNum">     378 </span>            :       {
+<span class="lineNum">     379 </span><span class="lineNoCov">          0 :         output_buffer &lt;&lt; &quot;&lt;&lt;&lt;&quot;;</span>
+<span class="lineNum">     380 </span>            :       }
+<span class="lineNum">     381 </span>            :     }
+<span class="lineNum">     382 </span>            : 
+<span class="lineNum">     383 </span><span class="lineNoCov">          0 :     output_buffer &lt;&lt; std::endl;</span>
+<span class="lineNum">     384 </span>            : 
+<span class="lineNum">     385 </span><span class="lineNoCov">          0 :     raise(&quot;test_erase1&quot;, __FILE__, __LINE__);</span>
+<span class="lineNum">     386 </span>            :   }
+<span class="lineNum">     387 </span><span class="lineNoCov">          0 :   test_stack.pop();</span>
+<span class="lineNum">     388 </span><span class="lineNoCov">          0 : }</span>
+<a name="389"><span class="lineNum">     389 </span>            : </a>
+<span class="lineNum">     390 </span>            : template&lt;typename Container, typename T&gt;
+<span class="lineNum">     391 </span><span class="lineNoCov">          0 : void test_erase(T&amp; t)</span>
+<span class="lineNum">     392 </span>            : {
+<span class="lineNum">     393 </span><span class="lineNoCov">          0 :   test_stack.push(&quot;test_erase&quot;);</span>
+<span class="lineNum">     394 </span>            : 
+<span class="lineNum">     395 </span><span class="lineNoCov">          0 :   test_erase1( t, Container(&quot;test_erase.bin&quot;, true), init_sequence(1, 1, 1), false );</span>
+<span class="lineNum">     396 </span>            :   
+<span class="lineNum">     397 </span><span class="lineNoCov">          0 :   test_erase1(t, Container(&quot;test_erase.bin&quot;, false), init_sequence(1, 1, 1), true );</span>
+<span class="lineNum">     398 </span>            : 
+<span class="lineNum">     399 </span><span class="lineNoCov">          0 :   test_erase1( t,  Container(&quot;test_erase.bin&quot;, true), init_sequence(10, 1, 20), false );</span>
+<span class="lineNum">     400 </span><span class="lineNoCov">          0 :   test_erase1(t, Container(&quot;test_erase.bin&quot;, false), init_sequence(10, 1, 20), true );</span>
+<span class="lineNum">     401 </span>            : 
+<span class="lineNum">     402 </span><span class="lineNoCov">          0 :   test_erase1( t, Container(&quot;test_erase.bin&quot;, true), init_sequence(256, 1, 512), false );</span>
+<span class="lineNum">     403 </span><span class="lineNoCov">          0 :   test_erase1(t, Container(&quot;test_erase.bin&quot;, false), init_sequence(256, 1, 512), true );</span>
+<span class="lineNum">     404 </span>            : 
+<span class="lineNum">     405 </span><span class="lineNoCov">          0 :   test_erase1( t, Container(&quot;test_erase.bin&quot;, true), init_sequence(2048, 0, 2048), false );</span>
+<span class="lineNum">     406 </span><span class="lineNoCov">          0 :   test_erase1(t, Container(&quot;test_erase.bin&quot;, false), init_sequence(2048, 0, 2048), true );</span>
+<span class="lineNum">     407 </span>            : 
+<span class="lineNum">     408 </span><span class="lineNoCov">          0 :   init_sequence init(10000, 0, 100000);</span>
+<span class="lineNum">     409 </span><span class="lineNoCov">          0 :   test_erase1( t, Container(&quot;test_erase.bin&quot;, true), init, false );</span>
+<span class="lineNum">     410 </span><span class="lineNoCov">          0 :   test_erase1(t, Container(&quot;test_erase.bin&quot;, false), init, true );</span>
+<span class="lineNum">     411 </span>            :   
+<span class="lineNum">     412 </span><span class="lineNoCov">          0 :   test_stack.pop();</span>
+<span class="lineNum">     413 </span><span class="lineNoCov">          0 : }</span>
+<span class="lineNum">     414 </span>            : 
+<a name="415"><span class="lineNum">     415 </span>            : </a>
+<span class="lineNum">     416 </span>            : template&lt;typename Container, typename T&gt;
+<span class="lineNum">     417 </span><span class="lineNoCov">          0 : void test_all(T&amp; t)</span>
+<span class="lineNum">     418 </span>            : {
+<span class="lineNum">     419 </span><span class="lineNoCov">          0 :   test_stack.push(&quot;test_all&quot;);</span>
+<span class="lineNum">     420 </span><span class="lineNoCov">          0 :   output_buffer &lt;&lt; &quot;test_all insert {&quot; &lt;&lt; std::endl;</span>
+<span class="lineNum">     421 </span><span class="lineNoCov">          0 :   test_insert&lt;Container&gt;(t);</span>
+<span class="lineNum">     422 </span><span class="lineNoCov">          0 :   output_buffer &lt;&lt; &quot;}test_all insert&quot; &lt;&lt; std::endl;</span>
+<span class="lineNum">     423 </span><span class="lineNoCov">          0 :   output_buffer &lt;&lt; &quot;test_all erase {&quot; &lt;&lt; std::endl;</span>
+<span class="lineNum">     424 </span><span class="lineNoCov">          0 :   test_erase&lt;Container&gt;(t);</span>
+<span class="lineNum">     425 </span><span class="lineNoCov">          0 :   output_buffer &lt;&lt; &quot;}test_all erase&quot; &lt;&lt; std::endl;</span>
+<span class="lineNum">     426 </span><span class="lineNoCov">          0 :   test_stack.pop();</span>
+<span class="lineNum">     427 </span><span class="lineNoCov">          0 : }</span>
+<a name="428"><span class="lineNum">     428 </span>            : </a>
+<span class="lineNum">     429 </span>            : template&lt;size_t BlockSize, typename T&gt;
+<span class="lineNum">     430 </span><span class="lineCov">          1 : void test_persist(T&amp; t)</span>
+<span class="lineNum">     431 </span>            : {
+<span class="lineNum">     432 </span><span class="lineCov">          1 :   if ( -1 == ::truncate( &quot;./test_erase.bin&quot;, 0) )</span>
+<span class="lineNum">     433 </span><span class="lineCov">          1 :     return;</span>
+<span class="lineNum">     434 </span><span class="lineNoCov">          0 :   if ( -1 == ::truncate( &quot;./test_insert.bin&quot;, 0) )</span>
+<span class="lineNum">     435 </span><span class="lineNoCov">          0 :     return;</span>
+<span class="lineNum">     436 </span><span class="lineNoCov">          0 :   if ( -1 == ::truncate( &quot;./test_insert1.bin&quot;, 0) )</span>
+<span class="lineNum">     437 </span><span class="lineNoCov">          0 :     return;</span>
+<span class="lineNum">     438 </span><span class="lineNoCov">          0 :   output_buffer &lt;&lt; &quot;------------------- test_persist ------------------- &quot; &lt;&lt; BlockSize &lt;&lt; std::endl;</span>
+<span class="lineNum">     439 </span><span class="lineNoCov">          0 :   test_stack.push(&quot;test_persist&quot;);</span>
+<span class="lineNum">     440 </span>            :   typedef persist_container&lt;BlockSize&gt; container;
+<span class="lineNum">     441 </span><span class="lineNoCov">          0 :   test_all&lt;container&gt;(t);</span>
+<span class="lineNum">     442 </span><span class="lineNoCov">          0 :   test_stack.pop();</span>
+<span class="lineNum">     443 </span>            : }
+<a name="444"><span class="lineNum">     444 </span>            : </a>
+<span class="lineNum">     445 </span>            : template&lt;typename T&gt;
+<span class="lineNum">     446 </span><span class="lineCov">          1 : void test_all_persist(T&amp; t)</span>
+<span class="lineNum">     447 </span>            : {
+<span class="lineNum">     448 </span><span class="lineCov">          1 :   output_buffer &lt;&lt; &quot;------------------- test_all_persist -------------------&quot; &lt;&lt; std::endl;</span>
+<span class="lineNum">     449 </span><span class="lineCov">          1 :   test_stack.push(&quot;test_all_persist&quot;);</span>
+<span class="lineNum">     450 </span>            : 
+<span class="lineNum">     451 </span><span class="lineCov">          1 :   test_persist&lt;3&gt;(t);</span>
+<span class="lineNum">     452 </span>            :   /*
+<span class="lineNum">     453 </span>            :   test_persist&lt;4&gt;(t);
+<span class="lineNum">     454 </span>            :   test_persist&lt;5&gt;(t);
+<span class="lineNum">     455 </span>            :   test_persist&lt;7&gt;(t);
+<span class="lineNum">     456 </span>            :   test_persist&lt;13&gt;(t);
+<span class="lineNum">     457 </span>            :   */
+<span class="lineNum">     458 </span>            :   /*test_persist&lt;64&gt;(t);
+<span class="lineNum">     459 </span>            :   test_persist&lt;256&gt;(t);
+<span class="lineNum">     460 </span>            :   test_persist&lt;500&gt;(t);
+<span class="lineNum">     461 </span>            :   test_persist&lt;1000&gt;(t);
+<span class="lineNum">     462 </span>            :   test_persist&lt;1024&gt;(t);
+<span class="lineNum">     463 </span>            :   test_persist&lt;4000&gt;(t);*/
+<span class="lineNum">     464 </span>            : 
+<span class="lineNum">     465 </span><span class="lineCov">          1 :   test_stack.pop();</span>
+<span class="lineNum">     466 </span>            : 
+<span class="lineNum">     467 </span><span class="lineCov">          1 :   t &lt;&lt; fas::testing::nothing;</span>
+<a name="468"><span class="lineNum">     468 </span><span class="lineCov">          1 : }</span></a>
+<span class="lineNum">     469 </span>            : 
+<span class="lineNum">     470 </span><span class="lineCov">          3 : UNIT(vtree_mmap_test, &quot;&quot;)</span>
+<span class="lineNum">     471 </span>            : {
+<span class="lineNum">     472 </span>            :   using namespace fas::testing;
+<span class="lineNum">     473 </span>            : #if ( ! (__GNUC__==4 &amp;&amp; __GNUC_MINOR__==6) )
+<span class="lineNum">     474 </span><span class="lineCov">          1 :   test_all_persist(t); // internal compiler error </span>
+<span class="lineNum">     475 </span>            : #endif
+<span class="lineNum">     476 </span><span class="lineCov">          1 :   t &lt;&lt; nothing;</span>
+<a name="477"><span class="lineNum">     477 </span><span class="lineCov">          1 : }</span></a>
+<span class="lineNum">     478 </span>            : 
+<a name="479"><span class="lineNum">     479 </span><span class="lineCov">          1 : BEGIN_SUITE(vtree_mmap_suite, &quot;&quot;)</span></a>
+<span class="lineNum">     480 </span>            :   ADD_UNIT(vtree_mmap_test)
+<span class="lineNum">     481 </span><span class="lineCov">          7 : END_SUITE(vtree_mmap_suite)</span>
+</pre>
+      </td>
+    </tr>
+  </table>
+  <br>
+
+  <table width="100%" border=0 cellspacing=0 cellpadding=0>
+    <tr><td class="ruler"><img src="../../glass.png" width=3 height=3 alt=""></td></tr>
+    <tr><td class="versionInfo">Generated by: <a href="http://ltp.sourceforge.net/coverage/lcov.php" target="_parent">LCOV version 1.10</a></td></tr>
+  </table>
+  <br>
+
+</body>
+</html>
