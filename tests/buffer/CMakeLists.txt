@@ -1,10 +1,8 @@
-ENABLE_TESTING()
-
 add_executable(
   test_buffer 
-  ${FAS_TESTING_CPP}
-  test_buffer.cpp
-  basic_suite.cpp 
+    test_buffer.cpp
+    basic_suite.cpp 
 )
 
-add_test(NAME ctest_buffer COMMAND test_buffer)
+wci_test(TARGET test_buffer COMMAND test_buffer)
+target_link_libraries(test_buffer PRIVATE v-set fas::testing)

@@ -8,6 +8,7 @@
 #define VSET_VTREE_ASPECT_LOWER_NODE_HPP
 
 #include <vset/vtree/aspect/tags.hpp>
+#include <vset/nullptr.hpp>
 
 namespace vset{ namespace vtree{
 
@@ -29,11 +30,16 @@ struct ad_lower_node
     }
 
     // value < itr->first.first
-    if ( itr!=container.end() 
+    if ( itr!=container.end()
       && itr!=container.begin()
       && t.get_aspect().template get<_key_compare_>()(value, itr->first.first) )
     {
       --itr;
+    }
+
+    if ( itr != container.end())
+    {
+      VSET_NULLPTR_ACCERT(itr->second)
     }
 
     return  itr;
@@ -59,6 +65,11 @@ struct ad_lower_node
       && t.get_aspect().template get<_value_compare_>()(value, itr->first.first) )
     {
       --itr;
+    }
+
+    if ( itr != container.end() )
+    {
+      VSET_NULLPTR_ACCERT(itr->second)
     }
 
     return itr;

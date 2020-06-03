@@ -19,13 +19,13 @@ struct ad_begin
   template<typename T, typename Pointer>
   Pointer operator()(T& t, fas::type2type<Pointer> ) const
   {
-    return _<Pointer>(t);
+    return begin_<Pointer>(t);
   }
-  
+
 private:
-  
+
   template<typename Pointer, typename T>
-  Pointer _(T& t) const
+  Pointer begin_(T& t) const
   {
     typedef ::vset::buffer::_size_      _buffer_size_;
     typedef ::vset::buffer::_data_type_ _buffer_data_type_;
@@ -43,14 +43,13 @@ private:
 
     data_type data = const_cast<data_type>( t.get_aspect().template get<_buffer_data_>()(t) );
 
-    chain_type* chn = reinterpret_cast<chain_type*>(data);
+    chain_type* chn = static_cast<chain_type*>( static_cast<void*>(data));
 
     if ( value_type* value = chn->first_value() )
     {
       return pointer( &t, t.get_aspect().template get<_offset_by_ptr_>()(t, value) );
-      //return pointer( &t, static_cast<size_t>(reinterpret_cast<data_type>(value) - data) );
     }
-    
+
     return pointer( &t );
   }
 };

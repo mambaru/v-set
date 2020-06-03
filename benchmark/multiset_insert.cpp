@@ -1,26 +1,3 @@
-/*#include <set>
-#include <fas/xtime.hpp>
-#include <iostream>
-
-const int MAX_COUNT = 1024*1024*10;
-
-int main()
-{
-  std::multiset<int> vtr;
-
-  fas::nanospan start = fas::process_nanotime();
-  for (int i=0; i < MAX_COUNT; ++i)
-    vtr.insert( rand() );
-  fas::nanospan finish = fas::process_nanotime();
-
-  std::cout << (finish - start).to_double() << std::endl;
-  std::cout << fas::rate(finish - start)*MAX_COUNT << std::endl;
-
-  std::cin.get();
-  return 0;
-}
-*/
-
 #include <set>
 #include <fas/xtime.hpp>
 #include <iostream>
@@ -49,8 +26,8 @@ int main()
   fas::nanospan start2 = start;
   for (int i=0; i < MAX_COUNT; ++i)
   {
-    stg.find( rand() );
-    if (i%MIN_COUNT==0)
+    storage_type::iterator itr = stg.find( rand() );
+    if ( i%MIN_COUNT==0 && itr!=stg.end() )
     {
       finish = fas::process_nanotime();
       fas::nanospan tmp = finish - start2;
@@ -64,7 +41,7 @@ int main()
         std::cout << "find rate (" << i << "):" <<fas::rate(finish - start)*MAX_COUNT << std::endl;
         std::cout << "find time (" << MIN_COUNT << "):" << (tmp).to_double() << std::endl;
         std::cout << "find rate (" << MIN_COUNT << "):" <<fas::rate(tmp)*MAX_COUNT << std::endl;
-#endif 
+#endif
       start2 = fas::process_nanotime();
     }
   }

@@ -1,13 +1,16 @@
 cmake_minimum_required(VERSION 3.1)
+
 project(v-set)
 
 include(cmake/ci.cmake)
 
-rootlibs(faslib)
+wci_getlib(NAME faslib)
 
+add_library(v-set INTERFACE)
+target_link_libraries(v-set INTERFACE faslib)
+target_include_directories(v-set INTERFACE "${vset_SOURCE_DIR}")
 if ( BUILD_TESTING )
   enable_testing()
-  include_directories(.)
   add_subdirectory(tests)
   if ( WITH_SAMPLES )
     add_subdirectory(examples)
@@ -20,8 +23,8 @@ endif()
 
 set(CPACK_PACKAGE_NAME "v-set")
 set(CPACK_PACKAGE_VERSION_MAJOR "0")
-set(CPACK_PACKAGE_VERSION_MINOR "8")
-set(CPACK_PACKAGE_VERSION_PATCH "2")
+set(CPACK_PACKAGE_VERSION_MINOR "9")
+set(CPACK_PACKAGE_VERSION_PATCH "0")
 set(CPACK_RESOURCE_FILE_LICENSE "${CMAKE_CURRENT_SOURCE_DIR}/LICENSE")
 set(CPACK_RESOURCE_FILE_README "${CMAKE_CURRENT_SOURCE_DIR}/Readme.md")
 set(CPACK_PACKAGE_CONTACT "migashko@gmail.com")

@@ -1,0 +1,7 @@
+# Список подавлений для cppcheck относительно корня проекта. Примеры
+*:./benchmark/*
+*:./examples/*
+*:./tutorial/*
+redundantPointerOp:./tests/memory/basic_suite.cpp:92
+accessMoved:./tests/vtree/vtree_ctor_suite.cpp:97
+noOperatorEq:./tests/vtree/vtree_mmap_suite.cpp:125

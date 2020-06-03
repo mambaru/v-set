@@ -24,10 +24,13 @@ struct ad_create_node
     typedef typename allocator_type::value_type array_type;
     typedef typename allocator_type::pointer pointer;
 
-    pointer parr = t.get_allocator().allocate(1, fas_nullptr);
-    t.get_allocator().construct(parr, array_type() );
-    const typename T::key_type& key = t.get_aspect().template get<_get_key_>()(t, value);
-    return t.get_aspect().template get<_insert_to_container_>()(t, std::make_pair(key, key), parr);
+    if ( pointer parr = t.get_allocator().allocate(1, fas_nullptr) )
+    {
+      t.get_allocator().construct(parr, array_type() );
+      const typename T::key_type& key = t.get_aspect().template get<_get_key_>()(t, value);
+      return t.get_aspect().template get<_insert_to_container_>()(t, std::make_pair(key, key), parr);
+    }
+    return t.get_container().end();
   }
 };
 

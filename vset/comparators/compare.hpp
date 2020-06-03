@@ -7,6 +7,9 @@
 #ifndef COMPARATORS_COMPARE_HPP
 #define COMPARATORS_COMPARE_HPP
 
+#include <fas/system/nullptr.hpp>
+#include <fas/system/unp.hpp>
+
 namespace vset{
   
 /**
@@ -17,6 +20,7 @@ namespace vset{
 template<typename A, typename C>
 struct compare
 {
+
   /**
    * @brief оператор сравнения
    * @tparam D тип исходных данных (например указатель или итератор)
@@ -29,6 +33,8 @@ struct compare
   {
     return C()( A()(left), A()(right) );
   }
+
+
 };
 
 }

@@ -42,6 +42,7 @@ struct item_cmp_t: item_cmp{};
 #define TEST_COUNT 3
 #endif
 
+
 typedef size_t offset_t;
 typedef vset::memory::manager< ::vset::memory::strategy::fsb_inmem<item, ::vset::memory::fsb::aspect_offset> > int_data;
 struct int_data_t: int_data{};
@@ -69,7 +70,7 @@ UNIT(multiset_mmap_lu, "")
     for (int j = 0; j < TEST_COUNT; ++j)
   {
     *val = item(i, -j);
-    
+
     int_index::iterator lower = index.lower_bound( val.get_offset() );
     int_index::iterator upper = index.upper_bound( val.get_offset() );
     t << equal<expect, size_t>( std::distance(lower, upper), 1 ) << FAS_FL;
@@ -81,10 +82,10 @@ UNIT(multiset_mmap_lu, "")
     t << equal<expect>(a.item1, b.item1) << FAS_FL;
     t << equal<expect>(a.item2, b.item2) << FAS_FL;
   }
-  
+
   /*
   int_index::iterator beg = index.begin();
-  for ( ; beg != index.end(); ++beg) 
+  for ( ; beg != index.end(); ++beg)
   {
     ptr.set_offset(*beg);
     item a = *ptr;

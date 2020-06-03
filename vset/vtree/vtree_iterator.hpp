@@ -1,6 +1,8 @@
 #ifndef VSET_VTREE_VTREE_ITERATOR_HPP
 #define VSET_VTREE_VTREE_ITERATOR_HPP
 
+#include <vset/nullptr.hpp>
+
 namespace vset{ namespace vtree{
 
 template<typename T>
@@ -24,9 +26,9 @@ public:
   typedef typename source_iterator::value_type source_value_type;
   typedef typename source_value_type::first_type source_key_type;
   typedef typename source_value_type::second_type source_mapped_type;
-  
+
   typedef typename mapped_type_helper<source_mapped_type>::value_type array_type;
-  
+
   typedef typename array_type::value_type array_value_type;
   typedef typename array_type::size_type  size_type;
 
@@ -35,7 +37,7 @@ public:
   typedef typename std::iterator_traits<ValueType*>::difference_type difference_type;
   typedef typename std::iterator_traits<ValueType*>::pointer pointer;
   typedef typename std::iterator_traits<ValueType*>::reference reference;
-  
+
   vtree_iterator()
     : _itr()
     , _pos(0)
@@ -63,14 +65,14 @@ public:
   {
   }
 
-  
+
   template<typename TI, typename VT>
   /*explicit*/ vtree_iterator(const vtree_iterator<TI, VT>& oth)
     : _itr( oth.get_source_iterator() )
     , _pos( oth.get_position() )
   {
   }
-  
+
   template<typename TI, typename VT>
   vtree_iterator& operator=(const vtree_iterator<TI, VT>& oth)
   {
@@ -82,17 +84,24 @@ public:
 
   reference operator*() const
   {
+    VSET_NULLPTR_ACCERT(_itr->second)
+
     return _itr->second->at( static_cast<size_type>(_pos) );
   }
-  
+
   pointer operator->() const
   {
+    VSET_NULLPTR_ACCERT(_itr->second)
+
     return &*(_itr->second->begin() + _pos);
   }
 
   self& operator++()
   {
     ++_pos;
+
+    VSET_NULLPTR_ACCERT(_itr->second)
+
     if ( _itr->second->size() == static_cast<size_t>(_pos))
     {
       ++_itr;
@@ -113,6 +122,7 @@ public:
     if ( _pos == 0 )
     {
       --_itr;
+      VSET_NULLPTR_ACCERT(_itr->second)
       _pos = static_cast<difference_type>( _itr->second->size() ) - 1;
     }
     else
@@ -131,19 +141,24 @@ public:
 
   self& operator += (difference_type n )
   {
+    VSET_NULLPTR_ACCERT(_itr->second)
+
     if ( n >= static_cast<difference_type>( _itr->second->size() ) - _pos )
     {
       n -= static_cast<difference_type>(_itr->second->size()) - _pos;
       ++_itr;
       _pos = 0;
 
-      while ( n >= static_cast<difference_type>( _itr->second->size() ) )
+      while ( _itr->second != fas_nullptr && n >= static_cast<difference_type>( _itr->second->size() ) )
       {
         n -= static_cast<difference_type>( _itr->second->size() );
         ++_itr;
         _pos = 0;
       }
     }
+
+    VSET_NULLPTR_ACCERT(_itr->second)
+
     _pos += n;
     return *this;
   }
@@ -154,12 +169,14 @@ public:
     {
       n -= _pos;
       --_itr;
+      VSET_NULLPTR_ACCERT(_itr->second)
       _pos = _itr->second->size() - 1;
 
       while ( n >= static_cast<difference_type>( _itr->second->size() ) )
       {
         n -= _itr->second->size();
         --_itr;
+        VSET_NULLPTR_ACCERT(_itr->second)
         _pos = _itr->second->size() - 1;
       }
     }
@@ -278,10 +295,13 @@ inline typename vtree_iterator<TI, VT>::difference_type operator -
   }
 
   typename vtree_iterator<TI, VT>::source_iterator titr = r2._itr;
+
+  VSET_NULLPTR_ACCERT(titr->second)
   difference_type result =  static_cast<difference_type>(titr->second->size()) - r2._pos;
-  
+
   for ( ++titr; titr != r1._itr; ++titr )
   {
+    VSET_NULLPTR_ACCERT(titr->second)
     result += static_cast<difference_type>( titr->second->size() );
   }
 

@@ -90,7 +90,7 @@ void generate( arg_list& arg)
   int interval = extract_param<int>(arg, 10000);
   std::set<hit, hit_src_cmp> hits;
   
-  while( hits.size() <  static_cast<size_t>(hits_total) )
+  while( static_cast<int>(hits.size()) <  hits_total )
   {
     // может смотреть сам себя
     hits.insert( hit::make( 

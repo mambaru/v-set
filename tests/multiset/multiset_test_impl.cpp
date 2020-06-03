@@ -7,7 +7,7 @@
 #include <vset/memory/fsb/aspect.hpp>
 
 #ifdef NDEBUG
-#define TEST_COUNT 10000
+#define TEST_COUNT 1000
 #else
 #define TEST_COUNT 5
 #endif
@@ -20,6 +20,7 @@ struct data
   int data1;
   int data2;
   int data3;
+  data(): data1(0), data2(0), data3(0) {}
 };
 
 typedef vset::memory::strategy::fsb_mmap<data, ::vset::memory::fsb::aspect_offset > mmap_data_aspect;
@@ -94,8 +95,10 @@ bool check(data_buffer& buffer, index123_type& index123)
   if ( size_check_fail )
   {
     std::cout << std::endl << "buffer/index size check failed!" << std::endl;
-    std::cout << "buffer_size " << buffer_size << std::endl;
-    std::cout << "index_size " << index_size << std::endl;
+    std::cout << "buffer_size "   << buffer_size << std::endl;
+    std::cout << "index_size "    << index_size << std::endl;
+    std::cout << "buffer2_size "  << buffer2_size << std::endl;
+    std::cout << "index2_size "   << index2_size << std::endl;
     return false;
   }
 
@@ -103,7 +106,7 @@ bool check(data_buffer& buffer, index123_type& index123)
   {
     return true;
   }
-  
+
   cmp123 cmp(buffer);
   index123_type::iterator itr1 = index123.begin();
   index123_type::iterator itr2 = itr1 + 1;
@@ -151,22 +154,22 @@ bool erase_one(data_buffer& buffer, index123_type& index123)
   data_pointer ptr = buffer.begin() /* + buffer_size > 0 ? std::rand()%buffer_size : 0*/;
   if ( buffer_size > 0 )
   {
-    ptr -= negate_optfix;    
+    ptr -= negate_optfix;
     ptr += negate_optfix;
     ptr += std::rand()%buffer_size;
   }
-  
+
   offset_t offset = static_cast<offset_t>( ptr.get_offset() );
-  
+
   index123_type::iterator lower = index123.lower_bound(offset);
   index123_type::iterator upper = index123.upper_bound(offset);
-  if (std::distance(lower,upper)!=1 )
+  if ( std::distance(lower,upper)!=1 )
   {
     std::cout << ptr->data1 << "," << ptr->data2 << ", " << ptr->data3 << std::endl;
     std::cout << "std::distance(lower,upper): "  << std::distance(lower,upper) << std::endl;
     return false;
   }
-  
+
   index123.erase( offset );
   buffer.deallocate(ptr, 1);
   std::ptrdiff_t buffer_size2 = std::distance(buffer.begin(), buffer.end());
@@ -175,7 +178,7 @@ bool erase_one(data_buffer& buffer, index123_type& index123)
     std::cout  << "Buffer size check failed - " << (buffer_size-1) << "!=" << buffer_size2 << std::endl;
     return false;
   }
-  
+
   return true;
 }
 
@@ -247,9 +250,9 @@ bool multiset_test()
 
   return
     init(buffer, index123)
-    
+
     && check(buffer, index123)
-    && stress(buffer, index123, 10000)
+    && stress(buffer, index123, TEST_COUNT)
     && check(buffer, index123)
     && clear(buffer, index123)
     && init(buffer, index123)
@@ -258,5 +261,5 @@ bool multiset_test()
 #else
   return true;
 #endif
-  
+
 }

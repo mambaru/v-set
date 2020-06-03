@@ -21,20 +21,27 @@ struct employee
   {
 
   }
+  
+  bool operator < (const employee& r) const
+  {
+    return this->company_id < r.company_id;
+  }
 };
 
 typedef ::vset::compare_member< employee, int, &employee::company_id, std::less<int> > employee_compare;
-typedef ::vset::multiset< employee, employee_compare> employee_multiset;
+typedef ::vset::multiset< employee, std::less<employee> /*, employee_compare*/> employee_multiset;
 
 int main()
 {
   employee_multiset employees;
 
-  employees.insert( employee(1, "Jane") );
+  //employees.insert( employee(1, "Jane") );
+  /*
   employees.insert( employee(2, "Bob") );
   employees.insert( employee(1, "Dave") );
   employees.insert( employee(1, "John") );
-  
+  */
+  /*
   std::cout << "Count of all employees is " << employees.size() << std::endl;
   std::cout << "Count of company 1 employees is " << employees.count( employee(1, "Tmp") ) << std::endl;
 
@@ -82,6 +89,6 @@ int main()
   {
     std::cout << "Company id: " << itr->company_id << ". Emp name: " << itr->name << std::endl;
   }
-
+*/
   return 0;
 }

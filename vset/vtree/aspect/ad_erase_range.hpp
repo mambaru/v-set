@@ -8,6 +8,7 @@
 #define VSET_VTREE_ASPECT_AD_ERASE_RANGE_HPP
 
 #include <vset/vtree/aspect/tags.hpp>
+#include <vset/nullptr.hpp>
 
 namespace vset{ namespace vtree{
 
@@ -22,7 +23,7 @@ struct ad_erase_range
   {
     typedef typename T::difference_type difference_type;
     typename T::iterator last = t.end();
-    
+
     difference_type dist = std::distance(beg, end);
     if (dist!=0)
     {
@@ -32,7 +33,7 @@ struct ad_erase_range
         last = t.get_aspect().template get<_erase_iterator_>()(t, last, false);
       }
     }
-    
+
     t.get_aspect().template get<_defrag_container_>()(t, last);
     return last;
   }

@@ -8,13 +8,13 @@
 #define VSET_VTREE_ASPECT_AD_ERASE_ITERATOR_HPP
 
 #include <vset/vtree/aspect/tags.hpp>
-
+#include <vset/nullptr.hpp>
 #include <iostream>
 
 namespace vset{ namespace vtree{
 
 #ifdef __GXX_EXPERIMENTAL_CXX0X__
-  
+
 struct ad_erase_iterator
 {
   template<typename T>
@@ -26,7 +26,7 @@ struct ad_erase_iterator
 
   template<typename T>
   typename T::iterator
-  operator()(T& t, typename T::const_iterator itr, bool make_defrag) const 
+  operator()(T& t, typename T::const_iterator itr, bool make_defrag) const
   {
     typedef typename T::iterator iterator;
     typedef typename iterator::difference_type difference_type;
@@ -40,8 +40,10 @@ struct ad_erase_iterator
     container_iterator cont_itr = t.get_container().erase( itr.get_source_iterator(), itr.get_source_iterator() );
     if ( cont_itr == t.get_container().end() )
       return iterator( cont_itr, 0 );
-    
-    cont_itr->second->erase( 
+
+    VSET_NULLPTR_ACCERT(cont_itr->second)
+
+    cont_itr->second->erase(
       cont_itr->second->cbegin() + offset,
       t.get_aspect().template get<_compare_>()
     );
@@ -55,6 +57,7 @@ struct ad_erase_iterator
     else
     {
       cont_itr = t.get_aspect().template get<_update_node_key_>()(t, cont_itr );
+      VSET_NULLPTR_ACCERT(cont_itr->second)
       if ( offset == static_cast<difference_type>(cont_itr->second->size()) )
       {
         offset=0;

@@ -9,6 +9,7 @@
 
 #include <vset/vtree/aspect/tags.hpp>
 #include <algorithm>
+#include <iostream>
 
 namespace vset{ namespace vtree{
 
@@ -17,8 +18,7 @@ struct ad_find
   template<typename T>
   typename T::iterator
   operator()(T& t, const typename T::key_type& value)
-  {
-    typename T::iterator itr = t.get_aspect().template get<_lower_bound_>()(t, value);
+  {    typename T::iterator itr = t.get_aspect().template get<_lower_bound_>()(t, value);
 
     if ( itr == t.end() )
     {

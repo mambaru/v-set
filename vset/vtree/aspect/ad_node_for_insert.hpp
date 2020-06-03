@@ -8,6 +8,7 @@
 #define VSET_VTREE_ASPECT_AD_NODE_FOR_INSERT_HPP
 
 #include <vset/vtree/aspect/tags.hpp>
+#include <vset/nullptr.hpp>
 #include <stdexcept>
 
 namespace vset{ namespace vtree{
@@ -42,6 +43,8 @@ struct ad_node_for_insert
     if ( less_equal(t, itr1->first.second, value)
       && less_equal(t, value, itr2->first.first) )
     {
+      VSET_NULLPTR_ACCERT( itr1->second )
+      VSET_NULLPTR_ACCERT( itr2->second )
       // Можно вставить в любой, выбираем меньший
       return itr1->second->size() < itr2->second->size() ? itr1 : itr2;
     }
@@ -60,10 +63,8 @@ struct ad_node_for_insert
 
     throw std::logic_error("ad_node_for_insert");
   }
-  
 };
 
-  
 }}
 
 #endif

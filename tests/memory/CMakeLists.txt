@@ -1,12 +1,12 @@
 add_executable(
   test_memory
-  ${FAS_TESTING_CPP}
-  test_memory.cpp
-  basic_suite.cpp 
-  manager_suite.cpp 
+    test_memory.cpp
+    basic_suite.cpp 
+    manager_suite.cpp 
 )
 
-add_test(NAME test_memory COMMAND test_memory)
+wci_test(TARGET test_memory COMMAND test_memory)
+target_link_libraries(test_memory PRIVATE v-set fas::testing)
 
 
 

@@ -121,9 +121,9 @@ public:
   persist_container(const std::string& filename, bool clear)
   {
     output_buffer << "persist_container::persist_container() clear = " << clear << std::endl;
-    
+
     _vset = new set_type;
-    
+
     _vset->get_allocator().memory().buffer().open( filename.c_str() );
     _vset->get_allocator().memory().buffer().reserve( 1024*1024);
     output_buffer << "persist_container size after open: " << _vset->size() << std::endl;
@@ -148,7 +148,7 @@ public:
       count += beg->size();
     }
     output_buffer << "~persist_container() " << count << std::endl;
-    
+
     _vset->get_allocator().memory().buffer().sync();
     _vset->get_allocator().memory().buffer().close();
     delete _vset;
@@ -166,7 +166,7 @@ public:
 
   persist_container(const persist_container& );
 private:
-  
+
   set_type* _vset;
 };
 
@@ -179,7 +179,7 @@ public:
 
   typedef vset::vtree::vtree< vset::vtree::strategy::vtree_fsb_mmap<int, std::less<int>, ArraySize> > set_type;
   typedef typename set_type::iterator iterator;
-  
+
 
   non_persist_container(const std::string& filename, bool /*clear*/)
   {
@@ -264,7 +264,7 @@ template<typename Container, typename T>
 void test_insert(T& t)
 {
   output_buffer << "test_insert {" << std::endl;
-  
+
   test_stack.push("test_insert");
 
   test_insert1(t, Container("test_insert.bin", true), init_sequence(1, 1, 1), false );
@@ -393,7 +393,7 @@ void test_erase(T& t)
   test_stack.push("test_erase");
 
   test_erase1( t, Container("test_erase.bin", true), init_sequence(1, 1, 1), false );
-  
+
   test_erase1(t, Container("test_erase.bin", false), init_sequence(1, 1, 1), true );
 
   test_erase1( t,  Container("test_erase.bin", true), init_sequence(10, 1, 20), false );
@@ -408,7 +408,7 @@ void test_erase(T& t)
   init_sequence init(10000, 0, 100000);
   test_erase1( t, Container("test_erase.bin", true), init, false );
   test_erase1(t, Container("test_erase.bin", false), init, true );
-  
+
   test_stack.pop();
 }
 
@@ -471,7 +471,7 @@ UNIT(vtree_mmap_test, "")
 {
   using namespace fas::testing;
 #if ( ! (__GNUC__==4 && __GNUC_MINOR__==6) )
-  test_all_persist(t); // internal compiler error 
+  test_all_persist(t); // internal compiler error
 #endif
   t << nothing;
 }

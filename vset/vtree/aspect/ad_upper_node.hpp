@@ -8,6 +8,7 @@
 #define VSET_VTREE_ASPECT_UPPER_NODE_HPP
 
 #include <vset/vtree/aspect/tags.hpp>
+#include <vset/nullptr.hpp>
 
 namespace vset{ namespace vtree{
 
@@ -43,6 +44,12 @@ struct ad_upper_node
         itr = (++container.rbegin()).base();
       }
     }
+
+    if ( itr != container.end() )
+    {
+      VSET_NULLPTR_ACCERT(itr->second)
+    }
+
     return  itr;
   }
 
@@ -76,6 +83,12 @@ struct ad_upper_node
         itr = (++container.crbegin()).base();
       }
     }
+
+    if ( itr != container.end() )
+    {
+      VSET_NULLPTR_ACCERT(itr->second)
+    }
+
     return itr;
   }
 };

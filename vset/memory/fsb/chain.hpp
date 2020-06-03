@@ -57,7 +57,6 @@ struct chain
     return size > 0 ? cnk + size - 1 : cnk;
   }
 
-  
   static size_t chunk_size()
   {
     return sizeof(chunk_type);
@@ -90,11 +89,11 @@ struct chain
   {
     return const_cast<T*>( const_cast<const self*>(this)->last_value() );
   }
-  
+
   const T* next_value(const T* value)  const
   {
     size_t offset = static_cast<size_t>(
-      reinterpret_cast<const char*>( value               ) - 
+      reinterpret_cast<const char*>( value               ) -
       reinterpret_cast<const char*>( this->first_chunk() )
     );
     const chunk_type* chk = first_chunk() + offset/sizeof(chunk_type);
@@ -123,7 +122,7 @@ struct chain
   const T* pred_value(const T* value)  const
   {
     size_t offset = static_cast<size_t>(
-      reinterpret_cast<const char*>(value) - 
+      reinterpret_cast<const char*>(value) -
       reinterpret_cast<const char*>(this->first_chunk())
     );
     const chunk_type* chk = first_chunk() + offset/sizeof(chunk_type);
@@ -192,7 +191,7 @@ struct chain
   {
     return const_cast<chunk_type*>( const_cast<const self*>(this)->last_occuped() );
   }
-  
+
   chunk_type* find_free()
   {
     chunk_type* beg = first_chunk() + first_free;

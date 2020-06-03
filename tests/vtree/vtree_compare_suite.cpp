@@ -25,8 +25,10 @@ UNIT(vtree_compare1, "")
     }
     t << is_true<expect>(tree1 == tree2);
     t << is_true<expect>(tree2 == tree1);
+    t << nothing;
   }
 }
+
 
 UNIT(vtree_compare2, "")
 {
@@ -144,6 +146,7 @@ UNIT(vtree_compare7, "")
     t << is_true<expect>(tree2 < tree1);
   }
 }
+
 
 BEGIN_SUITE(vtree_compare_suite, "")
   ADD_UNIT(vtree_compare1)

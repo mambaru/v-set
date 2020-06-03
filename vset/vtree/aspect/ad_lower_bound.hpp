@@ -8,8 +8,8 @@
 #define VSET_VTREE_ASPECT_AD_LOWER_BOUND_HPP
 
 #include <vset/vtree/aspect/tags.hpp>
+#include <vset/nullptr.hpp>
 #include <algorithm>
-#include <iostream>
 
 namespace vset{ namespace vtree{
 
@@ -27,7 +27,7 @@ struct ad_lower_bound
     typedef typename T::allocator_type allocator_type;
     typedef typename allocator_type::value_type array_type;
     typedef typename array_type::iterator array_iterator;
-    
+
     container_type& container = t.get_container();
 
     if ( container.empty() )
@@ -36,19 +36,20 @@ struct ad_lower_bound
     }
 
     container_iterator cont_itr = t.get_aspect().template get<_lower_node_>()(t, value);
-    
+
     if ( cont_itr == container.end() )
     {
       return t.end();
     }
-    
+
+    VSET_NULLPTR_ACCERT(cont_itr->second)
+
     array_iterator itr = std::lower_bound(
       cont_itr->second->begin(),
       cont_itr->second->end(),
       value,
       t.get_aspect().template get<_key_compare_>()
     );
-    
 
     if ( itr == cont_itr->second->end() )
     {

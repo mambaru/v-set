@@ -28,14 +28,15 @@ struct ad_capacity
 
     typedef ::vset::buffer::_data_      _buffer_data_;
     typedef ::vset::buffer::_const_data_type_ _buffer_data_type_;
-    
+
     typedef typename T::aspect::template advice_cast<_buffer_data_type_>::type data_type;
 
     data_type data = t.get_aspect().template get<_buffer_data_>()(t);
 
     typedef typename T::aspect::template advice_cast<_chain_type_>::type chain_type;
-    const chain_type* chn = reinterpret_cast<const chain_type*>(data);
-    
+
+    const chain_type* chn = static_cast<const chain_type*>( static_cast<const void*>(data));
+
     return chn->capacity();
   }
 };

@@ -19,7 +19,9 @@ struct ad_head
   operator()( T& t ) const
   {
     typedef typename T::aspect::template advice_cast<_head_type_>::type head_type;
-    return reinterpret_cast<const head_type*>( t.get_aspect().template get<_buffer_>() );
+    return static_cast<const head_type*>( static_cast<const void*>(
+            t.get_aspect().template get<_buffer_>()
+           ));
   }
 
   template<typename T>
@@ -27,7 +29,9 @@ struct ad_head
   operator()( T& t )
   {
     typedef typename T::aspect::template advice_cast<_head_type_>::type head_type;
-    return reinterpret_cast<head_type*>(t.get_aspect().template get<_buffer_>());
+    return static_cast<head_type*>( static_cast<void*>(
+             t.get_aspect().template get<_buffer_>()
+           ));
   }
 
 };

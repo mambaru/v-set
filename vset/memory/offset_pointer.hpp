@@ -53,22 +53,35 @@ public:
   
   value_type& operator*()
   {
-    return *(this->get_address());
+    if ( value_type* ptr = this->get_address() )
+      return *ptr;
+    abort();
+
+//    return *(this->get_address());
   }
   
   const value_type& operator*() const
   {
-    return *(this->get_address());
+    if ( const value_type* ptr = this->get_address() )
+      return *ptr;
+    abort();
+    //return *(this->get_address());
   }
   
   value_type* operator->()
   {
-    return this->get_address();
+    if ( value_type* ptr = this->get_address() )
+      return ptr;
+    abort();
+//    return this->get_address();
   }
 
   const value_type* operator->() const
   {
-    return this->get_address();
+    if ( const value_type* ptr = this->get_address() )
+      return ptr;
+    abort();
+//    return this->get_address();
   }
   
 

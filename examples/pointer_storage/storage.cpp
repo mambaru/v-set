@@ -56,6 +56,9 @@ typedef ::vset::multiset< EmployeeCmp::offset_t, EmployeeCmp, ::vset::allocator<
 template<typename P>
 void show_emlployees(P worker_pointer )
 {
+  if ( worker_pointer == fas_nullptr )
+    return;
+
   std::cout << "Company id: " << worker_pointer->company_id
               << ". Division id: " << worker_pointer->division_id
               << ". Emp id: " << worker_pointer->employee_id << std::endl;
@@ -131,9 +134,10 @@ int main()
     worker_pointer.set_offset(*itr);
     show_emlployees(worker_pointer);
   }
-  
+
   worker_pointer = storage.begin();
-  *worker_pointer = employee(2,3,0);
+  if ( worker_pointer != fas_nullptr )
+    *worker_pointer = employee(2,3,0);
   employee_index::iterator emp_ptr = index.find( worker_pointer.get_offset() );
   worker_pointer.set_offset(*emp_ptr);
   std::cout << "Found employee from company 1 and division 3 - id " << worker_pointer->employee_id << std::endl;

@@ -11,22 +11,23 @@
 #include <vset/memory/fsb/tags.hpp>
 
 #include <fas/typemanip/type2type.hpp>
+#include <fas/system/nullptr.hpp>
 #include <stdlib.h>
 namespace vset { namespace memory{ namespace fsb{
 
 struct ad_allocate
 {
   template<typename T, typename Pointer>
-  Pointer operator()(T& t, fas::type2type<Pointer>, size_t num = 1, void *  /*hint*/ = 0 ) const
+  Pointer operator()(T& t, fas::type2type<Pointer>, size_t num = 1, void *  /*hint*/ = fas_nullptr ) const
   {
-    for(; num > 1; --num) _<Pointer>(t);
-    return _<Pointer>(t);
+    for(; num > 1; --num) allocate_<Pointer>(t);
+    return allocate_<Pointer>(t);
   }
 
 private:
 
   template<typename Pointer, typename T>
-  Pointer _(T& t) const
+  Pointer allocate_(T& t) const
   {
     typedef Pointer pointer;
     typedef ::vset::buffer::_size_      _buffer_size_;
@@ -51,10 +52,7 @@ private:
       data = t.get_aspect().template get<_buffer_data_>()(t);
       chn = static_cast<chain_type*>( static_cast<void*>(data) );
       p.set_address(chn->mark());
-      if (!p)
-      {
-        abort();
-      }
+      if (!p) abort();
     }
     return p;
   }

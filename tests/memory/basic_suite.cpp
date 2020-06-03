@@ -54,7 +54,7 @@ UNIT(test_offset, "")
   }
 }
 
-#define MAX_TEST 777 
+#define MAX_TEST 777
 const size_t CAPACITY = (777/64)*64 + (777%64!=0)*64;
 
 //typedef char value_type;
@@ -83,6 +83,11 @@ void test_char_init(T& t, Alloc& allocator)
     t << equal< assert, value_type > ( *beg, '0' + i%10 ) << char(*beg) << "!=" << char('0' + i%10) << " " << FAS_TESTING_FILE_LINE;
     size_t off1 = beg.get_offset();
     value_type* add1 = beg.get_address();
+    t << not_equal< assert, value_type* > ( add1, fas_nullptr ) << FAS_FL;
+    if ( add1 == fas_nullptr)
+      break;
+    t << stop;
+
     t << equal< assert, value_type > ( *add1, '0' + i%10 ) << FAS_FL;
     t << equal< assert, value_type* > ( &(*beg), &(*add1) ) << FAS_FL;
     beg.set_offset(off1);
@@ -121,15 +126,15 @@ void test_char_test(T& t, const Alloc& allocator)
   const_pointer beg1 = beg;
   ++beg1;
   --beg1;
-  
+
   t << equal< assert > ( *beg, *beg1 ) << FAS_TESTING_FILE_LINE;
   t << equal< assert > ( beg, beg1 ) << FAS_TESTING_FILE_LINE;
-  
-  
+
+
   i = MAX_TEST - 1;
   beg = allocator.begin();
   end = allocator.end();
-  
+
   for ( --end; beg!=end;--end, --i)
   {
     if ( i < 0 )
@@ -146,7 +151,7 @@ UNIT(test_unit, "")
 {
   using namespace fas::testing;
   typedef vset::memory::manager< vset::memory::strategy::fsb_mmap<char, ::vset::memory::fsb::aspect_offset > > allocator_type;
-  
+
   allocator_type allocator;
   allocator.buffer().open("allocator.bin");
   allocator.buffer().truncate(0);
@@ -169,7 +174,7 @@ UNIT(test_unit, "")
   allocator.buffer().close();
 
   t << nothing;
-  
+
 }
 
 UNIT(test_allocator, "")

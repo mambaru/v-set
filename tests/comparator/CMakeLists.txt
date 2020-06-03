@@ -1,11 +1,11 @@
 add_executable(
   test_comparator 
-  ${FAS_TESTING_CPP}
-  test_comparator.cpp
-  comparator_suite.cpp
+    test_comparator.cpp
+    comparator_suite.cpp
 )
 
-add_test(NAME test_comparator COMMAND test_comparator)
+wci_test(TARGET test_comparator COMMAND test_comparator)
+target_link_libraries(test_comparator PRIVATE v-set fas::testing)
 
 
 

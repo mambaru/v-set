@@ -130,6 +130,7 @@ UNIT(comparator_set, "")
   set4.insert(d);
   set4.insert(d+1);
   set4.insert(d+2);
+  delete *(set3.begin());
   t << nothing;
 }
 

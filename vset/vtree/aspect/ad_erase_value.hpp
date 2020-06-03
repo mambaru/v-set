@@ -23,7 +23,6 @@ struct ad_erase_value
     iterator_type lower( t.get_aspect().template get<_lower_bound_>()(t, value) );
     iterator_type upper( t.get_aspect().template get<_upper_bound_>()(t, value) );
     size_type result = static_cast<size_type>( std::distance(lower, upper) );
- 
     t.get_aspect().template get<_erase_range_>()( t, lower, upper );
     return result;
   }
@@ -48,9 +47,9 @@ struct ad_erase_value
 
 
 #endif
-  
 
-  
+
+
 }}
 
 #endif

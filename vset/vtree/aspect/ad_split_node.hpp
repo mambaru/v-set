@@ -7,8 +7,8 @@
 #ifndef VSET_VTREE_ASPECT_AD_SPLIT_NODE_HPP
 #define VSET_VTREE_ASPECT_AD_SPLIT_NODE_HPP
 
-#include <fas/system/nullptr.hpp>
 #include <vset/vtree/aspect/tags.hpp>
+#include <vset/nullptr.hpp>
 #include <stdlib.h>
 
 namespace vset{ namespace vtree{
@@ -42,10 +42,8 @@ struct ad_split_node
 
     array_pointer arr1 = itr->second;
     array_pointer arr2 = t.get_allocator().allocate(1, fas_nullptr);
-    if ( !arr2 )
-    {
-      abort();//return container.end(); // TODO: проверить что offset_pointer при сравнении с числом не сравнивает оффыеты
-    }
+    VSET_NULLPTR_ACCERT(arr2)
+    VSET_NULLPTR_ACCERT(arr1)
 
     size_t offset = arr1->size();
 
@@ -58,20 +56,20 @@ struct ad_split_node
 
     arr2->assign( arr1->begin() + offset, arr1->end(), t.get_aspect().template get<_value_compare_>() );
     arr1->resize( offset, value_type(), t.get_aspect().template get<_value_compare_>() );
+
     container.erase( itr );
-    
+
     const typename T::aspect::template advice_cast<_get_key_>::type& get_key = t.get_aspect().template get<_get_key_>();
-    
+
     const key_type& k1f = get_key(t, arr1->front());
     const key_type& k1b = get_key(t, arr1->back());
-    container_iterator itr1 = t.get_aspect().template get<_insert_to_container_>()(t, std::make_pair(k1f, k1b/*arr1->front(), arr1->back()*/), arr1);
+    container_iterator itr1 = t.get_aspect().template get<_insert_to_container_>()(t, std::make_pair(k1f, k1b), arr1);
     const key_type& k2f = get_key(t, arr2->front());
     const key_type& k2b = get_key(t, arr2->back());
-    container_iterator itr2 = t.get_aspect().template get<_insert_to_container_>()(t, std::make_pair(k2f, k2b/*arr2->front(), arr2->back()*/), arr2);
+    container_iterator itr2 = t.get_aspect().template get<_insert_to_container_>()(t, std::make_pair(k2f, k2b), arr2);
 
     itr = t.get_aspect().template get<_node_for_insert_>()(t, itr1, itr2, value);
 
-    arr1 = itr->second;
     return itr;
   }
 };

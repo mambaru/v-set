@@ -120,6 +120,11 @@ public:
   struct copy_ctor_disabled_for_mapped_files;
 
 public:
+  
+  ~vtree()
+  {
+    this->clear();
+  }
 
   /**
    * @brief Конструктор по умолчанию. Создаёт пустой контейнер.
@@ -439,8 +444,10 @@ public:
   void swap( vtree& other )
   {
     this->get_aspect().template get<_swap_container_>()(*this, other);
+    std::swap(_allocator, other._allocator);
+    /*allocator_type old_alloc = _allocator;
     _allocator = this->get_aspect().template get<_allocator_>()(*this);
-    other._allocator = this->get_aspect().template get<_allocator_>()(other);
+    other._allocator = this->get_aspect().template get<_allocator_>()(other);*/
   }
 
   /**
