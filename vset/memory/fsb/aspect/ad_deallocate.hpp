@@ -20,7 +20,6 @@ struct ad_deallocate
     typedef ::vset::buffer::_data_      _buffer_data_;
     typedef ::vset::buffer::_data_type_ _buffer_data_type_;
 
-    //typedef typename T::aspect::template advice_cast<_value_type_>::type value_type;
     typedef typename T::aspect::template advice_cast<_chain_type_>::type chain_type;
     typedef typename T::aspect::template advice_cast<_buffer_data_type_>::type data_type;
 
