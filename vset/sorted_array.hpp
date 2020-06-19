@@ -2,6 +2,7 @@
 #define VSET_VTREE_SORTED_ARRAY_HPP
 
 #include <vset/array.hpp>
+#include <algorithm>
 
 namespace vset{
 
@@ -13,7 +14,7 @@ class sorted_array
   typedef array<T, N> super;
 
 public:
-  
+
   typedef Compare key_compare;
   typedef Compare value_compare;
 
@@ -54,37 +55,34 @@ public:
     this->sort(comp);
   }
 
-  void push_back ( const T& x, const value_compare& comp /*= value_compare()*/ )
+  void push_back( const T& x, const value_compare& comp /*= value_compare()*/ )
   {
     super_()->push_back(x);
     this->sort(comp);
   }
 
-  iterator insert ( const T& x, const value_compare& comp /*= value_compare()*/ )
+  iterator insert( const T& x, const value_compare& comp /*= value_compare()*/ )
   {
     iterator position = std::upper_bound(super_()->begin(), super_()->end(), x, comp );
     return static_cast<super*>(this)->insert(position, x);
   }
 
-  
-  void insert ( size_type n, const T& x, const value_compare& comp /*= value_compare()*/ )
+  void insert( size_type n, const T& x, const value_compare& comp /*= value_compare()*/ )
   {
     iterator position = std::upper_bound(super_()->begin(), super_()->end(), x, comp );
     return super_()->insert(position, n, x);
   }
-  
+
 
   template <class InputIterator>
-  void insert ( InputIterator first, InputIterator last, const value_compare& comp /*= value_compare()*/ )
+  void insert( InputIterator first, InputIterator last, const value_compare& comp /*= value_compare()*/ )
   {
     super_()->insert( super_()->end(), first, last );
     this->sort(comp);
   }
 
-  //using super_()->erase;
-  //using super_()->cbegin;
 #ifdef __GXX_EXPERIMENTAL_CXX0X__
-  iterator erase ( const_iterator position, const value_compare& comp )
+  iterator erase( const_iterator position, const value_compare& comp )
   {
     if ( position == this->cend() )
       throw std::out_of_range("iterator array<>::erase ( iterator position )");
@@ -96,7 +94,7 @@ public:
     return dst;
   }
 #else
-  iterator erase ( iterator position, const value_compare& comp )
+  iterator erase( iterator position, const value_compare& comp )
   {
     if ( position == this->end() )
       throw std::out_of_range("iterator array<>::erase ( iterator position )");
@@ -108,26 +106,14 @@ public:
   }
 #endif
 
-private:
-  /// BUG 
-  size_type erase( const T& x, const value_compare& comp )
-  {
-    size_type count = 0;
-    std::pair<iterator, iterator> range = std::equal_range(super_()->begin(), super_()->end(), x, comp );
-    for (;range.first!=range.second;++range.first, ++count)
-      super_()->erase(range.first);
-    return count;
-  }
-public:
-
   void sort(const value_compare& comp )
   {
     std::sort( super_()->begin(), super_()->end(), comp );
   }
+
 private:
   const super* super_() const { return static_cast< const super*>(this);}
   super* super_(){ return static_cast<super*>(this);}
-  
 };
 
 }

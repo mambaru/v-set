@@ -9,7 +9,7 @@
 
 #include <iterator>
 #include <fas/system/nullptr.hpp>
-  
+
 namespace vset { namespace memory{
 
 /**
@@ -39,18 +39,18 @@ public:
   {
   }
 
-  
+
   operator value_type* ()
   {
     return this->get_address();
   }
-  
+
   operator const value_type* () const
   {
     return this->get_address();
   }
-  
-  
+
+
   value_type& operator*()
   {
     if ( value_type* ptr = this->get_address() )
@@ -59,7 +59,7 @@ public:
 
 //    return *(this->get_address());
   }
-  
+
   const value_type& operator*() const
   {
     if ( const value_type* ptr = this->get_address() )
@@ -67,7 +67,7 @@ public:
     abort();
     //return *(this->get_address());
   }
-  
+
   value_type* operator->()
   {
     if ( value_type* ptr = this->get_address() )
@@ -83,13 +83,13 @@ public:
     abort();
 //    return this->get_address();
   }
-  
+
 
   value_type& get_ref()
   {
     return *(this->get_address());
   }
-  
+
   const value_type& get_ref() const
   {
     return *(this->get_address());
@@ -106,7 +106,7 @@ public:
       return fas_nullptr;
     return _provider.get(_offset);
   }
-  
+
   const value_type* get_address() const
   {
     if ( _offset == static_cast<size_t>(-1) )
@@ -125,7 +125,7 @@ public:
     return _offset;
   }
 
-  void set_offset(size_t offset) 
+  void set_offset(size_t offset)
   {
     _offset = offset;
   }
@@ -212,13 +212,11 @@ public:
   reference operator[] ( difference_type n )
   {
     return *(_provider.get( _provider.next( _offset, static_cast<size_t>(n) ) ));
-    /*return *(_provider.get( _offset + sizeof(value_type)*n ));*/
   }
 
   const reference operator[] ( difference_type n ) const
   {
     return *(_provider.get( _provider.next( _offset, static_cast<size_t>(n) ) ));
-    /*return *(_provider.get( _offset + sizeof(value_type)*n ));*/
   }
 
 private:

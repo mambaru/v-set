@@ -14,7 +14,7 @@ struct allocator
   typedef typename memory_type::value_type value_type;
   typedef typename memory_type::pointer pointer;
   typedef typename memory_type::const_pointer const_pointer;
-  
+
   typedef typename memory_type::reference       reference;
   typedef typename memory_type::const_reference const_reference;
   typedef typename memory_type::size_type size_type;
@@ -24,7 +24,7 @@ struct allocator
     : _memory()
   {
   }
-  
+
   explicit allocator(const memory_type& m)
     : _memory(m)
   {
@@ -44,8 +44,8 @@ struct allocator
   {
     return static_cast<char*>(&value) - _memory.data();
   }
-  
-  static size_type max_size () 
+
+  static size_type max_size ()
   {
     return 1;
   }
@@ -75,12 +75,6 @@ struct allocator
     return this->_memory;
   }
 
-  /*
-  memory_type memory()
-  {
-    return this->_memory;
-  }*/
-  
 private:
   memory_type _memory;
 };
