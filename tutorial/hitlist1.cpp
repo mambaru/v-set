@@ -12,6 +12,7 @@ class hitlist::impl
     typedef hit value_type;
     struct pointer
     {
+      pointer () = delete;
       explicit pointer(hit& h): _h(h) {}
       hit& operator*() { return _h;}
       const hit& operator*() const { return _h;}

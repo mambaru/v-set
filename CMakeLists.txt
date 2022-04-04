@@ -4,11 +4,20 @@ project(v-set)
 
 include(cmake/ci.cmake)
 
+if ( "${CMAKE_CXX_COMPILER_ID}" STREQUAL "GNU" )
+  if( CMAKE_CXX_COMPILER_VERSION VERSION_GREATER 10.2 OR CMAKE_CXX_COMPILER_VERSION VERSION_EQUAL 10.2 )
+    ogenc_warning(-Wno-maybe-uninitialized "" ON)
+    ogenc_warning(-Wno-null-dereference "" ON)
+  endif()
+endif()
+
 wci_submodule(NAME faslib)
 
 add_library(v-set INTERFACE)
 target_link_libraries(v-set INTERFACE faslib)
 target_include_directories(v-set INTERFACE "${vset_SOURCE_DIR}")
+
+
 if ( BUILD_TESTING )
   enable_testing()
   add_subdirectory(tests)
@@ -20,6 +29,8 @@ if ( BUILD_TESTING )
     endif()
   endif()
 endif()
+
+
 
 set(CPACK_PACKAGE_NAME "v-set")
 set(CPACK_PACKAGE_VERSION_MAJOR "0")

@@ -18,4 +18,5 @@ target_link_libraries(hitlist6 PUBLIC v-set)
 target_link_libraries(hitlist7 PUBLIC v-set)
 target_link_libraries(hitlistX PUBLIC v-set)
 
+
 wci_utils(hitlist1 hitlist2 hitlist3 hitlist4 hitlist5 hitlist6 hitlist7 hitlistX)

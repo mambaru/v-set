@@ -14,15 +14,11 @@
 
 struct employee
 {
-  int company_id;
-  int division_id;
-  int employee_id;
+  int company_id = 0;
+  int division_id = 0;
+  int employee_id = 0;
 
-  employee()
-    : company_id()
-    , division_id()
-    , employee_id()
-  {}
+  employee() = default;
 
   employee(int cmp_id, int div_id, int emp_id)
     : company_id(cmp_id)

@@ -125,7 +125,7 @@ private:
   const value_type& get_ref_(const_pointer val) const  { return T::get_ref(val); }*/
   index_type get_index_(pointer p) const { return T::get_index(p); }
   pointer get_ptr_(index_type i, storage_t& stg) const { return T::get_pointer(i, stg); }
-  hit get_value_(index_type i, storage_t& stg) const { return *get_ptr_(i, stg); }
+  hit get_value_(index_type i, storage_t& stg) const { return *get_ptr_(i, stg);}
   
   template<typename I1, typename I2, typename I3>
   size_t delete_user_t_(hit h1, hit h2, I1& i1, I2& i2, I3& i3, std::bidirectional_iterator_tag)
