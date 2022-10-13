@@ -28,7 +28,7 @@ struct cmp_data2: vset::compare_list2<compare_list> {};
 
 struct cmp_data3
 {
-  bool operator()(const data& l, const data& r) const
+  bool operator()(const data& l, const data& r) const noexcept
   {
     //std::cout << l.data1 << std::endl;
     return l.data1 < r.data1 
@@ -44,7 +44,7 @@ struct cmp_data3
 
 struct cmp_data4
 {
-  bool operator()(const data& l, const data& r) const
+  bool operator()(const data& l, const data& r) const noexcept
   {
     if ( l.data1 < r.data1 ) return true;
     if ( l.data1 > r.data1 ) return false;
@@ -68,7 +68,7 @@ struct cmp_data4
   }
 };
 
-inline bool cmp_data5(const data& l, const data& r)
+inline bool cmp_data5(const data& l, const data& r) noexcept
 {
     if ( l.data1 < r.data1 ) return true;
     if ( l.data1 > r.data1 ) return false;
@@ -102,7 +102,7 @@ inline bool cmp_data5(const data& l, const data& r)
 
 struct f_generate
 {
-  data operator()() const
+  data operator()() const noexcept
   {
     data d;
     d.data1 = std::rand()%RANGE;

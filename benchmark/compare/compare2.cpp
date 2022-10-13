@@ -27,7 +27,7 @@
 
 struct f_generate
 {
-  data operator()() const
+  data operator()() const noexcept
   {
     data d;
     d.data1 = std::rand()%RANGE;

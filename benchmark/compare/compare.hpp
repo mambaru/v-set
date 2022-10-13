@@ -8,7 +8,7 @@
 
 struct cmp1
 {
-  bool operator()(const data& l, const data& r) const
+  bool operator()(const data& l, const data& r) const noexcept
   {
     if ( l.data1 < r.data1 ) return true;
     if ( l.data1 > r.data1 ) return false;
@@ -32,7 +32,7 @@ struct cmp1
 
 struct cmp2
 {
-  bool operator()(const data& l, const data& r) const
+  bool operator()(const data& l, const data& r) const noexcept
   {
     return l.data1 < r.data1 
       || ( ! ( r.data1 < l.data1 ) && l.data2 < r.data2 ) 
@@ -48,7 +48,7 @@ struct cmp2
 
 struct cmp3
 {
-  bool operator()(const data& l, const data& r) const
+  bool operator()(const data& l, const data& r) const noexcept
   {
     return   l.data1 < r.data1 ? true : l.data1 > r.data1 ? false
            : l.data2 < r.data2 ? true : l.data2 > r.data2 ? false 

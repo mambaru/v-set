@@ -5,3 +5,5 @@
 redundantPointerOp:./tests/memory/basic_suite.cpp:92
 accessMoved:./tests/vtree/vtree_ctor_suite.cpp:97
 noOperatorEq:./tests/vtree/vtree_mmap_suite.cpp:125
+unusedFunction:./tests/multiset/multiset_test_impl.cpp:240
+unknownMacro:
