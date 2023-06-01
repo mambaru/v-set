@@ -74,7 +74,7 @@ class vtree:
     ::template advice_cast<_container_>::type
     ::template apply<
        container_key_tag,
-       typename allocator_type_tag::pointer, 
+       typename std::allocator_traits<allocator_type_tag>::pointer,
        container_comparator_tag
     >::type                                                                         container_type_tag;
     

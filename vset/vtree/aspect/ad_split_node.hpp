@@ -32,7 +32,7 @@ struct ad_split_node
     typedef typename helper<T>::container_type container_type;
 
     typedef typename T::allocator_type allocator_type;
-    typedef typename allocator_type::pointer array_pointer;
+    typedef typename std::allocator_traits<allocator_type>::pointer array_pointer;
 
     container_type& container = t.get_container();
     if ( itr == container.end() )
@@ -41,7 +41,7 @@ struct ad_split_node
     }
 
     array_pointer arr1 = itr->second;
-    array_pointer arr2 = t.get_allocator().allocate(1, fas_nullptr);
+    array_pointer arr2 = t.get_allocator().allocate(1);
     VSET_NULLPTR_ACCERT(arr2)
     VSET_NULLPTR_ACCERT(arr1)
 

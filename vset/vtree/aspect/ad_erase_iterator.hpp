@@ -33,7 +33,7 @@ struct ad_erase_iterator
     typedef typename T::container_type container_type;
     typedef typename container_type::iterator container_iterator;
 
-    if ( itr == t.end() )
+    if ( itr == t.cend() )
       return iterator(t.get_container().end(), 0 );
 
     difference_type    offset   = itr.get_position();
